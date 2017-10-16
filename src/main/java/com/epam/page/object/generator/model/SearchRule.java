@@ -18,21 +18,19 @@ public class SearchRule {
     public String tag;
     public String requiredAttribute;
     public List<String> classes;
-    public List<ElementAttribute> attributes;
+    public Pairs attributes;
 
     public SearchRule(JSONObject jsonObject) {
         type = ((String) jsonObject.get("type")).toLowerCase();
         requiredAttribute = (String) jsonObject.get("name");
         String rulesString = (String) jsonObject.get("rules");
-        Pairs rules = new Pairs(rulesString.split(";"),
+        Pairs rules = new Pairs(asList(rulesString.split(";")),
                 r -> r.split("=")[0],
                 r -> r.split("=")[1]);
         tag = rules.first(key -> key.equals("tag"));
         classes = rules.filter(
                 key -> key.equals("class"));
-        attributes = rules.filterAndMap(
-            key -> key.equals("class"),
-            pair -> new ElementAttribute(pair.key, pair.value));
+        attributes = rules;
     }
     public List<String> getElements(String url) throws IOException {
         return requiredAttribute.equals("text")
@@ -69,8 +67,8 @@ public class SearchRule {
     }
 
     private boolean elementAttributesMatch(Element element) {
-        return attributes.stream().noneMatch(elementAttribute -> element.attr(elementAttribute.getAttributeName()) == null
-                || !element.attr(elementAttribute.getAttributeName()).equals(elementAttribute.getAttributeValue()));
+        return attributes.stream().noneMatch(elementAttribute -> element.attr(elementAttribute.getName()) == null
+                || !element.attr(elementAttribute.getName()).equals(elementAttribute.getValue()));
     }
 
     private String prepareCSSQuerySelector() {

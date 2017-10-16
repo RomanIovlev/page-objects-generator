@@ -23,7 +23,7 @@ public class Generate {
         new PageObjectsGenerator(
                 "src/test/resources/custom.json",
                 urls,
-                "D:/Work/Projects/Java/JDI Generator/page-objects-generator-tests/src/main/java/",
+                "D:/Work/Projects/Java/temp/jdi-generator-example/src/main/java/",
                 "w3c.tests")
                 .generatePageObjects();
     }

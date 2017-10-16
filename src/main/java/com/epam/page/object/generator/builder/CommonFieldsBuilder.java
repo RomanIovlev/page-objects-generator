@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.builder;
 
+import com.epam.page.object.generator.model.Pairs;
 import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.FieldSpec;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +12,8 @@ import java.util.List;
 
 import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
 import static com.squareup.javapoet.AnnotationSpec.builder;
+import static java.lang.String.format;
+import static java.lang.String.valueOf;
 
 public class CommonFieldsBuilder implements IFieldsBuilder {
     public Class elementClass;
@@ -33,37 +36,13 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
     }
 
     private String createXPathSelector(SearchRule searchRule, String element) {
-        StringBuilder xPathSelector = new StringBuilder();
-        xPathSelector.append("//").append(searchRule.tag).append("[");
-
-        appendClassesToXPath(searchRule, xPathSelector);
-        appendAttributesToXPath(searchRule, xPathSelector);
-
-        if ("text".equals(searchRule.requiredAttribute))
-            xPathSelector.append("text()");
-        else
-            xPathSelector.append("@").append(searchRule.requiredAttribute);
-
-        xPathSelector.append("='").append(element).append("']");
-
-        return xPathSelector.toString();
+        Pairs classes = new Pairs(searchRule.classes,
+            key -> "@class", value -> value);
+        Pairs attrs = Pairs.merge(searchRule.attributes, classes);
+        attrs.add(searchRule.requiredAttribute.equals("text")
+            ? "text()"
+            : "@" + searchRule.requiredAttribute, element);
+        return format("//%s[%s]", searchRule.tag, attrs.printAsXpath());
     }
 
-    private void appendClassesToXPath(SearchRule searchRule, StringBuilder xPathSelector) {
-        if (!searchRule.classesAreEmpty()) {
-            xPathSelector.append("@class='");
-            searchRule.classes.forEach(clazz -> xPathSelector.append(clazz).append(" "));
-            xPathSelector.deleteCharAt(xPathSelector.lastIndexOf(" "));
-            xPathSelector.append("' and ");
-        }
-    }
-
-    private void appendAttributesToXPath(SearchRule searchRule, StringBuilder xPathSelector) {
-        if (!searchRule.attributesAreEmpty()) {
-            searchRule.attributes.forEach(elementAttribute -> xPathSelector.append("@")
-                .append(elementAttribute.getAttributeName())
-                .append("='").append(elementAttribute.getAttributeValue()).append("'")
-                .append(" and "));
-        }
-    }
 }

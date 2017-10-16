@@ -1,7 +1,5 @@
 package com.epam.page.object.generator.builder;
 
-import java.util.function.Function;
-
 /**
  * Created by Roman_Iovlev on 10/16/2017.
  */
