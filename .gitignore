@@ -1,0 +1,20 @@
+*.iml
+.idea/
+target/
+*.zip
+*.exe
+.logs/
+*.xlsx
+bin/
+obj/
+.vs/
+__pycache__/
+packages/
+*.nupkg
+test-output/
+
+# ReSharper files
+*.DotSettings.user
+*.bat
+*.txt
+*.user
