@@ -13,6 +13,7 @@ import static java.util.Arrays.asList;
  */
 public class Generate {
 
+    // EXAMPLE
     public static void main(String[] args) throws ParseException, IOException, URISyntaxException {
         List<String> urls = asList(
             "https://www.w3schools.com/html/html_forms.asp",
@@ -20,10 +21,10 @@ public class Generate {
             "https://www.w3schools.com/html/html_form_input_types.asp");
 
         new PageObjectsGenerator(
-                "src/test/resources/valid.json",
+                "src/test/resources/custom.json",
                 urls,
                 "D:/Work/Projects/Java/JDI Generator/page-objects-generator-tests/src/main/java/",
-                "w3c.test")
+                "w3c.tests")
                 .generatePageObjects();
     }
 }

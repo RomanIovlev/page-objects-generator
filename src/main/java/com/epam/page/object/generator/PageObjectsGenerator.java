@@ -32,8 +32,7 @@ import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.*;
 
 public class PageObjectsGenerator {
-
-	private String packageName = "com.epam.jdi.site.epam.pages";
+	private String packageName;
 
 	private JSONIntoRuleParser parser;
 	private List<String> urls;
@@ -41,6 +40,12 @@ public class PageObjectsGenerator {
 
 	private Map<String, IFieldsBuilder> builders = new HashMap<>();
 
+	public PageObjectsGenerator(List<String> urls, String outputDir) {
+		this("src/main/java/com/epam/page/object/generator/jdiRules.json", urls, outputDir, "test.project");
+	}
+	public PageObjectsGenerator(String jsonPath, List<String> urls, String outputDir) {
+		this(jsonPath, urls, outputDir, "test.project");
+	}
 	public PageObjectsGenerator(String jsonPath, List<String> urls, String outputDir, String packageName) {
 		builders.put("button", new CommonFieldsBuilder(Button.class));
 		builders.put("text", new CommonFieldsBuilder(Text.class));
