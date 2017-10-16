@@ -16,12 +16,15 @@ public class Generate {
     // EXAMPLE
     public static void main(String[] args) throws ParseException, IOException, URISyntaxException {
         List<String> urls = asList(
-            "https://www.w3schools.com/html/html_forms.asp",
-            "https://www.w3schools.com/css/default.asp",
-            "https://www.w3schools.com/html/html_form_input_types.asp");
+//            "https://www.w3schools.com/html/html_forms.asp",
+//            "https://www.w3schools.com/css/default.asp",
+//            "https://www.w3schools.com/html/html_form_input_types.asp",
+            "https://www.w3schools.com/howto/howto_js_dropdown.asp"
+        );
+
 
         new PageObjectsGenerator(
-                "src/test/resources/custom.json",
+                "src/test/resources/new.json",
                 urls,
                 "D:/Work/Projects/Java/JDI Generator/page-objects-generator-tests/src/main/java/",
                 "w3c.tests")

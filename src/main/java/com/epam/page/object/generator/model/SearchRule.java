@@ -31,7 +31,7 @@ public class SearchRule {
         classes = rules.filter(
                 key -> key.equals("class"));
         attributes = rules.filterAndMap(
-            key -> key.equals("class"),
+            key -> !(key.equals("class")),
             pair -> new ElementAttribute(pair.key, pair.value));
     }
     public List<String> getElements(String url) throws IOException {
@@ -62,7 +62,7 @@ public class SearchRule {
     }
 
     private Elements searchElementsByAttributes(Document document) {
-        return !attributesAreEmpty()
+        return attributesAreEmpty()
             ? new Elements(where(document.getAllElements(),
                 this::elementAttributesMatch))
             : document.getAllElements();

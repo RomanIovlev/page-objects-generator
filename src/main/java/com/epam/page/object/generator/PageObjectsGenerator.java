@@ -4,6 +4,7 @@ import com.epam.jdi.uitests.web.selenium.elements.common.Button;
 import com.epam.jdi.uitests.web.selenium.elements.common.CheckBox;
 import com.epam.jdi.uitests.web.selenium.elements.common.Image;
 import com.epam.jdi.uitests.web.selenium.elements.common.Text;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Dropdown;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
@@ -51,6 +52,7 @@ public class PageObjectsGenerator {
 		builders.put("text", new CommonFieldsBuilder(Text.class));
 		builders.put("checkbox", new CommonFieldsBuilder(CheckBox.class));
 		builders.put("image", new CommonFieldsBuilder(Image.class));
+		builders.put("dropdown", new CommonFieldsBuilder(Dropdown.class));
 		parser = new JSONIntoRuleParser(jsonPath, builders.keySet());
 		this.urls = urls;
 		this.outputDir = outputDir;
