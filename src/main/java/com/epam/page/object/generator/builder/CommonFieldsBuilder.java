@@ -1,33 +1,36 @@
 package com.epam.page.object.generator.builder;
 
-import com.epam.page.object.generator.model.SearchRule;
-import com.squareup.javapoet.FieldSpec;
-import org.openqa.selenium.support.FindBy;
-
-import javax.lang.model.element.Modifier;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
 import static com.squareup.javapoet.AnnotationSpec.builder;
 
+import com.epam.page.object.generator.model.SearchRule;
+import com.squareup.javapoet.FieldSpec;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.lang.model.element.Modifier;
+import org.openqa.selenium.support.FindBy;
+
 public class CommonFieldsBuilder implements IFieldsBuilder {
+
     public Class elementClass;
+
     public CommonFieldsBuilder(Class elementClass) {
         this.elementClass = elementClass;
     }
+
     public List<FieldSpec> buildField(SearchRule searchRule, String url) throws IOException {
         List<FieldSpec> abstractFields = new ArrayList<>();
         List<String> elements = searchRule.getElements(url);
 
-        for (String element : elements)
+        for (String element : elements) {
             abstractFields.add(FieldSpec.builder(elementClass, splitCamelCase(element))
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(builder(FindBy.class)
                     .addMember("xpath", "$S", createXPathSelector(searchRule, element))
                     .build())
                 .build());
+        }
 
         return abstractFields;
     }
@@ -39,10 +42,11 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
         appendClassesToXPath(searchRule, xPathSelector);
         appendAttributesToXPath(searchRule, xPathSelector);
 
-        if ("text".equals(searchRule.requiredAttribute))
+        if ("text".equals(searchRule.requiredAttribute)) {
             xPathSelector.append("text()");
-        else
+        } else {
             xPathSelector.append("@").append(searchRule.requiredAttribute);
+        }
 
         xPathSelector.append("='").append(element).append("']");
 

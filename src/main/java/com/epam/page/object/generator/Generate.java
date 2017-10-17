@@ -1,12 +1,11 @@
 package com.epam.page.object.generator;
 
-import org.json.simple.parser.ParseException;
+import static java.util.Arrays.asList;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-
-import static java.util.Arrays.asList;
+import org.json.simple.parser.ParseException;
 
 /**
  * Created by Roman_Iovlev on 10/16/2017.
@@ -21,10 +20,10 @@ public class Generate {
             "https://www.w3schools.com/html/html_form_input_types.asp");
 
         new PageObjectsGenerator(
-                "src/test/resources/custom.json",
-                urls,
-                "D:/Work/Projects/Java/JDI Generator/page-objects-generator-tests/src/main/java/",
-                "w3c.tests")
-                .generatePageObjects();
+            "src/test/resources/custom.json",
+            urls,
+            "src/main/java/",
+            "w3c.tests")
+            .generatePageObjects();
     }
 }

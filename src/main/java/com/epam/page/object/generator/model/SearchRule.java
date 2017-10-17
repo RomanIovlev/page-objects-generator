@@ -1,16 +1,17 @@
 package com.epam.page.object.generator.model;
 
+import static com.epam.commons.LinqUtils.where;
+
+import com.epam.page.object.generator.builder.StringUtils;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.List;
-
-import static com.epam.commons.LinqUtils.*;
-import static java.util.Arrays.asList;
 
 public class SearchRule {
 
@@ -19,28 +20,59 @@ public class SearchRule {
     public String requiredAttribute;
     public List<String> classes;
     public List<ElementAttribute> attributes;
+    public List<SearchRule> innerSearchRules;
+
 
     public SearchRule(JSONObject jsonObject) {
-        type = ((String) jsonObject.get("type")).toLowerCase();
+        if (jsonObject.get("type") != null) {
+            type = ((String) jsonObject.get("type")).toLowerCase();
+        }
         requiredAttribute = (String) jsonObject.get("name");
         String rulesString = (String) jsonObject.get("rules");
         Pairs rules = new Pairs(rulesString.split(";"),
-                r -> r.split("=")[0],
-                r -> r.split("=")[1]);
+            r -> r.split("=")[0],
+            r -> r.split("=")[1]);
         tag = rules.first(key -> key.equals("tag"));
         classes = rules.filter(
-                key -> key.equals("class"));
+            key -> key.equals("class"));
         attributes = rules.filterAndMap(
             key -> key.equals("class"),
             pair -> new ElementAttribute(pair.key, pair.value));
+
+        if (hasInnerRules(jsonObject)) {
+            parseInnerRules(jsonObject.get("FindBy") != null ? (JSONArray) jsonObject.get("FindBy")
+                : (JSONArray) jsonObject
+                    .get("J" + StringUtils.firstLetterUp(type)));
+        }
     }
+
+    private void parseInnerRules(JSONArray jsonArray) {
+        List<SearchRule> innerSearchRules = new ArrayList<>();
+
+        for (Object innerSearchRule : jsonArray) {
+            innerSearchRules.add(new SearchRule((JSONObject) innerSearchRule));
+        }
+
+        this.innerSearchRules = innerSearchRules;
+    }
+
+    private boolean hasInnerRules(JSONObject jsonObject) {
+        if (jsonObject.get("type") != null && (jsonObject
+            .get("J" + StringUtils.firstLetterUp(type)) != null
+            || jsonObject.get("FindBy") != null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public List<String> getElements(String url) throws IOException {
         return requiredAttribute.equals("text")
             ? extractElementsFromWebSite(url).eachText()
             : extractElementsFromWebSite(url).eachAttr(requiredAttribute);
     }
 
-	public Elements extractElementsFromWebSite(String url) throws IOException {
+    public Elements extractElementsFromWebSite(String url) throws IOException {
         Elements searchResults = new Elements();
         Document document = getURLConnection(url);
         searchResults.addAll(searchElementsByTag(document));
@@ -57,20 +89,22 @@ public class SearchRule {
 
     private Elements searchElementsByClasses(Document document) {
         return !classesAreEmpty()
-                ? document.select(prepareCSSQuerySelector())
-                : document.getAllElements();
+            ? document.select(prepareCSSQuerySelector())
+            : document.getAllElements();
     }
 
     private Elements searchElementsByAttributes(Document document) {
         return !attributesAreEmpty()
             ? new Elements(where(document.getAllElements(),
-                this::elementAttributesMatch))
+            this::elementAttributesMatch))
             : document.getAllElements();
     }
 
     private boolean elementAttributesMatch(Element element) {
-        return attributes.stream().noneMatch(elementAttribute -> element.attr(elementAttribute.getAttributeName()) == null
-                || !element.attr(elementAttribute.getAttributeName()).equals(elementAttribute.getAttributeValue()));
+        return attributes.stream()
+            .noneMatch(elementAttribute -> element.attr(elementAttribute.getAttributeName()) == null
+                || !element.attr(elementAttribute.getAttributeName())
+                .equals(elementAttribute.getAttributeValue()));
     }
 
     private String prepareCSSQuerySelector() {
