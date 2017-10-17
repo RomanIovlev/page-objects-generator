@@ -1,0 +1,16 @@
+{
+  "elements": [
+    {
+      "type": "Dropdown",
+      "name": "text",
+      "rules": "tag=div;class=dropdown",
+      "JDropdown": [
+        {
+          "type": "button",
+          "name": "text",
+          "rules": "tag=button;class=dropbtn"
+        }
+      ]
+    }
+  ]
+}
