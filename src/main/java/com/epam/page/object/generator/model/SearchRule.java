@@ -46,6 +46,29 @@ public class SearchRule {
         }
     }
 
+    public List<String> extractRequiredValuesFromFoundElements(String url) throws IOException {
+        return requiredAttribute.equals("text")
+            ? extractElementsFromWebSite(url).eachText()
+            : extractElementsFromWebSite(url).eachAttr(requiredAttribute);
+    }
+
+    private Elements extractElementsFromWebSite(String url) throws IOException {
+        Elements searchResults = new Elements();
+        Document document = getURLConnection(url);
+        searchResults.addAll(searchElementsByTag(document));
+        searchResults.retainAll(searchElementsByClasses(document));
+        searchResults.retainAll(searchElementsByAttributes(document));
+        return new Elements(searchResults);
+    }
+
+    public boolean classesAreEmpty() {
+        return classes == null || classes.isEmpty();
+    }
+
+    public boolean attributesAreEmpty() {
+        return attributes == null || attributes.isEmpty();
+    }
+
     private void parseInnerRules(JSONArray jsonArray) {
         List<SearchRule> innerSearchRules = new ArrayList<>();
 
@@ -64,21 +87,6 @@ public class SearchRule {
         } else {
             return false;
         }
-    }
-
-    public List<String> getElements(String url) throws IOException {
-        return requiredAttribute.equals("text")
-            ? extractElementsFromWebSite(url).eachText()
-            : extractElementsFromWebSite(url).eachAttr(requiredAttribute);
-    }
-
-    public Elements extractElementsFromWebSite(String url) throws IOException {
-        Elements searchResults = new Elements();
-        Document document = getURLConnection(url);
-        searchResults.addAll(searchElementsByTag(document));
-        searchResults.retainAll(searchElementsByClasses(document));
-        searchResults.retainAll(searchElementsByAttributes(document));
-        return new Elements(searchResults);
     }
 
     private Elements searchElementsByTag(Document document) {
@@ -115,14 +123,6 @@ public class SearchRule {
 
     private Document getURLConnection(String url) throws IOException {
         return Jsoup.connect(url).get();
-    }
-
-    public boolean classesAreEmpty() {
-        return classes == null || classes.isEmpty();
-    }
-
-    public boolean attributesAreEmpty() {
-        return attributes == null || attributes.isEmpty();
     }
 
 }
