@@ -28,23 +28,11 @@
         {
             "type":"Dropdown",
             "name": "text",
-            "rules":"tag=input;type=dropdown",
+            "rules":"tag=div;type=dropdown",
             "JDropdown": [
                 {
                     "name":"root",
                     "rules":"tag=button"
-                },
-                {
-                    "name":"value",
-                    "rules":"class=filter-option"
-                },
-                {
-                    "name":"expand",
-                    "rules":"class=someclass"
-                },
-                {
-                    "name":"list",
-                    "rules":"tag=li"
                 }
             ]
         }
