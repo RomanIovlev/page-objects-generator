@@ -59,6 +59,7 @@ public class PageObjectsGenerator {
 	private JSONIntoRuleParser parser;
 	private List<String> urls;
 	private String outputDir;
+	private boolean forceGenerateFile;
 
 	private Map<String, IFieldsBuilder> builders = new HashMap<>();
 
@@ -103,6 +104,7 @@ public class PageObjectsGenerator {
 
 	public PageObjectsGenerator addBuilder(String name, IFieldsBuilder builder) {
 		builders.put(name.toLowerCase(), builder);
+		parser.getSupportedTypes().add(name.toLowerCase());
 		return this;
 	}
 
@@ -114,7 +116,9 @@ public class PageObjectsGenerator {
      * @throws ParseException If JSON has invalid format.
      * @throws URISyntaxException If urls could not be parsed as URI references.
      */
-    public void generatePageObjects() throws IOException, ParseException, URISyntaxException {
+    public void generatePageObjects(boolean forceGenerateFile) throws IOException, ParseException, URISyntaxException {
+    	this.forceGenerateFile = forceGenerateFile;
+
         List<SearchRule> searchRules = parser.getRulesFromJSON();
         List<FieldSpec> siteClassFields = new ArrayList<>();
 
@@ -202,4 +206,7 @@ public class PageObjectsGenerator {
 		return document.title();
 	}
 
+	public boolean isForceGenerateFile() {
+		return forceGenerateFile;
+	}
 }

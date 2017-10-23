@@ -2,22 +2,19 @@ package com.epam.page.object.generator.parser;
 
 import static java.lang.String.format;
 
+import com.epam.page.object.generator.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.parser.ParseException;
 
 public class JSONIntoRuleParser {
 
     private String jsonPath;
-    private final JSONParser parser = new JSONParser();
     private Set<String> supportedTypes;
 
     public JSONIntoRuleParser(String jsonPath, Set<String> supportedTypes) {
@@ -33,22 +30,31 @@ public class JSONIntoRuleParser {
      * @throws ParseException If JSON has invalid format.
      */
     public List<SearchRule> getRulesFromJSON() throws IOException, ParseException {
-        try (BufferedReader br = new BufferedReader(new FileReader(jsonPath))) {
-            JSONObject fullJSON = (JSONObject) parser.parse(br);
-            JSONArray elements = (JSONArray) fullJSON.get("elements");
-            List<SearchRule> searchRules = new ArrayList<>();
-            for (Object element : elements) {
-                JSONObject jsonObject = (JSONObject) element;
-                String type = ((String) jsonObject.get("type")).toLowerCase();
-                if (supportedTypes.contains(type)) {
-                    searchRules.add(new SearchRule(jsonObject));
-                } else {
-                    throw new ParseException(1,
-                        format("Unsupported element type '%s'. Supported types: %s",
-                            type, supportedTypes));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        SearchRulesContainer elements = objectMapper.readValue(new File(jsonPath),SearchRulesContainer.class);
+
+        List<SearchRule> searchRules = elements.getSearchRules();
+
+        for (Iterator<SearchRule> iter = searchRules.iterator(); iter.hasNext();) {
+            String type = iter.next().getType().toLowerCase();
+            if (!supportedTypes.contains(type)) {
+                iter.remove();
+
+                throw new ParseException(1,
+                    format("Unsupported element type '%s'. Supported types: %s",
+                        type, supportedTypes));
                 }
             }
+
             return searchRules;
         }
+
+    public Set<String> getSupportedTypes() {
+        return supportedTypes;
+    }
+
+    public void setSupportedTypes(Set<String> supportedTypes) {
+        this.supportedTypes = supportedTypes;
     }
 }

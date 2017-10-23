@@ -25,6 +25,6 @@ public class Generate {
             urls,
             "src/main/java/",
             "w3c.tests")
-            .generatePageObjects();
+            .generatePageObjects(true);
     }
 }

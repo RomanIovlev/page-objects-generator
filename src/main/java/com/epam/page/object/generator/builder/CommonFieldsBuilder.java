@@ -93,37 +93,37 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
     private AnnotationSpec buildComplexAnnotation(SearchRule searchRule) {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec
             .builder(annotationMap.get(searchRule.type));
-
-        for (SearchRule innerSearchRule : searchRule.innerSearchRules) {
-            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-
-            if (innerSearchRule.tag != null) {
-                innerAnnotation.addMember("tagName", "$S", innerSearchRule.tag);
-                annotationBuilder
-                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
-            }
-
-            for (String clazz : innerSearchRule.classes) {
-                innerAnnotation
-                    .addMember("class", "$S", clazz);
-                annotationBuilder
-                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
-            }
-
-            for (ElementAttribute attribute : innerSearchRule.attributes) {
-                innerAnnotation
-                    .addMember(attribute.getAttributeName(), "$S", attribute.getAttributeValue());
-                annotationBuilder
-                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
-            }
-        }
+//
+//        for (SearchRule innerSearchRule : searchRule.innerSearchRules) {
+//            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
+//
+//            if (innerSearchRule.tag != null) {
+//                innerAnnotation.addMember("tagName", "$S", innerSearchRule.tag);
+//                annotationBuilder
+//                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
+//            }
+//
+//            for (String clazz : innerSearchRule.classes) {
+//                innerAnnotation
+//                    .addMember("class", "$S", clazz);
+//                annotationBuilder
+//                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
+//            }
+//
+//            for (ElementAttribute attribute : innerSearchRule.attributes) {
+//                innerAnnotation
+//                    .addMember(attribute.getAttributeName(), "$S", attribute.getAttributeValue());
+//                annotationBuilder
+//                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
+//            }
+//        }
 
         return annotationBuilder.build();
     }
 
     private String createXPathSelector(SearchRule searchRule, String element) {
         StringBuilder xPathSelector = new StringBuilder();
-        xPathSelector.append("//").append(searchRule.tag).append("[");
+//        xPathSelector.append("//").append(searchRule.tag).append("[");
 
         appendClassesToXPath(searchRule, xPathSelector);
         appendAttributesToXPath(searchRule, xPathSelector);
@@ -140,20 +140,20 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
     }
 
     private void appendClassesToXPath(SearchRule searchRule, StringBuilder xPathSelector) {
-        if (!searchRule.classesAreEmpty()) {
-            xPathSelector.append("@class='");
-            searchRule.classes.forEach(clazz -> xPathSelector.append(clazz).append(" "));
-            xPathSelector.deleteCharAt(xPathSelector.lastIndexOf(" "));
-            xPathSelector.append("' and ");
-        }
+//        if (!searchRule.classesAreEmpty()) {
+//            xPathSelector.append("@class='");
+//            searchRule.classes.forEach(clazz -> xPathSelector.append(clazz).append(" "));
+//            xPathSelector.deleteCharAt(xPathSelector.lastIndexOf(" "));
+//            xPathSelector.append("' and ");
+//        }
     }
 
     private void appendAttributesToXPath(SearchRule searchRule, StringBuilder xPathSelector) {
-        if (!searchRule.attributesAreEmpty()) {
-            searchRule.attributes.forEach(elementAttribute -> xPathSelector.append("@")
-                .append(elementAttribute.getAttributeName())
-                .append("='").append(elementAttribute.getAttributeValue()).append("'")
-                .append(" and "));
-        }
+//        if (!searchRule.attributesAreEmpty()) {
+//            searchRule.attributes.forEach(elementAttribute -> xPathSelector.append("@")
+//                .append(elementAttribute.getAttributeName())
+//                .append("='").append(elementAttribute.getAttributeValue()).append("'")
+//                .append(" and "));
+//        }
     }
 }
