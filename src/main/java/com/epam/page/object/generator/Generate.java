@@ -8,9 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 
-/**
- * Created by Roman_Iovlev on 10/16/2017.
- */
 public class Generate {
 
     // EXAMPLE
@@ -24,7 +21,7 @@ public class Generate {
 
 
         new PageObjectsGenerator(
-            "src/test/resources/custom.json",
+            "src/test/resources/new.json",
             urls,
             "src/main/java/",
             "w3c.tests")

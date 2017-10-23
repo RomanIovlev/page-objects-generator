@@ -49,11 +49,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
-import static com.epam.page.object.generator.builder.StringUtils.firstLetterDown;
-import static com.epam.page.object.generator.builder.StringUtils.firstLetterUp;
-import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
-import static javax.lang.model.element.Modifier.*;
 
 public class PageObjectsGenerator {
 	private String packageName;
@@ -165,7 +163,7 @@ public class PageObjectsGenerator {
         List<FieldSpec> fields = new ArrayList<>();
 
 		for (SearchRule searchRule : searchRules)
-			fields.addAll(builders.get(searchRule.type).buildField(searchRule, url));
+			fields.addAll(builders.get(searchRule.getType()).buildField(searchRule, url));
 
 		TypeSpec pageClass = TypeSpec.classBuilder(pageClassName)
 			.addModifiers(PUBLIC)
