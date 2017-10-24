@@ -82,16 +82,27 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
     }
 
     private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
-        return AnnotationSpec.builder(annotationMap.get(searchRule.getType()))
-            .addMember("css", "$S", searchRule.getCss() + appendSearchResult(searchRule, elementsRequiredValue))
-            .build();
+		if (searchRule.getCss() != null) {
+			return AnnotationSpec.builder(annotationMap.get(searchRule.getType().toLowerCase()))
+				.addMember("css", "$S", resultCssSelector(searchRule, elementsRequiredValue))
+				.build();
+		} else {
+			return AnnotationSpec.builder(annotationMap.get(searchRule.getType().toLowerCase()))
+				.addMember("xpath", "$S", resultXpathSelector(searchRule, elementsRequiredValue))
+				.build();
+		}
     }
 
-    private String appendSearchResult(SearchRule searchRule, String elementsRequiredValue) {
-    	return "[" + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+    private String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
+		return searchRule.getCss() + "[" + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
 	}
 
-    private AnnotationSpec buildComplexAnnotation(SearchRule searchRule) {
+	private String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
+		return searchRule.getXpath().replace("]", "") + " and @"
+			+ searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+	}
+
+	private AnnotationSpec buildComplexAnnotation(SearchRule searchRule) {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec
             .builder(annotationMap.get(searchRule.getType().toLowerCase()));
 //

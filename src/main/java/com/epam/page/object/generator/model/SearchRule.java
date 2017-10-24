@@ -33,17 +33,17 @@ public class SearchRule {
     }
 
     public List<String> extractRequiredValuesFromFoundElements(String url) throws IOException {
-        if (css == null) {
-        	return Xsoup.compile(xpath).evaluate(getURLConnection(url)).list();
-		} else {
-			return requiredAttribute.equals("text")
-				? extractElementsFromWebSiteByCss(url).eachText()
-				: extractElementsFromWebSiteByCss(url).eachAttr(requiredAttribute);
-		}
+		return requiredAttribute.equals("text")
+			? extractElementsFromWebSite(url).eachText()
+			: extractElementsFromWebSite(url).eachAttr(requiredAttribute);
     }
 
-    private Elements extractElementsFromWebSiteByCss(String url) throws IOException {
+    private Elements extractElementsFromWebSite(String url) throws IOException {
         Document document = getURLConnection(url);
+
+		if (css == null) {
+			return Xsoup.compile(xpath).evaluate(document).getElements();
+		}
 
         return document.select(css);
     }
