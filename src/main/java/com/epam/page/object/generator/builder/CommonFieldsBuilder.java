@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.lang.model.element.Modifier;
 import org.openqa.selenium.support.FindBy;
 
@@ -24,7 +25,7 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
 
     public Class elementClass;
 
-    Map<String, Class> annotationMap = new HashMap<>();
+    static Map<String, Class> annotationMap = new HashMap<>();
 
     {
         annotationMap.put("button", FindBy.class);
@@ -155,5 +156,9 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
 //                .append("='").append(elementAttribute.getAttributeValue()).append("'")
 //                .append(" and "));
 //        }
+    }
+
+    public static Set<String> getSupportedTypes() {
+        return annotationMap.keySet();
     }
 }

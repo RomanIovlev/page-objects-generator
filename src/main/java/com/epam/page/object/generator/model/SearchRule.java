@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.model;
 
-import com.epam.page.object.generator.builder.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,10 @@ import org.jsoup.select.Elements;
 public class SearchRule {
 
     public String type;
+
     @JsonProperty("name")
     public String requiredAttribute;
+
     public String css;
     public String xpath;
     public List<SearchRule> innerSearchRules;

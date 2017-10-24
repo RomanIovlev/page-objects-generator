@@ -4,6 +4,7 @@ import static java.lang.String.format;
 
 import com.epam.page.object.generator.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.SearchRuleValidator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,28 +31,16 @@ public class JSONIntoRuleParser {
      * @throws IOException If can't open JSON file.
      * @throws ParseException If JSON has invalid format.
      */
-    public List<SearchRule> getRulesFromJSON() throws IOException, ParseException {
+    public List<SearchRule> getRulesFromJSON() throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        SearchRulesContainer elements = objectMapper.readValue(new File(jsonPath),SearchRulesContainer.class);
+        SearchRulesContainer elements = objectMapper
+            .readValue(new File(jsonPath), SearchRulesContainer.class);
 
         List<SearchRule> searchRules = elements.getSearchRules();
-        List<SearchRule> searchRulesWithException = new ArrayList<>();
-        for (Iterator<SearchRule> iter = searchRules.iterator(); iter.hasNext();) {
-            SearchRule searchRule = iter.next();
-            String type = searchRule.getType().toLowerCase();
-            if (!supportedTypes.contains(type)) {
-                searchRulesWithException.add(searchRule);
-                iter.remove();
 
-                throw new ParseException(1,
-                    format("Unsupported element type '%s'. Supported types: %s",
-                        type, supportedTypes));
-                }
-            }
-
-            return searchRules;
-        }
+        return searchRules;
+    }
 
     public Set<String> getSupportedTypes() {
         return supportedTypes;
