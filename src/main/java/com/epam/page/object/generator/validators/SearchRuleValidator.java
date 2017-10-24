@@ -4,6 +4,7 @@ import static java.lang.String.format;
 
 import com.epam.page.object.generator.builder.CommonFieldsBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
+import com.epam.page.object.generator.errors.ValidationException.ErrorCode;
 import com.epam.page.object.generator.model.SearchRule;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +18,7 @@ public class SearchRuleValidator {
     public static void validate(List<SearchRule> rules) throws ValidationException {
         List<SearchRule> incorrectRules = new ArrayList<>();
 
-        for (Iterator<SearchRule> iter = rules.iterator(); iter.hasNext(); ) {
+        for (Iterator<SearchRule> iter = rules.iterator(); iter.hasNext();) {
             SearchRule rule = iter.next();
 
             if (!supportedTypes.contains(rule.getType().toLowerCase())) {
@@ -26,7 +27,7 @@ public class SearchRuleValidator {
             }
         }
         if (!incorrectRules.isEmpty()) {
-            throw new ValidationException(
+            throw new ValidationException(ErrorCode.NOT_SPECIFIED,
                 format("Unsupported elements. Supported types: %s. Incorrect rules:%s",
                     supportedTypes, incorrectRules));
         }

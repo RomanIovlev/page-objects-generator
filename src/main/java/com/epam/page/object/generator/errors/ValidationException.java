@@ -1,14 +1,25 @@
 package com.epam.page.object.generator.errors;
 
 public class ValidationException extends Exception {
+
+    public static enum ErrorCode {
+        NOT_SPECIFIED,
+        INCORRECT_RULES_PRESENT,
+        INCORRECT_LOCATOR
+    }
+    public ErrorCode errorCode;
+
     public ValidationException() {
+        errorCode = ErrorCode.NOT_SPECIFIED;
     }
 
-    public ValidationException(String msg) {
+    public ValidationException(ErrorCode errorCode, String msg) {
         super(msg);
+        this.errorCode = errorCode;
     }
 
-    public ValidationException(String msg, Throwable cause) {
+    public ValidationException(ErrorCode errorCode, String msg, Throwable cause) {
         super(msg, cause);
+        this.errorCode = errorCode;
     }
 }
