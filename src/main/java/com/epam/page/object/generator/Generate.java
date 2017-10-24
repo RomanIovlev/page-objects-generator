@@ -2,19 +2,12 @@ package com.epam.page.object.generator;
 
 import com.epam.page.object.generator.errors.ValidationException;
 import java.util.ArrayList;
-import org.json.simple.parser.ParseException;
-
-import static java.util.Arrays.asList;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 
 public class Generate {
 
-    public static void main(String[] args)
-        throws ParseException, IOException, URISyntaxException, ValidationException {
+    public static void main(String[] args) throws ValidationException {
        /* List<String> urls = asList(
 //            "https://www.w3schools.com/html/html_forms.asp",
 //            "https://www.w3schools.com/css/default.asp",
@@ -39,7 +32,8 @@ public class Generate {
         System.out.println("AFTER: " + strings);
     }
 
-    public void validate(List<String> strings) {
+    private void validate(List<String> strings) {
         strings.removeIf(s -> s.equals("hell"));
     }
+
 }

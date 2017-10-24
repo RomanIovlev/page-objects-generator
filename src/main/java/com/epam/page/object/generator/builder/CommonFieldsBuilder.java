@@ -1,14 +1,12 @@
 package com.epam.page.object.generator.builder;
 
 import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
-import static com.squareup.javapoet.AnnotationSpec.builder;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JComboBox;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropList;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JMenu;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JTable;
-import com.epam.page.object.generator.model.ElementAttribute;
 import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
@@ -23,9 +21,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class CommonFieldsBuilder implements IFieldsBuilder {
 
-    public Class elementClass;
+    private Class elementClass;
 
-    static Map<String, Class> annotationMap = new HashMap<>();
+    private static Map<String, Class> annotationMap = new HashMap<>();
 
     {
         annotationMap.put("button", FindBy.class);
@@ -57,13 +55,12 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
         this.elementClass = elementClass;
     }
 
+    @Override
     public List<FieldSpec> buildField(SearchRule searchRule, String url) throws IOException {
         List<FieldSpec> abstractFields = new ArrayList<>();
-        List<String> elementsRequiredValues = searchRule
-            .extractRequiredValuesFromFoundElements(url);
+        List<String> elementsRequiredValues = searchRule.extractRequiredValuesFromFoundElements(url);
 
         for (String elementsRequiredValue : elementsRequiredValues) {
-
             FieldSpec.Builder field = FieldSpec
                 .builder(elementClass, splitCamelCase(elementsRequiredValue))
                 .addModifiers(Modifier.PUBLIC);
@@ -77,23 +74,26 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
     }
 
     private AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue) {
-        if (searchRule.innerSearchRules == null) {
+        if (searchRule.getInnerSearchRules() == null) {
             return buildCommonAnnotation(searchRule, elementsRequiredValue);
         } else {
             return buildComplexAnnotation(searchRule);
         }
     }
 
-    private AnnotationSpec buildCommonAnnotation(SearchRule searchRule,
-        String elementsRequiredValue) {
-        return builder(annotationMap.get(searchRule.type))
-            .addMember("xpath", "$S", createXPathSelector(searchRule, elementsRequiredValue))
+    private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
+        return AnnotationSpec.builder(annotationMap.get(searchRule.getType()))
+            .addMember("css", "$S", searchRule.getCss() + appendSearchResult(searchRule, elementsRequiredValue))
             .build();
     }
 
+    private String appendSearchResult(SearchRule searchRule, String elementsRequiredValue) {
+    	return "[" + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+	}
+
     private AnnotationSpec buildComplexAnnotation(SearchRule searchRule) {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec
-            .builder(annotationMap.get(searchRule.type.toLowerCase()));
+            .builder(annotationMap.get(searchRule.getType().toLowerCase()));
 //
 //        for (SearchRule innerSearchRule : searchRule.innerSearchRules) {
 //            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
@@ -122,43 +122,8 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
         return annotationBuilder.build();
     }
 
-    private String createXPathSelector(SearchRule searchRule, String element) {
-        StringBuilder xPathSelector = new StringBuilder();
-//        xPathSelector.append("//").append(searchRule.tag).append("[");
-
-        appendClassesToXPath(searchRule, xPathSelector);
-        appendAttributesToXPath(searchRule, xPathSelector);
-
-        if ("text".equals(searchRule.requiredAttribute)) {
-            xPathSelector.append("text()");
-        } else {
-            xPathSelector.append("@").append(searchRule.requiredAttribute);
-        }
-
-        xPathSelector.append("='").append(element).append("']");
-
-        return xPathSelector.toString();
-    }
-
-    private void appendClassesToXPath(SearchRule searchRule, StringBuilder xPathSelector) {
-//        if (!searchRule.classesAreEmpty()) {
-//            xPathSelector.append("@class='");
-//            searchRule.classes.forEach(clazz -> xPathSelector.append(clazz).append(" "));
-//            xPathSelector.deleteCharAt(xPathSelector.lastIndexOf(" "));
-//            xPathSelector.append("' and ");
-//        }
-    }
-
-    private void appendAttributesToXPath(SearchRule searchRule, StringBuilder xPathSelector) {
-//        if (!searchRule.attributesAreEmpty()) {
-//            searchRule.attributes.forEach(elementAttribute -> xPathSelector.append("@")
-//                .append(elementAttribute.getAttributeName())
-//                .append("='").append(elementAttribute.getAttributeValue()).append("'")
-//                .append(" and "));
-//        }
-    }
-
     public static Set<String> getSupportedTypes() {
         return annotationMap.keySet();
     }
+
 }

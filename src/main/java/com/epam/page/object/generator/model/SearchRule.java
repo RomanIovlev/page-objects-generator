@@ -1,27 +1,27 @@
 package com.epam.page.object.generator.model;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import us.codecraft.xsoup.Xsoup;
 
 public class SearchRule {
 
-    public String type;
+    private String type;
 
     @JsonProperty("name")
-    public String requiredAttribute;
+    private String requiredAttribute;
 
-    public String css;
-    public String xpath;
-    public List<SearchRule> innerSearchRules;
+	private String css;
+	private String xpath;
+	private List<SearchRule> innerSearchRules;
 
-    public SearchRule() { }
+    public SearchRule() {
+
+	}
 
     public SearchRule(String type, String requiredAttribute, String css, String xpath,
         List<SearchRule> innerSearchRules) {
@@ -33,69 +33,66 @@ public class SearchRule {
     }
 
     public List<String> extractRequiredValuesFromFoundElements(String url) throws IOException {
-        return requiredAttribute.equals("text")
-            ? extractElementsFromWebSite(url).eachText()
-            : extractElementsFromWebSite(url).eachAttr(requiredAttribute);
-    }
-
-    private Elements extractElementsFromWebSite(String url) throws IOException {
-        Elements searchResults = new Elements();
-        Document document = getURLConnection(url);
         if (css == null) {
-//       TODO get elements by xpath
-        } else {
-            searchResults.addAll(document.select(css));
-        }
-        return new Elements(searchResults);
+        	return Xsoup.compile(xpath).evaluate(getURLConnection(url)).list();
+		} else {
+			return requiredAttribute.equals("text")
+				? extractElementsFromWebSiteByCss(url).eachText()
+				: extractElementsFromWebSiteByCss(url).eachAttr(requiredAttribute);
+		}
     }
 
-    private boolean hasInnerRules(JSONObject jsonObject) {
+    private Elements extractElementsFromWebSiteByCss(String url) throws IOException {
+        Document document = getURLConnection(url);
 
-        return !innerSearchRules.isEmpty();
+        return document.select(css);
+    }
+
+    private boolean hasInnerRules() {
+		return !innerSearchRules.isEmpty();
     }
 
     private Document getURLConnection(String url) throws IOException {
         return Jsoup.connect(url).get();
     }
 
-    public String getType() {
-        return type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public String getRequiredAttribute() {
-        return requiredAttribute;
-    }
+	public String getRequiredAttribute() {
+		return requiredAttribute;
+	}
 
-    public void setRequiredAttribute(String requiredAttribute) {
-        this.requiredAttribute = requiredAttribute;
-    }
+	public void setRequiredAttribute(String requiredAttribute) {
+		this.requiredAttribute = requiredAttribute;
+	}
 
-    public String getCss() {
-        return css;
-    }
+	public String getCss() {
+		return css;
+	}
 
-    public void setCss(String css) {
-        this.css = css;
-    }
+	public void setCss(String css) {
+		this.css = css;
+	}
 
-    public String getXpath() {
-        return xpath;
-    }
+	public String getXpath() {
+		return xpath;
+	}
 
-    public void setXpath(String xpath) {
-        this.xpath = xpath;
-    }
+	public void setXpath(String xpath) {
+		this.xpath = xpath;
+	}
 
-    public List<SearchRule> getInnerSearchRules() {
-        return innerSearchRules;
-    }
+	public List<SearchRule> getInnerSearchRules() {
+		return innerSearchRules;
+	}
 
-    public void setInnerSearchRules(
-        List<SearchRule> innerSearchRules) {
+	public void setInnerSearchRules(List<SearchRule> innerSearchRules) {
         this.innerSearchRules = innerSearchRules;
     }
 
@@ -109,4 +106,5 @@ public class SearchRule {
             ", innerSearchRules=" + innerSearchRules +
             '}';
     }
+
 }

@@ -15,12 +15,12 @@ import com.epam.jdi.uitests.web.selenium.elements.common.Input;
 import com.epam.jdi.uitests.web.selenium.elements.common.Label;
 import com.epam.jdi.uitests.web.selenium.elements.common.Link;
 import com.epam.jdi.uitests.web.selenium.elements.common.Text;
-import com.epam.jdi.uitests.web.selenium.elements.complex.Dropdown;
 import com.epam.jdi.uitests.web.selenium.elements.common.TextArea;
 import com.epam.jdi.uitests.web.selenium.elements.common.TextField;
 import com.epam.jdi.uitests.web.selenium.elements.complex.CheckList;
 import com.epam.jdi.uitests.web.selenium.elements.complex.ComboBox;
 import com.epam.jdi.uitests.web.selenium.elements.complex.DropList;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Dropdown;
 import com.epam.jdi.uitests.web.selenium.elements.complex.Elements;
 import com.epam.jdi.uitests.web.selenium.elements.complex.RadioButtons;
 import com.epam.jdi.uitests.web.selenium.elements.complex.Selector;
@@ -31,58 +31,42 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-
 import com.epam.page.object.generator.builder.CommonFieldsBuilder;
 import com.epam.page.object.generator.builder.IFieldsBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JSONIntoRuleParser;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
-
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
-
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 
 public class PageObjectsGenerator {
 
-    private String packageName;
-
     private JSONIntoRuleParser parser;
+
     private List<String> urls;
     private String outputDir;
+	private String packageName;
 
     private boolean forceGenerateFile;
 
     private Map<String, IFieldsBuilder> builders = new HashMap<>();
 
-    public PageObjectsGenerator(List<String> urls, String outputDir) {
-        this("src/main/java/com/epam/page/object/generator/jdiRules.json", urls, outputDir,
-            "test.project");
-    }
-
-    public PageObjectsGenerator(String jsonPath, List<String> urls, String outputDir) {
-        this(jsonPath, urls, outputDir, "test.project");
-    }
-
-    public PageObjectsGenerator(String jsonPath, List<String> urls, String outputDir,
-        String packageName) {
+    public PageObjectsGenerator(String jsonPath, List<String> urls, String outputDir, String packageName) {
         builders.put("button", new CommonFieldsBuilder(Button.class));
         builders.put("text", new CommonFieldsBuilder(Text.class));
         builders.put("checkbox", new CommonFieldsBuilder(CheckBox.class));
@@ -114,6 +98,7 @@ public class PageObjectsGenerator {
     public PageObjectsGenerator addBuilder(String name, IFieldsBuilder builder) {
         builders.put(name.toLowerCase(), builder);
         parser.getSupportedTypes().add(name.toLowerCase());
+
         return this;
     }
 
@@ -122,18 +107,15 @@ public class PageObjectsGenerator {
      * .json file.
      *
      * @throws IOException If .json file could not be opened or written to .java file.
-     * @throws ParseException If JSON has invalid format.
      * @throws URISyntaxException If urls could not be parsed as URI references.
      */
-    public void generatePageObjects(boolean forceGenerateFile)
-        throws IOException, URISyntaxException, ValidationException {
+    public void generatePageObjects(boolean forceGenerateFile) throws IOException, URISyntaxException, ValidationException {
         this.forceGenerateFile = forceGenerateFile;
 
         List<SearchRule> searchRules = parser.getRulesFromJSON();
 
         try {
             SearchRuleValidator.validate(searchRules);
-
         } catch (ValidationException ex) {
             if (forceGenerateFile) {
                 generateJavaFiles(searchRules);
@@ -141,10 +123,10 @@ public class PageObjectsGenerator {
             throw ex;
         }
 
-
+		generateJavaFiles(searchRules);
     }
-    private void generateJavaFiles(List<SearchRule> searchRules)
-        throws IOException, URISyntaxException {
+
+    private void generateJavaFiles(List<SearchRule> searchRules) throws IOException, URISyntaxException {
         List<FieldSpec> siteClassFields = new ArrayList<>();
 
         for (String url : urls) {
@@ -187,8 +169,7 @@ public class PageObjectsGenerator {
      * @return generated page class.
      * @throws IOException If can't write java file.
      */
-    private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules,
-        String url) throws IOException {
+    private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules, String url) throws IOException {
         List<FieldSpec> fields = new ArrayList<>();
 
         for (SearchRule searchRule : searchRules) {
@@ -234,6 +215,5 @@ public class PageObjectsGenerator {
         Document document = Jsoup.connect(url).get();
         return document.title();
     }
-
 
 }

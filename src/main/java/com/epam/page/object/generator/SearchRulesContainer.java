@@ -23,4 +23,5 @@ public class SearchRulesContainer {
             "searchRules=" + searchRules +
             '}';
     }
+
 }

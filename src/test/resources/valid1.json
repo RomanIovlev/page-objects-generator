@@ -1,0 +1,9 @@
+{
+  "elements": [
+    {
+      "type":"button",
+      "name": "name",
+      "css": "input[type=submit]"
+    }
+  ]
+}

@@ -7,7 +7,8 @@ public class ValidationException extends Exception {
         INCORRECT_RULES_PRESENT,
         INCORRECT_LOCATOR
     }
-    public ErrorCode errorCode;
+
+    private ErrorCode errorCode;
 
     public ValidationException() {
         errorCode = ErrorCode.NOT_SPECIFIED;
@@ -22,4 +23,5 @@ public class ValidationException extends Exception {
         super(msg, cause);
         this.errorCode = errorCode;
     }
+
 }

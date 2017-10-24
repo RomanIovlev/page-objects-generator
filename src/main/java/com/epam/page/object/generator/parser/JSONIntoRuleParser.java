@@ -1,14 +1,9 @@
 package com.epam.page.object.generator.parser;
 
-import static java.lang.String.format;
-
 import com.epam.page.object.generator.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.validators.SearchRuleValidator;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -32,14 +27,10 @@ public class JSONIntoRuleParser {
      * @throws ParseException If JSON has invalid format.
      */
     public List<SearchRule> getRulesFromJSON() throws IOException {
-
         ObjectMapper objectMapper = new ObjectMapper();
-        SearchRulesContainer elements = objectMapper
-            .readValue(new File(jsonPath), SearchRulesContainer.class);
+        SearchRulesContainer elements = objectMapper.readValue(new File(jsonPath), SearchRulesContainer.class);
 
-        List<SearchRule> searchRules = elements.getSearchRules();
-
-        return searchRules;
+        return elements.getSearchRules();
     }
 
     public Set<String> getSupportedTypes() {
@@ -49,4 +40,5 @@ public class JSONIntoRuleParser {
     public void setSupportedTypes(Set<String> supportedTypes) {
         this.supportedTypes = supportedTypes;
     }
+
 }
