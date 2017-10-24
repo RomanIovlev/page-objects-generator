@@ -6,6 +6,7 @@ import com.epam.page.object.generator.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -35,10 +36,12 @@ public class JSONIntoRuleParser {
         SearchRulesContainer elements = objectMapper.readValue(new File(jsonPath),SearchRulesContainer.class);
 
         List<SearchRule> searchRules = elements.getSearchRules();
-
+        List<SearchRule> searchRulesWithException = new ArrayList<>();
         for (Iterator<SearchRule> iter = searchRules.iterator(); iter.hasNext();) {
-            String type = iter.next().getType().toLowerCase();
+            SearchRule searchRule = iter.next();
+            String type = searchRule.getType().toLowerCase();
             if (!supportedTypes.contains(type)) {
+                searchRulesWithException.add(searchRule);
                 iter.remove();
 
                 throw new ParseException(1,

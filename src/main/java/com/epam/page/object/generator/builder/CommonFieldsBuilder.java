@@ -92,7 +92,7 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
 
     private AnnotationSpec buildComplexAnnotation(SearchRule searchRule) {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec
-            .builder(annotationMap.get(searchRule.type));
+            .builder(annotationMap.get(searchRule.type.toLowerCase()));
 //
 //        for (SearchRule innerSearchRule : searchRule.innerSearchRules) {
 //            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);

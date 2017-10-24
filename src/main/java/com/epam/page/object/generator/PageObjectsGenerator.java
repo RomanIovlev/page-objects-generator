@@ -167,7 +167,7 @@ public class PageObjectsGenerator {
         List<FieldSpec> fields = new ArrayList<>();
 
 		for (SearchRule searchRule : searchRules)
-			fields.addAll(builders.get(searchRule.getType()).buildField(searchRule, url));
+			fields.addAll(builders.get(searchRule.getType().toLowerCase()).buildField(searchRule, url));
 
 		TypeSpec pageClass = TypeSpec.classBuilder(pageClassName)
 			.addModifiers(PUBLIC)

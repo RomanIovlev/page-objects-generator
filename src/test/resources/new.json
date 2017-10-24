@@ -3,16 +3,12 @@
     {
       "type": "Dropdown",
       "name": "text",
-      "rules": {
-        "css": "div.dropdown"
-      },
-      "JDropdown": [
+      "css": "div.dropdown",
+      "innerSearchRules": [
         {
           "type": "button",
           "name": "text",
-          "rules": {
             "css": "button.dropbtn"
-          }
         }
       ]
     }
