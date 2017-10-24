@@ -7,11 +7,23 @@ import org.testng.annotations.Test;
 public class PageObjectsGeneratorTest {
 
 	@Test
-	public void test1() throws Exception {
-		String validJSONPath = "src/test/resources/valid1.json";
+	public void buttonTest() throws Exception {
+		String validJSONPath = "src/test/resources/button.json";
 		List<String> urls = new ArrayList<>();
 
 		urls.add("https://www.google.ru");
+
+		PageObjectsGenerator pageObjectGenerator = new PageObjectsGenerator(validJSONPath, urls, "src/test/resources/", "test");
+
+		pageObjectGenerator.generatePageObjects(true);
+	}
+
+	@Test
+	public void dropDownTest() throws Exception {
+		String validJSONPath = "src/test/resources/dropdown.json";
+		List<String> urls = new ArrayList<>();
+
+		urls.add("https://www.w3schools.com/howto/howto_js_dropdown.asp");
 
 		PageObjectsGenerator pageObjectGenerator = new PageObjectsGenerator(validJSONPath, urls, "src/test/resources/", "test");
 

@@ -2,7 +2,7 @@ package com.epam.page.object.generator.validators;
 
 import static java.lang.String.format;
 
-import com.epam.page.object.generator.builder.CommonFieldsBuilder;
+import com.epam.page.object.generator.builder.FieldsBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.ValidationException.ErrorCode;
 import com.epam.page.object.generator.model.SearchRule;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class SearchRuleValidator {
 
-    private static Set<String> supportedTypes = CommonFieldsBuilder.getSupportedTypes();
+    private static Set<String> supportedTypes = FieldsBuilder.getSupportedTypes();
 
     public static void validate(List<SearchRule> rules) throws ValidationException {
         List<SearchRule> incorrectRules = new ArrayList<>();

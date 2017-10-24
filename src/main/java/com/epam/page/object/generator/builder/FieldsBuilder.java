@@ -19,7 +19,7 @@ import java.util.Set;
 import javax.lang.model.element.Modifier;
 import org.openqa.selenium.support.FindBy;
 
-public class CommonFieldsBuilder implements IFieldsBuilder {
+public class FieldsBuilder implements IFieldsBuilder {
 
     private Class elementClass;
 
@@ -51,7 +51,7 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
         annotationMap.put("elements", FindBy.class);
     }
 
-    public CommonFieldsBuilder(Class elementClass) {
+    public FieldsBuilder(Class elementClass) {
         this.elementClass = elementClass;
     }
 
@@ -65,7 +65,7 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
                 .builder(elementClass, splitCamelCase(elementsRequiredValue))
                 .addModifiers(Modifier.PUBLIC);
 
-            field.addAnnotation(buildAnnotation(searchRule, elementsRequiredValue));
+            field.addAnnotation(buildAnnotation(searchRule, elementsRequiredValue, url));
 
             abstractFields.add(field.build());
         }
@@ -73,11 +73,11 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
         return abstractFields;
     }
 
-    private AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue) {
+    private AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue, String url) throws IOException {
         if (searchRule.getInnerSearchRules() == null) {
             return buildCommonAnnotation(searchRule, elementsRequiredValue);
         } else {
-            return buildComplexAnnotation(searchRule);
+            return buildComplexAnnotation(searchRule, url);
         }
     }
 
@@ -98,37 +98,36 @@ public class CommonFieldsBuilder implements IFieldsBuilder {
 	}
 
 	private String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
-		return searchRule.getXpath().replace("]", "") + " and @"
-			+ searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+		String xpathWithoutCloseBracket= searchRule.getXpath().replace("]", "");
+
+    	if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+			return xpathWithoutCloseBracket + " and @"
+				+ searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+		} else {
+			return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
+		}
 	}
 
-	private AnnotationSpec buildComplexAnnotation(SearchRule searchRule) {
-        AnnotationSpec.Builder annotationBuilder = AnnotationSpec
-            .builder(annotationMap.get(searchRule.getType().toLowerCase()));
-//
-//        for (SearchRule innerSearchRule : searchRule.innerSearchRules) {
-//            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-//
-//            if (innerSearchRule.tag != null) {
-//                innerAnnotation.addMember("tagName", "$S", innerSearchRule.tag);
-//                annotationBuilder
-//                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
-//            }
-//
-//            for (String clazz : innerSearchRule.classes) {
-//                innerAnnotation
-//                    .addMember("class", "$S", clazz);
-//                annotationBuilder
-//                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
-//            }
-//
-//            for (ElementAttribute attribute : innerSearchRule.attributes) {
-//                innerAnnotation
-//                    .addMember(attribute.getAttributeName(), "$S", attribute.getAttributeValue());
-//                annotationBuilder
-//                    .addMember(innerSearchRule.requiredAttribute, "$L", innerAnnotation.build());
-//            }
-//        }
+	private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url) throws IOException {
+        AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationMap.get(searchRule.getType().toLowerCase()));
+		String searchAttribute = searchRule.getRequiredAttribute();
+
+        for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
+			String annotationElementName = innerSearchRule.getRequiredAttribute();
+
+			innerSearchRule.setRequiredAttribute(searchAttribute);
+
+            if (innerSearchRule.getCss() != null) {
+                innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
+					innerSearchRule.extractRequiredValuesFromFoundElements(url).get(0)));
+            } else {
+				innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
+					innerSearchRule.extractRequiredValuesFromFoundElements(url).get(0)));
+			}
+
+			annotationBuilder.addMember(annotationElementName, "$L", innerAnnotation.build());
+		}
 
         return annotationBuilder.build();
     }

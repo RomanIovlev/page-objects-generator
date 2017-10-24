@@ -7,8 +7,8 @@
       "innerSearchRules": [
         {
           "type": "button",
-          "name": "text",
-            "css": "button.dropbtn"
+          "name": "root",
+          "xpath": "//button[@class='dropbtn']"
         }
       ]
     }
