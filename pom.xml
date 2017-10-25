@@ -64,7 +64,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>LATEST</version>
+				<version>RELEASE</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>

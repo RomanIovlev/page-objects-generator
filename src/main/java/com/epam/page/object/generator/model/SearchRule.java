@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.model;
 
+import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import java.io.IOException;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -19,9 +20,7 @@ public class SearchRule {
 	private String xpath;
 	private List<SearchRule> innerSearchRules;
 
-    public SearchRule() {
-
-	}
+    public SearchRule() {}
 
     public SearchRule(String type, String requiredAttribute, String css, String xpath,
         List<SearchRule> innerSearchRules) {
@@ -32,13 +31,26 @@ public class SearchRule {
         this.innerSearchRules = innerSearchRules;
     }
 
-    public List<String> extractRequiredValuesFromFoundElements(String url) throws IOException {
-		return requiredAttribute.equals("text")
-			? extractElementsFromWebSite(url).eachText()
-			: extractElementsFromWebSite(url).eachAttr(requiredAttribute);
+    public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
+    	Elements elements = extractElementsFromWebSite(url);
+
+		List<String> result = requiredAttribute.equals("text")
+			? elements.eachText()
+			: elements.eachAttr(requiredAttribute);
+
+
+
+//		StringBuilder builder = new StringBuilder("Elements: ");
+//		elements.forEach(element -> builder.append(element.cssSelector()).append('\n'));
+//
+//		if (elements.size() > 1) {
+//			throw new NotUniqueSelectorsException(builder.toString());
+//		}
+
+		return result;
     }
 
-    private Elements extractElementsFromWebSite(String url) throws IOException {
+    public Elements extractElementsFromWebSite(String url) throws IOException {
         Document document = getURLConnection(url);
 
 		if (css == null) {
@@ -46,10 +58,6 @@ public class SearchRule {
 		}
 
         return document.select(css);
-    }
-
-    private boolean hasInnerRules() {
-		return !innerSearchRules.isEmpty();
     }
 
     private Document getURLConnection(String url) throws IOException {

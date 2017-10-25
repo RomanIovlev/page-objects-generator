@@ -15,7 +15,7 @@ public class PageObjectsGeneratorTest {
 
 		PageObjectsGenerator pageObjectGenerator = new PageObjectsGenerator(validJSONPath, urls, "src/test/resources/", "test");
 
-		pageObjectGenerator.generatePageObjects(true);
+		pageObjectGenerator.generatePageObjects();
 	}
 
 	@Test
@@ -25,9 +25,13 @@ public class PageObjectsGeneratorTest {
 
 		urls.add("https://www.w3schools.com/howto/howto_js_dropdown.asp");
 
-		PageObjectsGenerator pageObjectGenerator = new PageObjectsGenerator(validJSONPath, urls, "src/test/resources/", "test");
+		PageObjectsGenerator pageObjectGenerator = new PageObjectsGenerator(validJSONPath, urls,
+			"src/test/resources/", "test");
 
-		pageObjectGenerator.generatePageObjects(true);
+		pageObjectGenerator.setCheckLocatorsUniqueness(true);
+		pageObjectGenerator.setForceGenerateFile(false);
+
+		pageObjectGenerator.generatePageObjects();
 	}
 
 }

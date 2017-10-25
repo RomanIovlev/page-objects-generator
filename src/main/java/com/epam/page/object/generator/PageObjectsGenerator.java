@@ -63,6 +63,7 @@ public class PageObjectsGenerator {
 	private String packageName;
 
     private boolean forceGenerateFile;
+    private boolean checkLocatorsUniqueness;
 
     private Map<String, IFieldsBuilder> builders = new HashMap<>();
 
@@ -102,6 +103,14 @@ public class PageObjectsGenerator {
         return this;
     }
 
+    public void setCheckLocatorsUniqueness(boolean checkLocatorsUniqueness) {
+        this.checkLocatorsUniqueness = checkLocatorsUniqueness;
+    }
+
+    public void setForceGenerateFile(boolean forceGenerateFile) {
+        this.forceGenerateFile = forceGenerateFile;
+    }
+
     /**
      * Generates .java file with all HTML-elements found on the web-site by rules given by user in
      * .json file.
@@ -109,9 +118,7 @@ public class PageObjectsGenerator {
      * @throws IOException If .json file could not be opened or written to .java file.
      * @throws URISyntaxException If urls could not be parsed as URI references.
      */
-    public void generatePageObjects(boolean forceGenerateFile) throws IOException, URISyntaxException, ValidationException {
-        this.forceGenerateFile = forceGenerateFile;
-
+    public void generatePageObjects() throws IOException, URISyntaxException, ValidationException {
         List<SearchRule> searchRules = parser.getRulesFromJSON();
 
         try {
@@ -171,6 +178,10 @@ public class PageObjectsGenerator {
      */
     private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules, String url) throws IOException {
         List<FieldSpec> fields = new ArrayList<>();
+
+        if (checkLocatorsUniqueness) {
+            SearchRuleValidator.checkLocatorUniquenessExceptions(searchRules, url);
+        }
 
         for (SearchRule searchRule : searchRules) {
             fields.addAll(

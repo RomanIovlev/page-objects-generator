@@ -58,7 +58,7 @@ public class FieldsBuilder implements IFieldsBuilder {
     @Override
     public List<FieldSpec> buildField(SearchRule searchRule, String url) throws IOException {
         List<FieldSpec> abstractFields = new ArrayList<>();
-        List<String> elementsRequiredValues = searchRule.extractRequiredValuesFromFoundElements(url);
+        List<String> elementsRequiredValues = searchRule.getRequiredValueFromFoundElement(url);
 
         for (String elementsRequiredValue : elementsRequiredValues) {
             FieldSpec.Builder field = FieldSpec
@@ -120,10 +120,10 @@ public class FieldsBuilder implements IFieldsBuilder {
 
             if (innerSearchRule.getCss() != null) {
                 innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
-					innerSearchRule.extractRequiredValuesFromFoundElements(url).get(0)));
+					innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
             } else {
 				innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
-					innerSearchRule.extractRequiredValuesFromFoundElements(url).get(0)));
+					innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
 			}
 
 			annotationBuilder.addMember(annotationElementName, "$L", innerAnnotation.build());
