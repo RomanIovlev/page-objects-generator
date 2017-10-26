@@ -1,58 +1,24 @@
 package com.epam.page.object.generator.builder;
 
-import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JComboBox;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropList;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JMenu;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JTable;
 import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.lang.model.element.Modifier;
 import org.openqa.selenium.support.FindBy;
 
 public class FieldsBuilder implements IFieldsBuilder {
 
     private Class elementClass;
+	private Class annotationClass;
 
-    private static Map<String, Class> annotationMap = new HashMap<>();
-
-    {
-        annotationMap.put("button", FindBy.class);
-        annotationMap.put("checkbox", FindBy.class);
-        annotationMap.put("datepicker", FindBy.class);
-        annotationMap.put("fileinput", FindBy.class);
-        annotationMap.put("image", FindBy.class);
-        annotationMap.put("input", FindBy.class);
-        annotationMap.put("label", FindBy.class);
-        annotationMap.put("link", FindBy.class);
-        annotationMap.put("text", FindBy.class);
-        annotationMap.put("textarea", FindBy.class);
-        annotationMap.put("textfield", FindBy.class);
-
-        annotationMap.put("menu", JMenu.class);
-        annotationMap.put("radiobuttons", FindBy.class);
-        annotationMap.put("selector", FindBy.class);
-        annotationMap.put("tabs", FindBy.class);
-        annotationMap.put("textlist", FindBy.class);
-        annotationMap.put("table", JTable.class);
-        annotationMap.put("checklist", FindBy.class);
-        annotationMap.put("combobox", JComboBox.class);
-        annotationMap.put("dropdown", JDropdown.class);
-        annotationMap.put("droplist", JDropList.class);
-        annotationMap.put("elements", FindBy.class);
-    }
-
-    public FieldsBuilder(Class elementClass) {
+    public FieldsBuilder(Class elementClass, Class annotationClass) {
         this.elementClass = elementClass;
+		this.annotationClass = annotationClass;
     }
 
     @Override
@@ -83,11 +49,11 @@ public class FieldsBuilder implements IFieldsBuilder {
 
     private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
 		if (searchRule.getCss() != null) {
-			return AnnotationSpec.builder(annotationMap.get(searchRule.getType().toLowerCase()))
+			return AnnotationSpec.builder(annotationClass)
 				.addMember("css", "$S", resultCssSelector(searchRule, elementsRequiredValue))
 				.build();
 		} else {
-			return AnnotationSpec.builder(annotationMap.get(searchRule.getType().toLowerCase()))
+			return AnnotationSpec.builder(annotationClass)
 				.addMember("xpath", "$S", resultXpathSelector(searchRule, elementsRequiredValue))
 				.build();
 		}
@@ -109,7 +75,7 @@ public class FieldsBuilder implements IFieldsBuilder {
 	}
 
 	private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url) throws IOException {
-        AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationMap.get(searchRule.getType().toLowerCase()));
+        AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
 		String searchAttribute = searchRule.getRequiredAttribute();
 
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
@@ -130,10 +96,6 @@ public class FieldsBuilder implements IFieldsBuilder {
 		}
 
         return annotationBuilder.build();
-    }
-
-    public static Set<String> getSupportedTypes() {
-        return annotationMap.keySet();
     }
 
 }
