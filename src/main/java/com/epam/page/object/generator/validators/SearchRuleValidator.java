@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.validators;
 
-import static java.lang.String.format;
 
 import com.epam.page.object.generator.builder.FieldsBuilder;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
@@ -12,14 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
-    private static Set<String> supportedTypes = FieldsBuilder.getSupportedTypes();
+    private  Set<String> supportedTypes = FieldsBuilder.getSupportedTypes();
 
-    public static void validate(List<SearchRule> rules) throws ValidationException {
+    public  void validate(List<SearchRule> rules) throws ValidationException {
 
         boolean exceptionOccured = false;
         String msg = "";
@@ -55,11 +53,11 @@ public class SearchRuleValidator {
         }
     }
 
-    private static boolean ruleTypeSupported(SearchRule rule) {
+    private  boolean ruleTypeSupported(SearchRule rule) {
         return supportedTypes.contains(rule.getType().toLowerCase());
     }
 
-    private static boolean ruleHasCorrectLocator(SearchRule rule) {
+    private  boolean ruleHasCorrectLocator(SearchRule rule) {
         if (rule.getCss() == null & rule.getXpath() == null) {
             return false;
         }
@@ -67,7 +65,7 @@ public class SearchRuleValidator {
         return true;
     }
 
-    public static void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
+    public static  void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
         throws NotUniqueSelectorsException, IOException {
         List<String> notUniqueLocators = new ArrayList<>();
 
