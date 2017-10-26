@@ -1,8 +1,8 @@
 package com.epam.page.object.generator.builder;
 
-import static com.epam.page.object.generator.builder.StringUtils.firstLetterDown;
-import static com.epam.page.object.generator.builder.StringUtils.firstLetterUp;
-import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 

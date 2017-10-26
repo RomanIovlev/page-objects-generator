@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.builder;
 
-import static com.epam.page.object.generator.builder.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.AnnotationSpec;
