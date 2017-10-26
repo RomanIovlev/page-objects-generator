@@ -1,8 +1,10 @@
 package com.epam.page.object.generator.errors;
 
-public class ValidationException extends Exception {
+public class ValidationException extends RuntimeException {
 
-    public ValidationException() {}
+    public ValidationException() {
+
+    }
 
     public ValidationException(String msg) {
         super(msg);
@@ -11,4 +13,5 @@ public class ValidationException extends Exception {
     public ValidationException(String msg, Throwable cause) {
         super(msg, cause);
     }
+
 }

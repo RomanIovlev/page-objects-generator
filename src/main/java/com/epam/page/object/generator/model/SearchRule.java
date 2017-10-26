@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.model;
 
-import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import java.io.IOException;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -11,16 +10,17 @@ import us.codecraft.xsoup.Xsoup;
 
 public class SearchRule {
 
-    private String type;
+	@JsonProperty("name")
+	private String requiredAttribute;
 
-    @JsonProperty("name")
-    private String requiredAttribute;
-
+	private String type;
 	private String css;
 	private String xpath;
 	private List<SearchRule> innerSearchRules;
 
-    public SearchRule() {}
+    public SearchRule() {
+
+	}
 
     public SearchRule(String type, String requiredAttribute, String css, String xpath,
         List<SearchRule> innerSearchRules) {
@@ -34,20 +34,9 @@ public class SearchRule {
     public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
     	Elements elements = extractElementsFromWebSite(url);
 
-		List<String> result = requiredAttribute.equals("text")
+		return requiredAttribute.equals("text")
 			? elements.eachText()
 			: elements.eachAttr(requiredAttribute);
-
-
-
-//		StringBuilder builder = new StringBuilder("Elements: ");
-//		elements.forEach(element -> builder.append(element.cssSelector()).append('\n'));
-//
-//		if (elements.size() > 1) {
-//			throw new NotUniqueSelectorsException(builder.toString());
-//		}
-
-		return result;
     }
 
     public Elements extractElementsFromWebSite(String url) throws IOException {

@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.parser;
 
-import com.epam.page.object.generator.SearchRulesContainer;
+import com.epam.page.object.generator.containers.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.File;
 import java.io.IOException;

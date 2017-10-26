@@ -1,4 +1,4 @@
-package com.epam.page.object.generator;
+package com.epam.page.object.generator.writer;
 
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class JavaFileWriter {
+
 	private String outputDir;
 
 	public JavaFileWriter(String outputDir) {
@@ -15,7 +16,9 @@ public class JavaFileWriter {
 
 	public void write(String packageName, TypeSpec siteClass) throws IOException {
 		JavaFile javaFile = JavaFile.builder(packageName + ".site", siteClass)
-				.build();
+			.build();
+
 		javaFile.writeTo(Paths.get(outputDir));
 	}
+
 }
