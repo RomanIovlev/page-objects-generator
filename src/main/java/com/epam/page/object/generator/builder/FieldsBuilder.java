@@ -98,4 +98,11 @@ public class FieldsBuilder implements IFieldsBuilder {
         return annotationBuilder.build();
     }
 
+    public Class getElementClass() {
+        return elementClass;
+    }
+
+    public Class getAnnotationClass() {
+        return annotationClass;
+    }
 }

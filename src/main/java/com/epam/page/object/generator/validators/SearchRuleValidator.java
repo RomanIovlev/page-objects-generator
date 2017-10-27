@@ -9,18 +9,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
-	private BuildersContainer buildersContainer;
+	private Set<String> supportedTypes;
 
-	public SearchRuleValidator(BuildersContainer buildersContainer) {
-		this.buildersContainer = buildersContainer;
+    private boolean checkLocatorsUniqueness;
+
+	public SearchRuleValidator(Set<String> supportedTypes) {
+		this.supportedTypes = supportedTypes;
 	}
 
-	public void validate(List<SearchRule> rules) {
+	public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
+
+	    if (checkLocatorsUniqueness) {
+            for (String url : urls) {
+                checkLocatorUniquenessExceptions(rules, url);
+            }
+        }
+
         boolean exceptionOccurred = false;
         String msg = "";
 
@@ -37,7 +47,7 @@ public class SearchRuleValidator {
                 continue;
             }
 
-            if(!ruleHasCorrectLocator(rule)) {
+            if(!ruleHasLocator(rule)) {
                 exceptionOccurred = true;
                 noLocatorRules.add(rule);
                 iterator.remove();
@@ -57,15 +67,19 @@ public class SearchRuleValidator {
         }
     }
 
-    private boolean ruleTypeSupported(SearchRule rule) {
-        return buildersContainer.getSupportedTypes().contains(rule.getType().toLowerCase());
+    public void setCheckLocatorsUniqueness(boolean checkLocatorsUniqueness) {
+        this.checkLocatorsUniqueness = checkLocatorsUniqueness;
     }
 
-    private boolean ruleHasCorrectLocator(SearchRule rule) {
+    private boolean ruleTypeSupported(SearchRule rule) {
+        return supportedTypes.contains(rule.getType().toLowerCase());
+    }
+
+    private boolean ruleHasLocator(SearchRule rule) {
         return !(rule.getCss() == null && rule.getXpath() == null);
     }
 
-    public void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
+    private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
         throws NotUniqueSelectorsException, IOException {
         List<String> notUniqueLocators = new ArrayList<>();
 

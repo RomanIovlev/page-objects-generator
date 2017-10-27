@@ -28,18 +28,16 @@ import org.jsoup.nodes.Document;
 
 public class SiteFieldSpecBuilder {
 
-	private boolean checkLocatorsUniqueness;
+
 	private String packageName;
 	private BuildersContainer buildersContainer;
 	private JavaFileWriter fileWriter;
 	private SearchRuleValidator validator;
 
-	public SiteFieldSpecBuilder(boolean checkLocatorsUniqueness,
-	                            String packageName,
+	public SiteFieldSpecBuilder(String packageName,
 	                            BuildersContainer buildersContainer,
 	                            JavaFileWriter fileWriter,
 								SearchRuleValidator validator) {
-		this.checkLocatorsUniqueness = checkLocatorsUniqueness;
 		this.packageName = packageName;
 		this.buildersContainer = buildersContainer;
 		this.fileWriter = fileWriter;
@@ -77,10 +75,6 @@ public class SiteFieldSpecBuilder {
 	private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules, String url)
 		throws IOException {
 		List<FieldSpec> fields = new ArrayList<>();
-
-		if (checkLocatorsUniqueness) {
-			validator.checkLocatorUniquenessExceptions(searchRules, url);
-		}
 
 		for (SearchRule searchRule : searchRules) {
 			fields.addAll(buildersContainer.getBuilders().get(searchRule.getType().toLowerCase()).buildField(searchRule, url));
