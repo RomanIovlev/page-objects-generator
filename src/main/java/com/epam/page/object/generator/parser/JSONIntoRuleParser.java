@@ -12,11 +12,9 @@ import org.json.simple.parser.ParseException;
 public class JSONIntoRuleParser {
 
     private String jsonPath;
-    private Set<String> supportedTypes;
 
-    public JSONIntoRuleParser(String jsonPath, Set<String> supportedTypes) {
+    public JSONIntoRuleParser(String jsonPath) {
         this.jsonPath = jsonPath;
-        this.supportedTypes = supportedTypes;
     }
 
     /**
@@ -32,13 +30,4 @@ public class JSONIntoRuleParser {
 
         return elements.getSearchRules();
     }
-
-    public Set<String> getSupportedTypes() {
-        return supportedTypes;
-    }
-
-    public void setSupportedTypes(Set<String> supportedTypes) {
-        this.supportedTypes = supportedTypes;
-    }
-
 }

@@ -18,9 +18,7 @@ public class SearchRule {
 	private String xpath;
 	private List<SearchRule> innerSearchRules;
 
-    public SearchRule() {
-
-	}
+    public SearchRule() {}
 
     public SearchRule(String type, String requiredAttribute, String css, String xpath,
         List<SearchRule> innerSearchRules) {
