@@ -32,16 +32,13 @@ public class SiteFieldSpecBuilder {
 	private String packageName;
 	private BuildersContainer buildersContainer;
 	private JavaFileWriter fileWriter;
-	private SearchRuleValidator validator;
 
 	public SiteFieldSpecBuilder(String packageName,
 	                            BuildersContainer buildersContainer,
-	                            JavaFileWriter fileWriter,
-								SearchRuleValidator validator) {
+	                            JavaFileWriter fileWriter) {
 		this.packageName = packageName;
 		this.buildersContainer = buildersContainer;
 		this.fileWriter = fileWriter;
-		this.validator = validator;
 	}
 
 	public TypeSpec build(List<String> urls, List<SearchRule> searchRules)

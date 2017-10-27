@@ -1,5 +1,6 @@
 package com.epam.page.object.generator;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.anyList;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -64,7 +65,7 @@ public class PageObjectsGeneratorTestNew {
 	@Test(expected = ValidationException.class)
 	public void generatePageObjects_ErrorWhenValidationFailsAndNoForceGenerateFlagSet()
 			throws Exception {
-		doThrow(new ValidationException("some message")).when(validator).validate(anyList(), urls);
+		doThrow(new ValidationException("some message")).when(validator).validate(anyList(), eq(urls));
 		sut.generatePageObjects();
 		verifyZeroInteractions(fileWriter);
 	}
