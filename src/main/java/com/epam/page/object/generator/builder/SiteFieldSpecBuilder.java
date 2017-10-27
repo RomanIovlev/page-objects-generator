@@ -12,7 +12,6 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
 import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -41,9 +40,9 @@ public class SiteFieldSpecBuilder {
 		this.fileWriter = fileWriter;
 	}
 
-	public TypeSpec build(List<String> urls, List<SearchRule> searchRules)
-		throws IOException, URISyntaxException {
+	public TypeSpec build(List<String> urls, List<SearchRule> searchRules) throws IOException, URISyntaxException {
 		List<FieldSpec> siteClassFields = new ArrayList<>();
+
 		for (String url : urls) {
 			String titleName = splitCamelCase(getPageTitle(url));
 			String pageFieldName = firstLetterDown(titleName);
@@ -69,8 +68,7 @@ public class SiteFieldSpecBuilder {
 				.build();
 	}
 
-	private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules, String url)
-		throws IOException {
+	private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules, String url) throws IOException {
 		List<FieldSpec> fields = new ArrayList<>();
 
 		for (SearchRule searchRule : searchRules) {

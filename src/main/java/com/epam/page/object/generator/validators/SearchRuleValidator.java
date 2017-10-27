@@ -1,7 +1,6 @@
 package com.epam.page.object.generator.validators;
 
 
-import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
@@ -24,8 +23,7 @@ public class SearchRuleValidator {
 	}
 
 	public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
-
-	    if (checkLocatorsUniqueness) {
+        if (checkLocatorsUniqueness) {
             for (String url : urls) {
                 checkLocatorUniquenessExceptions(rules, url);
             }
@@ -79,8 +77,7 @@ public class SearchRuleValidator {
         return !(rule.getCss() == null && rule.getXpath() == null);
     }
 
-    private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
-        throws NotUniqueSelectorsException, IOException {
+    private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url) throws IOException {
         List<String> notUniqueLocators = new ArrayList<>();
 
         for (SearchRule rule : searchRules) {

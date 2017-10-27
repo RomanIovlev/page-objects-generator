@@ -105,4 +105,5 @@ public class FieldsBuilder implements IFieldsBuilder {
     public Class getAnnotationClass() {
         return annotationClass;
     }
+
 }
