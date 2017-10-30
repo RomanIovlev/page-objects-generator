@@ -88,17 +88,25 @@ public class SearchRuleValidator {
 
             if (elements.size() > 1) {
                 for (Element element : elements) {
+
+                    builder.append("tag:");
+                    builder.append(element.tagName());
+                    builder.append(',');
+
                     element.attributes().forEach(attribute -> {
                         String key = attribute.getKey();
                         builder.append(key);
                         builder.append(':');
                         String value = attribute.getValue();
                         builder.append(value);
-                        notUniqueLocators.add(builder.toString());
-                        builder.setLength(0);
-
+                        builder.append(',');
                     });
+                    if (builder.length() > 0) {
+                        builder.setLength(builder.length() - 1);
+                    }
                     builder.append('\n');
+                    notUniqueLocators.add(builder.toString());
+                    builder.setLength(0);
                 }
             }
 
