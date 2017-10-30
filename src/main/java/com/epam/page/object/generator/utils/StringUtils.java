@@ -2,30 +2,33 @@ package com.epam.page.object.generator.utils;
 
 public class StringUtils {
 
-	private StringUtils() {
+    public static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
+
+    private StringUtils() {
 
 	}
 
 	public static String splitCamelCase(String camel) {
         String trim = camel.replaceAll("[^A-Za-z0-9 ]", "").trim();
-        String result = (trim.charAt(0) + "").toLowerCase();
+        StringBuilder result = new StringBuilder((trim.charAt(0) + "").toLowerCase());
         int spaces = 0;
 
         for (int i = 1; i < trim.length(); i++) {
             String letter = trim.charAt(i) + "";
 
             if (letter.equals(" ")) {
-                if (++spaces == 3) {
-                    return result;
+                if (++spaces == MAX_NUMBER_OF_WORDS_IN_NAME) {
+
+                    return result.toString();
                 }
             } else {
-                result += trim.charAt(i - 1) == ' '
+                result.append(trim.charAt(i - 1) == ' '
                     ? letter.toUpperCase()
-                    : letter.toLowerCase();
+                    : letter.toLowerCase());
             }
         }
 
-        return result;
+        return result.toString();
     }
 
     public static String firstLetterUp(String text) {
