@@ -10,6 +10,10 @@ public class StringUtils {
 
 	public static String splitCamelCase(String camel) {
         String trim = camel.replaceAll("[^A-Za-z0-9 ]", "").trim();
+
+        if(trim.length()<1) return trim;
+
+        trim = trim.replaceAll("\\s+", " ");
         StringBuilder result = new StringBuilder((trim.charAt(0) + "").toLowerCase());
         int spaces = 0;
 
@@ -32,11 +36,15 @@ public class StringUtils {
     }
 
     public static String firstLetterUp(String text) {
-        return (text.charAt(0) + "").toUpperCase() + text.substring(1);
+        return  text.length() > 0
+                    ? (text.charAt(0) + "").toUpperCase() + text.substring(1)
+                    : text;
     }
 
     public static String firstLetterDown(String text) {
-        return (text.charAt(0) + "").toLowerCase() + text.substring(1);
+        return  text.length() > 0
+                    ?(text.charAt(0) + "").toLowerCase() + text.substring(1)
+                    : text;
     }
 
 }
