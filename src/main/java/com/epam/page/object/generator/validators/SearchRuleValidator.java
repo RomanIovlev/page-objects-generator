@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
-	private Set<String> supportedTypes;
+    private Set<String> supportedTypes;
 
     private boolean checkLocatorsUniqueness;
 
-	public SearchRuleValidator(Set<String> supportedTypes) {
-		this.supportedTypes = supportedTypes;
-	}
+    public SearchRuleValidator(Set<String> supportedTypes) {
+        this.supportedTypes = supportedTypes;
+    }
 
-	public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
+    public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
         if (checkLocatorsUniqueness) {
             for (String url : urls) {
                 checkLocatorUniquenessExceptions(rules, url);
@@ -45,7 +45,7 @@ public class SearchRuleValidator {
                 continue;
             }
 
-            if(!ruleHasLocator(rule)) {
+            if (!ruleHasLocator(rule)) {
                 exceptionOccurred = true;
                 noLocatorRules.add(rule);
                 iterator.remove();
@@ -77,21 +77,36 @@ public class SearchRuleValidator {
         return !(rule.getCss() == null && rule.getXpath() == null);
     }
 
-    private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url) throws IOException {
+    private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
+        throws IOException {
         List<String> notUniqueLocators = new ArrayList<>();
+
+        StringBuilder builder = new StringBuilder();
 
         for (SearchRule rule : searchRules) {
             Elements elements = rule.extractElementsFromWebSite(url);
 
             if (elements.size() > 1) {
-                notUniqueLocators = elements.stream()
-                    .map(e->e.cssSelector() + "\n").collect(Collectors.toList());
+                for (Element element : elements) {
+                    element.attributes().forEach(attribute -> {
+                        String key = attribute.getKey();
+                        builder.append(key);
+                        builder.append(':');
+                        String value = attribute.getValue();
+                        builder.append(value);
+                        notUniqueLocators.add(builder.toString());
+                        builder.setLength(0);
+
+                    });
+                    builder.append('\n');
+                }
+            }
+
+            if (!notUniqueLocators.isEmpty()) {
+                throw new NotUniqueSelectorsException(
+                    "Search rules with not unique locator: \n" + notUniqueLocators);
             }
         }
 
-        if (!notUniqueLocators.isEmpty()) {
-            throw new NotUniqueSelectorsException("Search rules with not unique locator: \n" + notUniqueLocators);
-        }
     }
-
 }

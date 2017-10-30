@@ -39,7 +39,7 @@ public class SearchRule {
     }
 
     public Elements extractElementsFromWebSite(String url) throws IOException {
-        Document document = getURLConnection(url);
+        Document document = getDocument(url);
 
 		if (css == null) {
 			return Xsoup.compile(xpath).evaluate(document).getElements();
@@ -48,7 +48,7 @@ public class SearchRule {
         return document.select(css);
     }
 
-    private Document getURLConnection(String url) throws IOException {
+	private Document getDocument(String url) throws IOException {
         return Jsoup.connect(url).get();
     }
 
