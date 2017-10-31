@@ -15,88 +15,31 @@ public class FieldsBuilder implements IFieldsBuilder {
 
     private Class elementClass;
 	private Class annotationClass;
+    FieldAnnotationFactory fieldAnnotationFactory = new FieldAnnotationFactory();
 
     public FieldsBuilder(Class elementClass, Class annotationClass) {
         this.elementClass = elementClass;
 		this.annotationClass = annotationClass;
+
     }
 
     @Override
-    public List<FieldSpec> buildField(SearchRule searchRule, String url) throws IOException {
+    public List<FieldSpec> buildField(SearchRule searchRule, String url ) throws IOException {
+        fieldAnnotationFactory.setAnnotationClass(annotationClass);
+
+
         List<FieldSpec> abstractFields = new ArrayList<>();
         List<String> elementsRequiredValues = searchRule.getRequiredValueFromFoundElement(url);
 
         for (String elementsRequiredValue : elementsRequiredValues) {
-            FieldSpec.Builder field = FieldSpec
-                .builder(elementClass, splitCamelCase(elementsRequiredValue))
-                .addModifiers(Modifier.PUBLIC);
+            FieldSpecFactory fieldSpecFactory = new FieldSpecFactory(elementClass,elementsRequiredValue);
+            abstractFields.add(fieldSpecFactory.build(fieldAnnotationFactory.buildAnnotation(searchRule,elementsRequiredValue,url)));
 
-            field.addAnnotation(buildAnnotation(searchRule, elementsRequiredValue, url));
-
-            abstractFields.add(field.build());
         }
 
         return abstractFields;
     }
 
-    private AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue, String url) throws IOException {
-        if (searchRule.getInnerSearchRules() == null) {
-            return buildCommonAnnotation(searchRule, elementsRequiredValue);
-        } else {
-            return buildComplexAnnotation(searchRule, url);
-        }
-    }
-
-    private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
-		if (searchRule.getCss() != null) {
-			return AnnotationSpec.builder(annotationClass)
-				.addMember("css", "$S", resultCssSelector(searchRule, elementsRequiredValue))
-				.build();
-		} else {
-			return AnnotationSpec.builder(annotationClass)
-				.addMember("xpath", "$S", resultXpathSelector(searchRule, elementsRequiredValue))
-				.build();
-		}
-    }
-
-    private String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
-		return searchRule.getCss() + "[" + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
-	}
-
-	private String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
-		String xpathWithoutCloseBracket= searchRule.getXpath().replace("]", "");
-
-    	if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
-			return xpathWithoutCloseBracket + " and @"
-				+ searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
-		} else {
-			return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
-		}
-	}
-
-	private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url) throws IOException {
-        AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
-		String searchAttribute = searchRule.getRequiredAttribute();
-
-        for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-            AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-			String annotationElementName = innerSearchRule.getRequiredAttribute();
-
-			innerSearchRule.setRequiredAttribute(searchAttribute);
-
-            if (innerSearchRule.getCss() != null) {
-                innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
-					innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-            } else {
-				innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
-					innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-			}
-
-			annotationBuilder.addMember(annotationElementName, "$L", innerAnnotation.build());
-		}
-
-        return annotationBuilder.build();
-    }
 
     public Class getElementClass() {
         return elementClass;
