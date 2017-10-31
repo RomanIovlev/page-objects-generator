@@ -15,12 +15,12 @@ public class FieldsBuilder implements IFieldsBuilder {
 
     private Class elementClass;
 	private Class annotationClass;
-    FieldAnnotationFactory fieldAnnotationFactory = new FieldAnnotationFactory();
+    FieldAnnotationFactory fieldAnnotationFactory;
 
-    public FieldsBuilder(Class elementClass, Class annotationClass) {
+    public FieldsBuilder(Class elementClass, Class annotationClass, FieldAnnotationFactory fieldAnnotationFactory) {
         this.elementClass = elementClass;
 		this.annotationClass = annotationClass;
-
+        this.fieldAnnotationFactory = fieldAnnotationFactory;
     }
 
     @Override
