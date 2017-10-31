@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class MainTest {
 
@@ -26,13 +27,15 @@ public class MainTest {
         String jsonPath = "src/test/resources/button.json";
         JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
         BuildersContainer bc = new BuildersContainer();
-        JSONIntoRuleParser parser = new JSONIntoRuleParser(new File(jsonPath));
+        JSONIntoRuleParser parser = new JSONIntoRuleParser(new File(jsonPath), new ObjectMapper());
         SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
         validator.setCheckLocatorsUniqueness(true);
 
         SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName, bc,
             fileWriter);
+
+
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter,
             siteFieldSpecBuilder, validator, urls, packageName);
 

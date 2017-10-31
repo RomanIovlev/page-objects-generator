@@ -1,4 +1,4 @@
-package com.epam.page.object.generator;
+package com.epam.page.object.generator.validators;
 
 
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;

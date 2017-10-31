@@ -10,9 +10,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class JSONIntoRuleParser {
 
     private File file;
-
-    public JSONIntoRuleParser(File file) {
+    ObjectMapper objectMapper;
+    public JSONIntoRuleParser(File file, ObjectMapper objectMapper) {
         this.file = file;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -22,7 +23,7 @@ public class JSONIntoRuleParser {
      * @throws IOException If can't open JSON file.
      */
     public List<SearchRule> getRulesFromJSON() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+
         SearchRulesContainer elements = objectMapper.readValue(file, SearchRulesContainer.class);
 
         return elements.getSearchRules();
