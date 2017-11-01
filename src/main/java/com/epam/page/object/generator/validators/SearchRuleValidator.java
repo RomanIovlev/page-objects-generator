@@ -94,6 +94,7 @@ public class SearchRuleValidator {
         StringBuilder builder = new StringBuilder();
 
         for (SearchRule rule : searchRules) {
+
             Elements elements = rule.extractElementsFromWebSite(url);
 
             if (elements.size() > 1) {
