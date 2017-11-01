@@ -3,6 +3,7 @@ package com.epam.page.object.generator.integrationalTests;
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.containers.BuildersContainer;
+import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.parser.JSONIntoRuleParser;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
@@ -63,7 +64,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_wrongType() throws IOException, URISyntaxException {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-type.json",
@@ -74,7 +75,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_forceFileGenerate() throws IOException, URISyntaxException {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-type.json",
@@ -85,7 +86,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = NotUniqueSelectorsException.class)
     public void pageObjectsGenerator_NotUniqueLocatorFoundInUniquenessModeOn() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/button.json",
