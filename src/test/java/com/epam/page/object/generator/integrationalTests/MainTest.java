@@ -30,11 +30,10 @@ public class MainTest {
         JSONIntoRuleParser parser = new JSONIntoRuleParser(new File(jsonPath), new ObjectMapper());
         SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
-        validator.setCheckLocatorsUniqueness(true);
+        validator.setCheckLocatorsUniqueness(false);
 
         SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName, bc,
             fileWriter);
-
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter,
             siteFieldSpecBuilder, validator, urls, packageName);
