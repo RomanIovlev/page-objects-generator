@@ -15,21 +15,21 @@ public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
         List<String> urls = new ArrayList<>();
 
-        urls.add("https://www.google.com");
-//        urls.add("https://www.w3schools.com/howto/howto_js_dropdown.asp");
+//        urls.add("https://www.google.com");
+        urls.add("https://www.w3schools.com/howto/howto_js_dropdown.asp");
 
         String outputDir = "src/test/resources/";
         String packageName = "test";
 
-        String jsonPath = "src/test/resources/button.json";
-//        String jsonPath = "src/test/resources/dropdown.json";
+//        String jsonPath = "src/test/resources/button.json";
+        String jsonPath = "src/test/resources/dropdown.json";
         JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
         FieldAnnotationFactory fieldAnnotationFactory = new FieldAnnotationFactory();
         BuildersContainer bc = new BuildersContainer(fieldAnnotationFactory);
         JSONIntoRuleParser parser = new JSONIntoRuleParser(jsonPath);
         SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
-        validator.setCheckLocatorsUniqueness(false);
+        validator.setCheckLocatorsUniqueness(true);
 
         SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName, bc,
             fileWriter);
