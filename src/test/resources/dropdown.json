@@ -9,11 +9,6 @@
           "type": "button",
           "name": "root",
           "xpath": "//button[@class='dropbtn']"
-        },
-        {
-          "type": "button",
-          "name": "value",
-          "xpath": "//button[@class='dropbtn']"
         }
       ]
     }
