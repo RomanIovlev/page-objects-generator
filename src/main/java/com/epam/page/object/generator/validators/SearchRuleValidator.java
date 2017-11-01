@@ -23,12 +23,6 @@ public class SearchRuleValidator {
     }
 
     public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
-        if (checkLocatorsUniqueness) {
-            for (String url : urls) {
-                checkLocatorUniquenessExceptions(rules, url);
-            }
-        }
-
         boolean exceptionOccurred = false;
         String msg = "";
 
@@ -37,6 +31,16 @@ public class SearchRuleValidator {
 
         for (Iterator<SearchRule> iterator = rules.iterator(); iterator.hasNext(); ) {
             SearchRule rule = iterator.next();
+
+            if (rule.getInnerSearchRules() != null) {
+                try {
+                    validate(rule.getInnerSearchRules(), urls);
+                } catch (ValidationException | NotUniqueSelectorsException ex) {
+                    msg = ex.getMessage();
+                    exceptionOccurred = true;
+                }
+            }
+
 
             if (!ruleTypeSupported(rule)) {
                 exceptionOccurred = true;
@@ -62,6 +66,12 @@ public class SearchRuleValidator {
 
         if (exceptionOccurred) {
             throw new ValidationException(msg);
+        }
+
+        if (checkLocatorsUniqueness) {
+            for (String url : urls) {
+                checkLocatorUniquenessExceptions(rules, url);
+            }
         }
     }
 

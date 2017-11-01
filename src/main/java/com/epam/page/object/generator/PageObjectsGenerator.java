@@ -1,6 +1,7 @@
 package com.epam.page.object.generator;
 
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
+import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JSONIntoRuleParser;
@@ -41,7 +42,7 @@ public class PageObjectsGenerator {
 
 		try {
 			validator.validate(searchRules, urls);
-		} catch (ValidationException ex) {
+		} catch (ValidationException | NotUniqueSelectorsException ex) {
 			if (forceGenerateFile) {
 				generateJavaFiles(searchRules);
 			}
