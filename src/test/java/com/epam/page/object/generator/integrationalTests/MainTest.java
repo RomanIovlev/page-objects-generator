@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.integrationalTests;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
+import com.epam.page.object.generator.builder.FieldAnnotationFactory;
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
@@ -36,7 +37,9 @@ public class MainTest {
         urls.add(url);
 
         JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
-        BuildersContainer bc = new BuildersContainer();
+
+        FieldAnnotationFactory fieldAnnotationFactory = new FieldAnnotationFactory();
+        BuildersContainer bc = new BuildersContainer(fieldAnnotationFactory);
         JSONIntoRuleParser parser = new JSONIntoRuleParser(new File(jsonPath), new ObjectMapper());
         SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
