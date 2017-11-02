@@ -1,128 +1,106 @@
 package com.epam.page.object.generator.model;
 
-import static com.epam.commons.LinqUtils.where;
-
-import com.epam.page.object.generator.builder.StringUtils;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import us.codecraft.xsoup.Xsoup;
 
 public class SearchRule {
 
-    public String type;
-    public String tag;
-    public String requiredAttribute;
-    public List<String> classes;
-    public List<ElementAttribute> attributes;
-    public List<SearchRule> innerSearchRules;
+	@JsonProperty("name")
+	private String requiredAttribute;
 
+	private String type;
+	private String css;
+	private String xpath;
+	private List<SearchRule> innerSearchRules;
 
-    public SearchRule(JSONObject jsonObject) {
-        if (jsonObject.get("type") != null) {
-            type = ((String) jsonObject.get("type")).toLowerCase();
-        }
-        requiredAttribute = (String) jsonObject.get("name");
-        String rulesString = (String) jsonObject.get("rules");
-        Pairs rules = new Pairs(rulesString.split(";"),
-            r -> r.split("=")[0],
-            r -> r.split("=")[1]);
-        tag = rules.first(key -> key.equals("tag"));
-        classes = rules.filter(
-            key -> key.equals("class"));
-        attributes = rules.filterAndMap(
-            key -> key.equals("class"),
-            pair -> new ElementAttribute(pair.key, pair.value));
+    public SearchRule() {
 
-        if (hasInnerRules(jsonObject)) {
-            parseInnerRules(jsonObject.get("FindBy") != null ? (JSONArray) jsonObject.get("FindBy")
-                : (JSONArray) jsonObject
-                    .get("J" + StringUtils.firstLetterUp(type)));
-        }
-    }
+	}
 
-    public List<String> extractRequiredValuesFromFoundElements(String url) throws IOException {
-        return requiredAttribute.equals("text")
-            ? extractElementsFromWebSite(url).eachText()
-            : extractElementsFromWebSite(url).eachAttr(requiredAttribute);
-    }
-
-    private Elements extractElementsFromWebSite(String url) throws IOException {
-        Elements searchResults = new Elements();
-        Document document = getURLConnection(url);
-        searchResults.addAll(searchElementsByTag(document));
-        searchResults.retainAll(searchElementsByClasses(document));
-        searchResults.retainAll(searchElementsByAttributes(document));
-        return new Elements(searchResults);
-    }
-
-    public boolean classesAreEmpty() {
-        return classes == null || classes.isEmpty();
-    }
-
-    public boolean attributesAreEmpty() {
-        return attributes == null || attributes.isEmpty();
-    }
-
-    private void parseInnerRules(JSONArray jsonArray) {
-        List<SearchRule> innerSearchRules = new ArrayList<>();
-
-        for (Object innerSearchRule : jsonArray) {
-            innerSearchRules.add(new SearchRule((JSONObject) innerSearchRule));
-        }
-
+    public SearchRule(String type, String requiredAttribute, String css, String xpath, List<SearchRule> innerSearchRules) {
+        this.type = type;
+        this.requiredAttribute = requiredAttribute;
+        this.css = css;
+        this.xpath = xpath;
         this.innerSearchRules = innerSearchRules;
     }
 
-    private boolean hasInnerRules(JSONObject jsonObject) {
-        if (jsonObject.get("type") != null && (jsonObject
-            .get("J" + StringUtils.firstLetterUp(type)) != null
-            || jsonObject.get("FindBy") != null)) {
-            return true;
-        } else {
-            return false;
-        }
+    public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
+    	Elements elements = extractElementsFromWebSite(url);
+
+		return requiredAttribute.equals("text")
+			? elements.eachText()
+			: elements.eachAttr(requiredAttribute);
     }
 
-    private Elements searchElementsByTag(Document document) {
-        return tag != null
-            ? document.select(tag)
-            : document.getAllElements();
+    public Elements extractElementsFromWebSite(String url) throws IOException {
+        Document document = getDocument(url);
+
+		if (css == null) {
+			return Xsoup.compile(xpath).evaluate(document).getElements();
+		}
+
+        return document.select(css);
     }
 
-    private Elements searchElementsByClasses(Document document) {
-        return !classesAreEmpty()
-            ? document.select(prepareCSSQuerySelector())
-            : document.getAllElements();
-    }
-
-    private Elements searchElementsByAttributes(Document document) {
-        return !attributesAreEmpty()
-            ? new Elements(where(document.getAllElements(),
-            this::elementAttributesMatch))
-            : document.getAllElements();
-    }
-
-    private boolean elementAttributesMatch(Element element) {
-        return attributes.stream()
-            .noneMatch(elementAttribute -> element.attr(elementAttribute.getAttributeName()) == null
-                || !element.attr(elementAttribute.getAttributeName())
-                .equals(elementAttribute.getAttributeValue()));
-    }
-
-    private String prepareCSSQuerySelector() {
-        StringBuilder selector = new StringBuilder();
-        classes.forEach(clazz -> selector.append(".").append(clazz));
-        return selector.toString();
-    }
-
-    private Document getURLConnection(String url) throws IOException {
+	private Document getDocument(String url) throws IOException {
         return Jsoup.connect(url).get();
+    }
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getRequiredAttribute() {
+		return requiredAttribute;
+	}
+
+	public void setRequiredAttribute(String requiredAttribute) {
+		this.requiredAttribute = requiredAttribute;
+	}
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
+	}
+
+	public String getXpath() {
+		return xpath;
+	}
+
+	public void setXpath(String xpath) {
+		this.xpath = xpath;
+	}
+
+	public List<SearchRule> getInnerSearchRules() {
+		return innerSearchRules;
+	}
+
+	public void setInnerSearchRules(List<SearchRule> innerSearchRules) {
+        this.innerSearchRules = innerSearchRules;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchRule{" +
+            "type='" + type + '\'' +
+            ", requiredAttribute='" + requiredAttribute + '\'' +
+            ", css='" + css + '\'' +
+            ", xpath='" + xpath + '\'' +
+            ", innerSearchRules=" + innerSearchRules +
+            '}';
     }
 
 }

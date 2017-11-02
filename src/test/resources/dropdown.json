@@ -1,0 +1,16 @@
+{
+  "elements": [
+    {
+      "type": "Dropdown",
+      "name": "text",
+      "css": "div.dropdown",
+      "innerSearchRules": [
+        {
+          "type": "button",
+          "name": "root",
+          "xpath": "//button[@class='dropbtn']"
+        }
+      ]
+    }
+  ]
+}

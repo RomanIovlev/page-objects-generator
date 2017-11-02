@@ -1,0 +1,9 @@
+{
+  "elements": [
+    {
+      "type":"Button",
+      "name": "name",
+      "xpath":"//input[@type='submit']"
+    }
+  ]
+}
