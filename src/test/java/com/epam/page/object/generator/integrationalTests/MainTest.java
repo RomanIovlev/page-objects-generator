@@ -78,7 +78,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     public void pageObjectsGenerator_forceFileGenerate() throws IOException, URISyntaxException {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-type.json",

@@ -44,9 +44,11 @@ public class FieldAnnotationFactory {
             if (innerSearchRule.getCss() != null) {
                 innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-            } else {
+            } else if (innerSearchRule.getXpath() != null) {
                 innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
+
+                //TODO fix null pointer exception when no elements was found by innerSearchRule xpath locator
             }
 
             annotationBuilder.addMember(annotationElementName, "$L", innerAnnotation.build());
