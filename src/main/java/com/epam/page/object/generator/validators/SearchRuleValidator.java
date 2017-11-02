@@ -32,16 +32,6 @@ public class SearchRuleValidator {
         for (Iterator<SearchRule> iterator = rules.iterator(); iterator.hasNext(); ) {
             SearchRule rule = iterator.next();
 
-            if (rule.getInnerSearchRules() != null) {
-                try {
-                    validate(rule.getInnerSearchRules(), urls);
-                } catch (ValidationException | NotUniqueSelectorsException ex) {
-                    msg = ex.getMessage();
-                    exceptionOccurred = true;
-                }
-            }
-
-
             if (!ruleTypeSupported(rule)) {
                 exceptionOccurred = true;
                 unsupportedTypeRules.add(rule);
@@ -54,6 +44,28 @@ public class SearchRuleValidator {
                 noLocatorRules.add(rule);
                 iterator.remove();
             }
+
+            try {
+                if (rule.getInnerSearchRules() != null) {
+                    validateComplexElement(rule, urls);
+                } else {
+                    validateCommonElement(rule, urls);
+                }
+            } catch (ValidationException | NotUniqueSelectorsException ex) {
+                msg = ex.getMessage();
+                exceptionOccurred = true;
+            }
+
+//            if (rule.getInnerSearchRules() != null) {
+//                try {
+//                  validate(rule.getInnerSearchRules(), urls);
+//                } catch (ValidationException | NotUniqueSelectorsException ex) {
+//                    msg = ex.getMessage();
+//                    exceptionOccurred = true;
+//                }
+////            }
+//
+//
         }
 
         if (!unsupportedTypeRules.isEmpty()) {
@@ -73,6 +85,14 @@ public class SearchRuleValidator {
                 checkLocatorUniquenessExceptions(rules, url);
             }
         }
+    }
+
+    private void validateCommonElement(SearchRule rule, List<String> urls) {
+
+    }
+
+    private void validateComplexElement(SearchRule rule, List<String> urls) {
+
     }
 
     public void setCheckLocatorsUniqueness(boolean checkLocatorsUniqueness) {
