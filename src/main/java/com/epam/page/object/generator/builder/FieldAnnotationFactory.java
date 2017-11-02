@@ -2,7 +2,13 @@ package com.epam.page.object.generator.builder;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.AnnotationSpec;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import org.openqa.selenium.support.FindBy;
 
 public class FieldAnnotationFactory {
@@ -19,7 +25,22 @@ public class FieldAnnotationFactory {
     }
 
     private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
-        if (searchRule.getCss() != null) {
+        if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+            if (searchRule.getCss() == null) {
+                ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+
+                try {
+                    engine.eval(new FileReader("src/main/resources/cssify.js"));
+
+                    Invocable invocable = (Invocable) engine;
+
+                    searchRule.setCss(invocable.invokeFunction("cssify", searchRule.getXpath()).toString());
+                    searchRule.setXpath(null);
+                } catch (NoSuchMethodException | ScriptException | FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return AnnotationSpec.builder(annotationClass)
                 .addMember("css", "$S", resultCssSelector(searchRule, elementsRequiredValue))
                 .build();
@@ -29,7 +50,6 @@ public class FieldAnnotationFactory {
                 .build();
         }
     }
-
 
     private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url) throws IOException {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
@@ -74,4 +94,10 @@ public class FieldAnnotationFactory {
     public void setAnnotationClass(Class annotationClass) {
         this.annotationClass = annotationClass;
     }
+
+
+
+
+
+
 }

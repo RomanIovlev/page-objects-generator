@@ -46,7 +46,6 @@ public class FieldsBuilder implements IFieldsBuilder {
         return abstractFields;
     }
 
-
     public Class getElementClass() {
         return elementClass;
     }
