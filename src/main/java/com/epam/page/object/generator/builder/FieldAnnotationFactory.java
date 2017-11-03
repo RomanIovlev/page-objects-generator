@@ -7,10 +7,11 @@ import org.openqa.selenium.support.FindBy;
 
 public class FieldAnnotationFactory {
 
-   private Class annotationClass;
-   
+    private Class annotationClass;
 
-    public AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue, String url) throws IOException {
+
+    public AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue,
+        String url) throws IOException {
         if (searchRule.getInnerSearchRules() == null) {
             return buildCommonAnnotation(searchRule, elementsRequiredValue);
         } else {
@@ -18,7 +19,8 @@ public class FieldAnnotationFactory {
         }
     }
 
-    private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
+    private AnnotationSpec buildCommonAnnotation(SearchRule searchRule,
+        String elementsRequiredValue) {
         if (searchRule.getCss() != null) {
             return AnnotationSpec.builder(annotationClass)
                 .addMember("css", "$S", resultCssSelector(searchRule, elementsRequiredValue))
@@ -31,7 +33,8 @@ public class FieldAnnotationFactory {
     }
 
 
-    private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url) throws IOException {
+    private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url)
+        throws IOException {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
         String searchAttribute = searchRule.getRequiredAttribute();
 
@@ -39,7 +42,9 @@ public class FieldAnnotationFactory {
             AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
             String annotationElementName = innerSearchRule.getRequiredAttribute();
 
-            innerSearchRule.setRequiredAttribute(searchAttribute);
+//            if (annotationClass.getMethod("root"));
+
+//            innerSearchRule.setRequiredAttribute(searchAttribute);
 
             if (innerSearchRule.getCss() != null) {
                 innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
@@ -58,18 +63,24 @@ public class FieldAnnotationFactory {
     }
 
     private String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
-        return searchRule.getCss() + "[" + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+        return searchRule.getCss() + "[" + searchRule.getRequiredAttribute() + "='"
+            + elementsRequiredValue + "']";
     }
 
     private String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
-        String xpathWithoutCloseBracket= searchRule.getXpath().replace("]", "");
+        String xpathWithoutCloseBracket = searchRule.getXpath().replace("]", "");
 
-        if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
-            return xpathWithoutCloseBracket + " and @"
-                + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
-        } else {
-            return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
+        if (searchRule.getInnerSearchRules() == null) {
+
+            if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+                return xpathWithoutCloseBracket + " and @"
+                    + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+            } else {
+                return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
+            }
         }
+
+        return "";
     }
 
 

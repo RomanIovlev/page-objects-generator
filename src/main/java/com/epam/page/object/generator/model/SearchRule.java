@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.model;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -35,6 +36,12 @@ public class SearchRule {
 
     public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
         Elements elements = extractElementsFromWebSite(url);
+
+        if (requiredAttribute == null) {
+//  TODO: Find out how to name field for found complex element
+            return Lists.newArrayList(type);
+        }
+
 
         return requiredAttribute.equals("text")
             ? elements.eachText()
