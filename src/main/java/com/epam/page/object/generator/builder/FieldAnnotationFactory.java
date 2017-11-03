@@ -13,8 +13,11 @@ import org.openqa.selenium.support.FindBy;
 
 public class FieldAnnotationFactory {
 
-   private Class annotationClass;
-   
+    private Class annotationClass;
+
+    public FieldAnnotationFactory(Class annotationClass) {
+        this.annotationClass = annotationClass;
+    }
 
     public AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue, String url) throws IOException {
         if (searchRule.getInnerSearchRules() == null) {
@@ -89,15 +92,5 @@ public class FieldAnnotationFactory {
             return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
         }
     }
-
-
-    public void setAnnotationClass(Class annotationClass) {
-        this.annotationClass = annotationClass;
-    }
-
-
-
-
-
 
 }

@@ -1,6 +1,8 @@
 package com.epam.page.object.generator.builder;
 
 
+import static org.junit.Assert.assertTrue;
+
 import com.epam.jdi.uitests.web.selenium.elements.common.Button;
 import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.AnnotationSpec;
@@ -9,21 +11,13 @@ import javax.lang.model.element.Modifier;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-
 import org.mockito.MockitoAnnotations;
 
 public class FieldSpecFactoryTest {
 
     private Class elementClass;
     private String elementsRequiredValue;
-
     private SearchRule searchRule;
-
     private FieldSpecFactory sut;
 
     @Mock
@@ -41,7 +35,8 @@ public class FieldSpecFactoryTest {
         searchRule.setType("button");
         searchRule.setXpath("//input[@type='submit']");
 
-        sut = new FieldSpecFactory(elementClass, elementsRequiredValue);
+        sut = new FieldSpecFactory(elementClass);
+        sut.setElementsRequiredValue(elementsRequiredValue);
     }
 
     @Test
