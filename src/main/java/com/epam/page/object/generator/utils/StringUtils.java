@@ -9,7 +9,7 @@ public class StringUtils {
 	}
 
 	public static String splitCamelCase(String camel) {
-        String trim = camel.replaceAll("[^A-Za-z0-9 ]", "").trim();
+        String trim = camel.replaceAll("[^\\p{L}0-9 ]", "").trim();
 
         if(trim.length()<1) return trim;
 

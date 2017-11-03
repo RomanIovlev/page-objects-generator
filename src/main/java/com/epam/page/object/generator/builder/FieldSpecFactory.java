@@ -7,13 +7,13 @@ import com.squareup.javapoet.FieldSpec;
 import javax.lang.model.element.Modifier;
 
 public class FieldSpecFactory {
+
     private Class elementClass;
+
     private String elementsRequiredValue;
 
-    FieldSpecFactory(Class elementClass, String elementsRequiredValue){
+    public FieldSpecFactory(Class elementClass) {
         this.elementClass = elementClass;
-        this.elementsRequiredValue = elementsRequiredValue;
-
     }
 
     public FieldSpec build(AnnotationSpec annotationSpec){
@@ -25,4 +25,9 @@ public class FieldSpecFactory {
 
         return field.build();
     }
+
+	public void setElementsRequiredValue(String elementsRequiredValue) {
+		this.elementsRequiredValue = elementsRequiredValue;
+	}
+
 }

@@ -68,6 +68,7 @@ public class SiteFieldSpecBuilder {
 				.build();
 	}
 
+	//move fileWriter.write(packageName, pageClass) out
 	private ClassName createPageClass(String pageClassName, List<SearchRule> searchRules, String url) throws IOException {
 		List<FieldSpec> fields = new ArrayList<>();
 

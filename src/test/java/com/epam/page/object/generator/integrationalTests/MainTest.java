@@ -1,15 +1,13 @@
 package com.epam.page.object.generator.integrationalTests;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
-import com.epam.page.object.generator.builder.FieldAnnotationFactory;
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
-import com.epam.page.object.generator.parser.JSONIntoRuleParser;
+import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.writer.JavaFileWriter;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -39,9 +37,8 @@ public class MainTest {
 
         JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
 
-        FieldAnnotationFactory fieldAnnotationFactory = new FieldAnnotationFactory();
-        BuildersContainer bc = new BuildersContainer(fieldAnnotationFactory);
-        JSONIntoRuleParser parser = new JSONIntoRuleParser(new File(jsonPath), new ObjectMapper());
+        BuildersContainer bc = new BuildersContainer();
+        JsonRuleMapper parser = new JsonRuleMapper(new File(jsonPath), new ObjectMapper());
         SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
