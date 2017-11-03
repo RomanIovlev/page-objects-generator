@@ -13,7 +13,6 @@ public class FieldSpecFactory {
     FieldSpecFactory(Class elementClass, String elementsRequiredValue){
         this.elementClass = elementClass;
         this.elementsRequiredValue = elementsRequiredValue;
-
     }
 
     public FieldSpec build(AnnotationSpec annotationSpec){
