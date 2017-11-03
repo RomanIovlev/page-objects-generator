@@ -10,7 +10,7 @@ public class FieldsBuilder implements IFieldsBuilder {
 
     private Class elementClass;
 	private Class annotationClass;
-    FieldAnnotationFactory fieldAnnotationFactory;
+    private FieldAnnotationFactory fieldAnnotationFactory;
 
     public FieldsBuilder(Class elementClass, Class annotationClass, FieldAnnotationFactory fieldAnnotationFactory) {
         this.elementClass = elementClass;
@@ -29,7 +29,6 @@ public class FieldsBuilder implements IFieldsBuilder {
         for (String elementsRequiredValue : elementsRequiredValues) {
             FieldSpecFactory fieldSpecFactory = new FieldSpecFactory(elementClass,elementsRequiredValue);
             abstractFields.add(fieldSpecFactory.build(fieldAnnotationFactory.buildAnnotation(searchRule,elementsRequiredValue,url)));
-
         }
 
         return abstractFields;
