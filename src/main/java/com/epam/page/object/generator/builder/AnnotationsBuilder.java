@@ -11,7 +11,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class AnnotationsBuilder {
 
-    public AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue, Class annotationClass) {
+    public AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue,
+                                                Class annotationClass) {
         if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
                 XpathToCssTransformer.transformRule(searchRule);
@@ -27,20 +28,19 @@ public class AnnotationsBuilder {
         }
     }
 
-    public AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url, Class annotationClass) throws IOException {
+    public AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url,
+                                                 Class annotationClass) throws IOException {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
         String searchAttribute = searchRule.getRequiredAttribute();
 
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-            String annotationElementName = innerSearchRule.getRequiredAttribute();
-
-            innerSearchRule.setRequiredAttribute(searchAttribute);
+            String annotationElementName = innerSearchRule.getTitle();
 
             if (innerSearchRule.getCss() != null) {
                 innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-            } else {
+            } else if (innerSearchRule.getXpath() != null) {
                 innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
             }

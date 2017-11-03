@@ -1,7 +1,6 @@
 {
   "elements": [
     {
-      "name": "text",
       "type": "Dropdown",
       "css": "div.dropdown",
       "innerSearchRules": [

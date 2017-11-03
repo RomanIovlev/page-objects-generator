@@ -11,8 +11,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class LocatorExistenceValidatorTest {
-	SearchRule ruleWithCss = new SearchRule("type", "req", "css", null, null);
-	SearchRule ruleNoLocator = new SearchRule("type", "req", null, null, null);
+	SearchRule ruleWithCss = new SearchRule("type", "req", null, "css", null, null);
+	SearchRule ruleNoLocator = new SearchRule("type", "req", null, null, null, null);
 	private LocatorExistenceValidator sut;
 	private ValidationContext context;
 	private List<SearchRule> rules = Lists.newArrayList();

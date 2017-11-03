@@ -11,12 +11,17 @@ public class SelectorUtils {
     public static String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
         String xpathWithoutCloseBracket= searchRule.getXpath().replace("]", "");
 
-        if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
-            return xpathWithoutCloseBracket + " and @"
-                + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
-        } else {
-            return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
+        if (searchRule.getInnerSearchRules() == null) {
+
+            if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+                return xpathWithoutCloseBracket + " and @"
+                    + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+            } else {
+                return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
+            }
         }
+
+        return "";
     }
 
 }
