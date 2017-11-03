@@ -1,5 +1,6 @@
 package com.epam.page.object.generator;
 
+import com.epam.page.object.generator.builder.PageFieldSpecBuilder;
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
@@ -16,6 +17,7 @@ public class PageObjectsGenerator {
 
 	private JsonRuleMapper parser;
 	private JavaFileWriter fileWriter;
+	private PageFieldSpecBuilder pageFieldSpecBuilder;
 	private SiteFieldSpecBuilder siteFieldSpecBuilder;
 	private SearchRuleValidator validator;
 	private List<String> urls;
@@ -25,12 +27,14 @@ public class PageObjectsGenerator {
 
 	public PageObjectsGenerator(JsonRuleMapper parser,
 	                            JavaFileWriter fileWriter,
+								PageFieldSpecBuilder pageFieldSpecBuilder,
 	                            SiteFieldSpecBuilder siteFieldSpecBuilder,
 	                            SearchRuleValidator validator,
 	                            List<String> urls,
 	                            String packageName) {
 		this.parser = parser;
 		this.fileWriter = fileWriter;
+		this.pageFieldSpecBuilder = pageFieldSpecBuilder;
 		this.siteFieldSpecBuilder = siteFieldSpecBuilder;
 		this.validator = validator;
 		this.urls = urls;
@@ -53,7 +57,11 @@ public class PageObjectsGenerator {
 	}
 
 	private void generateJavaFiles(List<SearchRule> searchRules) throws IOException, URISyntaxException {
-		fileWriter.write(packageName, siteFieldSpecBuilder.build(urls, searchRules));
+		for (String url: urls) {
+			fileWriter.write(packageName + ".page", pageFieldSpecBuilder.build(searchRules, url));
+		}
+
+		fileWriter.write(packageName + ".site", siteFieldSpecBuilder.build(urls));
 	}
 
 	public void setForceGenerateFile(boolean forceGenerateFile) {

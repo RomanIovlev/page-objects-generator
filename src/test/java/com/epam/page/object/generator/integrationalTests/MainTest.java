@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.integrationalTests;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
+import com.epam.page.object.generator.builder.PageFieldSpecBuilder;
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
@@ -20,8 +21,8 @@ import org.junit.Test;
 
 public class MainTest {
 
-    String outputDir = "src/test/resources/";
-    String packageName = "test";
+    private String outputDir = "src/test/resources/";
+	private String packageName = "test";
 
     @Before
     public void setUp() throws IOException {
@@ -42,9 +43,11 @@ public class MainTest {
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
-        SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName, bc,
-            fileWriter);
-        PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter,
+        PageFieldSpecBuilder pageFieldSpecBuilder = new PageFieldSpecBuilder(bc);
+
+        SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName);
+
+        PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter, pageFieldSpecBuilder,
             siteFieldSpecBuilder, validator, urls, packageName);
 
         pog.setForceGenerateFile(forceGenerateFiles);
