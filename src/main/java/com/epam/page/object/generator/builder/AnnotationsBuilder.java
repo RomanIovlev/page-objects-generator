@@ -4,14 +4,9 @@ import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelect
 import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.squareup.javapoet.AnnotationSpec;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import org.openqa.selenium.support.FindBy;
 
 public class AnnotationsBuilder {
@@ -19,19 +14,7 @@ public class AnnotationsBuilder {
     public AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue, Class annotationClass) {
         if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
-                //TODO extract to XpathToCssTransformer class
-                ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-
-                try {
-                    engine.eval(new FileReader("src/main/resources/cssify.js"));
-
-                    Invocable invocable = (Invocable) engine;
-
-                    searchRule.setCss(invocable.invokeFunction("cssify", searchRule.getXpath()).toString());
-                    searchRule.setXpath(null);
-                } catch (NoSuchMethodException | ScriptException | FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                XpathToCssTransformer.transformRule(searchRule);
             }
 
             return AnnotationSpec.builder(annotationClass)
