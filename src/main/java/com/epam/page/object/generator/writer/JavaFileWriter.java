@@ -15,7 +15,7 @@ public class JavaFileWriter {
 	}
 
 	public void write(String packageName, TypeSpec siteClass) throws IOException {
-		JavaFile javaFile = JavaFile.builder(packageName + ".site", siteClass)
+		JavaFile javaFile = JavaFile.builder(packageName, siteClass)
 			.build();
 
 		javaFile.writeTo(Paths.get(outputDir));
