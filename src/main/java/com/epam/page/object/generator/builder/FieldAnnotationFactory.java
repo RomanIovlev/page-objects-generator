@@ -11,7 +11,7 @@ public class FieldAnnotationFactory {
 
 
     public AnnotationSpec buildAnnotation(SearchRule searchRule, String elementsRequiredValue,
-        String url) throws IOException {
+                                          String url) throws IOException {
         if (searchRule.getInnerSearchRules() == null) {
             return buildCommonAnnotation(searchRule, elementsRequiredValue);
         } else {
@@ -20,7 +20,7 @@ public class FieldAnnotationFactory {
     }
 
     private AnnotationSpec buildCommonAnnotation(SearchRule searchRule,
-        String elementsRequiredValue) {
+                                                 String elementsRequiredValue) {
         if (searchRule.getCss() != null) {
             return AnnotationSpec.builder(annotationClass)
                 .addMember("css", "$S", resultCssSelector(searchRule, elementsRequiredValue))
@@ -32,7 +32,6 @@ public class FieldAnnotationFactory {
         }
     }
 
-
     private AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url)
         throws IOException {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
@@ -40,11 +39,7 @@ public class FieldAnnotationFactory {
 
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-            String annotationElementName = innerSearchRule.getRequiredAttribute();
-
-//            if (annotationClass.getMethod("root"));
-
-//            innerSearchRule.setRequiredAttribute(searchAttribute);
+            String annotationElementName = innerSearchRule.getTitle();
 
             if (innerSearchRule.getCss() != null) {
                 innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
@@ -52,8 +47,6 @@ public class FieldAnnotationFactory {
             } else if (innerSearchRule.getXpath() != null) {
                 innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-
-                //TODO fix null pointer exception when no elements was found by innerSearchRule xpath locator
             }
 
             annotationBuilder.addMember(annotationElementName, "$L", innerAnnotation.build());

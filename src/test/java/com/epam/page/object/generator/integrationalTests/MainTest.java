@@ -31,7 +31,8 @@ public class MainTest {
     }
 
     private PageObjectsGenerator initPog(String jsonPath, String url,
-        boolean checkLocatorUniqueness, boolean forceGenerateFiles) {
+                                         boolean checkLocatorUniqueness,
+                                         boolean forceGenerateFiles) {
         List<String> urls = new ArrayList<>();
 
         urls.add(url);
@@ -78,7 +79,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_forceFileGenerate() throws IOException, URISyntaxException {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-type.json",

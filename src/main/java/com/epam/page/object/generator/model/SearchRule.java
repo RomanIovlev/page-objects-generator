@@ -38,10 +38,9 @@ public class SearchRule {
         Elements elements = extractElementsFromWebSite(url);
 
         if (requiredAttribute == null) {
-//  TODO: Find out how to name field for found complex element
+            //  TODO: Find out how to name field for found complex element
             return Lists.newArrayList(type);
         }
-
 
         return requiredAttribute.equals("text")
             ? elements.eachText()
@@ -100,6 +99,14 @@ public class SearchRule {
 
     public void setInnerSearchRules(List<SearchRule> innerSearchRules) {
         this.innerSearchRules = innerSearchRules;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
