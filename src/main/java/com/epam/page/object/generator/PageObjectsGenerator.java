@@ -4,7 +4,7 @@ import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.parser.JSONIntoRuleParser;
+import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PageObjectsGenerator {
 
-	private JSONIntoRuleParser parser;
+	private JsonRuleMapper parser;
 	private JavaFileWriter fileWriter;
 	private SiteFieldSpecBuilder siteFieldSpecBuilder;
 	private SearchRuleValidator validator;
@@ -23,7 +23,7 @@ public class PageObjectsGenerator {
 
 	private boolean forceGenerateFile = false;
 
-	public PageObjectsGenerator(JSONIntoRuleParser parser,
+	public PageObjectsGenerator(JsonRuleMapper parser,
 	                            JavaFileWriter fileWriter,
 	                            SiteFieldSpecBuilder siteFieldSpecBuilder,
 	                            SearchRuleValidator validator,

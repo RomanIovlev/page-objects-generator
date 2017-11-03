@@ -2,7 +2,7 @@
   "elements": [
     {
       "type":"Button",
-      "name": "name",
+      "name": "value",
       "xpath":"//input[@type='submit']"
     }
   ]

@@ -5,7 +5,7 @@ import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
-import com.epam.page.object.generator.parser.JSONIntoRuleParser;
+import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.File;
@@ -37,7 +37,7 @@ public class MainTest {
         JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
 
         BuildersContainer bc = new BuildersContainer();
-        JSONIntoRuleParser parser = new JSONIntoRuleParser(new File(jsonPath), new ObjectMapper());
+        JsonRuleMapper parser = new JsonRuleMapper(new File(jsonPath), new ObjectMapper());
         SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);

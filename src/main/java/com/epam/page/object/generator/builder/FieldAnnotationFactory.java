@@ -30,6 +30,7 @@ public class FieldAnnotationFactory {
     private AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue) {
         if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
+                //TODO extract to XpathToCssTransformer class
                 ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
                 try {
@@ -78,6 +79,7 @@ public class FieldAnnotationFactory {
         return annotationBuilder.build();
     }
 
+    //Move to separate class
     private String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
         return searchRule.getCss() + "[" + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
     }

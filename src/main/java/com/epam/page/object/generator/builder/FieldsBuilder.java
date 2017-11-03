@@ -18,15 +18,15 @@ public class FieldsBuilder implements IFieldsBuilder {
 
     @Override
     public List<FieldSpec> buildField(SearchRule searchRule, String url ) throws IOException {
-        List<FieldSpec> abstractFields = new ArrayList<>();
+        List<FieldSpec> fields = new ArrayList<>();
         List<String> elementsRequiredValues = searchRule.getRequiredValueFromFoundElement(url);
 
         for (String elementsRequiredValue : elementsRequiredValues) {
             fieldSpecFactory.setElementsRequiredValue(elementsRequiredValue);
-            abstractFields.add(fieldSpecFactory.build(fieldAnnotationFactory.buildAnnotation(searchRule,elementsRequiredValue,url)));
+            fields.add(fieldSpecFactory.build(fieldAnnotationFactory.buildAnnotation(searchRule,elementsRequiredValue,url)));
         }
 
-        return abstractFields;
+        return fields;
     }
 
 }

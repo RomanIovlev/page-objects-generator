@@ -22,6 +22,17 @@ public class SearchRuleValidator {
         this.supportedTypes = supportedTypes;
     }
 
+    /*
+        Move to validators:
+            1. CSS or XPATH (css by default)
+            2. Type is supported
+
+
+        Move to
+            3. Inner elements exists
+            4. If checkLocatorsUniqueness==true, then throw error if found duplicate elements.
+            Filter out duplicate elements otherwise
+     */
     public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
         boolean exceptionOccurred = false;
         String msg = "";

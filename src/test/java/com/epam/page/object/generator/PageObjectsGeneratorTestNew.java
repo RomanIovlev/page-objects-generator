@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.parser.JSONIntoRuleParser;
+import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import com.google.common.collect.Lists;
@@ -26,7 +26,7 @@ public class PageObjectsGeneratorTestNew {
 	private static final String TEST_PACKAGE = "testPackage";
 
 	@Mock
-	private JSONIntoRuleParser parser;
+	private JsonRuleMapper parser;
 
 	@Mock
 	private JavaFileWriter fileWriter;
