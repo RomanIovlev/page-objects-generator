@@ -7,5 +7,5 @@ before_script:
 script:
   - mvn test -B
 after_script:
-  - ./cc-test-reporter format-coverage -t jacoco $TRAVIS_BUILD_DIR/target/site/jacoco-ut/jacoco.xml
+  - ./cc-test-reporter format-coverage --prefix $TRAVIS_BUILD_DIR/src/main/java -t jacoco $TRAVIS_BUILD_DIR/target/site/jacoco-ut/jacoco.xml
   - ./cc-test-reporter upload-coverage
