@@ -8,13 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
+import org.assertj.core.util.Lists;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
-    private List<Validator> validators;
+    private List<Validator> validators = Lists.newArrayList(new LocatorExistenceValidator());
 
     private ValidationContext validationContext;
 
@@ -39,57 +41,72 @@ public class SearchRuleValidator {
             4. If checkLocatorsUniqueness==true, then throw error if found duplicate elements.
             Filter out duplicate elements otherwise
      */
-    public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
-        boolean exceptionOccurred = false;
-        String msg = "";
+    public void validate() throws IOException {
 
-        List<SearchRule> unsupportedTypeRules = new ArrayList<>();
-        List<SearchRule> noLocatorRules = new ArrayList<>();
-
-        for (Iterator<SearchRule> iterator = rules.iterator(); iterator.hasNext(); ) {
-            SearchRule rule = iterator.next();
-
-            if (rule.getInnerSearchRules() != null) {
-                try {
-                    validate(rule.getInnerSearchRules(), urls);
-                } catch (ValidationException | NotUniqueSelectorsException ex) {
-                    msg = ex.getMessage();
-                    exceptionOccurred = true;
-                }
-            }
-
-
-            if (!ruleTypeSupported(rule)) {
-                exceptionOccurred = true;
-                unsupportedTypeRules.add(rule);
-                iterator.remove();
-                continue;
-            }
-
-            if (!ruleHasLocator(rule)) {
-                exceptionOccurred = true;
-                noLocatorRules.add(rule);
-                iterator.remove();
-            }
+        for (Validator validator : validators) {
+            validator.validate(validationContext);
         }
 
-        if (!unsupportedTypeRules.isEmpty()) {
-            msg += "Unsupported types found: " + unsupportedTypeRules + ".\n";
+        StringBuilder allExeprions = new StringBuilder();
+        for (Entry<RuntimeException, List<SearchRule>> runtimeExceptionListEntry : validationContext
+            .getNotValidRules().entrySet()) {
+            allExeprions.append(runtimeExceptionListEntry.getKey().getMessage() + runtimeExceptionListEntry.getValue().toString() + "\n");
         }
 
-        if (!noLocatorRules.isEmpty()) {
-            msg += "Either css or xpath must be specified: " + noLocatorRules + ".\n";
+        if(allExeprions.length() != 0){
+            throw new ValidationException(allExeprions.toString());
         }
 
-        if (exceptionOccurred) {
-            throw new ValidationException(msg);
-        }
-
-        if (checkLocatorsUniqueness) {
-            for (String url : urls) {
-                checkLocatorUniquenessExceptions(rules, url);
-            }
-        }
+//        boolean exceptionOccurred = false;
+//        String msg = "";
+//
+//        List<SearchRule> unsupportedTypeRules = new ArrayList<>();
+//        List<SearchRule> noLocatorRules = new ArrayList<>();
+//
+//        for (Iterator<SearchRule> iterator = rules.iterator(); iterator.hasNext(); ) {
+//            SearchRule rule = iterator.next();
+//
+//            if (rule.getInnerSearchRules() != null) {
+//                try {
+//                    validate(rule.getInnerSearchRules(), urls);
+//                } catch (ValidationException | NotUniqueSelectorsException ex) {
+//                    msg = ex.getMessage();
+//                    exceptionOccurred = true;
+//                }
+//            }
+//
+//
+//            if (!ruleTypeSupported(rule)) {
+//                exceptionOccurred = true;
+//                unsupportedTypeRules.add(rule);
+//                iterator.remove();
+//                continue;
+//            }
+//
+//            if (!ruleHasLocator(rule)) {
+//                exceptionOccurred = true;
+//                noLocatorRules.add(rule);
+//                iterator.remove();
+//            }
+//        }
+//
+//        if (!unsupportedTypeRules.isEmpty()) {
+//            msg += "Unsupported types found: " + unsupportedTypeRules + ".\n";
+//        }
+//
+//        if (!noLocatorRules.isEmpty()) {
+//            msg += "Either css or xpath must be specified: " + noLocatorRules + ".\n";
+//        }
+//
+//        if (exceptionOccurred) {
+//            throw new ValidationException(msg);
+//        }
+//
+//        if (checkLocatorsUniqueness) {
+//            for (String url : urls) {
+//                checkLocatorUniquenessExceptions(rules, url);
+//            }
+//        }
     }
 
     public void setCheckLocatorsUniqueness(boolean checkLocatorsUniqueness) {

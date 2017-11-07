@@ -76,7 +76,7 @@ public class PageObjectsGeneratorTestNew {
 			throws Exception {
 		sut.generatePageObjects();
 
-		verify(validator).validate(searchRules, urls);
+		verify(validator).validate();
 
 		for (String url: urls) {
 			verify(fileWriter).write(TEST_PACKAGE + ".page", urlSpecMap.get(url));
@@ -88,7 +88,7 @@ public class PageObjectsGeneratorTestNew {
 	@Test(expected = ValidationException.class)
 	public void generatePageObjects_ErrorWhenValidationFailsAndNoForceGenerateFlagSet()
 			throws Exception {
-		doThrow(new ValidationException("some message")).when(validator).validate(anyList(), eq(urls));
+		doThrow(new ValidationException("some message")).when(validator).validate();
 		sut.generatePageObjects();
 		verifyZeroInteractions(fileWriter);
 	}
