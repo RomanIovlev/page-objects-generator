@@ -6,5 +6,6 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - mvn test -B
+  - mv $TRAVIS_BUILD_DIR/target/site/jacoco-ut/jacoco.xml $TRAVIS_BUILD_DIR/
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT -d
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
