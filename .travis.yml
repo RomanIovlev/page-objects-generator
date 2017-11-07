@@ -7,4 +7,4 @@ before_script:
 script:
   - mvn test -B
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --prefix $TRAVIS_BUILD_DIR/target/site/jacoco-ut
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT -d
