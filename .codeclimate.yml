@@ -7,3 +7,7 @@ engines:
         - src/test/**
   pmd:
     enabled: true
+    config:
+      rules:
+        - "java-basics"
+        - "java-design"
