@@ -1,11 +1,5 @@
 language: java
 jdk: oraclejdk8
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-script:
-  - mvn test -B
-after_script:
-  - ./cc-test-reporter format-coverage --prefix $TRAVIS_BUILD_DIR/src/main/java -t jacoco $TRAVIS_BUILD_DIR/target/site/jacoco-ut/jacoco.xml
-  - ./cc-test-reporter upload-coverage
+sudo: false
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
