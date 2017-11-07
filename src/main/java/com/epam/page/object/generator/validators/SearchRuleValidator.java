@@ -49,8 +49,9 @@ public class SearchRuleValidator {
 
         StringBuilder allExeprions = new StringBuilder();
         for (Entry<RuntimeException, List<SearchRule>> runtimeExceptionListEntry : validationContext
-            .getNotValidRules().entrySet()) {
-            allExeprions.append(runtimeExceptionListEntry.getKey().getMessage() + runtimeExceptionListEntry.getValue().toString() + "\n");
+            .getNotValidRulesWithExceptions().entrySet()) {
+            allExeprions.append(runtimeExceptionListEntry.getKey().getMessage() + ": " +
+                    runtimeExceptionListEntry.getValue().toString() + "\n");
         }
 
         if(allExeprions.length() != 0){

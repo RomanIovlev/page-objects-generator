@@ -5,33 +5,37 @@ import com.epam.page.object.generator.model.SearchRule;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
-public class LocatorExistenceValidator implements Validator {
+public class LocatorExistenceValidator extends AbstractValidator {
 
-    private int order = 0;
-    private RuntimeException ex = new LocatorExistenceException("No xpath or css locators: ");
+    private int order;
+    private RuntimeException ex;
 
-    @Override
-    public RuntimeException getException() {
-        return ex;
+    public LocatorExistenceValidator() {
+        super(0, new LocatorExistenceException("No xpath or css"));
     }
 
+    public LocatorExistenceValidator(int order, RuntimeException ex) {
+        super(order, ex);
+    }
+
+
     @Override
-    public void validate(ValidationContext context) {
-        for (SearchRule searchRule : context.getRulesToValidate()) {
-            if (isEmpty(searchRule.getCss()) && isEmpty(searchRule.getXpath())) {
-                context.addRuleToInvalid(searchRule, getException());
-                continue;
+    public boolean validate(SearchRule searchRule) {
+        boolean isValidInnerSearchRules = true;
+        if (searchRule.getInnerSearchRules() != null) {
+            for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+                if (!validate(innerSearchRule)) {
+                    isValidInnerSearchRules = false;
+                    break;
+                }
             }
         }
-    }
-
-    @Override
-    public int getOrder() {
-        return order;
+        return isValidInnerSearchRules && (!isEmpty(searchRule.getCss()) || !isEmpty(searchRule.getXpath()));
     }
 }
