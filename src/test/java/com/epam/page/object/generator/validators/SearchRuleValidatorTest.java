@@ -43,7 +43,9 @@ public class SearchRuleValidatorTest {
 
         urls.add("https://www.google.ru");
 
-        sut = new SearchRuleValidator(supportedTypes);
+        ValidationContext context = new ValidationContext(searchRules, urls);
+
+        sut = new SearchRuleValidator(supportedTypes, context);
 
         sut.setCheckLocatorsUniqueness(false);
 

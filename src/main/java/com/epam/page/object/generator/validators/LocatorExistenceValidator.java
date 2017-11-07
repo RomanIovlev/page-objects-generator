@@ -11,20 +11,21 @@ import static org.apache.commons.lang3.StringUtils.*;
 
 public class LocatorExistenceValidator implements Validator {
 
-	@Override
-	public void validate(ValidationContext context) {
-		for (SearchRule searchRule : context.getRulesToValidate()) {
-			if(!isEmpty(searchRule.getCss())){
-				context.addRuleToValid(searchRule);
-			}
-			if(isEmpty(searchRule.getCss()) && isEmpty(searchRule.getXpath())){
-				context.addRuleToInvalid(searchRule);
-			}
-		}
-	}
+    int order = 0;
 
-	@Override
-	public int getOrder() {
-		return 0;
-	}
+    @Override
+    public void validate(ValidationContext context) {
+        for (SearchRule searchRule : context.getRulesToValidate()) {
+            if (isEmpty(searchRule.getCss()) && isEmpty(searchRule.getXpath())) {
+                context.addRuleToInvalid(searchRule);
+                continue;
+            }
+            context.addRuleToValid(searchRule);
+        }
+    }
+
+    @Override
+    public int getOrder() {
+        return order;
+    }
 }

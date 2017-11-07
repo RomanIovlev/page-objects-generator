@@ -14,18 +14,24 @@ import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
+    private List<Validator> validators;
+
+    private ValidationContext validationContext;
+
     private Set<String> supportedTypes;
 
     private boolean checkLocatorsUniqueness;
 
-    public SearchRuleValidator(Set<String> supportedTypes) {
+    public SearchRuleValidator(Set<String> supportedTypes, ValidationContext validationContext) {
+        this.validationContext = validationContext;
+
         this.supportedTypes = supportedTypes;
     }
 
     /*
         Move to validators:
-            1. CSS or XPATH (css by default)
-            2. Type is supported
+            1. CSS or XPATH (css by default) DONE
+            2. Type is supported    DONE
 
 
         Move to

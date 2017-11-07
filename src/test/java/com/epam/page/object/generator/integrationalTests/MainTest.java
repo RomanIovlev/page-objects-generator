@@ -6,8 +6,10 @@ import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
 import com.epam.page.object.generator.containers.BuildersContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
+import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
+import com.epam.page.object.generator.validators.ValidationContext;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +24,7 @@ import org.junit.Test;
 public class MainTest {
 
     private String outputDir = "src/test/resources/";
-	private String packageName = "test";
+    private String packageName = "test";
 
     @Before
     public void setUp() throws IOException {
@@ -30,7 +32,7 @@ public class MainTest {
     }
 
     private PageObjectsGenerator initPog(String jsonPath, String url,
-        boolean checkLocatorUniqueness, boolean forceGenerateFiles) {
+        boolean checkLocatorUniqueness, boolean forceGenerateFiles) throws IOException {
         List<String> urls = new ArrayList<>();
 
         urls.add(url);
@@ -38,8 +40,15 @@ public class MainTest {
         JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
 
         BuildersContainer bc = new BuildersContainer();
+
         JsonRuleMapper parser = new JsonRuleMapper(new File(jsonPath), new ObjectMapper());
-        SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
+
+        List<SearchRule> rulesFromJSON = parser.getRulesFromJSON();
+
+        ValidationContext validationContext = new ValidationContext(rulesFromJSON, urls);
+
+        SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes(),
+            validationContext);
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
@@ -47,7 +56,8 @@ public class MainTest {
 
         SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName);
 
-        PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter, pageFieldSpecBuilder,
+        PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter,
+            pageFieldSpecBuilder,
             siteFieldSpecBuilder, validator, urls, packageName);
 
         pog.setForceGenerateFile(forceGenerateFiles);

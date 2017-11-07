@@ -1,10 +1,8 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.model.SearchRule;
-
-import java.util.Set;
 
 public class TypeSupportedValidator implements Validator {
+
 	private int order;
 
 	public TypeSupportedValidator(int order) {
@@ -19,5 +17,9 @@ public class TypeSupportedValidator implements Validator {
 	@Override
 	public int getOrder() {
 		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 }
