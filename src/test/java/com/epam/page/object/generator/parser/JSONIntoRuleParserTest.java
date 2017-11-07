@@ -3,7 +3,7 @@ package com.epam.page.object.generator.parser;
 
 import com.epam.page.object.generator.containers.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.parser.JSONIntoRuleParser;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,14 +26,14 @@ public class JSONIntoRuleParserTest {
     @Mock
     ObjectMapper mapper;
 
-    JSONIntoRuleParser sut;
+    JsonRuleMapper sut;
 
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        sut = new JSONIntoRuleParser(jsonFile, mapper);
+        sut = new JsonRuleMapper(jsonFile, mapper);
 
         SearchRule rule = new SearchRule();
         container = new SearchRulesContainer();

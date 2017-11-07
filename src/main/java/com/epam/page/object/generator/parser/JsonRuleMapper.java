@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class JSONIntoRuleParser {
+public class JsonRuleMapper {
 
     private File file;
     ObjectMapper objectMapper;
-    public JSONIntoRuleParser(File file, ObjectMapper objectMapper) {
+
+    public JsonRuleMapper(File file, ObjectMapper objectMapper) {
         this.file = file;
         this.objectMapper = objectMapper;
     }
@@ -25,6 +26,7 @@ public class JSONIntoRuleParser {
     public List<SearchRule> getRulesFromJSON() throws IOException {
 
         SearchRulesContainer elements = objectMapper.readValue(file, SearchRulesContainer.class);
+//        TODO: fix mapping of "title" field
 
         return elements.getSearchRules();
     }

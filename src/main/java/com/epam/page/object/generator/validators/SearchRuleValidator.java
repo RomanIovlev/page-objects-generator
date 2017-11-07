@@ -22,6 +22,17 @@ public class SearchRuleValidator {
         this.supportedTypes = supportedTypes;
     }
 
+    /*
+        Move to validators:
+            1. CSS or XPATH (css by default)
+            2. Type is supported
+
+
+        Move to
+            3. Inner elements exists
+            4. If checkLocatorsUniqueness==true, then throw error if found duplicate elements.
+            Filter out duplicate elements otherwise
+     */
     public void validate(List<SearchRule> rules, List<String> urls) throws IOException {
         boolean exceptionOccurred = false;
         String msg = "";
@@ -33,14 +44,15 @@ public class SearchRuleValidator {
             SearchRule rule = iterator.next();
 
             if (rule.getInnerSearchRules() != null) {
-                try {
-                    validate(rule.getInnerSearchRules(), urls);
-                } catch (ValidationException | NotUniqueSelectorsException ex) {
-                    msg = ex.getMessage();
-                    exceptionOccurred = true;
+                for (SearchRule innerRule : rule.getInnerSearchRules()) {
+                    if (!ruleHasLocator(innerRule)) {
+                        exceptionOccurred = true;
+                        noLocatorRules.add(innerRule);
+                    }
                 }
-            }
 
+                //TODO also need to check for uniqueness for inner search rules
+            }
 
             if (!ruleTypeSupported(rule)) {
                 exceptionOccurred = true;

@@ -2,12 +2,11 @@
   "elements": [
     {
       "type": "Dropdown",
-      "name": "text",
       "css": "div.dropdown",
       "innerSearchRules": [
         {
-          "type": "button",
-          "name": "root",
+          "title": "root",
+          "name": "text",
           "xpath": "//button[@class='dropbtn']"
         }
       ]
