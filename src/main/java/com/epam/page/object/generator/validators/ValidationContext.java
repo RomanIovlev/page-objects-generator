@@ -31,6 +31,7 @@ public class ValidationContext {
                 .stream()
                 .map(Map.Entry::getValue)
                 .flatMap(List::stream)
+                .distinct()
                 .collect(Collectors.toList());
     }
 

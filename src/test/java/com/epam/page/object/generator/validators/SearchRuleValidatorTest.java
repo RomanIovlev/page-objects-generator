@@ -23,8 +23,10 @@ public class SearchRuleValidatorTest {
 
     private Set<String> supportedTypes = new HashSet<>();
 
-    SearchRule ruleWithLocator = new SearchRule("type", "req", "css", null, null);
-    SearchRule ruleNoLocator = new SearchRule("type", "req", null, null, null);
+    private SearchRule ruleWithLocator =
+            new SearchRule("type", "req", "css", null, null);
+    private SearchRule ruleNoLocator =
+            new SearchRule("type", "req", null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
     private ValidationContext context;

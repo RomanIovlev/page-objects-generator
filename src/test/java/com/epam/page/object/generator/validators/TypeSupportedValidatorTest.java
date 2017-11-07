@@ -10,12 +10,16 @@ import org.testng.collections.Lists;
 public class TypeSupportedValidatorTest {
 
     private TypeSupportedValidator sut;
-    SearchRule innerRule = new SearchRule(null, "req", "css", null, null);
+    private SearchRule innerRule = new SearchRule(null, "req", "css", null, null);
 
-    SearchRule ruleWithRightType = new SearchRule("button", "req", "css", null, null);
-    SearchRule ruleWithWrongType = new SearchRule("type", "req", "css", null, null);
-    SearchRule complexRuleWithRigthType = new SearchRule("button", "req", "css", null, Lists.newArrayList(innerRule));
-    SearchRule complexRuleWithWrongType = new SearchRule("type", "req", "css", null, Lists.newArrayList(innerRule));
+    private SearchRule ruleWithRightType =
+            new SearchRule("button", "req", "css", null, null);
+    private SearchRule ruleWithWrongType =
+            new SearchRule("type", "req", "css", null, null);
+    private SearchRule complexRuleWithRigthType =
+            new SearchRule("button", "req", "css", null, Lists.newArrayList(innerRule));
+    private SearchRule complexRuleWithWrongType =
+            new SearchRule("type", "req", "css", null, Lists.newArrayList(innerRule));
 
     @Before
     public void setUp() throws Exception {

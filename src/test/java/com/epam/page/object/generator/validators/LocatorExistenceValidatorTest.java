@@ -13,9 +13,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class LocatorExistenceValidatorTest {
-	SearchRule ruleWithCss = new SearchRule("type", "req", "css", null, null);
-	SearchRule ruleWithXpath = new SearchRule("type", "req", null, "//input", null);
-	SearchRule ruleNoLocator = new SearchRule("type", "req", null, null, null);
+	private SearchRule ruleWithCss =
+			new SearchRule("type", "req", "css", null, null);
+	private SearchRule ruleWithXpath =
+			new SearchRule("type", "req", null, "//input", null);
+	private SearchRule ruleNoLocator =
+			new SearchRule("type", "req", null, null, null);
+	private SearchRule complexRuleWithNoLocatorInnerRule =
+			new SearchRule(null, null, "css", null,  Lists.newArrayList(ruleNoLocator));
+	private SearchRule complexRuleWithLocatorsInnerRules =
+			new SearchRule(null, null, "css", null,  Lists.newArrayList(ruleWithCss, ruleWithXpath));
+
+
 	private LocatorExistenceValidator sut;
 	private ValidationContext context;
 	private List<SearchRule> rules = Lists.newArrayList();
@@ -23,7 +32,6 @@ public class LocatorExistenceValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
 		sut = new LocatorExistenceValidator();
 	}
 
@@ -74,5 +82,15 @@ public class LocatorExistenceValidatorTest {
 	@Test
 	public void validate_FalseSearchRuleValidationNoLocators(){
 		assertFalse(sut.validate(ruleNoLocator));
+	}
+
+	@Test
+	public void validate_TrueInnerSearchRulesValidation(){
+		assertTrue(sut.validate(complexRuleWithLocatorsInnerRules));
+	}
+
+	@Test
+	public void validate_FalseInnerSearchRuleValidationNoLocators(){
+		assertFalse(sut.validate(complexRuleWithNoLocatorInnerRule));
 	}
 }
