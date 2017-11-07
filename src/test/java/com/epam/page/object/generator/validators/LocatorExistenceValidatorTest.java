@@ -9,6 +9,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class LocatorExistenceValidatorTest {
 	SearchRule ruleWithCss = new SearchRule("type", "req", "css", null, null);
@@ -57,5 +59,20 @@ public class LocatorExistenceValidatorTest {
 		sut.validate(context);
 		assertEquals(2, context.getValidRules().size());
 		assertEquals(1, context.getNotValidRules().size());
+	}
+
+	@Test
+	public void validate_TrueSearchRuleValidationWithCss(){
+		assertTrue(sut.validate(ruleWithCss));
+	}
+
+	@Test
+	public void validate_TrueSearchRuleValidationWithXpath(){
+		assertTrue(sut.validate(ruleWithXpath));
+	}
+
+	@Test
+	public void validate_FalseSearchRuleValidationNoLocators(){
+		assertFalse(sut.validate(ruleNoLocator));
 	}
 }

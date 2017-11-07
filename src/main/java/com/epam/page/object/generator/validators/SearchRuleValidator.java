@@ -16,7 +16,7 @@ import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
-    private List<Validator> validators = Lists.newArrayList(new LocatorExistenceValidator());
+    private List<Validator> validators = Lists.newArrayList(new LocatorExistenceValidator(), new TypeSupportedValidator());
 
     private ValidationContext validationContext;
 
