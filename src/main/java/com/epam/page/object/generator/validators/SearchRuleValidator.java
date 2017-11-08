@@ -35,8 +35,6 @@ public class SearchRuleValidator {
         Move to validators:
             1. CSS or XPATH (css by default) DONE
             2. Type is supported    DONE
-
-
         Move to
             3. Inner elements exists
             4. If checkLocatorsUniqueness==true, then throw error if found duplicate elements.
@@ -114,7 +112,7 @@ public class SearchRuleValidator {
     }
 
     private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
-        throws IOException {
+            throws IOException {
         List<String> notUniqueLocators = new ArrayList<>();
 
         StringBuilder builder = new StringBuilder();
@@ -149,7 +147,7 @@ public class SearchRuleValidator {
 
             if (!notUniqueLocators.isEmpty()) {
                 throw new NotUniqueSelectorsException(
-                    "Search rules with not unique locator: \n" + notUniqueLocators);
+                        "Search rules with not unique locator: \n" + notUniqueLocators);
             }
         }
 

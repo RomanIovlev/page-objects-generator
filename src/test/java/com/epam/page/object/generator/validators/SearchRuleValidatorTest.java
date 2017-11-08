@@ -22,9 +22,9 @@ public class SearchRuleValidatorTest {
     private Set<String> supportedTypes = new HashSet<>();
 
     private SearchRule ruleWithLocator =
-            new SearchRule("button", "req", "css", null, null);
+            new SearchRule("button", "req", null, "css", null, null);
     private SearchRule ruleNoLocator =
-            new SearchRule("button", "req", null, null, null);
+            new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
     private ValidationContext context;
@@ -63,7 +63,7 @@ public class SearchRuleValidatorTest {
     }
 
     @After
-    public void clear(){
+    public void clear() {
         searchRules.clear();
     }
 }

@@ -10,11 +10,11 @@ import static org.junit.Assert.assertTrue;
 
 public class ValidationContextTest {
     private SearchRule ruleWithCss =
-        new SearchRule("type", "req", "css", null, null);
+        new SearchRule("type", "req", null, "css", null, null);
     private SearchRule ruleWithXpath =
-        new SearchRule("type", "req", null, "//input", null);
+        new SearchRule("type", "req", null, null, "//input", null);
     private SearchRule ruleNoLocator =
-        new SearchRule("type", "req", null, null, null);
+        new SearchRule("type", "req", null, null, null, null);
 
     private ValidationContext sut;
 
