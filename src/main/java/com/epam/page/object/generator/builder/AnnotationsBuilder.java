@@ -35,14 +35,12 @@ public class AnnotationsBuilder {
 
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-            String annotationElementName = innerSearchRule.getRequiredAttribute();
-
-            innerSearchRule.setRequiredAttribute(searchAttribute);
+            String annotationElementName = innerSearchRule.getTitle();
 
             if (innerSearchRule.getCss() != null) {
                 innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-            } else {
+            } else if (innerSearchRule.getXpath() != null) {
                 innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
                     innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
             }

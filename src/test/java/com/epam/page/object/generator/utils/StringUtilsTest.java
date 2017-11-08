@@ -3,7 +3,6 @@ package com.epam.page.object.generator.utils;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.testng.Assert;
 
 public class StringUtilsTest {
 

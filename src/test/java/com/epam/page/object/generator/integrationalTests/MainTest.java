@@ -32,7 +32,8 @@ public class MainTest {
     }
 
     private PageObjectsGenerator initPog(String jsonPath, String url,
-        boolean checkLocatorUniqueness, boolean forceGenerateFiles) throws IOException {
+                                         boolean checkLocatorUniqueness,
+                                         boolean forceGenerateFiles) {
         List<String> urls = new ArrayList<>();
 
         urls.add(url);
