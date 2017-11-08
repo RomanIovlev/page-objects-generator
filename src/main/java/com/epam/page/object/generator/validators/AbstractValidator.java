@@ -6,49 +6,49 @@ import java.util.Iterator;
 
 public abstract class AbstractValidator implements Validator {
 
-    private int order;
-    private RuntimeException ex;
-    private ValidationContext validationContext;
+    private int priority;
+    private boolean isValidateAllSearchRules = false;
 
-    public AbstractValidator(int order, RuntimeException ex) {
-        this.order = order;
-        this.ex = ex;
+    public AbstractValidator(int priority) {
+        this.priority = priority;
+    }
+    public AbstractValidator(int priority, boolean isValidateAllSearchRules) {
+        this.priority = priority;
+        this.isValidateAllSearchRules = isValidateAllSearchRules;
     }
 
     @Override
-    public ValidationContext getValidationContext() {
-        return validationContext;
-    }
+    public void validate(ValidationContext validationContext) {
 
-    @Override
-    public void setValidationContext(ValidationContext validationContext) {
-        this.validationContext = validationContext;
-    }
-
-    @Override
-    public RuntimeException getException() {
-        return ex;
-    }
-
-
-    @Override
-    public void validate() {
-        Iterator<SearchRule> iterator = getValidationContext().getValidRules().iterator();
+        Iterator<SearchRule> iterator;
+        if(isValidateAllSearchRules){
+            iterator = validationContext.getAllSearchRules().iterator();
+        }
+        else{
+            iterator = validationContext.getValidRules().iterator();
+        }
 
         while (iterator.hasNext()) {
             SearchRule searchRule = iterator.next();
-            if (!isValid(searchRule)) {
-                getValidationContext().addRuleToInvalid(searchRule, getException());
-                iterator.remove();
+            if (!isValid(searchRule, validationContext)) {
+                validationContext.addValidationResult(new ValidationResult(false, this, searchRule));
+            }
+            else {
+                validationContext.addValidationResult(new ValidationResult(true, this, searchRule));
             }
         }
     }
 
     @Override
-    public int getOrder() {
-        return order;
+    public int getPriority() {
+        return priority;
     }
 
-    public abstract boolean isValid(SearchRule searchRule);
+    @Override
+    public void setIsValidateAllSearchRules(boolean flag) {
+        this.isValidateAllSearchRules = flag;
+    }
+
+    public abstract boolean isValid(SearchRule searchRule, ValidationContext validationContext);
 
 }

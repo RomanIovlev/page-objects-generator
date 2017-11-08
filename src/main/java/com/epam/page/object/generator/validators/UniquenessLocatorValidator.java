@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
 import org.jsoup.select.Elements;
@@ -8,25 +7,30 @@ import org.jsoup.select.Elements;
 public class UniquenessLocatorValidator extends AbstractValidator {
 
     public UniquenessLocatorValidator() {
-        super(2, new NotUniqueSelectorsException("Not unique locator"));
+        super(2);
     }
 
-    public UniquenessLocatorValidator(int order, RuntimeException ex) {
-        super(order, ex);
+    public UniquenessLocatorValidator(int order) {
+        super(order);
+    }
+
+    public UniquenessLocatorValidator(boolean isValidateAllSearchRules){
+        super(2, isValidateAllSearchRules);
+    }
+
+    public UniquenessLocatorValidator(int order, boolean isValidateAllSearchRules) {
+        super(order, isValidateAllSearchRules);
     }
 
     @Override
-    public boolean isValid(SearchRule searchRule) {
-        if(!getValidationContext().isCheckLocatorsUniqueness()){
-            return true;
-        }
+    public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
         boolean isValidInnerSearchRules = true;
         boolean isExistOnUrl = false;
 
-        for (String url : getValidationContext().getUrls()) {
+        for (String url : validationContext.getUrls()) {
             if (searchRule.getInnerSearchRules() != null) {
                 for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-                    if (!isValid(innerSearchRule)) {
+                    if (!isValid(innerSearchRule, validationContext)) {
                         isValidInnerSearchRules = false;
                         break;
                     }
@@ -38,6 +42,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
                     isExistOnUrl = false;
                     break;
                 }
+                isExistOnUrl = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -45,5 +50,10 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
 
         return isValidInnerSearchRules && isExistOnUrl;
+    }
+
+    @Override
+    public String getExceptionMessage() {
+        return "This element is not uniqueness";
     }
 }
