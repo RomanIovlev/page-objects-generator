@@ -10,23 +10,25 @@ import javax.script.ScriptException;
 
 public class XpathToCssTransformer {
 
-	private XpathToCssTransformer() {
+    private XpathToCssTransformer() {
 
-	}
+    }
 
-	public static void transformRule(SearchRule searchRule) {
-		ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+    public static SearchRule transformRule(SearchRule searchRule) {
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
-		try {
-			engine.eval(new FileReader("src/main/resources/cssify.js"));
+        try {
+            engine.eval(new FileReader("src/main/resources/cssify.js"));
 
-			Invocable invocable = (Invocable) engine;
+            Invocable invocable = (Invocable) engine;
 
-			searchRule.setCss(invocable.invokeFunction("cssify", searchRule.getXpath()).toString());
-			searchRule.setXpath(null);
-		} catch (NoSuchMethodException | ScriptException | FileNotFoundException ex) {
-			ex.printStackTrace();
-		}
-	}
+            searchRule.setCss(invocable.invokeFunction("cssify", searchRule.getXpath()).toString());
+            searchRule.setXpath(null);
+        } catch (NoSuchMethodException | ScriptException | FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return searchRule;
+    }
 
 }

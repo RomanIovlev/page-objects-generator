@@ -11,10 +11,11 @@ import org.openqa.selenium.support.FindBy;
 
 public class AnnotationsBuilder {
 
-    public AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue, Class annotationClass) {
+    public AnnotationSpec buildCommonAnnotation(SearchRule searchRule, String elementsRequiredValue,
+                                                Class annotationClass) {
         if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
-                XpathToCssTransformer.transformRule(searchRule);
+                searchRule = XpathToCssTransformer.transformRule(searchRule);
             }
 
             return AnnotationSpec.builder(annotationClass)
@@ -27,7 +28,8 @@ public class AnnotationsBuilder {
         }
     }
 
-    public AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url, Class annotationClass) throws IOException {
+    public AnnotationSpec buildComplexAnnotation(SearchRule searchRule, String url,
+                                                 Class annotationClass) throws IOException {
         AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
         String searchAttribute = searchRule.getRequiredAttribute();
 
