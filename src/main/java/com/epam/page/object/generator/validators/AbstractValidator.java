@@ -8,10 +8,21 @@ public abstract class AbstractValidator implements Validator {
 
     private int order;
     private RuntimeException ex;
+    private ValidationContext validationContext;
 
     public AbstractValidator(int order, RuntimeException ex) {
         this.order = order;
         this.ex = ex;
+    }
+
+    @Override
+    public ValidationContext getValidationContext() {
+        return validationContext;
+    }
+
+    @Override
+    public void setValidationContext(ValidationContext validationContext) {
+        this.validationContext = validationContext;
     }
 
     @Override
@@ -21,13 +32,13 @@ public abstract class AbstractValidator implements Validator {
 
 
     @Override
-    public void validate(ValidationContext context){
-        Iterator<SearchRule> iterator = context.getValidRules().iterator();
+    public void validate() {
+        Iterator<SearchRule> iterator = getValidationContext().getValidRules().iterator();
 
         while (iterator.hasNext()) {
             SearchRule searchRule = iterator.next();
-            if (!validate(searchRule)) {
-                context.addRuleToInvalid(searchRule, getException());
+            if (!isValid(searchRule)) {
+                getValidationContext().addRuleToInvalid(searchRule, getException());
                 iterator.remove();
             }
         }
@@ -38,7 +49,6 @@ public abstract class AbstractValidator implements Validator {
         return order;
     }
 
-    public abstract boolean validate(SearchRule searchRule);
-
+    public abstract boolean isValid(SearchRule searchRule);
 
 }

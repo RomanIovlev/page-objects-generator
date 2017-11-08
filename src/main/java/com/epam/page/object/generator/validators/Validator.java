@@ -4,7 +4,11 @@ public interface Validator {
 
 	RuntimeException getException();
 
-	void validate(ValidationContext context);
+	void validate();
 
 	int getOrder();
+
+	ValidationContext getValidationContext();
+
+	void setValidationContext(ValidationContext validationContext);
 }

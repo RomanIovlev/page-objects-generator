@@ -44,7 +44,8 @@ public class SearchRuleValidator {
     public void validate() throws IOException {
 
         for (Validator validator : validators) {
-            validator.validate(validationContext);
+            validator.setValidationContext(validationContext);
+            validator.validate();
         }
 
         StringBuilder allExeprions = new StringBuilder();
@@ -69,7 +70,7 @@ public class SearchRuleValidator {
 //
 //            if (rule.getInnerSearchRules() != null) {
 //                try {
-//                    validate(rule.getInnerSearchRules(), urls);
+//                    isValid(rule.getInnerSearchRules(), urls);
 //                } catch (ValidationException | NotUniqueSelectorsException ex) {
 //                    msg = ex.getMessage();
 //                    exceptionOccurred = true;

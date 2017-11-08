@@ -4,7 +4,6 @@ import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
@@ -33,26 +32,30 @@ public class LocatorExistenceValidatorTest {
 	@Before
 	public void setUp() throws Exception {
 		sut = new LocatorExistenceValidator();
+		sut.setValidationContext(context);
 	}
 
 	@Test
 	public void validate_allPassIfOnlyCssIsSet() throws Exception {
 		context = new ValidationContext(Lists.newArrayList(ruleWithCss), null);
-		sut.validate(context);
+		sut.setValidationContext(context);
+		sut.validate();
 		assertEquals(ruleWithCss, context.getValidRules().get(0));
 	}
 
 	@Test
 	public void validate_allPassIfOnlyXpathIsSet() throws Exception {
 		context = new ValidationContext(Lists.newArrayList(ruleWithXpath), null);
-		sut.validate(context);
+		sut.setValidationContext(context);
+		sut.validate();
 		assertEquals(ruleWithXpath, context.getValidRules().get(0));
 	}
 
 	@Test
 	public void validate_shouldAddSearchRuleToFailedIfNoLocatorSet() throws Exception {
 		context = new ValidationContext(Lists.newArrayList(ruleNoLocator), null);
-		sut.validate(context);
+		sut.setValidationContext(context);
+		sut.validate();
 		assertEquals(ruleNoLocator, context.getNotValidRules().get(0));
 	}
 
@@ -63,34 +66,35 @@ public class LocatorExistenceValidatorTest {
 		rules.add(ruleNoLocator);
 
 		context = new ValidationContext(rules, null);
+		sut.setValidationContext(context);
 
-		sut.validate(context);
+		sut.validate();
 		assertEquals(2, context.getValidRules().size());
 		assertEquals(1, context.getNotValidRules().size());
 	}
 
 	@Test
 	public void validate_TrueSearchRuleValidationWithCss(){
-		assertTrue(sut.validate(ruleWithCss));
+		assertTrue(sut.isValid(ruleWithCss));
 	}
 
 	@Test
 	public void validate_TrueSearchRuleValidationWithXpath(){
-		assertTrue(sut.validate(ruleWithXpath));
+		assertTrue(sut.isValid(ruleWithXpath));
 	}
 
 	@Test
 	public void validate_FalseSearchRuleValidationNoLocators(){
-		assertFalse(sut.validate(ruleNoLocator));
+		assertFalse(sut.isValid(ruleNoLocator));
 	}
 
 	@Test
 	public void validate_TrueInnerSearchRulesValidation(){
-		assertTrue(sut.validate(complexRuleWithLocatorsInnerRules));
+		assertTrue(sut.isValid(complexRuleWithLocatorsInnerRules));
 	}
 
 	@Test
 	public void validate_FalseInnerSearchRuleValidationNoLocators(){
-		assertFalse(sut.validate(complexRuleWithNoLocatorInnerRule));
+		assertFalse(sut.isValid(complexRuleWithNoLocatorInnerRule));
 	}
 }

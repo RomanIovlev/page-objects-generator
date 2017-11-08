@@ -2,12 +2,6 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.errors.LocatorExistenceException;
 import com.epam.page.object.generator.model.SearchRule;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
@@ -26,11 +20,11 @@ public class LocatorExistenceValidator extends AbstractValidator {
 
 
     @Override
-    public boolean validate(SearchRule searchRule) {
+    public boolean isValid(SearchRule searchRule) {
         boolean isValidInnerSearchRules = true;
         if (searchRule.getInnerSearchRules() != null) {
             for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-                if (!validate(innerSearchRule)) {
+                if (!isValid(innerSearchRule)) {
                     isValidInnerSearchRules = false;
                     break;
                 }

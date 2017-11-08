@@ -14,11 +14,19 @@ public class ValidationContext {
     private List<SearchRule> validRules;
     private Map<RuntimeException, List<SearchRule>> notValidRules;
     private List<String> urls;
+    private boolean checkLocatorsUniqueness = true;
 
     public ValidationContext(List<SearchRule> toValidate, List<String> urls) {
         this.validRules = toValidate;
         this.notValidRules = Maps.newHashMap();
         this.urls = urls;
+    }
+
+    public ValidationContext(List<SearchRule> toValidate, List<String> urls, boolean checkLocatorsUniqueness) {
+        this.validRules = toValidate;
+        this.notValidRules = Maps.newHashMap();
+        this.urls = urls;
+        this.checkLocatorsUniqueness = checkLocatorsUniqueness;
     }
 
     public List<SearchRule> getValidRules() {
@@ -46,5 +54,13 @@ public class ValidationContext {
             notValidRules.put(ex, Lists.newArrayList(searchRule));
         }
         //TODO throw new Exception if we detect first Exception
+    }
+
+    public List<String> getUrls(){
+        return urls;
+    }
+
+    public boolean isCheckLocatorsUniqueness() {
+        return checkLocatorsUniqueness;
     }
 }

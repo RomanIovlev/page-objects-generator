@@ -28,22 +28,22 @@ public class TypeSupportedValidatorTest {
 
     @Test
     public void validate_TrueSearchRuleValidationWithRightType() throws Exception {
-        assertTrue(sut.validate(ruleWithRightType));
+        assertTrue(sut.isValid(ruleWithRightType));
     }
 
     @Test
     public void validate_FalseSearchRuleValidationWithWrongType() throws Exception {
-        assertFalse(sut.validate(ruleWithWrongType));
+        assertFalse(sut.isValid(ruleWithWrongType));
     }
 
     @Test
     public void validate_TrueComplexSearchRuleValidationWithRightType() throws Exception {
-        assertTrue(sut.validate(complexRuleWithRigthType));
+        assertTrue(sut.isValid(complexRuleWithRigthType));
     }
 
     @Test
     public void validate_FalseComplexSearchRuleValidationWithWrongType() throws Exception {
-        assertFalse(sut.validate(complexRuleWithWrongType));
+        assertFalse(sut.isValid(complexRuleWithWrongType));
     }
 
 }
