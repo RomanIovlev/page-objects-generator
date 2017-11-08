@@ -9,13 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.assertj.core.util.Lists;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.verify;
 
 public class SearchRuleValidatorTest {
 
@@ -23,12 +22,15 @@ public class SearchRuleValidatorTest {
 
     private Set<String> supportedTypes = new HashSet<>();
 
-    private SearchRule ruleWithLocator =
-            new SearchRule("button", "req", "css", null, null);
-    private SearchRule ruleNoLocator =
-            new SearchRule("button", "req", null, null, null);
-
     private List<SearchRule> searchRules = new ArrayList<>();
+
+    private SearchRule innerRule = new SearchRule(null, "req", "css", null, null, searchRules);
+
+    private SearchRule ruleWithLocator =
+            new SearchRule("button", "req", null, "css", null, searchRules);
+    private SearchRule ruleNoLocator =
+            new SearchRule("button", "req", null, null, null, searchRules);
+
     private ValidationContext context;
     private List<String> urls = new ArrayList<>();
 
@@ -42,7 +44,7 @@ public class SearchRuleValidatorTest {
 
         context = new ValidationContext(searchRules, urls);
 
-        sut = new SearchRuleValidator(supportedTypes, context);
+        sut = new SearchRuleValidator(supportedTypes);
 
         sut.setCheckLocatorsUniqueness(false);
     }
@@ -50,7 +52,7 @@ public class SearchRuleValidatorTest {
     @Test
     public void validateSearchRules_Success() throws Exception {
         searchRules.add(ruleWithLocator);
-        sut.validate();
+        sut.validate(searchRules, urls);
 
         Assert.assertEquals(1, context.getValidRules().size());
     }
@@ -58,7 +60,7 @@ public class SearchRuleValidatorTest {
     @Test(expected = ValidationException.class)
     public void validateSearchRules_NotLocatorExist() throws Exception {
         searchRules.add(ruleNoLocator);
-        sut.validate();
+        sut.validate(searchRules, urls);
     }
 
     @After

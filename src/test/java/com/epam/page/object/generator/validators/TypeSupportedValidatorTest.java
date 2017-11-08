@@ -3,23 +3,26 @@ package com.epam.page.object.generator.validators;
 import static org.junit.Assert.*;
 
 import com.epam.page.object.generator.model.SearchRule;
+import java.util.ArrayList;
+import java.util.List;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
-import org.testng.collections.Lists;
 
 public class TypeSupportedValidatorTest {
 
     private TypeSupportedValidator sut;
-    private SearchRule innerRule = new SearchRule(null, "req", "css", null, null);
+
+    private SearchRule innerRule = new SearchRule(null, "req", "css", null, null, new ArrayList<>());
 
     private SearchRule ruleWithRightType =
-            new SearchRule("button", "req", "css", null, null);
+            new SearchRule("button", "req", "css", null, null, Lists.newArrayList(innerRule));
     private SearchRule ruleWithWrongType =
-            new SearchRule("type", "req", "css", null, null);
+            new SearchRule("type", "req", "css", null, null, Lists.newArrayList(innerRule));
     private SearchRule complexRuleWithRigthType =
-            new SearchRule("button", "req", "css", null, Lists.newArrayList(innerRule));
+            new SearchRule("button", "req", "css", null,null,  Lists.newArrayList(innerRule));
     private SearchRule complexRuleWithWrongType =
-            new SearchRule("type", "req", "css", null, Lists.newArrayList(innerRule));
+            new SearchRule("type", "req", "css", null, null, Lists.newArrayList(innerRule));
 
     @Before
     public void setUp() throws Exception {

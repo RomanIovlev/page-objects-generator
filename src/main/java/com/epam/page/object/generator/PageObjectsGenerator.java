@@ -45,7 +45,7 @@ public class PageObjectsGenerator {
 		List<SearchRule> searchRules = parser.getRulesFromJSON();
 
 		try {
-			validator.validate();
+			validator.validate(searchRules, urls);
 		} catch (ValidationException | NotUniqueSelectorsException ex) {
 			if (forceGenerateFile) {
 				generateJavaFiles(searchRules);
