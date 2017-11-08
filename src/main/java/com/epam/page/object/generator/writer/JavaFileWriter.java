@@ -1,24 +1,12 @@
 package com.epam.page.object.generator.writer;
 
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.TypeSpec;
-
+import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.net.URISyntaxException;
+import java.util.List;
 
-public class JavaFileWriter {
+public interface JavaFileWriter {
 
-	private String outputDir;
-
-	public JavaFileWriter(String outputDir) {
-		this.outputDir = outputDir;
-	}
-
-	public void write(String packageName, TypeSpec siteClass) throws IOException {
-		JavaFile javaFile = JavaFile.builder(packageName, siteClass)
-			.build();
-
-		javaFile.writeTo(Paths.get(outputDir));
-	}
+	void writeFile(String packageName, String outputDir, List<SearchRule> searchRules, List<String> urls) throws IOException, URISyntaxException;
 
 }

@@ -1,16 +1,14 @@
 package com.epam.page.object.generator.integrationalTests;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
-import com.epam.page.object.generator.builder.PageFieldSpecBuilder;
-import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
-import com.epam.page.object.generator.containers.BuildersContainer;
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.validators.ValidationContext;
-import com.epam.page.object.generator.writer.JavaFileWriter;
+import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,11 +36,11 @@ public class MainTest {
 
         urls.add(url);
 
-        JavaFileWriter fileWriter = new JavaFileWriter(outputDir);
-
-        BuildersContainer bc = new BuildersContainer();
+        SupportedTypesContainer bc = new SupportedTypesContainer();
 
         JsonRuleMapper parser = new JsonRuleMapper(new File(jsonPath), new ObjectMapper());
+
+        JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc);
 
         List<SearchRule> rulesFromJSON = parser.getRulesFromJSON();
 
@@ -52,13 +50,7 @@ public class MainTest {
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
-        PageFieldSpecBuilder pageFieldSpecBuilder = new PageFieldSpecBuilder(bc);
-
-        SiteFieldSpecBuilder siteFieldSpecBuilder = new SiteFieldSpecBuilder(packageName);
-
-        PageObjectsGenerator pog = new PageObjectsGenerator(parser, fileWriter,
-            pageFieldSpecBuilder,
-            siteFieldSpecBuilder, validator, urls, packageName);
+        PageObjectsGenerator pog = new PageObjectsGenerator(parser, validator, javaPoetAdapter, outputDir, urls, packageName);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 

@@ -1,12 +1,12 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.containers.BuildersContainer;
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 
 public class TypeSupportedValidator extends AbstractValidator {
 
-    //TODO remove BuilderContrainer from Validator
-    BuildersContainer bc = new BuildersContainer();
+	//TODO remove BuilderContrainer from Validator
+	SupportedTypesContainer bc = new SupportedTypesContainer();
 
     public TypeSupportedValidator() {
         super(1);
