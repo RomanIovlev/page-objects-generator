@@ -2,13 +2,12 @@ package com.epam.page.object.generator.validators;
 
 public interface Validator {
 
-	RuntimeException getException();
+	void validate(ValidationContext validationContext);
 
-	void validate();
+	int getPriority();
 
-	int getOrder();
+	String getExceptionMessage();
 
-	ValidationContext getValidationContext();
+	void setIsValidateAllSearchRules(boolean flag);
 
-	void setValidationContext(ValidationContext validationContext);
 }
