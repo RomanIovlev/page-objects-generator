@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Validator {
 
-	void validate(ValidationContext validationContext);
+	void validate(ValidationContext validationContext, boolean isValidateAllRules);
 
 	int getOrder();
 

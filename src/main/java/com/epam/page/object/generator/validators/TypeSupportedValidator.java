@@ -16,4 +16,9 @@ public class TypeSupportedValidator extends AbstractValidator {
 	public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
 		return bc.getSupportedTypes().contains(searchRule.getType().toLowerCase());
 	}
+
+	@Override
+	public String getExceptionMessage() {
+		return "This type is not supported";
+	}
 }

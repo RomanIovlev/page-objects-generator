@@ -19,6 +19,7 @@ public class ValidationContext {
     private List<String> urls;
 
     public ValidationContext(List<SearchRule> searchRules, List<String> urls) {
+        validationResults = Lists.newArrayList();
         this.searchRules = searchRules;
         this.urls = urls;
     }
@@ -32,34 +33,24 @@ public class ValidationContext {
     }
 
     public List<SearchRule> getValidRules() {
-        validationResults.stream().collect(groupingBy(ValidationResult::getSearchRule, ))
-        return validRules;
-    }
-
-    public List<SearchRule> getNotValidRules() {
-        return notValidRules
+        return validationResults
+                .stream()
+                .collect(Collectors.groupingBy(ValidationResult::getSearchRule))
                 .entrySet()
                 .stream()
-                .map(Map.Entry::getValue)
-                .flatMap(List::stream)
-                .distinct()
+                .filter(searchRuleListEntry -> searchRuleListEntry
+                        .getValue()
+                        .stream()
+                        .allMatch(ValidationResult::isValid))
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-    }
-
-    public Map<RuntimeException, List<SearchRule>> getNotValidRulesWithExceptions() {
-        return notValidRules;
-    }
-
-    public void addRuleToInvalid(SearchRule searchRule, RuntimeException ex) {
-        if (notValidRules.containsKey(ex)) {
-            notValidRules.get(ex).add(searchRule);
-        } else {
-            notValidRules.put(ex, Lists.newArrayList(searchRule));
-        }
-        //TODO throw new Exception if we detect first Exception
     }
 
     public List<String> getUrls(){
         return urls;
+    }
+
+    public List<ValidationResult> getValidationResults() {
+        return validationResults;
     }
 }

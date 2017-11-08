@@ -55,10 +55,13 @@ public class SearchRuleValidatorTest {
         Assert.assertEquals(1, context.getValidRules().size());
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     public void validateSearchRules_NotLocatorExist() throws Exception {
         searchRules.add(ruleNoLocator);
         sut.validate();
+
+        Assert.assertEquals(2, context.getValidationResults().size());
+        Assert.assertFalse(context.getValidationResults().get(0).isValid());
     }
 
     @After

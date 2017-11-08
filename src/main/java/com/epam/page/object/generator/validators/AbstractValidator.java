@@ -9,24 +9,21 @@ import java.util.List;
 public abstract class AbstractValidator implements Validator {
 
     private int order;
-    private boolean validateAllSearchRules = false;
 
     public AbstractValidator(int order) {
         this.order = order;
     }
 
     @Override
-    public void validate(ValidationContext validationContext) {
+    public void validate(ValidationContext validationContext, boolean isValidateAllSearchRules) {
 
         Iterator<SearchRule> iterator;
-        if(validateAllSearchRules){
+        if(isValidateAllSearchRules){
             iterator = validationContext.getAllSearchRules().iterator();
         }
         else{
             iterator = validationContext.getValidRules().iterator();
         }
-
-        List<ValidationResult> validationResults = Lists.newArrayList();
 
         while (iterator.hasNext()) {
             SearchRule searchRule = iterator.next();

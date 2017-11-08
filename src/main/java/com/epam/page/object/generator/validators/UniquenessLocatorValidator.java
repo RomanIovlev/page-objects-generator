@@ -43,4 +43,9 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
         return isValidInnerSearchRules && isExistOnUrl;
     }
+
+    @Override
+    public String getExceptionMessage() {
+        return "This element is not uniqueness";
+    }
 }

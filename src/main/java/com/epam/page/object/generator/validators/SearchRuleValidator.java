@@ -43,22 +43,11 @@ public class SearchRuleValidator {
      */
     public void validate() throws IOException {
 
-        List<ValidationResult> validationResults;
-
         for (Validator validator : validators) {
-            validator.validate(validationContext);
+            validator.validate(validationContext, true);
         }
 
-        StringBuilder allExeprions = new StringBuilder();
-        for (Entry<RuntimeException, List<SearchRule>> runtimeExceptionListEntry : validationContext
-            .getNotValidRulesWithExceptions().entrySet()) {
-            allExeprions.append(runtimeExceptionListEntry.getKey().getMessage() + ": " +
-                    runtimeExceptionListEntry.getValue().toString() + "\n");
-        }
 
-        if(allExeprions.length() != 0){
-            throw new ValidationException(allExeprions.toString());
-        }
 
 //        boolean exceptionOccurred = false;
 //        String msg = "";
