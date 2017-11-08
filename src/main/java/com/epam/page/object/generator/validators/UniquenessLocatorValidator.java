@@ -8,25 +8,22 @@ import org.jsoup.select.Elements;
 public class UniquenessLocatorValidator extends AbstractValidator {
 
     public UniquenessLocatorValidator() {
-        super(2, new NotUniqueSelectorsException("Not unique locator"));
+        super(2);
     }
 
     public UniquenessLocatorValidator(int order, RuntimeException ex) {
-        super(order, ex);
+        super(order);
     }
 
     @Override
-    public boolean isValid(SearchRule searchRule) {
-        if(!getValidationContext().isCheckLocatorsUniqueness()){
-            return true;
-        }
+    public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
         boolean isValidInnerSearchRules = true;
         boolean isExistOnUrl = false;
 
-        for (String url : getValidationContext().getUrls()) {
+        for (String url : validationContext.getUrls()) {
             if (searchRule.getInnerSearchRules() != null) {
                 for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-                    if (!isValid(innerSearchRule)) {
+                    if (!isValid(innerSearchRule, validationContext)) {
                         isValidInnerSearchRules = false;
                         break;
                     }

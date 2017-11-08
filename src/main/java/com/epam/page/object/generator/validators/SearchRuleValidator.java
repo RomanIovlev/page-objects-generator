@@ -43,9 +43,10 @@ public class SearchRuleValidator {
      */
     public void validate() throws IOException {
 
+        List<ValidationResult> validationResults;
+
         for (Validator validator : validators) {
-            validator.setValidationContext(validationContext);
-            validator.validate();
+            validator.validate(validationContext);
         }
 
         StringBuilder allExeprions = new StringBuilder();

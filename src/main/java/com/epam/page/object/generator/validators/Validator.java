@@ -1,14 +1,13 @@
 package com.epam.page.object.generator.validators;
 
+import java.util.List;
+
 public interface Validator {
 
-	RuntimeException getException();
-
-	void validate();
+	void validate(ValidationContext validationContext);
 
 	int getOrder();
 
-	ValidationContext getValidationContext();
+	String getExceptionMessage();
 
-	void setValidationContext(ValidationContext validationContext);
 }

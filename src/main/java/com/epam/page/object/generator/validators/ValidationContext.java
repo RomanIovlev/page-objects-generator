@@ -1,5 +1,7 @@
 package com.epam.page.object.generator.validators;
 
+import static java.util.stream.Collectors.groupingBy;
+
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
 
@@ -7,29 +9,30 @@ import com.google.common.collect.Maps;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ValidationContext {
 
-    private List<SearchRule> validRules;
-    private Map<RuntimeException, List<SearchRule>> notValidRules;
+    private List<SearchRule> searchRules;
+    private List<ValidationResult> validationResults;
     private List<String> urls;
-    private boolean checkLocatorsUniqueness = true;
 
-    public ValidationContext(List<SearchRule> toValidate, List<String> urls) {
-        this.validRules = toValidate;
-        this.notValidRules = Maps.newHashMap();
+    public ValidationContext(List<SearchRule> searchRules, List<String> urls) {
+        this.searchRules = searchRules;
         this.urls = urls;
     }
 
-    public ValidationContext(List<SearchRule> toValidate, List<String> urls, boolean checkLocatorsUniqueness) {
-        this.validRules = toValidate;
-        this.notValidRules = Maps.newHashMap();
-        this.urls = urls;
-        this.checkLocatorsUniqueness = checkLocatorsUniqueness;
+    public void addValidationResult(ValidationResult validationResult){
+        validationResults.add(validationResult);
+    }
+
+    public List<SearchRule> getAllSearchRules(){
+        return searchRules;
     }
 
     public List<SearchRule> getValidRules() {
+        validationResults.stream().collect(groupingBy(ValidationResult::getSearchRule, ))
         return validRules;
     }
 
@@ -58,9 +61,5 @@ public class ValidationContext {
 
     public List<String> getUrls(){
         return urls;
-    }
-
-    public boolean isCheckLocatorsUniqueness() {
-        return checkLocatorsUniqueness;
     }
 }
