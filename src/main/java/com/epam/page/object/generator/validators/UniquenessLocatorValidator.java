@@ -24,32 +24,27 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        boolean isValidInnerSearchRules = true;
-        boolean isExistOnUrl = false;
-
         for (String url : validationContext.getUrls()) {
             if (searchRule.getInnerSearchRules() != null) {
                 for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
                     if (!isValid(innerSearchRule, validationContext)) {
-                        isValidInnerSearchRules = false;
-                        break;
+                        return false;
                     }
                 }
             }
+
             try {
                 Elements elements = searchRule.extractElementsFromWebSite(url);
                 if(elements.size() > 1){
-                    isExistOnUrl = false;
-                    break;
+                    return false;
                 }
-                isExistOnUrl = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
 
-        return isValidInnerSearchRules && isExistOnUrl;
+        return false;
     }
 
     @Override
