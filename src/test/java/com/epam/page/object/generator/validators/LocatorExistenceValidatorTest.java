@@ -2,6 +2,7 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
@@ -16,26 +17,27 @@ public class LocatorExistenceValidatorTest {
 	private LocatorExistenceValidator sut;
 	private ValidationContext context;
 	private List<SearchRule> rules = Lists.newArrayList();
+	private List<String> urls = Lists.newArrayList("https://www.google.com");
 
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		rules.add(ruleWithCss);
-		context = new ValidationContext(rules);
+		context = new ValidationContext(rules, urls);
 		sut = new LocatorExistenceValidator();
 	}
 
 	@Test
 	public void validate_allPassIfOnlyCssIsSet() throws Exception {
-		sut.validate(context);
+		sut.validate();
 		assertEquals(context.getValidRules().get(0), ruleWithCss);
 	}
 
 	@Test
 	public void validate_shouldAddSearchRuleToFailedIfNoLocatorSet() throws Exception {
-		context = new ValidationContext(Lists.newArrayList(ruleNoLocator));
-		sut.validate(context);
+		context = new ValidationContext(Lists.newArrayList(ruleNoLocator), urls);
+		sut.validate();
 		assertEquals(context.getNotValidRules().get(0), ruleNoLocator);
 	}
 }

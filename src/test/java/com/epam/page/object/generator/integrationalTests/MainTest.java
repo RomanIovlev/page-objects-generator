@@ -33,7 +33,7 @@ public class MainTest {
 
     private PageObjectsGenerator initPog(String jsonPath, String url,
                                          boolean checkLocatorUniqueness,
-                                         boolean forceGenerateFiles) {
+                                         boolean forceGenerateFiles) throws IOException {
         List<String> urls = new ArrayList<>();
 
         urls.add(url);
@@ -48,8 +48,7 @@ public class MainTest {
 
         ValidationContext validationContext = new ValidationContext(rulesFromJSON, urls);
 
-        SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes(),
-            validationContext);
+        SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes());
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
