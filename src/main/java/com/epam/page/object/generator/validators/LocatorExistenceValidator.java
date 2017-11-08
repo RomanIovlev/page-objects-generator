@@ -7,9 +7,6 @@ import static org.apache.commons.lang3.StringUtils.*;
 
 public class LocatorExistenceValidator extends AbstractValidator {
 
-    private int order;
-    private RuntimeException ex;
-
     public LocatorExistenceValidator() {
         super(0, new LocatorExistenceException("No xpath or css"));
     }
@@ -30,6 +27,7 @@ public class LocatorExistenceValidator extends AbstractValidator {
                 }
             }
         }
-        return isValidInnerSearchRules && (!isEmpty(searchRule.getCss()) || !isEmpty(searchRule.getXpath()));
+        return isValidInnerSearchRules && (!isEmpty(searchRule.getCss()) || !isEmpty(
+            searchRule.getXpath()));
     }
 }
