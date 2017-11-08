@@ -34,7 +34,7 @@ public class LocatorExistenceValidatorTest {
 		sut = new LocatorExistenceValidator();
 	}
 
-/*	@Test
+	@Test
 	public void validate_allPassIfOnlyCssIsSet() throws Exception {
 		context = new ValidationContext(Lists.newArrayList(ruleWithCss), null);
 		sut.validate(context);
@@ -52,7 +52,9 @@ public class LocatorExistenceValidatorTest {
 	public void validate_shouldAddSearchRuleToFailedIfNoLocatorSet() throws Exception {
 		context = new ValidationContext(Lists.newArrayList(ruleNoLocator), null);
 		sut.validate(context);
-		assertEquals(ruleNoLocator, context.getNotValidRules().get(0));
+		assertEquals(0, context.getValidRules().size());
+		assertEquals(1, context.getValidationResults().size());
+		assertEquals(ruleNoLocator, context.getValidationResults().get(0).getSearchRule());
 	}
 
 	@Test
@@ -64,9 +66,8 @@ public class LocatorExistenceValidatorTest {
 		context = new ValidationContext(rules, null);
 		sut.validate(context);
 		assertEquals(2, context.getValidRules().size());
-		assertEquals(1, context.getNotValidRules().size());
 	}
-*/
+
 	@Test
 	public void validate_TrueSearchRuleValidationWithCss(){
 		assertTrue(sut.isValid(ruleWithCss, context));

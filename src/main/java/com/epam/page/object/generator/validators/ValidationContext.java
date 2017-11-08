@@ -1,15 +1,10 @@
 package com.epam.page.object.generator.validators;
 
-import static java.util.stream.Collectors.groupingBy;
-
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
 
-import com.google.common.collect.Maps;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ValidationContext {
@@ -33,6 +28,7 @@ public class ValidationContext {
     }
 
     public List<SearchRule> getValidRules() {
+        if(validationResults.isEmpty()) return searchRules;
         return validationResults
                 .stream()
                 .collect(Collectors.groupingBy(ValidationResult::getSearchRule))

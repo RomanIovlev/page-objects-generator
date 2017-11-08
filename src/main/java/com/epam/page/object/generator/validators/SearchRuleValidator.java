@@ -6,6 +6,7 @@ import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -44,9 +45,8 @@ public class SearchRuleValidator {
     public void validate() throws IOException {
 
         for (Validator validator : validators) {
-            validator.validate(validationContext, true);
+            validator.validate(validationContext);
         }
-
 
 
 //        boolean exceptionOccurred = false;

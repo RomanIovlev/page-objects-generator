@@ -1,7 +1,6 @@
 package com.epam.page.object.generator.validators;
 
 
-import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 
 import java.util.ArrayList;
@@ -15,8 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.verify;
-
+//TODO rewrite all tests with creation Validators
 public class SearchRuleValidatorTest {
 
     private SearchRuleValidator sut;
@@ -60,7 +58,7 @@ public class SearchRuleValidatorTest {
         searchRules.add(ruleNoLocator);
         sut.validate();
 
-        Assert.assertEquals(2, context.getValidationResults().size());
+        Assert.assertEquals(1, context.getValidationResults().size());
         Assert.assertFalse(context.getValidationResults().get(0).isValid());
     }
 

@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
 import org.jsoup.select.Elements;
@@ -11,8 +10,16 @@ public class UniquenessLocatorValidator extends AbstractValidator {
         super(2);
     }
 
-    public UniquenessLocatorValidator(int order, RuntimeException ex) {
+    public UniquenessLocatorValidator(int order) {
         super(order);
+    }
+
+    public UniquenessLocatorValidator(boolean isValidateAllSearchRules){
+        super(2, isValidateAllSearchRules);
+    }
+
+    public UniquenessLocatorValidator(int order, boolean isValidateAllSearchRules) {
+        super(order, isValidateAllSearchRules);
     }
 
     @Override
@@ -35,6 +42,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
                     isExistOnUrl = false;
                     break;
                 }
+                isExistOnUrl = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }

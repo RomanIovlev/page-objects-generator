@@ -5,20 +5,32 @@ import com.epam.page.object.generator.model.SearchRule;
 
 public class TypeSupportedValidator extends AbstractValidator {
 
-	//TODO remove BuilderContrainer from Validator
-	BuildersContainer bc = new BuildersContainer();
+    //TODO remove BuilderContrainer from Validator
+    BuildersContainer bc = new BuildersContainer();
 
-	public TypeSupportedValidator() {
-		super(1);
-	}
+    public TypeSupportedValidator() {
+        super(1);
+    }
 
-	@Override
-	public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-		return bc.getSupportedTypes().contains(searchRule.getType().toLowerCase());
-	}
+    public TypeSupportedValidator(int order) {
+        super(order);
+    }
 
-	@Override
-	public String getExceptionMessage() {
-		return "This type is not supported";
-	}
+    public TypeSupportedValidator(boolean isValidateAllSearchRules){
+        super(1, isValidateAllSearchRules);
+    }
+
+    public TypeSupportedValidator(int order, boolean isValidateAllSearchRules) {
+        super(order, isValidateAllSearchRules);
+    }
+
+    @Override
+    public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
+        return bc.getSupportedTypes().contains(searchRule.getType().toLowerCase());
+    }
+
+    @Override
+    public String getExceptionMessage() {
+        return "This type is not supported";
+    }
 }

@@ -6,8 +6,6 @@ import static org.apache.commons.lang3.StringUtils.*;
 
 public class LocatorExistenceValidator extends AbstractValidator {
 
-    private int order;
-
     public LocatorExistenceValidator() {
         super(0);
     }
@@ -16,6 +14,13 @@ public class LocatorExistenceValidator extends AbstractValidator {
         super(order);
     }
 
+    public LocatorExistenceValidator(boolean isValidateAllSearchRules){
+        super(0, isValidateAllSearchRules);
+    }
+
+    public LocatorExistenceValidator(int order, boolean isValidateAllSearchRules) {
+        super(order, isValidateAllSearchRules);
+    }
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {

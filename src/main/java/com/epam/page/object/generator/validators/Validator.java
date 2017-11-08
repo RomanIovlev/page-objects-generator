@@ -1,13 +1,13 @@
 package com.epam.page.object.generator.validators;
 
-import java.util.List;
-
 public interface Validator {
 
-	void validate(ValidationContext validationContext, boolean isValidateAllRules);
+	void validate(ValidationContext validationContext);
 
-	int getOrder();
+	int getPriority();
 
 	String getExceptionMessage();
+
+	void setIsValidateAllSearchRules(boolean flag);
 
 }
