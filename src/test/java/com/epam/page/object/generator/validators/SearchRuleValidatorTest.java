@@ -41,7 +41,7 @@ public class SearchRuleValidatorTest {
 
         context = new ValidationContext(searchRules, urls);
 
-        sut = new SearchRuleValidator(supportedTypes, context);
+        sut = new SearchRuleValidator(context);
 
         sut.setCheckLocatorsUniqueness(false);
     }
@@ -52,7 +52,7 @@ public class SearchRuleValidatorTest {
         sut.validate();
 
         Assert.assertEquals(1, context.getValidRules().size());
-        Assert.assertEquals(3, context.getValidationResults().size());
+        Assert.assertEquals(2, context.getValidationResults().size());
     }
 
     @Test(expected = ValidationException.class)

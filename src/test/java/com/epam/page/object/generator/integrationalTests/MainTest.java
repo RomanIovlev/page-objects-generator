@@ -48,7 +48,7 @@ public class MainTest {
 
         ValidationContext validationContext = new ValidationContext(rulesFromJSON, urls);
 
-        SearchRuleValidator validator = new SearchRuleValidator(bc.getSupportedTypes(), validationContext);
+        SearchRuleValidator validator = new SearchRuleValidator(validationContext);
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
