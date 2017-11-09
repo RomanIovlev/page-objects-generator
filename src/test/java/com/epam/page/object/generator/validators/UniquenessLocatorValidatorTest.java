@@ -11,9 +11,14 @@ import static org.junit.Assert.*;
 
 public class UniquenessLocatorValidatorTest {
 
-    private SearchRule uniguenessInnerSearchRule =
+    private SearchRule uniguenessInnerSearchRuleWithXpath =
         new SearchRule(null, "text", "root", null, "//img[@class='dropimg']", null);
-    private SearchRule notUniguenessInnerSearchRule =
+    private SearchRule notUniguenessInnerSearchRuleWithXpath =
+        new SearchRule(null, "text", "root", null, "//button", null);
+
+    private SearchRule uniguenessInnerSearchRuleWithCss =
+        new SearchRule(null, "text", "root", null, "//img[@class='dropimg']", null);
+    private SearchRule notUniguenessInnerSearchRuleWithCss =
         new SearchRule(null, "text", "root", null, "//button", null);
 
     private SearchRule uniquenessSearchRuleWithXpath =
@@ -21,11 +26,22 @@ public class UniquenessLocatorValidatorTest {
     private SearchRule notUniquenessSearchRuleWithXpath =
         new SearchRule("dropdown", "text", null, null, "//button", null);
     private SearchRule complexRuleWithUniquenessXpathInnerRule =
-        new SearchRule("dropdown", "text", null, null, null,
-            Lists.newArrayList(uniguenessInnerSearchRule));
+        new SearchRule("dropdown", "text", null, null, "//img[@class='dropimg']",
+            Lists.newArrayList(uniguenessInnerSearchRuleWithXpath));
     private SearchRule complexRuleWithNotUniquenessXpathInnerRule =
-        new SearchRule("dropdown", "text", null, null, null,
-            Lists.newArrayList(notUniguenessInnerSearchRule));
+        new SearchRule("dropdown", "text", null, null, "//img[@class='dropimg']",
+            Lists.newArrayList(notUniguenessInnerSearchRuleWithXpath));
+
+    private SearchRule uniquenessSearchRuleWithCss =
+        new SearchRule("dropdown", "text", null, "img.dropimg", null, null);
+    private SearchRule notUniquenessSearchRuleWithCss =
+        new SearchRule("dropdown", "text", null, "img", null, null);
+    private SearchRule complexRuleWithUniquenessCssInnerRule =
+        new SearchRule("dropdown", "text", null, "img.dropimg", null,
+            Lists.newArrayList(uniguenessInnerSearchRuleWithCss));
+    private SearchRule complexRuleWithNotUniquenessCssInnerRule =
+        new SearchRule("dropdown", "text", null, "img.dropimg", null,
+            Lists.newArrayList(notUniguenessInnerSearchRuleWithCss));
 
     private UniquenessLocatorValidator sut;
     private ValidationContext context;
@@ -40,23 +56,43 @@ public class UniquenessLocatorValidatorTest {
     }
 
     @Test
-    public void validate_TrueUniquenessSearchRuleValidation() throws Exception {
+    public void validate_TrueUniquenessSearchRuleValidationWithXpath() throws Exception {
         assertTrue(sut.isValid(uniquenessSearchRuleWithXpath, context));
     }
 
     @Test
-    public void validate_FalseNotUniquenessSearchRuleValidation() throws Exception {
+    public void validate_FalseNotUniquenessSearchRuleValidationWithXpath() throws Exception {
         assertFalse(sut.isValid(notUniquenessSearchRuleWithXpath, context));
     }
 
     @Test
-    public void validate_TrueUniquenessInnerSearchRuleValidation() throws Exception {
+    public void validate_TrueUniquenessInnerSearchRuleValidationWithXpath() throws Exception {
         assertTrue(sut.isValid(complexRuleWithUniquenessXpathInnerRule, context));
     }
 
     @Test
-    public void validate_FalseNotUniquenessInnerSearchRuleValidation() throws Exception {
+    public void validate_FalseNotUniquenessInnerSearchRuleValidationWithXpath() throws Exception {
         assertFalse(sut.isValid(complexRuleWithNotUniquenessXpathInnerRule, context));
+    }
+
+    @Test
+    public void validate_TrueUniquenessSearchRuleValidationWithCss() throws Exception {
+        assertTrue(sut.isValid(uniquenessSearchRuleWithCss, context));
+    }
+
+    @Test
+    public void validate_FalseNotUniquenessSearchRuleValidationWithCss() throws Exception {
+        assertFalse(sut.isValid(notUniquenessSearchRuleWithCss, context));
+    }
+
+    @Test
+    public void validate_TrueUniquenessInnerSearchRuleValidationWithCss() throws Exception {
+        assertTrue(sut.isValid(complexRuleWithUniquenessCssInnerRule, context));
+    }
+
+    @Test
+    public void validate_FalseNotUniquenessInnerSearchRuleValidationWithCss() throws Exception {
+        assertFalse(sut.isValid(complexRuleWithNotUniquenessCssInnerRule, context));
     }
 
     @After
