@@ -51,4 +51,8 @@ public class ValidationContext {
     public List<ValidationResult> getValidationResults() {
         return validationResults;
     }
+
+    public boolean hasInvalidRules(){
+        return validationResults.stream().anyMatch(validationResult -> !validationResult.isValid());
+    }
 }

@@ -17,8 +17,11 @@ import org.jsoup.select.Elements;
 
 public class SearchRuleValidator {
 
-    private List<Validator> validators = Lists.newArrayList(new LocatorExistenceValidator(),
-            new TypeSupportedValidator());
+    private List<Validator> validators = Lists.newArrayList(
+        new LocatorExistenceValidator(),
+        new TypeSupportedValidator(),
+        new IntermediateCheckValidator(),
+        new UniquenessLocatorValidator());
 
     private ValidationContext validationContext;
 
@@ -46,7 +49,6 @@ public class SearchRuleValidator {
         for (Validator validator : validators) {
             validator.validate(validationContext);
         }
-
 
 //        boolean exceptionOccurred = false;
 //        String msg = "";
@@ -113,7 +115,7 @@ public class SearchRuleValidator {
     }
 
     private void checkLocatorUniquenessExceptions(List<SearchRule> searchRules, String url)
-            throws IOException {
+        throws IOException {
         List<String> notUniqueLocators = new ArrayList<>();
 
         StringBuilder builder = new StringBuilder();
@@ -148,7 +150,7 @@ public class SearchRuleValidator {
 
             if (!notUniqueLocators.isEmpty()) {
                 throw new NotUniqueSelectorsException(
-                        "Search rules with not unique locator: \n" + notUniqueLocators);
+                    "Search rules with not unique locator: \n" + notUniqueLocators);
             }
         }
 

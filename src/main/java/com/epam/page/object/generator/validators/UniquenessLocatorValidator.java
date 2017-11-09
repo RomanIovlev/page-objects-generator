@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 public class UniquenessLocatorValidator extends AbstractValidator {
 
     public UniquenessLocatorValidator() {
-        super(2);
+        super(51);
     }
 
     public UniquenessLocatorValidator(int order) {
@@ -15,7 +15,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     }
 
     public UniquenessLocatorValidator(boolean isValidateAllSearchRules){
-        super(2, isValidateAllSearchRules);
+        super(51, isValidateAllSearchRules);
     }
 
     public UniquenessLocatorValidator(int order, boolean isValidateAllSearchRules) {

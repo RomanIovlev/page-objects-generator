@@ -28,7 +28,7 @@ public abstract class AbstractValidator implements Validator {
      * <p>
      * For priority you need to use int numbers: <br/>
      * <ul>
-     * <li>0-50 fot validators which validate format of JSON files</li>
+     * <li>0-49 fot validators which validate format of JSON files</li>
      * <li>51+ for validators which validate SearchRules by the urls</li>
      * </ul>
      *

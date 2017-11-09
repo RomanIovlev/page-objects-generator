@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.validators;
 
 
+import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 
 import java.util.ArrayList;
@@ -51,15 +52,13 @@ public class SearchRuleValidatorTest {
         sut.validate();
 
         Assert.assertEquals(1, context.getValidRules().size());
+        Assert.assertEquals(3, context.getValidationResults().size());
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void validateSearchRules_NotLocatorExist() throws Exception {
         searchRules.add(ruleNoLocator);
         sut.validate();
-
-        Assert.assertEquals(1, context.getValidationResults().size());
-        Assert.assertFalse(context.getValidationResults().get(0).isValid());
     }
 
     @After
