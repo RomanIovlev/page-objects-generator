@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
@@ -50,6 +51,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
         String name;
         String format;
         String arg;
+        AnnotationSpec annotation;
 
         AnnotationMember(String name, String format, String arg) {
             this.name = name;
@@ -57,6 +59,11 @@ public class JavaPoetAdapter implements JavaFileWriter {
             this.arg = arg;
         }
 
+        public AnnotationMember(String name, String format, AnnotationSpec annotation) {
+            this.name = name;
+            this.format = format;
+            this.annotation = annotation;
+        }
     }
 
     private TypeSpec buildPageClass(List<SearchRule> searchRules, String url) throws IOException {
@@ -90,38 +97,29 @@ public class JavaPoetAdapter implements JavaFileWriter {
                         resultXpathSelector(searchRule, elementRequiredValue));
                 }
 
-                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass,
-                    commonElementAnnotationMember);
+                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass, Arrays.asList(commonElementAnnotationMember));
             } else {
                 // сложная аннотация
-
-                // TODO: переписать с нащшими внутренними методами
-
+                AnnotationMember innerAnnotationMember;
                 elementRequiredValue = searchRule.getType();
-
-                AnnotationSpec.Builder annotationBuilder = AnnotationSpec
-                    .builder(fieldAnnotationClass);
-                String searchAttribute = searchRule.getRequiredAttribute();
+                List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
                 for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-                    AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-                    String annotationElementName = innerSearchRule.getTitle();
 
+                    String annotationElementName = innerSearchRule.getTitle();
                     if (innerSearchRule.getCss() != null) {
-                        innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
-                            innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
+                        innerAnnotationMember = new AnnotationMember("css", "$S", resultCssSelector(innerSearchRule,
+                                innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
                     } else {
-                        innerAnnotation
-                            .addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
+                        innerAnnotationMember = new AnnotationMember("xpath", "$S", resultCssSelector(innerSearchRule,
                                 innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
                     }
 
-                    annotationBuilder
-                        .addMember(annotationElementName, "$L", innerAnnotation.build());
+                    AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class, Arrays.asList(innerAnnotationMember));
+                    innerAnnotations.add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
                 }
-                // Конец TODO
 
-                elementFieldAnnotation = annotationBuilder.build();
+                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass, innerAnnotations);
             }
 
             fields.add(buildFieldSpec(fieldClass, elementFieldAnnotation,
@@ -140,10 +138,11 @@ public class JavaPoetAdapter implements JavaFileWriter {
             String pageFieldName = firstLetterDown(titleName);
             String pageClassName = firstLetterUp(titleName);
             ClassName pageClass = getPageClassName(packageName, pageClassName);
+            List<AnnotationMember> pageAnnotations = new ArrayList<>();
+            pageAnnotations.add(new AnnotationMember("url", "$S", getUrlWithoutDomain(url)));
+            pageAnnotations.add(new AnnotationMember("title", "$S", getPageTitle(url)));
 
-            AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class,
-                new AnnotationMember("url", "$S", getUrlWithoutDomain(url)),
-                new AnnotationMember("title", "$S", getPageTitle(url)));
+            AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class, pageAnnotations);
 
             pageFields
                 .add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
@@ -151,7 +150,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         AnnotationMember siteAnnotationMember = new AnnotationMember("domain", "$S",
             getDomainName(urls));
-        AnnotationSpec siteClassAnnotation = buildAnnotationSpec(JSite.class, siteAnnotationMember);
+        AnnotationSpec siteClassAnnotation = buildAnnotationSpec(JSite.class, Arrays.asList(siteAnnotationMember));
 
         return buildTypeSpec("Site", WebSite.class, siteClassAnnotation, pageFields, PUBLIC);
     }
@@ -197,7 +196,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec buildAnnotationSpec(Class annotationClass,
-                                               AnnotationMember... annotationMembers) {
+                                               List<AnnotationMember> annotationMembers) {
         AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
 
         for (AnnotationMember annotationMember : annotationMembers) {
