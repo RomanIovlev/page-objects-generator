@@ -31,7 +31,6 @@ public class UniquenessLocatorValidator extends AbstractValidator {
                         return false;
                     }
                 }
-                return true;
             }
 
             try {
