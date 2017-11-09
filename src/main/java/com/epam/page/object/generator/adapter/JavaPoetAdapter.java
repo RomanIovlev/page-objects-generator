@@ -38,8 +38,11 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
     private SupportedTypesContainer supportedTypesContainer;
 
+    private XpathToCssTransformer xpathToCssTransformer;
+
     public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer) {
         this.supportedTypesContainer = supportedTypesContainer;
+        this.xpathToCssTransformer = new XpathToCssTransformer();
     }
 
     private class AnnotationMember {
@@ -77,7 +80,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
                 if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
                     if (searchRule.getCss() == null) {
-                        searchRule = XpathToCssTransformer.transformRule(searchRule);
+                        searchRule = xpathToCssTransformer.transformRule(searchRule);
                     }
 
                     commonElementAnnotationMember = new AnnotationMember("css", "$S",
