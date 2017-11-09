@@ -14,7 +14,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
         super(order);
     }
 
-    public UniquenessLocatorValidator(boolean isValidateAllSearchRules){
+    public UniquenessLocatorValidator(boolean isValidateAllSearchRules) {
         super(51, isValidateAllSearchRules);
     }
 
@@ -25,17 +25,14 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
         for (String url : validationContext.getUrls()) {
-            if (searchRule.getInnerSearchRules() != null) {
-                for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-                    if (!isValid(innerSearchRule, validationContext)) {
-                        return false;
-                    }
-                }
+
+            if (!isInnerRulesValid(searchRule, validationContext)) {
+                return false;
             }
 
             try {
                 Elements elements = searchRule.extractElementsFromWebSite(url);
-                if(elements.size() > 1){
+                if (elements.size() > 1) {
                     return false;
                 }
             } catch (IOException e) {

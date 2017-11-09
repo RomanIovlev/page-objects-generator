@@ -64,6 +64,18 @@ public abstract class AbstractValidator implements Validator {
         this.isValidateAllSearchRules = isValidateAllSearchRules;
     }
 
+    public boolean isInnerRulesValid(SearchRule searchRule, ValidationContext validationContext) {
+        if (searchRule.getInnerSearchRules() != null) {
+            for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+                if (!isValid(innerSearchRule, validationContext)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public void validate(ValidationContext validationContext) {
 

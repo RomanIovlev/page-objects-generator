@@ -14,7 +14,7 @@ public class LocatorExistenceValidator extends AbstractValidator {
         super(order);
     }
 
-    public LocatorExistenceValidator(boolean isValidateAllSearchRules){
+    public LocatorExistenceValidator(boolean isValidateAllSearchRules) {
         super(0, isValidateAllSearchRules);
     }
 
@@ -24,14 +24,9 @@ public class LocatorExistenceValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        if (searchRule.getInnerSearchRules() != null) {
-            for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-                if (!isValid(innerSearchRule, validationContext)) {
-                    return false;
-                }
-            }
-        }
-        return !isEmpty(searchRule.getCss()) || !isEmpty(searchRule.getXpath());
+
+        return (isInnerRulesValid(searchRule, validationContext)) && (!isEmpty(searchRule.getCss())
+            || !isEmpty(searchRule.getXpath()));
     }
 
     @Override
