@@ -8,8 +8,6 @@ import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static com.epam.page.object.generator.utils.URLUtils.getDomainName;
 import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
-import static javax.lang.model.element.Modifier.PUBLIC;
-import static javax.lang.model.element.Modifier.STATIC;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
@@ -30,6 +28,10 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
+
 import javax.lang.model.element.Modifier;
 import org.openqa.selenium.support.FindBy;
 
