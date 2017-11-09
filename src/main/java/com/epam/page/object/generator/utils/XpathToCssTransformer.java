@@ -10,11 +10,7 @@ import javax.script.ScriptException;
 
 public class XpathToCssTransformer {
 
-    private XpathToCssTransformer() {
-
-    }
-
-    public static SearchRule transformRule(SearchRule searchRule) {
+    public SearchRule transformRule(SearchRule searchRule) {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
         try {
