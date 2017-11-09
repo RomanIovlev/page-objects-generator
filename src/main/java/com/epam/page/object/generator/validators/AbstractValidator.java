@@ -2,7 +2,9 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * AbstractValidator is the abstract base class for crating a new Validator,
@@ -65,22 +67,16 @@ public abstract class AbstractValidator implements Validator {
     @Override
     public void validate(ValidationContext validationContext) {
 
-        Iterator<SearchRule> iterator;
-        if (isValidateAllSearchRules) {
-            iterator = validationContext.getAllSearchRules().iterator();
-        } else {
-            iterator = validationContext.getValidRules().iterator();
-        }
+        List<SearchRule> searchRules = new ArrayList<>();
+        searchRules.addAll(isValidateAllSearchRules ? validationContext.getAllSearchRules()
+            : validationContext.getValidRules());
 
-        while (iterator.hasNext()) {
-            SearchRule searchRule = iterator.next();
-            if (!isValid(searchRule, validationContext)) {
-                validationContext
-                    .addValidationResult(new ValidationResult(false, this, searchRule));
-            } else {
-                validationContext.addValidationResult(new ValidationResult(true, this, searchRule));
-            }
-        }
+        searchRules.forEach(searchRule -> {
+            validationContext
+                .addValidationResult(
+                    !isValid(searchRule, validationContext) ? new ValidationResult(false, this,
+                        searchRule) : new ValidationResult(true, this, searchRule));
+        });
     }
 
     @Override
