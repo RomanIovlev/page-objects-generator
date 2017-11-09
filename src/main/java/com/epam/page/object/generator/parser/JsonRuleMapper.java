@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class JsonRuleMapper {
 
     private File file;
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     public JsonRuleMapper(File file, ObjectMapper objectMapper) {
         this.file = file;

@@ -1,17 +1,17 @@
 package com.epam.page.object.generator.integrationalTests;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
+import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
+import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
 import com.epam.page.object.generator.validators.ValidationContext;
-import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
@@ -40,7 +40,9 @@ public class MainTest {
 
         JsonRuleMapper parser = new JsonRuleMapper(new File(jsonPath), new ObjectMapper());
 
-        JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc);
+        XpathToCssTransformation xpathToCssTransformation = new XpathToCssTransformation();
+
+        JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
 
         List<SearchRule> rulesFromJSON = parser.getRulesFromJSON();
 
@@ -58,7 +60,7 @@ public class MainTest {
     }
 
     @Test
-    public void pageObjectsGenerator_ok() throws IOException, URISyntaxException {
+    public void pageObjectsGenerator_ok() throws Exception {
 
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown.json",
@@ -70,7 +72,7 @@ public class MainTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectsGenerator_wrongType() throws IOException, URISyntaxException {
+    public void pageObjectsGenerator_wrongType() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-type.json",
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
@@ -81,7 +83,7 @@ public class MainTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectsGenerator_forceFileGenerate() throws IOException, URISyntaxException {
+    public void pageObjectsGenerator_forceFileGenerate() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-type.json",
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",

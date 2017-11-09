@@ -1,26 +1,5 @@
 package com.epam.page.object.generator.adapter;
 
-import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
-import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
-import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.utils.XpathToCssTransformer;
-import com.epam.page.object.generator.writer.JavaFileWriter;
-import com.squareup.javapoet.AnnotationSpec;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.TypeSpec;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
@@ -32,6 +11,28 @@ import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
+import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
+import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
+import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.XpathToCssTransformation;
+import com.epam.page.object.generator.writer.JavaFileWriter;
+import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeSpec;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.openqa.selenium.support.FindBy;
 
@@ -39,11 +40,11 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
     private SupportedTypesContainer supportedTypesContainer;
 
-    private XpathToCssTransformer xpathToCssTransformer;
+    private XpathToCssTransformation xpathToCssTransformation;
 
-    public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer) {
+    public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer, XpathToCssTransformation xpathToCssTransformation) {
         this.supportedTypesContainer = supportedTypesContainer;
-        this.xpathToCssTransformer = new XpathToCssTransformer();
+        this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
     private class AnnotationMember {
@@ -59,14 +60,15 @@ public class JavaPoetAdapter implements JavaFileWriter {
             this.arg = arg;
         }
 
-        public AnnotationMember(String name, String format, AnnotationSpec annotation) {
+        AnnotationMember(String name, String format, AnnotationSpec annotation) {
             this.name = name;
             this.format = format;
             this.annotation = annotation;
         }
+
     }
 
-    private TypeSpec buildPageClass(List<SearchRule> searchRules, String url) throws IOException {
+    private TypeSpec buildPageClass(List<SearchRule> searchRules, String url) throws IOException, XpathToCssTransformerException {
         List<FieldSpec> fields = new ArrayList<>();
         String pageClassName = firstLetterUp(splitCamelCase(getPageTitle(url)));
 
@@ -80,42 +82,44 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
             AnnotationSpec elementFieldAnnotation;
 
-            // добавить аннотацию
             if (searchRule.getInnerSearchRules() == null) {
-                // простая аннотация
                 AnnotationMember commonElementAnnotationMember;
 
                 if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
                     if (searchRule.getCss() == null) {
-                        searchRule = xpathToCssTransformer.transformRule(searchRule);
+                        searchRule = xpathToCssTransformation.transformRule(searchRule);
                     }
 
                     commonElementAnnotationMember = new AnnotationMember("css", "$S",
                         resultCssSelector(searchRule, elementRequiredValue));
                 } else {
-                    commonElementAnnotationMember = new AnnotationMember("css", "$S",
+                    commonElementAnnotationMember = new AnnotationMember("xpath", "$S",
                         resultXpathSelector(searchRule, elementRequiredValue));
                 }
 
-                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass, Arrays.asList(commonElementAnnotationMember));
+                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass, Collections.singletonList(commonElementAnnotationMember));
             } else {
-                // сложная аннотация
                 AnnotationMember innerAnnotationMember;
                 elementRequiredValue = searchRule.getType();
                 List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
                 for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+					String annotationElementName = innerSearchRule.getTitle();
 
-                    String annotationElementName = innerSearchRule.getTitle();
-                    if (innerSearchRule.getCss() != null) {
-                        innerAnnotationMember = new AnnotationMember("css", "$S", resultCssSelector(innerSearchRule,
-                                innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-                    } else {
-                        innerAnnotationMember = new AnnotationMember("xpath", "$S", resultCssSelector(innerSearchRule,
-                                innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-                    }
+					if (!innerSearchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+						if (innerSearchRule.getCss() == null) {
+							innerSearchRule = xpathToCssTransformation.transformRule(innerSearchRule);
+						}
 
-                    AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class, Arrays.asList(innerAnnotationMember));
+						innerAnnotationMember = new AnnotationMember("css", "$S", resultCssSelector(innerSearchRule,
+							innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
+
+					} else {
+						innerAnnotationMember = new AnnotationMember("xpath", "$S", resultCssSelector(innerSearchRule,
+							innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
+					}
+
+                    AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class, Collections.singletonList(innerAnnotationMember));
                     innerAnnotations.add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
                 }
 
@@ -211,10 +215,9 @@ public class JavaPoetAdapter implements JavaFileWriter {
     @Override
     public void writeFile(String packageName, String outputDir, List<SearchRule> searchRules,
                           List<String> urls)
-        throws IOException, URISyntaxException {
+		throws IOException, URISyntaxException, XpathToCssTransformerException {
         JavaFile javaFile;
 
-        // Для сайта
         String sitePackageName = packageName + ".site";
 
         TypeSpec siteClass = buildSiteClass(sitePackageName, urls);
@@ -224,7 +227,6 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         javaFile.writeTo(Paths.get(outputDir));
 
-        // для страницы
         String pagesPackageName = packageName + ".page";
 
         for (String url : urls) {

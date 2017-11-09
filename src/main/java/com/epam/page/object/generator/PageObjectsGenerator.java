@@ -2,6 +2,7 @@ package com.epam.page.object.generator;
 
 import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.SearchRuleValidator;
@@ -36,7 +37,8 @@ public class PageObjectsGenerator {
 		this.packageName = packageName;
 	}
 
-	public void generatePageObjects() throws IOException, URISyntaxException {
+	public void generatePageObjects()
+		throws IOException, URISyntaxException, XpathToCssTransformerException {
 		List<SearchRule> searchRules = parser.getRulesFromJSON();
 
 		try {
@@ -51,7 +53,8 @@ public class PageObjectsGenerator {
 		generateJavaFiles(searchRules);
 	}
 
-	private void generateJavaFiles(List<SearchRule> searchRules) throws IOException, URISyntaxException {
+	private void generateJavaFiles(List<SearchRule> searchRules)
+		throws IOException, URISyntaxException, XpathToCssTransformerException {
 		javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
 	}
 
