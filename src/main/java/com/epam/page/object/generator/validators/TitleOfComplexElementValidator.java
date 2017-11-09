@@ -5,36 +5,46 @@ import com.epam.page.object.generator.model.SearchRule;
 
 import java.lang.reflect.Method;
 
-public class TitleOfComplexElementValiadator extends AbstractValidator{
+public class TitleOfComplexElementValidator extends AbstractValidator{
 
-    public TitleOfComplexElementValiadator() {
+    public TitleOfComplexElementValidator() {
         super(3);
     }
 
-    public TitleOfComplexElementValiadator(int priority) {
+    public TitleOfComplexElementValidator(int priority) {
         super(priority);
     }
 
-    public TitleOfComplexElementValiadator(int priority, boolean isValidateAllSearchRules) {
+    public TitleOfComplexElementValidator(int priority, boolean isValidateAllSearchRules) {
         super(priority, isValidateAllSearchRules);
     }
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-       String title = searchRule.getTitle();
-       String type = searchRule.getType();
+        String type = searchRule.getType();
         SupportedTypesContainer supportedTypesContainer = new SupportedTypesContainer();
+
+        if(searchRule.getInnerSearchRules() == null){
+            return true;
+        }
 
         Class elementAnnotation = supportedTypesContainer.getSupportedTypesMap()
                 .get(type)
                 .getElementAnnotation();
+        for (SearchRule sr : searchRule.getInnerSearchRules()) {
+            Boolean valid = false;
+            String title = sr.getTitle();
 
-        for (Method m: elementAnnotation.getDeclaredMethods()) {
-            if(title.equals(m.getName())){
-                return true;
+
+            for (Method m : elementAnnotation.getDeclaredMethods()) {
+                if (title.equals(m.getName())) {
+                    valid = true;
+                    break;
+                }
             }
+            if(!valid) return false;
         }
-        return false;
+        return true;
     }
 
     @Override
