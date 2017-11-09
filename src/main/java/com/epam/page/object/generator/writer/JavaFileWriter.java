@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface JavaFileWriter {
 
-	void writeFile(String packageName, String outputDir, List<SearchRule> searchRules, List<String> urls) throws IOException, URISyntaxException;
+    void writeFile(String packageName, String outputDir, List<SearchRule> searchRules,
+                   List<String> urls) throws IOException, URISyntaxException;
 
 }

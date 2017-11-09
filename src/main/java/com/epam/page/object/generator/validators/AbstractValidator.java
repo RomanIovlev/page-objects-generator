@@ -12,6 +12,7 @@ public abstract class AbstractValidator implements Validator {
     public AbstractValidator(int priority) {
         this.priority = priority;
     }
+
     public AbstractValidator(int priority, boolean isValidateAllSearchRules) {
         this.priority = priority;
         this.isValidateAllSearchRules = isValidateAllSearchRules;
@@ -21,19 +22,18 @@ public abstract class AbstractValidator implements Validator {
     public void validate(ValidationContext validationContext) {
 
         Iterator<SearchRule> iterator;
-        if(isValidateAllSearchRules){
+        if (isValidateAllSearchRules) {
             iterator = validationContext.getAllSearchRules().iterator();
-        }
-        else{
+        } else {
             iterator = validationContext.getValidRules().iterator();
         }
 
         while (iterator.hasNext()) {
             SearchRule searchRule = iterator.next();
             if (!isValid(searchRule, validationContext)) {
-                validationContext.addValidationResult(new ValidationResult(false, this, searchRule));
-            }
-            else {
+                validationContext
+                    .addValidationResult(new ValidationResult(false, this, searchRule));
+            } else {
                 validationContext.addValidationResult(new ValidationResult(true, this, searchRule));
             }
         }

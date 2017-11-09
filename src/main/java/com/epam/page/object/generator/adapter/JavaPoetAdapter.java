@@ -35,187 +35,203 @@ import org.openqa.selenium.support.FindBy;
 
 public class JavaPoetAdapter implements JavaFileWriter {
 
-	private SupportedTypesContainer supportedTypesContainer;
+    private SupportedTypesContainer supportedTypesContainer;
 
-	public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer) {
-		this.supportedTypesContainer = supportedTypesContainer;
-	}
+    public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer) {
+        this.supportedTypesContainer = supportedTypesContainer;
+    }
 
-	private class AnnotationMember {
+    private class AnnotationMember {
 
-		String name;
-		String format;
-		String arg;
+        String name;
+        String format;
+        String arg;
 
-		AnnotationMember(String name, String format, String arg) {
-			this.name = name;
-			this.format = format;
-			this.arg = arg;
-		}
+        AnnotationMember(String name, String format, String arg) {
+            this.name = name;
+            this.format = format;
+            this.arg = arg;
+        }
 
-	}
+    }
 
-	private TypeSpec buildPageClass(List<SearchRule> searchRules, String url) throws IOException {
-		List<FieldSpec> fields = new ArrayList<>();
-		String pageClassName = firstLetterUp(splitCamelCase(getPageTitle(url)));
+    private TypeSpec buildPageClass(List<SearchRule> searchRules, String url) throws IOException {
+        List<FieldSpec> fields = new ArrayList<>();
+        String pageClassName = firstLetterUp(splitCamelCase(getPageTitle(url)));
 
-		for (SearchRule searchRule : searchRules) {
-			ClassAndAnnotationPair currentElementPair = supportedTypesContainer.getSupportedTypesMap().get(searchRule.getType().toLowerCase());
-			Class fieldClass = currentElementPair.getElementClass();
-			Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
+        for (SearchRule searchRule : searchRules) {
+            ClassAndAnnotationPair currentElementPair = supportedTypesContainer
+                .getSupportedTypesMap().get(searchRule.getType().toLowerCase());
+            Class fieldClass = currentElementPair.getElementClass();
+            Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
 
-			String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
+            String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
 
-			AnnotationSpec elementFieldAnnotation;
+            AnnotationSpec elementFieldAnnotation;
 
-			// добавить аннотацию
-			if (searchRule.getInnerSearchRules() == null) {
-				// простая аннотация
-				AnnotationMember commonElementAnnotationMember;
+            // добавить аннотацию
+            if (searchRule.getInnerSearchRules() == null) {
+                // простая аннотация
+                AnnotationMember commonElementAnnotationMember;
 
-				if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
-					if (searchRule.getCss() == null) {
-						searchRule = XpathToCssTransformer.transformRule(searchRule);
-					}
+                if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+                    if (searchRule.getCss() == null) {
+                        searchRule = XpathToCssTransformer.transformRule(searchRule);
+                    }
 
-					commonElementAnnotationMember = new AnnotationMember("css", "$S", resultCssSelector(searchRule, elementRequiredValue));
-				} else {
-					commonElementAnnotationMember = new AnnotationMember("css", "$S", resultXpathSelector(searchRule, elementRequiredValue));
-				}
+                    commonElementAnnotationMember = new AnnotationMember("css", "$S",
+                        resultCssSelector(searchRule, elementRequiredValue));
+                } else {
+                    commonElementAnnotationMember = new AnnotationMember("css", "$S",
+                        resultXpathSelector(searchRule, elementRequiredValue));
+                }
 
-				elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass, commonElementAnnotationMember);
-			} else {
-				// сложная аннотация
+                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass,
+                    commonElementAnnotationMember);
+            } else {
+                // сложная аннотация
 
-				// TODO: переписать с нащшими внутренними методами
+                // TODO: переписать с нащшими внутренними методами
 
-				elementRequiredValue = searchRule.getType();
+                elementRequiredValue = searchRule.getType();
 
-				AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(fieldAnnotationClass);
-				String searchAttribute = searchRule.getRequiredAttribute();
+                AnnotationSpec.Builder annotationBuilder = AnnotationSpec
+                    .builder(fieldAnnotationClass);
+                String searchAttribute = searchRule.getRequiredAttribute();
 
-				for (SearchRule innerSearchRule: searchRule.getInnerSearchRules()) {
-					AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
-					String annotationElementName = innerSearchRule.getTitle();
+                for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+                    AnnotationSpec.Builder innerAnnotation = AnnotationSpec.builder(FindBy.class);
+                    String annotationElementName = innerSearchRule.getTitle();
 
-					if (innerSearchRule.getCss() != null) {
-						innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
-							innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-					} else {
-						innerAnnotation.addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
-							innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-					}
+                    if (innerSearchRule.getCss() != null) {
+                        innerAnnotation.addMember("css", "$S", resultCssSelector(innerSearchRule,
+                            innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
+                    } else {
+                        innerAnnotation
+                            .addMember("xpath", "$S", resultXpathSelector(innerSearchRule,
+                                innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
+                    }
 
-					annotationBuilder.addMember(annotationElementName, "$L", innerAnnotation.build());
-				}
-				// Конец TODO
+                    annotationBuilder
+                        .addMember(annotationElementName, "$L", innerAnnotation.build());
+                }
+                // Конец TODO
 
-				elementFieldAnnotation = annotationBuilder.build();
-			}
+                elementFieldAnnotation = annotationBuilder.build();
+            }
 
-			fields.add(buildFieldSpec(fieldClass, elementFieldAnnotation, firstLetterDown(splitCamelCase(elementRequiredValue)), PUBLIC));
-		}
+            fields.add(buildFieldSpec(fieldClass, elementFieldAnnotation,
+                firstLetterDown(splitCamelCase(elementRequiredValue)), PUBLIC));
+        }
 
-		return buildTypeSpec(pageClassName, WebPage.class, fields, PUBLIC);
-	}
+        return buildTypeSpec(pageClassName, WebPage.class, fields, PUBLIC);
+    }
 
-	private TypeSpec buildSiteClass(String packageName, List<String> urls) throws IOException, URISyntaxException {
-		List<FieldSpec> pageFields = new ArrayList<>();
+    private TypeSpec buildSiteClass(String packageName, List<String> urls)
+        throws IOException, URISyntaxException {
+        List<FieldSpec> pageFields = new ArrayList<>();
 
-		for (String url : urls) {
-			String titleName = splitCamelCase(getPageTitle(url));
-			String pageFieldName = firstLetterDown(titleName);
-			String pageClassName = firstLetterUp(titleName);
-			ClassName pageClass = getPageClassName(packageName, pageClassName);
+        for (String url : urls) {
+            String titleName = splitCamelCase(getPageTitle(url));
+            String pageFieldName = firstLetterDown(titleName);
+            String pageClassName = firstLetterUp(titleName);
+            ClassName pageClass = getPageClassName(packageName, pageClassName);
 
-			AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class,
-				new AnnotationMember("url", "$S", getUrlWithoutDomain(url)),
-				new AnnotationMember("title", "$S", getPageTitle(url)));
+            AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class,
+                new AnnotationMember("url", "$S", getUrlWithoutDomain(url)),
+                new AnnotationMember("title", "$S", getPageTitle(url)));
 
-			pageFields.add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
-		}
+            pageFields
+                .add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
+        }
 
-		AnnotationMember siteAnnotationMember = new AnnotationMember("domain", "$S", getDomainName(urls));
-		AnnotationSpec siteClassAnnotation = buildAnnotationSpec(JSite.class, siteAnnotationMember);
+        AnnotationMember siteAnnotationMember = new AnnotationMember("domain", "$S",
+            getDomainName(urls));
+        AnnotationSpec siteClassAnnotation = buildAnnotationSpec(JSite.class, siteAnnotationMember);
 
-		return buildTypeSpec("Site", WebSite.class, siteClassAnnotation, pageFields, PUBLIC);
-	}
+        return buildTypeSpec("Site", WebSite.class, siteClassAnnotation, pageFields, PUBLIC);
+    }
 
-	private ClassName getPageClassName(String packageName, String pageClassName) {
-		return ClassName.get(packageName + ".page", pageClassName);
-	}
+    private ClassName getPageClassName(String packageName, String pageClassName) {
+        return ClassName.get(packageName + ".page", pageClassName);
+    }
 
-	private TypeSpec buildTypeSpec(String className, Class superClass, AnnotationSpec annotationSpec,
-								   List<FieldSpec> fieldSpecs, Modifier... modifiers){
-		return TypeSpec.classBuilder(className)
-			.addModifiers(modifiers)
-			.superclass(superClass)
-			.addAnnotation(annotationSpec)
-			.addFields(fieldSpecs)
-			.build();
-	}
+    private TypeSpec buildTypeSpec(String className, Class superClass,
+                                   AnnotationSpec annotationSpec,
+                                   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
+        return TypeSpec.classBuilder(className)
+            .addModifiers(modifiers)
+            .superclass(superClass)
+            .addAnnotation(annotationSpec)
+            .addFields(fieldSpecs)
+            .build();
+    }
 
-	private TypeSpec buildTypeSpec(String className, Class superClass,
-								   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
-		return TypeSpec.classBuilder(className)
-			.addModifiers(modifiers)
-			.superclass(superClass)
-			.addFields(fieldSpecs)
-			.build();
-	}
+    private TypeSpec buildTypeSpec(String className, Class superClass,
+                                   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
+        return TypeSpec.classBuilder(className)
+            .addModifiers(modifiers)
+            .superclass(superClass)
+            .addFields(fieldSpecs)
+            .build();
+    }
 
-	private FieldSpec buildFieldSpec(ClassName fieldClass, AnnotationSpec annotationSpec, String fieldName, Modifier... modifiers) {
-		return FieldSpec.builder(fieldClass, fieldName)
-			.addModifiers(modifiers)
-			.addAnnotation(annotationSpec)
-			.build();
-	}
+    private FieldSpec buildFieldSpec(ClassName fieldClass, AnnotationSpec annotationSpec,
+                                     String fieldName, Modifier... modifiers) {
+        return FieldSpec.builder(fieldClass, fieldName)
+            .addModifiers(modifiers)
+            .addAnnotation(annotationSpec)
+            .build();
+    }
 
-	private FieldSpec buildFieldSpec(Class fieldClass, AnnotationSpec annotationSpec, String fieldName, Modifier... modifiers) {
-		return FieldSpec.builder(fieldClass, fieldName)
-			.addModifiers(modifiers)
-			.addAnnotation(annotationSpec)
-			.build();
-	}
+    private FieldSpec buildFieldSpec(Class fieldClass, AnnotationSpec annotationSpec,
+                                     String fieldName, Modifier... modifiers) {
+        return FieldSpec.builder(fieldClass, fieldName)
+            .addModifiers(modifiers)
+            .addAnnotation(annotationSpec)
+            .build();
+    }
 
-	private AnnotationSpec buildAnnotationSpec(Class annotationClass, AnnotationMember ... annotationMembers) {
-		AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
+    private AnnotationSpec buildAnnotationSpec(Class annotationClass,
+                                               AnnotationMember... annotationMembers) {
+        AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
 
-		for (AnnotationMember annotationMember: annotationMembers) {
-			annotationSpec = annotationSpec.toBuilder()
-				.addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
-				.build();
-		}
+        for (AnnotationMember annotationMember : annotationMembers) {
+            annotationSpec = annotationSpec.toBuilder()
+                .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
+                .build();
+        }
 
-		return annotationSpec;
-	}
+        return annotationSpec;
+    }
 
-	@Override
-	public void writeFile(String packageName, String outputDir, List<SearchRule> searchRules, List<String> urls)
-		throws IOException, URISyntaxException {
-		JavaFile javaFile;
+    @Override
+    public void writeFile(String packageName, String outputDir, List<SearchRule> searchRules,
+                          List<String> urls)
+        throws IOException, URISyntaxException {
+        JavaFile javaFile;
 
-		// Для сайта
-		String sitePackageName = packageName + ".site";
+        // Для сайта
+        String sitePackageName = packageName + ".site";
 
-		TypeSpec siteClass = buildSiteClass(sitePackageName, urls);
+        TypeSpec siteClass = buildSiteClass(sitePackageName, urls);
 
-		javaFile = JavaFile.builder(sitePackageName, siteClass)
-			.build();
+        javaFile = JavaFile.builder(sitePackageName, siteClass)
+            .build();
 
-		javaFile.writeTo(Paths.get(outputDir));
+        javaFile.writeTo(Paths.get(outputDir));
 
-		// для страницы
-		String pagesPackageName = packageName + ".page";
+        // для страницы
+        String pagesPackageName = packageName + ".page";
 
-		for (String url: urls) {
-			TypeSpec pageClass = buildPageClass(searchRules, url);
+        for (String url : urls) {
+            TypeSpec pageClass = buildPageClass(searchRules, url);
 
-			javaFile = JavaFile.builder(pagesPackageName, pageClass)
-				.build();
+            javaFile = JavaFile.builder(pagesPackageName, pageClass)
+                .build();
 
-			javaFile.writeTo(Paths.get(outputDir));
-		}
-	}
+            javaFile.writeTo(Paths.get(outputDir));
+        }
+    }
 
 }
