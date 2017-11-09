@@ -1,14 +1,5 @@
 package com.epam.page.object.generator.adapter;
 
-import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
-import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
-import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
-import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
-import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
-import static com.epam.page.object.generator.utils.URLUtils.getDomainName;
-import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
-import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
-
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
@@ -29,6 +20,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
+import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.utils.URLUtils.getDomainName;
+import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
+import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
