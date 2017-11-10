@@ -29,16 +29,15 @@ public class SearchRuleValidator {
 
     public void setCheckLocatorsUniqueness(boolean checkLocatorsUniqueness) {
         if (checkLocatorsUniqueness) {
-            if(!validators.contains(uniquenessLocatorValidator)) {
+            if (!validators.contains(uniquenessLocatorValidator)) {
                 validators.add(uniquenessLocatorValidator);
             }
-        }
-        else{
+        } else {
             validators.remove(uniquenessLocatorValidator);
         }
     }
 
-    public void addValidator(Validator validator){
+    public void addValidator(Validator validator) {
         validators.add(validator);
     }
 }

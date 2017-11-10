@@ -22,8 +22,9 @@ public class XpathToCssTransformation {
             searchRule.setCss(invocable.invokeFunction("cssify", searchRule.getXpath()).toString());
             searchRule.setXpath(null);
         } catch (NoSuchMethodException | ScriptException | FileNotFoundException ex) {
-            throw new XpathToCssTransformerException("Failed to transform Xpath to Css locator in this search rule:"
-                + searchRule);
+            throw new XpathToCssTransformerException(
+                "Failed to transform Xpath to Css locator in this search rule:"
+                    + searchRule);
         }
 
         return searchRule;

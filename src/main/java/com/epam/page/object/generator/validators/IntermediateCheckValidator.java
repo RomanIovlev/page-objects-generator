@@ -34,6 +34,6 @@ public class IntermediateCheckValidator implements Validator {
 
     @Override
     public void setIsValidateAllSearchRules(boolean flag) {
-        this.isValidateAllSearchRules = isValidateAllSearchRules;
+        this.isValidateAllSearchRules = flag;
     }
 }
