@@ -11,7 +11,7 @@ import javax.script.ScriptException;
 
 public class XpathToCssTransformation {
 
-    public SearchRule transformRule(SearchRule searchRule) throws XpathToCssTransformerException {
+    public void transformRule(SearchRule searchRule) throws XpathToCssTransformerException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
         try {
@@ -26,8 +26,6 @@ public class XpathToCssTransformation {
                 "Failed to transform Xpath to Css locator in this search rule:"
                     + searchRule);
         }
-
-        return searchRule;
     }
 
 }

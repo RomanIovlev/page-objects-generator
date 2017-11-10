@@ -124,7 +124,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
-                searchRule = xpathToCssTransformation.transformRule(searchRule);
+                xpathToCssTransformation.transformRule(searchRule);
             }
 
             annotationMember = new AnnotationMember("css", "$S",
