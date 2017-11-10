@@ -4,6 +4,7 @@ import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * {@link TitleOfComplexElementValidator} validate that inner {@link SearchRule} has correct "title"
@@ -25,31 +26,15 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        String type = searchRule.getType();
         SupportedTypesContainer supportedTypesContainer = new SupportedTypesContainer();
 
-        if (searchRule.getInnerSearchRules() == null) {
-            return true;
-        }
-
         Class elementAnnotation = supportedTypesContainer.getSupportedTypesMap()
-            .get(type)
+            .get(searchRule.getType())
             .getElementAnnotation();
-        for (SearchRule sr : searchRule.getInnerSearchRules()) {
-            Boolean valid = false;
-            String title = sr.getTitle();
 
-            for (Method m : elementAnnotation.getDeclaredMethods()) {
-                if (title.equals(m.getName())) {
-                    valid = true;
-                    break;
-                }
-            }
-            if (!valid) {
-                return false;
-            }
-        }
-        return true;
+        return searchRule.getInnerSearchRules() == null || searchRule.getInnerSearchRules().stream()
+            .allMatch(sr -> Arrays.stream(elementAnnotation.getDeclaredMethods())
+                .anyMatch(m -> sr.getTitle().equals(m.getName())));
     }
 
     @Override
