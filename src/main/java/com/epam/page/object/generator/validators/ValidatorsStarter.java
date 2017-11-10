@@ -1,12 +1,13 @@
 package com.epam.page.object.generator.validators;
 
+import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import org.assertj.core.util.Lists;
 
 /**
- * It is a main class which start validation process.<br/> {@link SearchRuleValidator} contains:
+ * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains:
  * <ul>
  * <li>Set of the {@link Validator} which will be validate list of {@link
  * com.epam.page.object.generator.model.SearchRule}.</li>
@@ -14,7 +15,7 @@ import org.assertj.core.util.Lists;
  * collect all information about validation process.</li>
  * </ul>
  */
-public class SearchRuleValidator {
+public class ValidatorsStarter {
 
     /**
      * Set of the {@link Validator} by default, which will be validate list of {@link
@@ -29,16 +30,17 @@ public class SearchRuleValidator {
 
     private ValidationContext validationContext;
 
-    public SearchRuleValidator(ValidationContext validationContext) {
-        this.validationContext = validationContext;
+    public ValidatorsStarter() {
     }
 
     /**
-     * Validation {@link ValidationContext#searchRules} using {@link SearchRuleValidator#validators}.<br/>
+     * Validation {@link ValidationContext#searchRules} using {@link ValidatorsStarter#validators}.<br/>
      *
      * @throws com.epam.page.object.generator.errors.ValidationException if JSON file is not valid.
      */
-    public void validate() throws IOException {
+    public List<SearchRule> validate(List<SearchRule> searchRules, List<String> urls) throws IOException {
+
+        validationContext = new ValidationContext(searchRules, urls);
 
         validators.sort(Comparator.comparingInt(Validator::getPriority));
 
@@ -46,6 +48,7 @@ public class SearchRuleValidator {
             validator.validate(validationContext);
         }
 
+        return validationContext.getValidRules();
     }
 
     /**
@@ -71,5 +74,14 @@ public class SearchRuleValidator {
      */
     public void addValidator(Validator validator) {
         validators.add(validator);
+    }
+
+    /**
+     * Return {@link ValidationContext} which used by {@link ValidatorsStarter}.
+     *
+     * @return {@link ValidationContext}
+     */
+    public ValidationContext getValidationContext() {
+        return validationContext;
     }
 }

@@ -32,8 +32,9 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
             .get(searchRule.getType())
             .getElementAnnotation();
 
-        return searchRule.getInnerSearchRules() == null || searchRule.getInnerSearchRules().stream()
-            .allMatch(sr -> Arrays.stream(elementAnnotation.getDeclaredMethods())
+        return searchRule.getInnerSearchRules() == null ||
+            searchRule.getInnerSearchRules().stream()
+                .allMatch(sr -> Arrays.stream(elementAnnotation.getDeclaredMethods())
                 .anyMatch(m -> sr.getTitle().equals(m.getName())));
     }
 

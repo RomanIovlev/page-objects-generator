@@ -9,16 +9,7 @@ public class IntermediateCheckValidator implements Validator {
     @Override
     public void validate(ValidationContext validationContext) {
         if (validationContext.hasInvalidRules()) {
-            StringBuilder stringBuilder = new StringBuilder("\n");
-            validationContext.getValidationResults().stream()
-                .filter(validationResult -> !validationResult.isValid())
-                .forEach(validationResult -> stringBuilder
-                    .append(validationResult.getExceptionMessage())
-                    .append(": ")
-                    .append(validationResult.getSearchRule())
-                    .append("\n"));
-
-            throw new ValidationException(stringBuilder.toString());
+            throw new ValidationException(validationContext);
         }
     }
 

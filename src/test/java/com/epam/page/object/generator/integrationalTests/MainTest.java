@@ -8,7 +8,7 @@ import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.validators.SearchRuleValidator;
+import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.validators.ValidationContext;
 import java.io.File;
 import java.io.IOException;
@@ -44,11 +44,7 @@ public class MainTest {
 
         JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
 
-        List<SearchRule> rulesFromJSON = parser.getRulesFromJSON();
-
-        ValidationContext validationContext = new ValidationContext(rulesFromJSON, urls);
-
-        SearchRuleValidator validator = new SearchRuleValidator(validationContext);
+        ValidatorsStarter validator = new ValidatorsStarter();
 
         validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
@@ -93,7 +89,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test(expected = NotUniqueSelectorsException.class)
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_NotUniqueLocatorFoundInUniquenessModeOn() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/button.json",

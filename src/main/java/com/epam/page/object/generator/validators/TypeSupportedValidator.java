@@ -10,7 +10,7 @@ import com.epam.page.object.generator.model.SearchRule;
 public class TypeSupportedValidator extends AbstractValidator {
 
     //TODO remove BuilderContrainer from Validator
-    SupportedTypesContainer bc = new SupportedTypesContainer();
+    private SupportedTypesContainer bc = new SupportedTypesContainer();
 
     public TypeSupportedValidator() {
         super(1);

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * AbstractValidator is the abstract base class for crating a new Validator, which can be used into
- * SearchRuleValidator. <p> For creating a new Validator you need: <ol> <li>Create a new class which
+ * ValidatorsStarter. <p> For creating a new Validator you need: <ol> <li>Create a new class which
  * extends from {@link AbstractValidator} and override the main method {@link
  * AbstractValidator#isValid(SearchRule, ValidationContext)}.</li> <li>Create default constructor
  * with {@link AbstractValidator#priority}.</li> <li>Override {@link

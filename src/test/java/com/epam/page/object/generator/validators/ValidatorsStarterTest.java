@@ -16,9 +16,9 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
 //TODO rewrite all tests with creation Validators
-public class SearchRuleValidatorTest {
+public class ValidatorsStarterTest {
 
-    private SearchRuleValidator sut;
+    private ValidatorsStarter sut;
 
     private Set<String> supportedTypes = new HashSet<>();
 
@@ -28,7 +28,6 @@ public class SearchRuleValidatorTest {
             new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
-    private ValidationContext context;
     private List<String> urls = new ArrayList<>();
 
     @Before
@@ -39,9 +38,7 @@ public class SearchRuleValidatorTest {
 
         urls.add("https://www.google.ru");
 
-        context = new ValidationContext(searchRules, urls);
-
-        sut = new SearchRuleValidator(context);
+        sut = new ValidatorsStarter();
 
         sut.setCheckLocatorsUniqueness(false);
     }
@@ -49,16 +46,16 @@ public class SearchRuleValidatorTest {
     @Test
     public void validateSearchRules_Success() throws Exception {
         searchRules.add(ruleWithLocator);
-        sut.validate();
+        sut.validate(searchRules, urls);
 
-        Assert.assertEquals(1, context.getValidRules().size());
-        Assert.assertEquals(2, context.getValidationResults().size());
+        Assert.assertEquals(1, sut.getValidationContext().getValidRules().size());
+        Assert.assertEquals(2, sut.getValidationContext().getValidationResults().size());
     }
 
     @Test(expected = ValidationException.class)
     public void validateSearchRules_NotLocatorExist() throws Exception {
         searchRules.add(ruleNoLocator);
-        sut.validate();
+        sut.validate(searchRules, urls);
     }
 
     @After

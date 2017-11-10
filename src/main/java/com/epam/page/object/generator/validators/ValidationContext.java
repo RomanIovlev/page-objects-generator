@@ -110,4 +110,17 @@ public class ValidationContext {
     public boolean hasInvalidRules() {
         return validationResults.stream().anyMatch(validationResult -> !validationResult.isValid());
     }
+
+    public String getExceptionsAboutInvalidRules(){
+        StringBuilder stringBuilder = new StringBuilder("\n");
+        validationResults.stream()
+            .filter(validationResult -> !validationResult.isValid())
+            .forEach(validationResult -> stringBuilder
+                .append(validationResult.getExceptionMessage())
+                .append(": ")
+                .append(validationResult.getSearchRule())
+                .append("\n"));
+
+        return stringBuilder.toString();
+    }
 }

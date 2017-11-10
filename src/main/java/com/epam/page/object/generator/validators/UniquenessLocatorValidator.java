@@ -29,7 +29,8 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
         return isInnerRulesValid(searchRule, validationContext) && validationContext.getUrls()
-            .stream().allMatch(url -> {
+            .stream()
+            .allMatch(url -> {
                 try {
                     return searchRule.extractElementsFromWebSite(url).size() <= 1;
                 } catch (IOException e) {
