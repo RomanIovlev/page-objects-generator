@@ -4,6 +4,10 @@ import com.epam.page.object.generator.model.SearchRule;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
+/**
+ * {@link LocatorExistenceValidator} validate that {@link SearchRule} has any locator (xpath or
+ * css).<br/> Default priority: 0.
+ */
 public class LocatorExistenceValidator extends AbstractValidator {
 
     public LocatorExistenceValidator() {

@@ -4,6 +4,10 @@ import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
 import org.jsoup.select.Elements;
 
+/**
+ * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
+ * Default priority: 51.
+ */
 public class UniquenessLocatorValidator extends AbstractValidator {
 
     public UniquenessLocatorValidator() {

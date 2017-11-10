@@ -3,10 +3,14 @@ package com.epam.page.object.generator.validators;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 
+/**
+ * {@link TypeSupportedValidator} validate that {@link SearchRule} has correct "type" attribute
+ * which supported by the program. <br/> Default priority: 1.
+ */
 public class TypeSupportedValidator extends AbstractValidator {
 
-	//TODO remove BuilderContrainer from Validator
-	SupportedTypesContainer bc = new SupportedTypesContainer();
+    //TODO remove BuilderContrainer from Validator
+    SupportedTypesContainer bc = new SupportedTypesContainer();
 
     public TypeSupportedValidator() {
         super(1);
@@ -16,7 +20,7 @@ public class TypeSupportedValidator extends AbstractValidator {
         super(order);
     }
 
-    public TypeSupportedValidator(boolean isValidateAllSearchRules){
+    public TypeSupportedValidator(boolean isValidateAllSearchRules) {
         super(1, isValidateAllSearchRules);
     }
 

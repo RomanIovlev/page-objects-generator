@@ -47,6 +47,15 @@ public abstract class AbstractValidator implements Validator {
         this.isValidateAllSearchRules = isValidateAllSearchRules;
     }
 
+    /**
+     * Validate all inner {@link SearchRule}.
+     *
+     * @param searchRule inner {@link SearchRule}
+     * @param validationContext {@link ValidationContext}
+     * @return
+     * <b>true</b> - if all inner {@link SearchRule} have passed validation<br/>
+     * <b>false</b> - if at least one {@link SearchRule} hasn't passed validation
+     */
     public boolean isInnerRulesValid(SearchRule searchRule, ValidationContext validationContext) {
         return searchRule.getInnerSearchRules() == null || searchRule.getInnerSearchRules().stream()
             .allMatch(innerSearchRule -> isValid(innerSearchRule, validationContext));

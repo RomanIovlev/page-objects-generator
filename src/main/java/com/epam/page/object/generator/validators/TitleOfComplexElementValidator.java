@@ -5,10 +5,14 @@ import com.epam.page.object.generator.model.SearchRule;
 
 import java.lang.reflect.Method;
 
+/**
+ * {@link TitleOfComplexElementValidator} validate that inner {@link SearchRule} has correct "title"
+ * attribute which supported by complex annotation. <br/> Default priority: 2.
+ */
 public class TitleOfComplexElementValidator extends AbstractValidator {
 
     public TitleOfComplexElementValidator() {
-        super(3);
+        super(2);
     }
 
     public TitleOfComplexElementValidator(int priority) {
