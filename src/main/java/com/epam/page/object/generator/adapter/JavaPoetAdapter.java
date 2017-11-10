@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.lang.model.element.Modifier;
@@ -79,8 +78,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
                 .getSupportedTypesMap().get(searchRule.getType().toLowerCase());
             Class fieldClass = currentElementPair.getElementClass();
             Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
-            String elementRequiredValue;
 
+            String elementRequiredValue;
             AnnotationSpec elementFieldAnnotation;
 
             if (searchRule.getInnerSearchRules() == null) {
@@ -93,14 +92,13 @@ public class JavaPoetAdapter implements JavaFileWriter {
                     Collections.singletonList(commonElementAnnotationMember));
 
             } else {
-                AnnotationMember innerAnnotationMember;
                 elementRequiredValue = searchRule.getType();
-                List<AnnotationMember> innerAnnotations = new ArrayList<>();
+				List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
-                for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+				for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
 
-                    String annotationElementName = innerSearchRule.getTitle();
-                    innerAnnotationMember = getAnnotationMemberFromRule(innerSearchRule, url);
+					String annotationElementName = innerSearchRule.getTitle();
+                    AnnotationMember innerAnnotationMember = getAnnotationMemberFromRule(innerSearchRule, url);
 
                     AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
                         Collections.singletonList(innerAnnotationMember));
@@ -160,7 +158,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
         AnnotationMember siteAnnotationMember = new AnnotationMember("domain", "$S",
             getDomainName(urls));
         AnnotationSpec siteClassAnnotation = buildAnnotationSpec(JSite.class,
-            Arrays.asList(siteAnnotationMember));
+			Collections.singletonList(siteAnnotationMember));
 
         return buildTypeSpec("Site", WebSite.class, siteClassAnnotation, pageFields, PUBLIC);
     }
