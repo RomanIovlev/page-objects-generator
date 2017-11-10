@@ -35,13 +35,4 @@ public interface Validator {
      * @return exception message.
      */
     String getExceptionMessage();
-
-    /**
-     * Method that can change validator's mode of working.
-     *
-     * @param flag <i>true</i> if you want to mode on and <i>false</i> if you want to mode off.<br/>
-     * More information about modes you can read here {@link AbstractValidator#isValidateAllSearchRules}
-     */
-    void setIsValidateAllSearchRules(boolean flag);
-
 }

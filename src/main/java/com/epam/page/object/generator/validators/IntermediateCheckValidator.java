@@ -4,8 +4,6 @@ import com.epam.page.object.generator.errors.ValidationException;
 
 public class IntermediateCheckValidator implements Validator {
 
-    private boolean isValidateAllSearchRules = false;
-
     @Override
     public void validate(ValidationContext validationContext) {
         if (validationContext.hasInvalidRules()) {
@@ -21,10 +19,5 @@ public class IntermediateCheckValidator implements Validator {
     @Override
     public String getExceptionMessage() {
         return null;
-    }
-
-    @Override
-    public void setIsValidateAllSearchRules(boolean flag) {
-        this.isValidateAllSearchRules = flag;
     }
 }

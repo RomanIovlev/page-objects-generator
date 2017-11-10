@@ -20,8 +20,8 @@ public abstract class AbstractValidator implements Validator {
      * Validator priority is a number which specifies the order of executing validators. All
      * validators which present by the default have some default priority, but if you create your
      * own validator you must not forget to set priority for you validator into default constructor
-     * and change priories for all default validators if you need. <br/><br/> <p> For priority you
-     * need to use int numbers: <br/> <ul> <li>0-49 fot validators which validate format of JSON
+     * and change priories for all default validators if you need. <br/><br/> For priority you need
+     * to use int numbers: <br/> <ul> <li>0-49 fot validators which validate format of JSON
      * files</li> <li>51+ for validators which validate SearchRules by the urls</li> </ul>
      *
      * For example: <br/> UniquenessLocatorValidator can have priority equals 51, because it checks
@@ -52,8 +52,7 @@ public abstract class AbstractValidator implements Validator {
      *
      * @param searchRule inner {@link SearchRule}
      * @param validationContext {@link ValidationContext}
-     * @return
-     * <b>true</b> - if all inner {@link SearchRule} have passed validation<br/>
+     * @return <b>true</b> - if all inner {@link SearchRule} have passed validation<br/>
      * <b>false</b> - if at least one {@link SearchRule} hasn't passed validation
      */
     public boolean isInnerRulesValid(SearchRule searchRule, ValidationContext validationContext) {
@@ -80,11 +79,6 @@ public abstract class AbstractValidator implements Validator {
     @Override
     public int getPriority() {
         return priority;
-    }
-
-    @Override
-    public void setIsValidateAllSearchRules(boolean flag) {
-        this.isValidateAllSearchRules = flag;
     }
 
     /**
