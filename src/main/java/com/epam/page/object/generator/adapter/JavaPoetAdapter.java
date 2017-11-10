@@ -79,51 +79,27 @@ public class JavaPoetAdapter implements JavaFileWriter {
                 .getSupportedTypesMap().get(searchRule.getType().toLowerCase());
             Class fieldClass = currentElementPair.getElementClass();
             Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
-
-            String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
+            String elementRequiredValue;
 
             AnnotationSpec elementFieldAnnotation;
 
             if (searchRule.getInnerSearchRules() == null) {
-                AnnotationMember commonElementAnnotationMember;
+                elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
 
-                if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
-                    if (searchRule.getCss() == null) {
-                        searchRule = xpathToCssTransformation.transformRule(searchRule);
-                    }
-
-                    commonElementAnnotationMember = new AnnotationMember("css", "$S",
-                        resultCssSelector(searchRule, elementRequiredValue));
-                } else {
-                    commonElementAnnotationMember = new AnnotationMember("xpath", "$S",
-                        resultXpathSelector(searchRule, elementRequiredValue));
-                }
+                AnnotationMember commonElementAnnotationMember = getAnnotationMemberFromRule(searchRule, url);
 
                 elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass,
                     Collections.singletonList(commonElementAnnotationMember));
+
             } else {
                 AnnotationMember innerAnnotationMember;
                 elementRequiredValue = searchRule.getType();
                 List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
                 for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+
                     String annotationElementName = innerSearchRule.getTitle();
-
-                    if (!innerSearchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
-                        if (innerSearchRule.getCss() == null) {
-                            innerSearchRule = xpathToCssTransformation
-                                .transformRule(innerSearchRule);
-                        }
-
-                        innerAnnotationMember = new AnnotationMember("css", "$S",
-                            resultCssSelector(innerSearchRule,
-                                innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-
-                    } else {
-                        innerAnnotationMember = new AnnotationMember("xpath", "$S",
-                            resultCssSelector(innerSearchRule,
-                                innerSearchRule.getRequiredValueFromFoundElement(url).get(0)));
-                    }
+                    innerAnnotationMember = getAnnotationMemberFromRule(innerSearchRule, url);
 
                     AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
                         Collections.singletonList(innerAnnotationMember));
@@ -140,6 +116,24 @@ public class JavaPoetAdapter implements JavaFileWriter {
         }
 
         return buildTypeSpec(pageClassName, WebPage.class, fields, PUBLIC);
+    }
+
+    private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, String url) throws XpathToCssTransformerException, IOException {
+        AnnotationMember annotationMember;
+        String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
+
+        if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+            if (searchRule.getCss() == null) {
+                searchRule = xpathToCssTransformation.transformRule(searchRule);
+            }
+
+            annotationMember = new AnnotationMember("css", "$S",
+                resultCssSelector(searchRule, elementRequiredValue));
+        } else {
+            annotationMember = new AnnotationMember("xpath", "$S",
+                resultXpathSelector(searchRule, elementRequiredValue));
+        }
+        return annotationMember;
     }
 
     private TypeSpec buildSiteClass(String packageName, List<String> urls)
