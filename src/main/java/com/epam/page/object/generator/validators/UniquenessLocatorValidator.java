@@ -28,20 +28,15 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        if (!isInnerRulesValid(searchRule, validationContext)) {
-            return false;
-        }
-        for (String url : validationContext.getUrls()) {
-            try {
-                if (searchRule.extractElementsFromWebSite(url).size() > 1) {
-                    return false;
+        return isInnerRulesValid(searchRule, validationContext) && validationContext.getUrls()
+            .stream().allMatch(url -> {
+                try {
+                    return searchRule.extractElementsFromWebSite(url).size() <= 1;
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return true;
+                return false;
+            });
     }
 
     @Override
