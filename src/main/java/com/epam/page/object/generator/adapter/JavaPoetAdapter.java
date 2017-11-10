@@ -86,7 +86,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
             if (searchRule.getInnerSearchRules() == null) {
                 elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
 
-                AnnotationMember commonElementAnnotationMember = getAnnotationMemberFromRule(searchRule, url);
+                AnnotationMember commonElementAnnotationMember = getAnnotationMemberFromRule(
+                    searchRule, url);
 
                 elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass,
                     Collections.singletonList(commonElementAnnotationMember));
@@ -118,7 +119,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
         return buildTypeSpec(pageClassName, WebPage.class, fields, PUBLIC);
     }
 
-    private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, String url) throws XpathToCssTransformerException, IOException {
+    private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, String url)
+        throws XpathToCssTransformerException, IOException {
         AnnotationMember annotationMember;
         String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
 
