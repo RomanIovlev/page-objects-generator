@@ -6,22 +6,17 @@ public class IntermediateCheckValidator implements Validator {
 
     private boolean isValidateAllSearchRules = false;
 
-    public IntermediateCheckValidator() {
-    }
-
     @Override
     public void validate(ValidationContext validationContext) {
         if (validationContext.hasInvalidRules()) {
             StringBuilder stringBuilder = new StringBuilder("\n");
-            for (ValidationResult validationResult : validationContext.getValidationResults()) {
-                if (!validationResult.isValid()) {
-                    stringBuilder
-                        .append(validationResult.getExceptionMessage())
-                        .append(": ")
-                        .append(validationResult.getSearchRule())
-                        .append("\n");
-                }
-            }
+            validationContext.getValidationResults().stream()
+                .filter(validationResult -> !validationResult.isValid())
+                .forEach(validationResult -> stringBuilder
+                    .append(validationResult.getExceptionMessage())
+                    .append(": ")
+                    .append(validationResult.getSearchRule())
+                    .append("\n"));
 
             throw new ValidationException(stringBuilder.toString());
         }

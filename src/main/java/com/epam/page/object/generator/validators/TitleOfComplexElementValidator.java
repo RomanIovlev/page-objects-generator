@@ -5,7 +5,7 @@ import com.epam.page.object.generator.model.SearchRule;
 
 import java.lang.reflect.Method;
 
-public class TitleOfComplexElementValidator extends AbstractValidator{
+public class TitleOfComplexElementValidator extends AbstractValidator {
 
     public TitleOfComplexElementValidator() {
         super(3);
@@ -24,17 +24,16 @@ public class TitleOfComplexElementValidator extends AbstractValidator{
         String type = searchRule.getType();
         SupportedTypesContainer supportedTypesContainer = new SupportedTypesContainer();
 
-        if(searchRule.getInnerSearchRules() == null){
+        if (searchRule.getInnerSearchRules() == null) {
             return true;
         }
 
         Class elementAnnotation = supportedTypesContainer.getSupportedTypesMap()
-                .get(type)
-                .getElementAnnotation();
+            .get(type)
+            .getElementAnnotation();
         for (SearchRule sr : searchRule.getInnerSearchRules()) {
             Boolean valid = false;
             String title = sr.getTitle();
-
 
             for (Method m : elementAnnotation.getDeclaredMethods()) {
                 if (title.equals(m.getName())) {
@@ -42,7 +41,9 @@ public class TitleOfComplexElementValidator extends AbstractValidator{
                     break;
                 }
             }
-            if(!valid) return false;
+            if (!valid) {
+                return false;
+            }
         }
         return true;
     }
