@@ -42,7 +42,9 @@ public class TitleOfComplexElementValidator extends AbstractValidator{
                     break;
                 }
             }
-            if(!valid) return false;
+            if(!valid){
+                return false;
+            }
         }
         return true;
     }
