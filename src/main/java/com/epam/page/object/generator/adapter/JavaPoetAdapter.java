@@ -75,7 +75,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         for (SearchRule searchRule : searchRules) {
             ClassAndAnnotationPair currentElementPair = supportedTypesContainer
-                .getSupportedTypesMap().get(searchRule.getType().toLowerCase());
+                .getSupportedTypesMap().get(searchRule.getType());
             Class fieldClass = currentElementPair.getElementClass();
             Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
 
