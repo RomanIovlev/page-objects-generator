@@ -44,11 +44,11 @@ public class MainTest {
 
         JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
 
-        ValidatorsStarter validator = new ValidatorsStarter();
+        ValidatorsStarter validatorsStarter = new ValidatorsStarter();
+        validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
-        validator.setCheckLocatorsUniqueness(checkLocatorUniqueness);
-
-        PageObjectsGenerator pog = new PageObjectsGenerator(parser, validator, javaPoetAdapter, outputDir, urls, packageName);
+        PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,
+                javaPoetAdapter, outputDir, urls, packageName);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 
@@ -56,7 +56,7 @@ public class MainTest {
     }
 
     @Test
-    public void pageObjectsGenerator_ok() throws Exception {
+    public void pageObjectsGenerator_success() throws Exception {
 
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown.json",

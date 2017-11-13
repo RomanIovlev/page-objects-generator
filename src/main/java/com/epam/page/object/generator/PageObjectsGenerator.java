@@ -4,8 +4,10 @@ import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
+import com.epam.page.object.generator.validators.Validator;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.writer.JavaFileWriter;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 public class PageObjectsGenerator {
 
     private JsonRuleMapper parser;
-    private ValidatorsStarter validator;
+    private ValidatorsStarter validatorsStarter;
     private JavaFileWriter javaFileWriter;
     private String outPutDir;
     private List<String> urls;
@@ -23,13 +25,13 @@ public class PageObjectsGenerator {
     private boolean forceGenerateFile = false;
 
     public PageObjectsGenerator(JsonRuleMapper parser,
-                                ValidatorsStarter validator,
+                                ValidatorsStarter validatorsStarter,
                                 JavaFileWriter javaFileWriter,
                                 String outPutDir,
                                 List<String> urls,
                                 String packageName) {
         this.parser = parser;
-        this.validator = validator;
+        this.validatorsStarter = validatorsStarter;
         this.javaFileWriter = javaFileWriter;
         this.outPutDir = outPutDir;
         this.urls = urls;
@@ -39,19 +41,19 @@ public class PageObjectsGenerator {
     public void generatePageObjects()
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         List<SearchRule> searchRules = parser.getRulesFromJSON();
-        List<SearchRule> validSearchRules = validator.validate(searchRules, urls);
+        List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules, urls);
         generateJavaFiles(validSearchRules);
     }
 
     private void generateJavaFiles(List<SearchRule> searchRules)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
 
-        if (validator.getValidationContext().hasInvalidRules()) {
+        if (validatorsStarter.getValidationContext().hasInvalidRules()) {
             if (forceGenerateFile) {
                 javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
             }
 
-            throw new ValidationException(validator.getValidationContext());
+            throw new ValidationException(validatorsStarter.getValidationContext());
         }
 
         javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
@@ -60,5 +62,4 @@ public class PageObjectsGenerator {
     public void setForceGenerateFile(boolean forceGenerateFile) {
         this.forceGenerateFile = forceGenerateFile;
     }
-
 }

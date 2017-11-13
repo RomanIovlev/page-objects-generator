@@ -26,7 +26,7 @@ public class SearchRule {
 
     public SearchRule(String type, String requiredAttribute, String title, String css,
                       String xpath, List<SearchRule> innerSearchRules) {
-        this.type = type;
+        this.type = type == null ? null : type.toLowerCase();
         this.requiredAttribute = requiredAttribute;
         this.title = title;
         this.css = css;
@@ -66,7 +66,7 @@ public class SearchRule {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type == null ? null : type.toLowerCase();
     }
 
     public String getRequiredAttribute() {

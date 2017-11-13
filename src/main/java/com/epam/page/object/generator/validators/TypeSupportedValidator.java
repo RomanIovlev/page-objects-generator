@@ -30,7 +30,7 @@ public class TypeSupportedValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        return bc.getSupportedTypes().contains(searchRule.getType().toLowerCase());
+        return bc.getSupportedTypes().contains(searchRule.getType());
     }
 
     @Override

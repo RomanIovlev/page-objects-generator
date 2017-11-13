@@ -32,7 +32,7 @@ public class PageObjectsGeneratorTestNew {
     private JavaPoetAdapter javaPoetAdapter;
 
     @Mock
-    private ValidatorsStarter validator;
+    private ValidatorsStarter validatorsStarter;
 
     private SearchRule searchRule = new SearchRule();
     private SearchRule invalidSearchRule =
@@ -53,10 +53,10 @@ public class PageObjectsGeneratorTestNew {
         MockitoAnnotations.initMocks(this);
 
         when(parser.getRulesFromJSON()).thenReturn(searchRules);
-        when(validator.validate(anyList(), anyList())).thenReturn(searchRules);
-        when(validator.getValidationContext()).thenReturn(validationContext);
+        when(validatorsStarter.validate(anyList(), anyList())).thenReturn(searchRules);
+        when(validatorsStarter.getValidationContext()).thenReturn(validationContext);
 
-        sut = new PageObjectsGenerator(parser, validator, javaPoetAdapter, outputDir, urls,
+        sut = new PageObjectsGenerator(parser, validatorsStarter, javaPoetAdapter, outputDir, urls,
             TEST_PACKAGE);
     }
 
@@ -66,14 +66,14 @@ public class PageObjectsGeneratorTestNew {
 
         sut.generatePageObjects();
 
-        verify(validator).validate(searchRules, urls);
+        verify(validatorsStarter).validate(searchRules, urls);
         verify(javaPoetAdapter).writeFile(TEST_PACKAGE, outputDir, searchRules, urls);
     }
 
     @Test(expected = ValidationException.class)
     public void generatePageObjects_ErrorWhenJSONValidationFails()
         throws Exception {
-        doThrow(new ValidationException("some message")).when(validator)
+        doThrow(new ValidationException("some message")).when(validatorsStarter)
             .validate(searchRules, urls);
         sut.generatePageObjects();
         verifyZeroInteractions(javaPoetAdapter);

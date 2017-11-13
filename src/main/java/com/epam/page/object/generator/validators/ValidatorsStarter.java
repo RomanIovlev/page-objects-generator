@@ -24,13 +24,21 @@ public class ValidatorsStarter {
     private List<Validator> validators = Lists.newArrayList(
         new LocatorExistenceValidator(),
         new TypeSupportedValidator(),
-        new IntermediateCheckValidator());
+        new IntermediateCheckValidator(),
+        new TitleOfComplexElementValidator());
 
-    private UniquenessLocatorValidator uniquenessLocatorValidator = new UniquenessLocatorValidator();
+    private UniquenessLocatorValidator uniquenessLocatorValidator =
+            new UniquenessLocatorValidator();
 
     private ValidationContext validationContext;
 
     public ValidatorsStarter() {
+    }
+
+    public ValidatorsStarter(List<Validator> newValidators) {
+        if (newValidators != null) {
+            validators.addAll(newValidators);
+        }
     }
 
     /**
@@ -68,12 +76,23 @@ public class ValidatorsStarter {
     }
 
     /**
-     * Adding a new custom validator to the set of validators.
+     * Adding a new custom validator to the list of validators.
      *
-     * @param validator custom validator.
+     * @param validator {@link Validator}
      */
     public void addValidator(Validator validator) {
         validators.add(validator);
+    }
+
+    /**
+     * Adding a new list of custom validators to the list of validators.
+     * @param newValidators list of {@link Validator}
+     */
+
+    public void addValidatorsList(List<Validator> newValidators) {
+        if (newValidators != null) {
+            validators.addAll(newValidators);
+        }
     }
 
     /**

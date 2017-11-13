@@ -22,9 +22,9 @@ public class ValidatorsStarterTest {
 
     private Set<String> supportedTypes = new HashSet<>();
 
-    private SearchRule ruleWithLocator =
+    private SearchRule ruleJsonValid =
             new SearchRule("button", "req", null, "css", null, null);
-    private SearchRule ruleNoLocator =
+    private SearchRule ruleJsonInvalid =
             new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
@@ -36,25 +36,25 @@ public class ValidatorsStarterTest {
         supportedTypes.add("button");
         supportedTypes.add("input");
 
-        urls.add("https://www.google.ru");
+        urls.add("https://www.google.com");
 
         sut = new ValidatorsStarter();
 
-        sut.setCheckLocatorsUniqueness(false);
+        sut.setCheckLocatorsUniqueness(true);
     }
 
     @Test
     public void validateSearchRules_Success() throws Exception {
-        searchRules.add(ruleWithLocator);
+        searchRules.add(ruleJsonValid);
         sut.validate(searchRules, urls);
 
         Assert.assertEquals(1, sut.getValidationContext().getValidRules().size());
-        Assert.assertEquals(2, sut.getValidationContext().getValidationResults().size());
+        Assert.assertEquals(4, sut.getValidationContext().getValidationResults().size());
     }
 
     @Test(expected = ValidationException.class)
     public void validateSearchRules_NotLocatorExist() throws Exception {
-        searchRules.add(ruleNoLocator);
+        searchRules.add(ruleJsonInvalid);
         sut.validate(searchRules, urls);
     }
 
