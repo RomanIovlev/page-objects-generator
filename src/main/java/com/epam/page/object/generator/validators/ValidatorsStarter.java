@@ -103,4 +103,12 @@ public class ValidatorsStarter {
     public ValidationContext getValidationContext() {
         return validationContext;
     }
+
+    /**
+     * Return list of {@link Validator} which used by {@link ValidatorsStarter}
+     * @return list of {@link Validator}
+     */
+    public List<Validator> getValidators() {
+        return validators;
+    }
 }
