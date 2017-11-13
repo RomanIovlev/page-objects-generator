@@ -26,6 +26,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.lang.model.element.Modifier;
+
 import org.openqa.selenium.support.FindBy;
 
 public class JavaPoetAdapter implements JavaFileWriter {
@@ -69,56 +71,19 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private TypeSpec buildPageClass(List<SearchRule> searchRules, String url)
-        throws IOException, XpathToCssTransformerException {
+            throws IOException, XpathToCssTransformerException {
         List<FieldSpec> fields = new ArrayList<>();
         String pageClassName = firstLetterUp(splitCamelCase(getPageTitle(url)));
 
         for (SearchRule searchRule : searchRules) {
-            ClassAndAnnotationPair currentElementPair = supportedTypesContainer
-                .getSupportedTypesMap().get(searchRule.getType());
-            Class fieldClass = currentElementPair.getElementClass();
-            Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
-
-            String elementRequiredValue;
-            AnnotationSpec elementFieldAnnotation;
-
-            if (searchRule.getInnerSearchRules() == null) {
-                elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
-
-                AnnotationMember commonElementAnnotationMember = getAnnotationMemberFromRule(
-                    searchRule, url);
-
-                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass,
-                    Collections.singletonList(commonElementAnnotationMember));
-
-            } else {
-                elementRequiredValue = searchRule.getType();
-				List<AnnotationMember> innerAnnotations = new ArrayList<>();
-
-				for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-
-					String annotationElementName = innerSearchRule.getTitle();
-                    AnnotationMember innerAnnotationMember = getAnnotationMemberFromRule(innerSearchRule, url);
-
-                    AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
-                        Collections.singletonList(innerAnnotationMember));
-                    innerAnnotations
-                        .add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
-                }
-
-                elementFieldAnnotation = buildAnnotationSpec(fieldAnnotationClass,
-                    innerAnnotations);
-            }
-
-            fields.add(buildFieldSpec(fieldClass, elementFieldAnnotation,
-                firstLetterDown(splitCamelCase(elementRequiredValue)), PUBLIC));
+            fields.add(createAnnotation(searchRule, url));
         }
 
         return buildTypeSpec(pageClassName, WebPage.class, fields, PUBLIC);
     }
 
     private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, String url)
-        throws XpathToCssTransformerException, IOException {
+            throws XpathToCssTransformerException, IOException {
         AnnotationMember annotationMember;
         String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
 
@@ -128,16 +93,16 @@ public class JavaPoetAdapter implements JavaFileWriter {
             }
 
             annotationMember = new AnnotationMember("css", "$S",
-                resultCssSelector(searchRule, elementRequiredValue));
+                    resultCssSelector(searchRule, elementRequiredValue));
         } else {
             annotationMember = new AnnotationMember("xpath", "$S",
-                resultXpathSelector(searchRule, elementRequiredValue));
+                    resultXpathSelector(searchRule, elementRequiredValue));
         }
         return annotationMember;
     }
 
     private TypeSpec buildSiteClass(String packageName, List<String> urls)
-        throws IOException, URISyntaxException {
+            throws IOException, URISyntaxException {
         List<FieldSpec> pageFields = new ArrayList<>();
 
         for (String url : urls) {
@@ -152,13 +117,13 @@ public class JavaPoetAdapter implements JavaFileWriter {
             AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class, pageAnnotations);
 
             pageFields
-                .add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
+                    .add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
         }
 
         AnnotationMember siteAnnotationMember = new AnnotationMember("domain", "$S",
-            getDomainName(urls));
+                getDomainName(urls));
         AnnotationSpec siteClassAnnotation = buildAnnotationSpec(JSite.class,
-			Collections.singletonList(siteAnnotationMember));
+                Collections.singletonList(siteAnnotationMember));
 
         return buildTypeSpec("Site", WebSite.class, siteClassAnnotation, pageFields, PUBLIC);
     }
@@ -167,40 +132,88 @@ public class JavaPoetAdapter implements JavaFileWriter {
         return ClassName.get(packageName + ".page", pageClassName);
     }
 
+    private AnnotationSpec createCommonAnnotation(SearchRule searchRule, String url, Class fieldAnnotationClass) throws IOException, XpathToCssTransformerException {
+        AnnotationMember commonElementAnnotationMember = getAnnotationMemberFromRule(
+                searchRule, url);
+
+        return buildAnnotationSpec(fieldAnnotationClass,
+                Collections.singletonList(commonElementAnnotationMember));
+    }
+
+    private AnnotationSpec createComplexAnnotation (SearchRule searchRule, String url, Class fieldAnnotationClass) throws IOException, XpathToCssTransformerException {
+        List<AnnotationMember> innerAnnotations = new ArrayList<>();
+
+        for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+
+            String annotationElementName = innerSearchRule.getTitle();
+            AnnotationMember innerAnnotationMember = getAnnotationMemberFromRule(innerSearchRule, url);
+
+            AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
+                    Collections.singletonList(innerAnnotationMember));
+            innerAnnotations
+                    .add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
+        }
+
+        return buildAnnotationSpec(fieldAnnotationClass,
+                innerAnnotations);
+    }
+
+    private FieldSpec createAnnotation(SearchRule searchRule, String url)
+        throws IOException, XpathToCssTransformerException {
+        ClassAndAnnotationPair currentElementPair = supportedTypesContainer
+            .getSupportedTypesMap().get(searchRule.getType());
+        Class fieldClass = currentElementPair.getElementClass();
+        Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
+
+        String elementRequiredValue;
+        AnnotationSpec elementFieldAnnotation;
+
+        if (searchRule.getInnerSearchRules() == null) {
+            elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
+            elementFieldAnnotation = createCommonAnnotation(searchRule, url, fieldAnnotationClass);
+        } else {
+            elementRequiredValue = searchRule.getType();
+            elementFieldAnnotation = createComplexAnnotation(searchRule, url, fieldAnnotationClass);
+        }
+
+        return buildFieldSpec(fieldClass, elementFieldAnnotation,
+            firstLetterDown(splitCamelCase(elementRequiredValue)), PUBLIC);
+    }
+
     private TypeSpec buildTypeSpec(String className, Class superClass,
                                    AnnotationSpec annotationSpec,
                                    List<FieldSpec> fieldSpecs, Modifier... modifiers) {
         return TypeSpec.classBuilder(className)
-            .addModifiers(modifiers)
-            .superclass(superClass)
-            .addAnnotation(annotationSpec)
-            .addFields(fieldSpecs)
-            .build();
+                .addModifiers(modifiers)
+                .superclass(superClass)
+                .addAnnotation(annotationSpec)
+                .addFields(fieldSpecs)
+                .build();
     }
 
     private TypeSpec buildTypeSpec(String className, Class superClass,
                                    List<FieldSpec> fieldSpecs, Modifier... modifiers) {
         return TypeSpec.classBuilder(className)
-            .addModifiers(modifiers)
-            .superclass(superClass)
-            .addFields(fieldSpecs)
-            .build();
+                .addModifiers(modifiers)
+                .superclass(superClass)
+                .addFields(fieldSpecs)
+                .build();
     }
 
     private FieldSpec buildFieldSpec(ClassName fieldClass, AnnotationSpec annotationSpec,
                                      String fieldName, Modifier... modifiers) {
         return FieldSpec.builder(fieldClass, fieldName)
-            .addModifiers(modifiers)
-            .addAnnotation(annotationSpec)
-            .build();
+                .addModifiers(modifiers)
+                .addAnnotation(annotationSpec)
+                .build();
     }
 
     private FieldSpec buildFieldSpec(Class fieldClass, AnnotationSpec annotationSpec,
                                      String fieldName, Modifier... modifiers) {
         return FieldSpec.builder(fieldClass, fieldName)
-            .addModifiers(modifiers)
-            .addAnnotation(annotationSpec)
-            .build();
+                .addModifiers(modifiers)
+                .addAnnotation(annotationSpec)
+                .build();
     }
 
     private AnnotationSpec buildAnnotationSpec(Class annotationClass,
@@ -209,8 +222,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         for (AnnotationMember annotationMember : annotationMembers) {
             annotationSpec = annotationSpec.toBuilder()
-                .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
-                .build();
+                    .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
+                    .build();
         }
 
         return annotationSpec;
@@ -219,7 +232,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     @Override
     public void writeFile(String packageName, String outputDir, List<SearchRule> searchRules,
                           List<String> urls)
-        throws IOException, URISyntaxException, XpathToCssTransformerException {
+            throws IOException, URISyntaxException, XpathToCssTransformerException {
         JavaFile javaFile;
 
         String sitePackageName = packageName + ".site";
@@ -227,7 +240,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
         TypeSpec siteClass = buildSiteClass(sitePackageName, urls);
 
         javaFile = JavaFile.builder(sitePackageName, siteClass)
-            .build();
+                .build();
 
         javaFile.writeTo(Paths.get(outputDir));
 
@@ -237,7 +250,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
             TypeSpec pageClass = buildPageClass(searchRules, url);
 
             javaFile = JavaFile.builder(pagesPackageName, pageClass)
-                .build();
+                    .build();
 
             javaFile.writeTo(Paths.get(outputDir));
         }
