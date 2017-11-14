@@ -106,18 +106,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
         List<FieldSpec> pageFields = new ArrayList<>();
 
         for (String url : urls) {
-            String titleName = splitCamelCase(getPageTitle(url));
-            String pageFieldName = firstLetterDown(titleName);
-            String pageClassName = firstLetterUp(titleName);
-            ClassName pageClass = getPageClassName(packageName, pageClassName);
-            List<AnnotationMember> pageAnnotations = new ArrayList<>();
-            pageAnnotations.add(new AnnotationMember("url", "$S", getUrlWithoutDomain(url)));
-            pageAnnotations.add(new AnnotationMember("title", "$S", getPageTitle(url)));
-
-            AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class, pageAnnotations);
-
-            pageFields
-                    .add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
+            createPageFields(packageName, pageFields, url);
         }
 
         AnnotationMember siteAnnotationMember = new AnnotationMember("domain", "$S",
@@ -126,6 +115,22 @@ public class JavaPoetAdapter implements JavaFileWriter {
                 Collections.singletonList(siteAnnotationMember));
 
         return buildTypeSpec("Site", WebSite.class, siteClassAnnotation, pageFields, PUBLIC);
+    }
+
+    private void createPageFields(String packageName, List<FieldSpec> pageFields, String url)
+        throws IOException, URISyntaxException {
+        String titleName = splitCamelCase(getPageTitle(url));
+        String pageFieldName = firstLetterDown(titleName);
+        String pageClassName = firstLetterUp(titleName);
+        ClassName pageClass = getPageClassName(packageName, pageClassName);
+        List<AnnotationMember> pageAnnotations = new ArrayList<>();
+        pageAnnotations.add(new AnnotationMember("url", "$S", getUrlWithoutDomain(url)));
+        pageAnnotations.add(new AnnotationMember("title", "$S", getPageTitle(url)));
+
+        AnnotationSpec pageFieldAnnotation = buildAnnotationSpec(JPage.class, pageAnnotations);
+
+        pageFields
+                .add(buildFieldSpec(pageClass, pageFieldAnnotation, pageFieldName, PUBLIC, STATIC));
     }
 
     private ClassName getPageClassName(String packageName, String pageClassName) {
