@@ -1,15 +1,14 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.model.SearchRule;
-import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import com.epam.page.object.generator.model.SearchRule;
+import com.google.common.collect.Lists;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
 
 public class LocatorExistenceValidatorTest {
     private SearchRule ruleWithCss =

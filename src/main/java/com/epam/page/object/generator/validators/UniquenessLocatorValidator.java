@@ -2,7 +2,6 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
-import org.jsoup.select.Elements;
 
 /**
  * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>

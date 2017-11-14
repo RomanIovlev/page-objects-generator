@@ -2,7 +2,7 @@
   "elements": [
     {
       "type": "Dropdown",
-      "css": "div.dropdown",
+      "css": "div.dropdownlkp1",
       "innerSearchRules": [
         {
           "title": "root",

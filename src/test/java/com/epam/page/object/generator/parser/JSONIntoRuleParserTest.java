@@ -1,9 +1,12 @@
 package com.epam.page.object.generator.parser;
 
 
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
+
 import com.epam.page.object.generator.containers.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,8 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.*;
 
 public class JSONIntoRuleParserTest {
 
