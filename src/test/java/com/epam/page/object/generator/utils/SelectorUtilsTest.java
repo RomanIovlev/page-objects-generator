@@ -15,7 +15,7 @@ public class SelectorUtilsTest {
         elementsRequiredValue = "button";
         searchRule.setCss("css");
         searchRule.setXpath("//input[@type='submit']");
-        searchRule.setRequiredAttribute("name");
+        searchRule.setUniqueness("name");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class SelectorUtilsTest {
 
     @Test
     public void resultXpathSelector_withText() throws Exception {
-        searchRule.setRequiredAttribute("text");
+        searchRule.setUniqueness("text");
         String expected = "//input[@type='submit' and text()='button']";
 
         Assert.assertEquals(expected,
