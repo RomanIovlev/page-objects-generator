@@ -48,7 +48,7 @@ public class MainTest {
         validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,
-                javaPoetAdapter, outputDir, urls, packageName);
+            javaPoetAdapter, outputDir, urls, packageName);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 

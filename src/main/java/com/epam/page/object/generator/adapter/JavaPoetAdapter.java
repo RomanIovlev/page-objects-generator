@@ -44,7 +44,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     private XpathToCssTransformation xpathToCssTransformation;
 
     public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer,
-        XpathToCssTransformation xpathToCssTransformation) {
+                           XpathToCssTransformation xpathToCssTransformation) {
         this.supportedTypesContainer = supportedTypesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
     }
@@ -137,7 +137,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec createCommonAnnotation(SearchRule searchRule, String url,
-        Class fieldAnnotationClass)
+                                                  Class fieldAnnotationClass)
         throws IOException, XpathToCssTransformerException {
         if ((searchRule.extractElementsFromWebSite(url) != null) && (!searchRule
             .getRequiredValueFromFoundElement(url).isEmpty())) {
@@ -151,7 +151,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec createComplexAnnotation(SearchRule searchRule, String url,
-        Class fieldAnnotationClass)
+                                                   Class fieldAnnotationClass)
         throws IOException, XpathToCssTransformerException {
         List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
@@ -198,8 +198,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private TypeSpec buildTypeSpec(String className, Class superClass,
-        AnnotationSpec annotationSpec,
-        List<FieldSpec> fieldSpecs, Modifier... modifiers) {
+                                   AnnotationSpec annotationSpec,
+                                   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
         return TypeSpec.classBuilder(className)
             .addModifiers(modifiers)
             .superclass(superClass)
@@ -209,7 +209,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private TypeSpec buildTypeSpec(String className, Class superClass,
-        List<FieldSpec> fieldSpecs, Modifier... modifiers) {
+                                   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
         return TypeSpec.classBuilder(className)
             .addModifiers(modifiers)
             .superclass(superClass)
@@ -218,7 +218,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private FieldSpec buildFieldSpec(ClassName fieldClass, AnnotationSpec annotationSpec,
-        String fieldName, Modifier... modifiers) {
+                                     String fieldName, Modifier... modifiers) {
         return FieldSpec.builder(fieldClass, fieldName)
             .addModifiers(modifiers)
             .addAnnotation(annotationSpec)
@@ -226,7 +226,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private FieldSpec buildFieldSpec(Class fieldClass, AnnotationSpec annotationSpec,
-        String fieldName, Modifier... modifiers) {
+                                     String fieldName, Modifier... modifiers) {
         return FieldSpec.builder(fieldClass, fieldName)
             .addModifiers(modifiers)
             .addAnnotation(annotationSpec)
@@ -234,7 +234,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec buildAnnotationSpec(Class annotationClass,
-        List<AnnotationMember> annotationMembers) {
+                                               List<AnnotationMember> annotationMembers) {
         AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
 
         for (AnnotationMember annotationMember : annotationMembers) {
@@ -248,7 +248,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
     @Override
     public void writeFile(String packageName, String outputDir, List<SearchRule> searchRules,
-        List<String> urls)
+                          List<String> urls)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         JavaFile javaFile;
 
