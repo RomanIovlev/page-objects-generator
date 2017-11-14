@@ -8,15 +8,14 @@ import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
-import org.apache.commons.io.FileUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MainTest {
 
@@ -70,10 +69,10 @@ public class MainTest {
     public void pageObjectsGenerator_wrongUrl() throws Exception {
 
         PageObjectsGenerator pog = initPog(
-                "src/test/resources/dropdown.json",
-                "https://www.w3schoolsd.com/howto/howto_js_dropdown.asp",
-                true,
-                false);
+            "src/test/resources/dropdown.json",
+            "https://www.w3schoolsd.com/howto/howto_js_dropdown.asp",
+            true,
+            false);
 
         pog.generatePageObjects();
     }

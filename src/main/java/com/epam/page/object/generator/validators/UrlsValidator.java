@@ -1,9 +1,8 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
-import org.jsoup.Jsoup;
-
 import java.io.IOException;
+import org.jsoup.Jsoup;
 
 public class UrlsValidator implements Validator {
 
@@ -12,7 +11,7 @@ public class UrlsValidator implements Validator {
         for (String url : validationContext.getUrls()) {
             try {
                 Jsoup.connect(url).get();
-            } catch (IOException  | IllegalArgumentException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 throw new NotValidUrlException("Not valid url: " + url);
             }
 

@@ -1,9 +1,8 @@
 package com.epam.page.object.generator.containers;
 
 import com.epam.page.object.generator.model.SearchRule;
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class SearchRulesContainer {
 

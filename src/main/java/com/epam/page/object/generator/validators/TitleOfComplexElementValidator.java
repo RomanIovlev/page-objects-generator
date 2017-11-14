@@ -2,7 +2,6 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-
 import java.util.Arrays;
 
 /**
@@ -33,7 +32,7 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
 
         return searchRule.getInnerSearchRules() == null
             || searchRule.getInnerSearchRules().stream()
-                .allMatch(sr -> Arrays.stream(elementAnnotation.getDeclaredMethods())
+            .allMatch(sr -> Arrays.stream(elementAnnotation.getDeclaredMethods())
                 .anyMatch(m -> sr.getTitle().equals(m.getName())));
     }
 

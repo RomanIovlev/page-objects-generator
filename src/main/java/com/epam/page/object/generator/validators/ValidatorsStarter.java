@@ -1,20 +1,16 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
-import org.assertj.core.util.Lists;
-
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import org.assertj.core.util.Lists;
 
 /**
- * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains:
- * <ul>
+ * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains: <ul>
  * <li>Set of the {@link Validator} which will be validate list of {@link
- * com.epam.page.object.generator.model.SearchRule}.</li>
- * <li>{@link ValidationContext} which
- * collect all information about validation process.</li>
- * </ul>
+ * com.epam.page.object.generator.model.SearchRule}.</li> <li>{@link ValidationContext} which
+ * collect all information about validation process.</li> </ul>
  */
 public class ValidatorsStarter {
 
@@ -30,7 +26,7 @@ public class ValidatorsStarter {
         new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
-            new UniquenessLocatorValidator();
+        new UniquenessLocatorValidator();
 
     private ValidationContext validationContext;
 
@@ -48,7 +44,8 @@ public class ValidatorsStarter {
      *
      * @throws com.epam.page.object.generator.errors.ValidationException if JSON file is not valid.
      */
-    public List<SearchRule> validate(List<SearchRule> searchRules, List<String> urls) throws IOException {
+    public List<SearchRule> validate(List<SearchRule> searchRules, List<String> urls)
+        throws IOException {
 
         validationContext = new ValidationContext(searchRules, urls);
 
@@ -88,6 +85,7 @@ public class ValidatorsStarter {
 
     /**
      * Adding a new list of custom validators to the list of validators.
+     *
      * @param newValidators list of {@link Validator}
      */
 
@@ -108,6 +106,7 @@ public class ValidatorsStarter {
 
     /**
      * Return list of {@link Validator} which used by {@link ValidatorsStarter}
+     *
      * @return list of {@link Validator}
      */
     public List<Validator> getValidators() {

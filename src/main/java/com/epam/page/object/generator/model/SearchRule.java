@@ -1,13 +1,12 @@
 package com.epam.page.object.generator.model;
 
 import com.google.common.collect.Lists;
+import java.io.IOException;
+import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import us.codecraft.xsoup.Xsoup;
-
-import java.io.IOException;
-import java.util.List;
 
 public class SearchRule {
 

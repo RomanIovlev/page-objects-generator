@@ -1,5 +1,11 @@
 package com.epam.page.object.generator;
 
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+
 import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
@@ -9,15 +15,11 @@ import com.epam.page.object.generator.validators.ValidationContext;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.google.common.collect.Lists;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.List;
-
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Mockito.*;
 
 public class PageObjectsGeneratorTestNew {
 

@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.errors;
 
 public class NotValidUrlException extends RuntimeException {
+
     public NotValidUrlException() {
     }
 

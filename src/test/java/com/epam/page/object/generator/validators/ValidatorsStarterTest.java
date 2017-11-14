@@ -1,20 +1,19 @@
 package com.epam.page.object.generator.validators;
 
 
+import static org.junit.Assert.assertTrue;
+
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.Assert.assertTrue;
 
 public class ValidatorsStarterTest {
 
@@ -23,9 +22,9 @@ public class ValidatorsStarterTest {
     private Set<String> supportedTypes = new HashSet<>();
 
     private SearchRule ruleValid =
-            new SearchRule("button", "req", null, "css", null, null);
+        new SearchRule("button", "req", null, "css", null, null);
     private SearchRule ruleJsonInvalid =
-            new SearchRule("button", "req", null, null, null, null);
+        new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
     private List<String> urls = new ArrayList<>();
@@ -53,7 +52,7 @@ public class ValidatorsStarterTest {
         //IntermediateCheckValidator and UrlsValidator do not generate validationResult,
         // that why we should compare amount of validationResults with validators.size() - 2
         Assert.assertEquals(sut.getValidators().size() - 2,
-                sut.getValidationContext().getValidationResults().size());
+            sut.getValidationContext().getValidationResults().size());
     }
 
     @Test(expected = ValidationException.class)
@@ -67,8 +66,8 @@ public class ValidatorsStarterTest {
         sut.setCheckLocatorsUniqueness(true);
 
         assertTrue(sut.getValidators()
-                .stream()
-                .anyMatch(validator -> validator instanceof UniquenessLocatorValidator));
+            .stream()
+            .anyMatch(validator -> validator instanceof UniquenessLocatorValidator));
 
     }
 
@@ -77,8 +76,8 @@ public class ValidatorsStarterTest {
         sut.setCheckLocatorsUniqueness(false);
 
         assertTrue(sut.getValidators()
-                .stream()
-                .noneMatch(validator -> validator instanceof UniquenessLocatorValidator));
+            .stream()
+            .noneMatch(validator -> validator instanceof UniquenessLocatorValidator));
 
     }
 

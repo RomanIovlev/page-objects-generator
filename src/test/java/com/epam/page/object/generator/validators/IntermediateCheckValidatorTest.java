@@ -1,13 +1,13 @@
 package com.epam.page.object.generator.validators;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.epam.page.object.generator.errors.ValidationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class IntermediateCheckValidatorTest {
 
@@ -40,7 +40,6 @@ public class IntermediateCheckValidatorTest {
 
         verify(validationContext).hasInvalidRules();
     }
-
 
 
 }

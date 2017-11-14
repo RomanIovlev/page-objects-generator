@@ -1,5 +1,16 @@
 package com.epam.page.object.generator.adapter;
 
+import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
+import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.utils.URLUtils.getDomainName;
+import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
+import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
+
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
@@ -10,24 +21,20 @@ import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.writer.JavaFileWriter;
-import com.squareup.javapoet.*;
-import org.jsoup.select.Elements;
-import org.openqa.selenium.support.FindBy;
-
-import javax.lang.model.element.Modifier;
+import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
-import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
-import static com.epam.page.object.generator.utils.StringUtils.*;
-import static com.epam.page.object.generator.utils.URLUtils.*;
-import static javax.lang.model.element.Modifier.PUBLIC;
-import static javax.lang.model.element.Modifier.STATIC;
+import javax.lang.model.element.Modifier;
+import org.jsoup.select.Elements;
+import org.openqa.selenium.support.FindBy;
 
 public class JavaPoetAdapter implements JavaFileWriter {
 
@@ -36,30 +43,9 @@ public class JavaPoetAdapter implements JavaFileWriter {
     private XpathToCssTransformation xpathToCssTransformation;
 
     public JavaPoetAdapter(SupportedTypesContainer supportedTypesContainer,
-        XpathToCssTransformation xpathToCssTransformation) {
+                           XpathToCssTransformation xpathToCssTransformation) {
         this.supportedTypesContainer = supportedTypesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
-    }
-
-    private class AnnotationMember {
-
-        String name;
-        String format;
-        String arg;
-        AnnotationSpec annotation;
-
-        AnnotationMember(String name, String format, String arg) {
-            this.name = name;
-            this.format = format;
-            this.arg = arg;
-        }
-
-        AnnotationMember(String name, String format, AnnotationSpec annotation) {
-            this.name = name;
-            this.format = format;
-            this.annotation = annotation;
-        }
-
     }
 
     private TypeSpec buildPageClass(List<SearchRule> searchRules, String url)
@@ -134,7 +120,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec createCommonAnnotation(SearchRule searchRule, String url,
-        Class fieldAnnotationClass)
+                                                  Class fieldAnnotationClass)
         throws IOException, XpathToCssTransformerException {
         List<String> requiredValue = searchRule.getRequiredValueFromFoundElement(url);
         if ((requiredValue != null) && (!requiredValue.isEmpty())) {
@@ -148,7 +134,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec createComplexAnnotation(SearchRule searchRule, String url,
-        Class fieldAnnotationClass)
+                                                   Class fieldAnnotationClass)
         throws IOException, XpathToCssTransformerException {
         List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
@@ -195,8 +181,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private TypeSpec buildTypeSpec(String className, Class superClass,
-        AnnotationSpec annotationSpec,
-        List<FieldSpec> fieldSpecs, Modifier... modifiers) {
+                                   AnnotationSpec annotationSpec,
+                                   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
         return TypeSpec.classBuilder(className)
             .addModifiers(modifiers)
             .superclass(superClass)
@@ -206,7 +192,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private TypeSpec buildTypeSpec(String className, Class superClass,
-        List<FieldSpec> fieldSpecs, Modifier... modifiers) {
+                                   List<FieldSpec> fieldSpecs, Modifier... modifiers) {
         return TypeSpec.classBuilder(className)
             .addModifiers(modifiers)
             .superclass(superClass)
@@ -215,7 +201,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private FieldSpec buildFieldSpec(ClassName fieldClass, AnnotationSpec annotationSpec,
-        String fieldName, Modifier... modifiers) {
+                                     String fieldName, Modifier... modifiers) {
         return FieldSpec.builder(fieldClass, fieldName)
             .addModifiers(modifiers)
             .addAnnotation(annotationSpec)
@@ -223,7 +209,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private FieldSpec buildFieldSpec(Class fieldClass, AnnotationSpec annotationSpec,
-        String fieldName, Modifier... modifiers) {
+                                     String fieldName, Modifier... modifiers) {
         return FieldSpec.builder(fieldClass, fieldName)
             .addModifiers(modifiers)
             .addAnnotation(annotationSpec)
@@ -231,7 +217,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private AnnotationSpec buildAnnotationSpec(Class annotationClass,
-        List<AnnotationMember> annotationMembers) {
+                                               List<AnnotationMember> annotationMembers) {
         AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
 
         for (AnnotationMember annotationMember : annotationMembers) {
@@ -245,7 +231,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
     @Override
     public void writeFile(String packageName, String outputDir, List<SearchRule> searchRules,
-        List<String> urls)
+                          List<String> urls)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         JavaFile javaFile;
 
@@ -268,6 +254,27 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
             javaFile.writeTo(Paths.get(outputDir));
         }
+    }
+
+    private class AnnotationMember {
+
+        String name;
+        String format;
+        String arg;
+        AnnotationSpec annotation;
+
+        AnnotationMember(String name, String format, String arg) {
+            this.name = name;
+            this.format = format;
+            this.arg = arg;
+        }
+
+        AnnotationMember(String name, String format, AnnotationSpec annotation) {
+            this.name = name;
+            this.format = format;
+            this.annotation = annotation;
+        }
+
     }
 
 }

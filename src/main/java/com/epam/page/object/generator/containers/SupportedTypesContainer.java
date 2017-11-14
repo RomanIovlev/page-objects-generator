@@ -1,15 +1,37 @@
 package com.epam.page.object.generator.containers;
 
-import com.epam.jdi.uitests.web.selenium.elements.common.*;
-import com.epam.jdi.uitests.web.selenium.elements.complex.*;
+import com.epam.jdi.uitests.web.selenium.elements.common.Button;
+import com.epam.jdi.uitests.web.selenium.elements.common.CheckBox;
+import com.epam.jdi.uitests.web.selenium.elements.common.DatePicker;
+import com.epam.jdi.uitests.web.selenium.elements.common.FileInput;
+import com.epam.jdi.uitests.web.selenium.elements.common.Image;
+import com.epam.jdi.uitests.web.selenium.elements.common.Input;
+import com.epam.jdi.uitests.web.selenium.elements.common.Label;
+import com.epam.jdi.uitests.web.selenium.elements.common.Link;
+import com.epam.jdi.uitests.web.selenium.elements.common.Text;
+import com.epam.jdi.uitests.web.selenium.elements.common.TextArea;
+import com.epam.jdi.uitests.web.selenium.elements.common.TextField;
+import com.epam.jdi.uitests.web.selenium.elements.complex.CheckList;
+import com.epam.jdi.uitests.web.selenium.elements.complex.ComboBox;
+import com.epam.jdi.uitests.web.selenium.elements.complex.DropList;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Dropdown;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Elements;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Menu;
+import com.epam.jdi.uitests.web.selenium.elements.complex.RadioButtons;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Selector;
+import com.epam.jdi.uitests.web.selenium.elements.complex.Tabs;
+import com.epam.jdi.uitests.web.selenium.elements.complex.TextList;
 import com.epam.jdi.uitests.web.selenium.elements.complex.table.Table;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.*;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JComboBox;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropList;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JMenu;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JTable;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
-import org.openqa.selenium.support.FindBy;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.openqa.selenium.support.FindBy;
 
 public class SupportedTypesContainer {
 
