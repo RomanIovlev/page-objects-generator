@@ -11,9 +11,7 @@ import us.codecraft.xsoup.Xsoup;
 
 public class SearchRule {
 
-    @JsonProperty("name")
-    private String requiredAttribute;
-
+    private String uniqueness;
     private String title;
     private String type;
     private String css;
@@ -24,10 +22,10 @@ public class SearchRule {
 
     }
 
-    public SearchRule(String type, String requiredAttribute, String title, String css,
+    public SearchRule(String type, String uniqueness, String title, String css,
                       String xpath, List<SearchRule> innerSearchRules) {
         this.type = type == null ? null : type.toLowerCase();
-        this.requiredAttribute = requiredAttribute;
+        this.uniqueness = uniqueness;
         this.title = title;
         this.css = css;
         this.xpath = xpath;
@@ -37,14 +35,14 @@ public class SearchRule {
     public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
         Elements elements = extractElementsFromWebSite(url);
 
-        if (requiredAttribute == null) {
+        if (uniqueness == null) {
             //  TODO: Find out how to name field for found complex element
             return Lists.newArrayList(type);
         }
 
-        return requiredAttribute.equals("text")
+        return uniqueness.equals("text")
             ? elements.eachText()
-            : elements.eachAttr(requiredAttribute);
+            : elements.eachAttr(uniqueness);
     }
 
     public Elements extractElementsFromWebSite(String url) throws IOException {
@@ -69,12 +67,12 @@ public class SearchRule {
         this.type = type == null ? null : type.toLowerCase();
     }
 
-    public String getRequiredAttribute() {
-        return requiredAttribute;
+    public String getUniqueness() {
+        return uniqueness;
     }
 
-    public void setRequiredAttribute(String requiredAttribute) {
-        this.requiredAttribute = requiredAttribute;
+    public void setUniqueness(String uniqueness) {
+        this.uniqueness = uniqueness;
     }
 
     public String getCss() {
@@ -112,7 +110,7 @@ public class SearchRule {
     @Override
     public String toString() {
         return "SearchRule{" +
-            "requiredAttribute='" + requiredAttribute + '\'' +
+            "uniqueness='" + uniqueness + '\'' +
             ", title='" + title + '\'' +
             ", type='" + type + '\'' +
             ", css='" + css + '\'' +

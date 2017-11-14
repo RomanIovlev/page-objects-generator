@@ -5,7 +5,7 @@ import com.epam.page.object.generator.model.SearchRule;
 public class SelectorUtils {
 
     public static String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
-        return String.format("%s[%s='%s']", searchRule.getCss(), searchRule.getRequiredAttribute(), elementsRequiredValue);
+        return String.format("%s[%s='%s']", searchRule.getCss(), searchRule.getUniqueness(), elementsRequiredValue);
     }
 
     public static String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
@@ -13,9 +13,9 @@ public class SelectorUtils {
 
         if (searchRule.getInnerSearchRules() == null) {
 
-            if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+            if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
                 return xpathWithoutCloseBracket + " and @"
-                    + searchRule.getRequiredAttribute() + "='" + elementsRequiredValue + "']";
+                    + searchRule.getUniqueness() + "='" + elementsRequiredValue + "']";
             } else {
                 return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
             }

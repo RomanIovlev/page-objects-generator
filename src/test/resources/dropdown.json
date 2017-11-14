@@ -6,7 +6,7 @@
       "innerSearchRules": [
         {
           "title": "root",
-          "name": "text",
+          "uniqueness": "text",
           "xpath": "//button[@class='dropbtn']"
         }
       ]

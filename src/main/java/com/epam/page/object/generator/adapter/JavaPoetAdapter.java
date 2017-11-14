@@ -87,7 +87,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
         AnnotationMember annotationMember;
         String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
 
-        if (!searchRule.getRequiredAttribute().equalsIgnoreCase("text")) {
+        if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
                 xpathToCssTransformation.transformRule(searchRule);
             }
