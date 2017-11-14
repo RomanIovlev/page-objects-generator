@@ -16,6 +16,7 @@ import com.squareup.javapoet.*;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
 import java.net.URI;
@@ -51,6 +52,7 @@ public class PageObjectsGenerator {
 		builders.put("text", new CommonFieldsBuilder(Text.class));
 		builders.put("checkbox", new CommonFieldsBuilder(CheckBox.class));
 		builders.put("image", new CommonFieldsBuilder(Image.class));
+		builders.put("webelement", new CommonFieldsBuilder(WebElement.class));
 		parser = new JSONIntoRuleParser(jsonPath, builders.keySet());
 		this.urls = urls;
 		this.outputDir = outputDir;

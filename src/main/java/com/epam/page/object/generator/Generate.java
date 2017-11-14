@@ -21,7 +21,7 @@ public class Generate {
             "https://www.w3schools.com/html/html_form_input_types.asp");
 
         new PageObjectsGenerator(
-                "src/test/resources/custom.json",
+                "src/test/resources/webElement.json",
                 urls,
                 "D:/Work/Projects/Java/temp/jdi-generator-example/src/main/java/",
                 "w3c.tests")
