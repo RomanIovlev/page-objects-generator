@@ -1,0 +1,15 @@
+{
+  "elements": [
+    {
+      "type": "Drop4down",
+      "css": "div.dropdown",
+      "innerSearchRules": [
+        {
+          "title": "root",
+          "uniqueness": "text",
+          "xpath": "//button[@class='dropbtn']"
+        }
+      ]
+    }
+  ]
+}
