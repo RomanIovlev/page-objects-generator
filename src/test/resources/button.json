@@ -1,9 +1,9 @@
 {
   "elements": [
     {
-      "type":"Button",
-      "name": "value",
-      "xpath":"//input[@type='submit']"
+      "type": "Button",
+      "uniqueness": "value",
+      "xpath": "//input[@type='submit']"
     }
   ]
 }

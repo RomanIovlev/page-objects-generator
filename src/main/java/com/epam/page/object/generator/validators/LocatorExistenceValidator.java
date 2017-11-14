@@ -1,30 +1,40 @@
 package com.epam.page.object.generator.validators;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import com.epam.page.object.generator.model.SearchRule;
-import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+/**
+ * {@link LocatorExistenceValidator} validate that {@link SearchRule} has any locator (xpath or
+ * css).<br/> Default priority: 0.
+ */
+public class LocatorExistenceValidator extends AbstractValidator {
 
-import static org.apache.commons.lang3.StringUtils.*;
+    public LocatorExistenceValidator() {
+        super(0);
+    }
 
-public class LocatorExistenceValidator implements Validator {
+    public LocatorExistenceValidator(int order) {
+        super(order);
+    }
 
-	@Override
-	public void validate(ValidationContext context) {
-		for (SearchRule searchRule : context.getRulesToValidate()) {
-			if(!isEmpty(searchRule.getCss())){
-				context.addRuleToValid(searchRule);
-			}
-			if(isEmpty(searchRule.getCss()) && isEmpty(searchRule.getXpath())){
-				context.addRuleToInvalid(searchRule);
-			}
-		}
-	}
+    public LocatorExistenceValidator(boolean isValidateAllSearchRules) {
+        super(0, isValidateAllSearchRules);
+    }
 
-	@Override
-	public int getOrder() {
-		return 0;
-	}
+    public LocatorExistenceValidator(int order, boolean isValidateAllSearchRules) {
+        super(order, isValidateAllSearchRules);
+    }
+
+    @Override
+    public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
+
+        return (isInnerRulesValid(searchRule, validationContext)) && (!isEmpty(searchRule.getCss())
+            || !isEmpty(searchRule.getXpath()));
+    }
+
+    @Override
+    public String getExceptionMessage() {
+        return "No xpath or css locator";
+    }
 }

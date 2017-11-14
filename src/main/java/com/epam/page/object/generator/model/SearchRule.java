@@ -3,7 +3,6 @@ package com.epam.page.object.generator.model;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -11,9 +10,7 @@ import us.codecraft.xsoup.Xsoup;
 
 public class SearchRule {
 
-    @JsonProperty("name")
-    private String requiredAttribute;
-
+    private String uniqueness;
     private String title;
     private String type;
     private String css;
@@ -24,10 +21,10 @@ public class SearchRule {
 
     }
 
-    public SearchRule(String type, String requiredAttribute, String title, String css,
+    public SearchRule(String type, String uniqueness, String title, String css,
                       String xpath, List<SearchRule> innerSearchRules) {
-        this.type = type;
-        this.requiredAttribute = requiredAttribute;
+        this.type = type == null ? null : type.toLowerCase();
+        this.uniqueness = uniqueness;
         this.title = title;
         this.css = css;
         this.xpath = xpath;
@@ -37,14 +34,14 @@ public class SearchRule {
     public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
         Elements elements = extractElementsFromWebSite(url);
 
-        if (requiredAttribute == null) {
+        if (uniqueness == null) {
             //  TODO: Find out how to name field for found complex element
             return Lists.newArrayList(type);
         }
 
-        return requiredAttribute.equals("text")
+        return uniqueness.equals("text")
             ? elements.eachText()
-            : elements.eachAttr(requiredAttribute);
+            : elements.eachAttr(uniqueness);
     }
 
     public Elements extractElementsFromWebSite(String url) throws IOException {
@@ -66,15 +63,15 @@ public class SearchRule {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type == null ? null : type.toLowerCase();
     }
 
-    public String getRequiredAttribute() {
-        return requiredAttribute;
+    public String getUniqueness() {
+        return uniqueness;
     }
 
-    public void setRequiredAttribute(String requiredAttribute) {
-        this.requiredAttribute = requiredAttribute;
+    public void setUniqueness(String uniqueness) {
+        this.uniqueness = uniqueness;
     }
 
     public String getCss() {
@@ -112,7 +109,7 @@ public class SearchRule {
     @Override
     public String toString() {
         return "SearchRule{" +
-            "requiredAttribute='" + requiredAttribute + '\'' +
+            "uniqueness='" + uniqueness + '\'' +
             ", title='" + title + '\'' +
             ", type='" + type + '\'' +
             ", css='" + css + '\'' +

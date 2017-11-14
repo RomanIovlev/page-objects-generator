@@ -1,11 +1,10 @@
 package com.epam.page.object.generator;
 
-import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
-import com.epam.page.object.generator.errors.NotUniqueSelectorsException;
 import com.epam.page.object.generator.errors.ValidationException;
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
-import com.epam.page.object.generator.validators.SearchRuleValidator;
+import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,50 +13,51 @@ import java.util.List;
 
 public class PageObjectsGenerator {
 
-	private JsonRuleMapper parser;
-	private JavaFileWriter fileWriter;
-	private SiteFieldSpecBuilder siteFieldSpecBuilder;
-	private SearchRuleValidator validator;
-	private List<String> urls;
-	private String packageName;
+    private JsonRuleMapper parser;
+    private ValidatorsStarter validatorsStarter;
+    private JavaFileWriter javaFileWriter;
+    private String outPutDir;
+    private List<String> urls;
+    private String packageName;
 
-	private boolean forceGenerateFile = false;
+    private boolean forceGenerateFile = false;
 
-	public PageObjectsGenerator(JsonRuleMapper parser,
-	                            JavaFileWriter fileWriter,
-	                            SiteFieldSpecBuilder siteFieldSpecBuilder,
-	                            SearchRuleValidator validator,
-	                            List<String> urls,
-	                            String packageName) {
-		this.parser = parser;
-		this.fileWriter = fileWriter;
-		this.siteFieldSpecBuilder = siteFieldSpecBuilder;
-		this.validator = validator;
-		this.urls = urls;
-		this.packageName = packageName;
-	}
+    public PageObjectsGenerator(JsonRuleMapper parser,
+                                ValidatorsStarter validatorsStarter,
+                                JavaFileWriter javaFileWriter,
+                                String outPutDir,
+                                List<String> urls,
+                                String packageName) {
+        this.parser = parser;
+        this.validatorsStarter = validatorsStarter;
+        this.javaFileWriter = javaFileWriter;
+        this.outPutDir = outPutDir;
+        this.urls = urls;
+        this.packageName = packageName;
+    }
 
-	public void generatePageObjects() throws IOException, URISyntaxException {
-		List<SearchRule> searchRules = parser.getRulesFromJSON();
+    public void generatePageObjects()
+        throws IOException, URISyntaxException, XpathToCssTransformerException {
+        List<SearchRule> searchRules = parser.getRulesFromJSON();
+        List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules, urls);
+        generateJavaFiles(validSearchRules);
+    }
 
-		try {
-			validator.validate(searchRules, urls);
-		} catch (ValidationException | NotUniqueSelectorsException ex) {
-			if (forceGenerateFile) {
-				generateJavaFiles(searchRules);
-			}
-			throw ex;
-		}
+    private void generateJavaFiles(List<SearchRule> searchRules)
+        throws IOException, URISyntaxException, XpathToCssTransformerException {
 
-		generateJavaFiles(searchRules);
-	}
+        if (validatorsStarter.getValidationContext().hasInvalidRules()) {
+            if (forceGenerateFile) {
+                javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
+            }
 
-	private void generateJavaFiles(List<SearchRule> searchRules) throws IOException, URISyntaxException {
-		fileWriter.write(packageName, siteFieldSpecBuilder.build(urls, searchRules));
-	}
+            throw new ValidationException(validatorsStarter.getValidationContext());
+        }
 
-	public void setForceGenerateFile(boolean forceGenerateFile) {
-		this.forceGenerateFile = forceGenerateFile;
-	}
+        javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
+    }
 
+    public void setForceGenerateFile(boolean forceGenerateFile) {
+        this.forceGenerateFile = forceGenerateFile;
+    }
 }

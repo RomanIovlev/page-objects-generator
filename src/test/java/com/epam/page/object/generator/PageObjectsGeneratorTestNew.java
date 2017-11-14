@@ -1,20 +1,20 @@
 package com.epam.page.object.generator;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.anyList;
+import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
-import com.epam.page.object.generator.builder.SiteFieldSpecBuilder;
+import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
-import com.epam.page.object.generator.validators.SearchRuleValidator;
-import com.epam.page.object.generator.writer.JavaFileWriter;
+import com.epam.page.object.generator.validators.LocatorExistenceValidator;
+import com.epam.page.object.generator.validators.ValidationContext;
+import com.epam.page.object.generator.validators.ValidationResult;
+import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.google.common.collect.Lists;
-import com.squareup.javapoet.TypeSpec;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,51 +23,82 @@ import org.mockito.MockitoAnnotations;
 
 public class PageObjectsGeneratorTestNew {
 
-	private static final String TEST_PACKAGE = "testPackage";
+    private static final String TEST_PACKAGE = "testPackage";
 
-	@Mock
-	private JsonRuleMapper parser;
+    @Mock
+    private JsonRuleMapper parser;
 
-	@Mock
-	private JavaFileWriter fileWriter;
+    @Mock
+    private JavaPoetAdapter javaPoetAdapter;
 
-	@Mock
-	private SiteFieldSpecBuilder siteFieldSpecBuilder;
+    @Mock
+    private ValidatorsStarter validatorsStarter;
 
-	@Mock
-	private SearchRuleValidator validator;
+    private SearchRule searchRule = new SearchRule();
+    private SearchRule invalidSearchRule =
+        new SearchRule("button", "req", null, null, null, null);
 
-	private SearchRule searchRule = new SearchRule();
-	private TypeSpec siteTypeSpec = TypeSpec.classBuilder("PageObjectsGeneratorTestNew").build();
-	private List<SearchRule> searchRules = Lists.newArrayList(searchRule);
-	private List<String> urls = Lists.newArrayList("some_url");
+    private List<SearchRule> searchRules = Lists.newArrayList(searchRule);
 
-	private PageObjectsGenerator sut;
+    private String outputDir = "";
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+    private List<String> urls = Lists.newArrayList("https://www.google.com");
 
-		when(parser.getRulesFromJSON()).thenReturn(searchRules);
-		when(siteFieldSpecBuilder.build(urls, searchRules)).thenReturn(siteTypeSpec);
+    private ValidationContext validationContext = new ValidationContext(searchRules, urls);
 
-		sut = new PageObjectsGenerator(parser, fileWriter, siteFieldSpecBuilder, validator, urls, TEST_PACKAGE);
-	}
+    private PageObjectsGenerator sut;
 
-	@Test
-	public void generatePageObjects_filesGeneratedWithoutErrors()
-			throws Exception {
-		sut.generatePageObjects();
-		verify(validator).validate(searchRules, urls);
-		verify(fileWriter).write(TEST_PACKAGE, siteTypeSpec);
-	}
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
 
-	@Test(expected = ValidationException.class)
-	public void generatePageObjects_ErrorWhenValidationFailsAndNoForceGenerateFlagSet()
-			throws Exception {
-		doThrow(new ValidationException("some message")).when(validator).validate(anyList(), eq(urls));
-		sut.generatePageObjects();
-		verifyZeroInteractions(fileWriter);
-	}
+        when(parser.getRulesFromJSON()).thenReturn(searchRules);
+        when(validatorsStarter.validate(anyList(), anyList())).thenReturn(searchRules);
+        when(validatorsStarter.getValidationContext()).thenReturn(validationContext);
+
+        sut = new PageObjectsGenerator(parser, validatorsStarter, javaPoetAdapter, outputDir, urls,
+            TEST_PACKAGE);
+    }
+
+    @Test
+    public void generatePageObjects_filesGeneratedWithoutErrors()
+        throws Exception {
+
+        sut.generatePageObjects();
+
+        verify(validatorsStarter).validate(searchRules, urls);
+        verify(javaPoetAdapter).writeFile(TEST_PACKAGE, outputDir, searchRules, urls);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void generatePageObjects_ErrorWhenJSONValidationFails()
+        throws Exception {
+        doThrow(new ValidationException("some message")).when(validatorsStarter)
+            .validate(searchRules, urls);
+        sut.generatePageObjects();
+        verifyZeroInteractions(javaPoetAdapter);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void generatePageObjects_ErrorWhenWebValidationFailsWithTrueForceGenerateFile()
+        throws Exception {
+        validationContext.addValidationResult(
+            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));
+        sut.setForceGenerateFile(true);
+
+        sut.generatePageObjects();
+        verify(javaPoetAdapter).writeFile(TEST_PACKAGE, outputDir, searchRules, urls);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void generatePageObjects_ErrorWhenWebValidationFailsWithFlaseForceGenerateFile()
+        throws Exception {
+        validationContext.addValidationResult(
+            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));
+        sut.setForceGenerateFile(false);
+
+        sut.generatePageObjects();
+        verifyZeroInteractions(javaPoetAdapter);
+    }
 
 }
