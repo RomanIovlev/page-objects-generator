@@ -89,6 +89,17 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
+    @Test
+    public void pageObjectsGenerator_wrongSelector() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-wrong-selector.json",
+            "https://www.w3schools.com/howto/howto_js_dropdown.asp",
+            true,
+            false);
+
+        pog.generatePageObjects();
+    }
+
     @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_NotUniqueLocatorFoundInUniquenessModeOn() throws Exception {
         PageObjectsGenerator pog = initPog(
