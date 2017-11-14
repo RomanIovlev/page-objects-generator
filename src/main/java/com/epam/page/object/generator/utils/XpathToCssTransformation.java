@@ -2,12 +2,13 @@ package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class XpathToCssTransformation {
 

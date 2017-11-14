@@ -2,6 +2,7 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+
 import java.util.Arrays;
 
 /**

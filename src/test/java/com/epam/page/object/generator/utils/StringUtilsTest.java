@@ -1,8 +1,8 @@
 package com.epam.page.object.generator.utils;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class StringUtilsTest {
 

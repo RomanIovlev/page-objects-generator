@@ -1,11 +1,12 @@
 package com.epam.page.object.generator.utils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class URLUtils {
 

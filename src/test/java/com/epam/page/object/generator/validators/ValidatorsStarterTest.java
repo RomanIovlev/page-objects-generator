@@ -1,19 +1,20 @@
 package com.epam.page.object.generator.validators;
 
 
-import static org.junit.Assert.assertTrue;
-
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.Assert.assertTrue;
 
 public class ValidatorsStarterTest {
 
@@ -49,9 +50,9 @@ public class ValidatorsStarterTest {
 
         Assert.assertEquals(searchRules.size(), validationResults.size());
 
-        //IntermediateCheckValidator does not generate validationResult, that why
-        //we should compare amount of validationResults with validators.size() - 1
-        Assert.assertEquals(sut.getValidators().size() - 1,
+        //IntermediateCheckValidator and UrlsValidator do not generate validationResult,
+        // that why we should compare amount of validationResults with validators.size() - 2
+        Assert.assertEquals(sut.getValidators().size() - 2,
                 sut.getValidationContext().getValidationResults().size());
     }
 

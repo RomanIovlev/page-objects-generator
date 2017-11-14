@@ -1,10 +1,11 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import org.assertj.core.util.Lists;
+
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import org.assertj.core.util.Lists;
 
 /**
  * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains:
@@ -25,7 +26,8 @@ public class ValidatorsStarter {
         new LocatorExistenceValidator(),
         new TypeSupportedValidator(),
         new IntermediateCheckValidator(),
-        new TitleOfComplexElementValidator());
+        new TitleOfComplexElementValidator(),
+        new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
             new UniquenessLocatorValidator();

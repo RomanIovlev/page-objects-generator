@@ -2,6 +2,7 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

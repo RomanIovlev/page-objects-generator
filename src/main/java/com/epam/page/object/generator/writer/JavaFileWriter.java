@@ -2,6 +2,7 @@ package com.epam.page.object.generator.writer;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+
 import java.util.ArrayList;
 import java.util.List;
 

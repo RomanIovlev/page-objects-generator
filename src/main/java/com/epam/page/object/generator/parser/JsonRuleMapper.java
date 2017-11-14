@@ -2,10 +2,11 @@ package com.epam.page.object.generator.parser;
 
 import com.epam.page.object.generator.containers.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import org.codehaus.jackson.map.ObjectMapper;
 
 public class JsonRuleMapper {
 

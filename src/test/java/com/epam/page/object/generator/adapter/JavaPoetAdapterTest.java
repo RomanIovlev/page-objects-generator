@@ -1,13 +1,14 @@
 package com.epam.page.object.generator.adapter;
 
-import static org.junit.Assert.assertTrue;
-
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.google.common.collect.Lists;
-import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+
+import static org.junit.Assert.assertTrue;
 
 public class JavaPoetAdapterTest {
 

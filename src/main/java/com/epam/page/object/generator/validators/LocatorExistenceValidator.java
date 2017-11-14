@@ -1,8 +1,8 @@
 package com.epam.page.object.generator.validators;
 
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-
 import com.epam.page.object.generator.model.SearchRule;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /**
  * {@link LocatorExistenceValidator} validate that {@link SearchRule} has any locator (xpath or

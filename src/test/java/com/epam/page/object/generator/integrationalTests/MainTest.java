@@ -3,18 +3,20 @@ package com.epam.page.object.generator.integrationalTests;
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.errors.NotValidUrlException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainTest {
 
@@ -60,6 +62,18 @@ public class MainTest {
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
             true,
             false);
+
+        pog.generatePageObjects();
+    }
+
+    @Test(expected = NotValidUrlException.class)
+    public void pageObjectsGenerator_wrongUrl() throws Exception {
+
+        PageObjectsGenerator pog = initPog(
+                "src/test/resources/dropdown.json",
+                "https://www.w3schoolsd.com/howto/howto_js_dropdown.asp",
+                true,
+                false);
 
         pog.generatePageObjects();
     }

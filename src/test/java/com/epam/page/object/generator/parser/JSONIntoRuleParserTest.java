@@ -1,22 +1,21 @@
 package com.epam.page.object.generator.parser;
 
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.when;
-
 import com.epam.page.object.generator.containers.SearchRulesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 public class JSONIntoRuleParserTest {
 
