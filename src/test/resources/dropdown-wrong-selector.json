@@ -1,0 +1,15 @@
+{
+  "elements": [
+    {
+      "type": "Dropdown",
+      "css": "div.dropdownlkp1",
+      "innerSearchRules": [
+        {
+          "title": "root",
+          "uniqueness": "text",
+          "xpath": "//button[@cla123ss='dropbtn']"
+        }
+      ]
+    }
+  ]
+}
