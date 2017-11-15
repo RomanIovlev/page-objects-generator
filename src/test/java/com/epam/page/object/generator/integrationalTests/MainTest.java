@@ -15,8 +15,10 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class MainTest {
 
     private String outputDir = "src/test/resources/";
