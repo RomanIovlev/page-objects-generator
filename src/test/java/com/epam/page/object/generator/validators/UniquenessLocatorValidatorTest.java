@@ -12,14 +12,14 @@ import org.junit.Test;
 
 public class UniquenessLocatorValidatorTest {
 
-    private SearchRule uniguenessInnerSearchRuleWithXpath =
+    private SearchRule uniquenessInnerSearchRuleWithXpath =
         new SearchRule(null, "text", "root", null, "//img[@class='dropimg']", null);
-    private SearchRule notUniguenessInnerSearchRuleWithXpath =
+    private SearchRule notUniquenessInnerSearchRuleWithXpath =
         new SearchRule(null, "text", "root", null, "//button", null);
 
-    private SearchRule uniguenessInnerSearchRuleWithCss =
+    private SearchRule uniquenessInnerSearchRuleWithCss =
         new SearchRule(null, "text", "root", null, "//img[@class='dropimg']", null);
-    private SearchRule notUniguenessInnerSearchRuleWithCss =
+    private SearchRule notUniquenessInnerSearchRuleWithCss =
         new SearchRule(null, "text", "root", null, "//button", null);
 
     private SearchRule uniquenessSearchRuleWithXpath =
@@ -28,10 +28,10 @@ public class UniquenessLocatorValidatorTest {
         new SearchRule("dropdown", "text", null, null, "//button", null);
     private SearchRule complexRuleWithUniquenessXpathInnerRule =
         new SearchRule("dropdown", "text", null, null, "//img[@class='dropimg']",
-            Lists.newArrayList(uniguenessInnerSearchRuleWithXpath));
+            Lists.newArrayList(uniquenessInnerSearchRuleWithXpath));
     private SearchRule complexRuleWithNotUniquenessXpathInnerRule =
         new SearchRule("dropdown", "text", null, null, "//img[@class='dropimg']",
-            Lists.newArrayList(notUniguenessInnerSearchRuleWithXpath));
+            Lists.newArrayList(notUniquenessInnerSearchRuleWithXpath));
 
     private SearchRule uniquenessSearchRuleWithCss =
         new SearchRule("dropdown", "text", null, "img.dropimg", null, null);
@@ -39,10 +39,10 @@ public class UniquenessLocatorValidatorTest {
         new SearchRule("dropdown", "text", null, "img", null, null);
     private SearchRule complexRuleWithUniquenessCssInnerRule =
         new SearchRule("dropdown", "text", null, "img.dropimg", null,
-            Lists.newArrayList(uniguenessInnerSearchRuleWithCss));
+            Lists.newArrayList(uniquenessInnerSearchRuleWithCss));
     private SearchRule complexRuleWithNotUniquenessCssInnerRule =
         new SearchRule("dropdown", "text", null, "img.dropimg", null,
-            Lists.newArrayList(notUniguenessInnerSearchRuleWithCss));
+            Lists.newArrayList(notUniquenessInnerSearchRuleWithCss));
 
     private UniquenessLocatorValidator sut;
     private ValidationContext context;

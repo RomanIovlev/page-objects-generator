@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class PageObjectsGeneratorTestNew {
+public class PageObjectsGeneratorTest {
 
     private static final String TEST_PACKAGE = "testPackage";
 
@@ -91,7 +91,7 @@ public class PageObjectsGeneratorTestNew {
     }
 
     @Test(expected = ValidationException.class)
-    public void generatePageObjects_ErrorWhenWebValidationFailsWithFlaseForceGenerateFile()
+    public void generatePageObjects_ErrorWhenWebValidationFailsWithFalseForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
             new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));

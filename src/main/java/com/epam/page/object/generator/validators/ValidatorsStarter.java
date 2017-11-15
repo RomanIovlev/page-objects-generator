@@ -23,6 +23,7 @@ public class ValidatorsStarter {
         new TypeSupportedValidator(),
         new IntermediateCheckValidator(),
         new TitleOfComplexElementValidator(),
+        new UniquenessAttributeExistenceValidator(),
         new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =

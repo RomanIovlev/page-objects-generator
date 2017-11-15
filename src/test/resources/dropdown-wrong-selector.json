@@ -7,7 +7,7 @@
         {
           "title": "root",
           "uniqueness": "text",
-          "xpath": "//button[@cla123ss='dropbtn']"
+          "xpath": "//button[@class='dropbtn']"
         }
       ]
     }
