@@ -91,7 +91,7 @@ public class PageObjectsGeneratorTestNew {
     }
 
     @Test(expected = ValidationException.class)
-    public void generatePageObjects_ErrorWhenWebValidationFailsWithFlaseForceGenerateFile()
+    public void generatePageObjects_ErrorWhenWebValidationFailsWithFalseForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
             new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));

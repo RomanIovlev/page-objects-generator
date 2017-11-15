@@ -25,7 +25,8 @@ public class ValidatorsStarter {
         new LocatorExistenceValidator(),
         new TypeSupportedValidator(),
         new IntermediateCheckValidator(),
-        new TitleOfComplexElementValidator());
+        new TitleOfComplexElementValidator(),
+        new UniquenessAttributeExistenceValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
             new UniquenessLocatorValidator();

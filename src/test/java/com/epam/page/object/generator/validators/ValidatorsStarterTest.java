@@ -21,7 +21,7 @@ public class ValidatorsStarterTest {
     private Set<String> supportedTypes = new HashSet<>();
 
     private SearchRule ruleValid =
-            new SearchRule("button", "req", null, "css", null, null);
+            new SearchRule("button", "value", null, null, "//input[@name='btnK']", null);
     private SearchRule ruleJsonInvalid =
             new SearchRule("button", "req", null, null, null, null);
 
