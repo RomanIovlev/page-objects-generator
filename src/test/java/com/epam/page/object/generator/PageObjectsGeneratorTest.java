@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class PageObjectsGeneratorTestNew {
+public class PageObjectsGeneratorTest {
 
     private static final String TEST_PACKAGE = "testPackage";
 
