@@ -2,20 +2,16 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Context which creates for validation process. {@link ValidationContext} contains:
- * <ul>
- * <li>{@link ValidationContext#searchRules} - list of {@link SearchRule} which need to validate.</li>
+ * Context which creates for validation process. {@link ValidationContext} contains: <ul> <li>{@link
+ * ValidationContext#searchRules} - list of {@link SearchRule} which need to validate.</li>
  * <li>{@link ValidationContext#validationResults} - list of {@link ValidationResult} which contains
- * information about previous validation processes.</li>
- * <li>{@link ValidationContext#urls} - list of urls which used by some validators for validation
- * elements on the web pages.</li>
- * </ul>
+ * information about previous validation processes.</li> <li>{@link ValidationContext#urls} - list
+ * of urls which used by some validators for validation elements on the web pages.</li> </ul>
  */
 public class ValidationContext {
 
@@ -25,8 +21,8 @@ public class ValidationContext {
     private List<SearchRule> searchRules;
 
     /**
-     * List of {@link ValidationResult} which contains all information about
-     * {@link SearchRule} after validation process.
+     * List of {@link ValidationResult} which contains all information about {@link SearchRule}
+     * after validation process.
      */
     private List<ValidationResult> validationResults;
 
@@ -91,8 +87,8 @@ public class ValidationContext {
     }
 
     /**
-     * Method returns list of {@link ValidationResult} which contains all information about
-     * {@link SearchRule} after validation process.
+     * Method returns list of {@link ValidationResult} which contains all information about {@link
+     * SearchRule} after validation process.
      *
      * @return list of {@link ValidationResult}
      */
@@ -103,15 +99,15 @@ public class ValidationContext {
     /**
      * Check for invalid rules.
      *
-     * @return
-     * <b>true</b> - if some {@link SearchRule} haven't passed at least one validator at the moment<br/>
-     * <b>false</b> - if all {@link SearchRule} have passed all validators at the moment
+     * @return <b>true</b> - if some {@link SearchRule} haven't passed at least one validator at the
+     * moment<br/> <b>false</b> - if all {@link SearchRule} have passed all validators at the
+     * moment
      */
     public boolean hasInvalidRules() {
         return validationResults.stream().anyMatch(validationResult -> !validationResult.isValid());
     }
 
-    public String getExceptionsAboutInvalidRules(){
+    public String getExceptionsAboutInvalidRules() {
         StringBuilder stringBuilder = new StringBuilder("\n");
         validationResults.stream()
             .filter(validationResult -> !validationResult.isValid())

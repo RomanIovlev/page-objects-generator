@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 

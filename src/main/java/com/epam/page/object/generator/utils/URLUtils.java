@@ -9,22 +9,22 @@ import org.jsoup.nodes.Document;
 
 public class URLUtils {
 
-	private URLUtils() {
+    private URLUtils() {
 
-	}
+    }
 
-	public static String getDomainName(List<String> urls) throws URISyntaxException {
-		return new URI(urls.get(0)).getHost();
-	}
+    public static String getDomainName(List<String> urls) throws URISyntaxException {
+        return new URI(urls.get(0)).getHost();
+    }
 
-	public static String getPageTitle(String url) throws IOException {
-		Document document = Jsoup.connect(url).get();
+    public static String getPageTitle(String url) throws IOException {
+        Document document = Jsoup.connect(url).get();
 
-		return document.title();
-	}
+        return document.title();
+    }
 
-	public static String getUrlWithoutDomain(String url) throws URISyntaxException {
-		return new URI(url).getPath();
-	}
+    public static String getUrlWithoutDomain(String url) throws URISyntaxException {
+        return new URI(url).getPath();
+    }
 
 }

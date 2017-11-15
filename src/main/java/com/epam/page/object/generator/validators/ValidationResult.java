@@ -4,6 +4,9 @@ import com.epam.page.object.generator.model.SearchRule;
 
 public class ValidationResult {
 
+    private boolean isValid;
+    private Validator validator;
+    private SearchRule searchRule;
     public ValidationResult(boolean isValid,
                             Validator validator,
                             SearchRule searchRule) {
@@ -11,11 +14,6 @@ public class ValidationResult {
         this.validator = validator;
         this.searchRule = searchRule;
     }
-
-    private boolean isValid;
-    private Validator validator;
-    private SearchRule searchRule;
-
 
     public boolean isValid() {
         return isValid;

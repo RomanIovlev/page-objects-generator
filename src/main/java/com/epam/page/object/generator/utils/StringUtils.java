@@ -6,12 +6,14 @@ public class StringUtils {
 
     private StringUtils() {
 
-	}
+    }
 
-	public static String splitCamelCase(String camel) {
+    public static String splitCamelCase(String camel) {
         String trim = camel.replaceAll("[^\\p{L}0-9 ]", "").trim();
 
-        if(trim.length()<1) return trim;
+        if (trim.length() < 1) {
+            return trim;
+        }
 
         trim = trim.replaceAll("\\s+", " ");
         StringBuilder result = new StringBuilder((trim.charAt(0) + "").toLowerCase());
@@ -36,15 +38,15 @@ public class StringUtils {
     }
 
     public static String firstLetterUp(String text) {
-        return  text.length() > 0
-                    ? (text.charAt(0) + "").toUpperCase() + text.substring(1)
-                    : text;
+        return text.length() > 0
+            ? (text.charAt(0) + "").toUpperCase() + text.substring(1)
+            : text;
     }
 
     public static String firstLetterDown(String text) {
-        return  text.length() > 0
-                    ?(text.charAt(0) + "").toLowerCase() + text.substring(1)
-                    : text;
+        return text.length() > 0
+            ? (text.charAt(0) + "").toLowerCase() + text.substring(1)
+            : text;
     }
 
 }

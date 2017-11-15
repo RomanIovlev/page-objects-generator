@@ -26,7 +26,8 @@ public class ValidatorsStarter {
         new TypeSupportedValidator(),
         new IntermediateCheckValidator(),
         new TitleOfComplexElementValidator(),
-        new UniquenessAttributeExistenceValidator());
+        new UniquenessAttributeExistenceValidator(),
+        new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
             new UniquenessLocatorValidator();
@@ -47,7 +48,8 @@ public class ValidatorsStarter {
      *
      * @throws com.epam.page.object.generator.errors.ValidationException if JSON file is not valid.
      */
-    public List<SearchRule> validate(List<SearchRule> searchRules, List<String> urls) throws IOException {
+    public List<SearchRule> validate(List<SearchRule> searchRules, List<String> urls)
+        throws IOException {
 
         validationContext = new ValidationContext(searchRules, urls);
 
@@ -87,6 +89,7 @@ public class ValidatorsStarter {
 
     /**
      * Adding a new list of custom validators to the list of validators.
+     *
      * @param newValidators list of {@link Validator}
      */
 
@@ -107,6 +110,7 @@ public class ValidatorsStarter {
 
     /**
      * Return list of {@link Validator} which used by {@link ValidatorsStarter}
+     *
      * @return list of {@link Validator}
      */
     public List<Validator> getValidators() {

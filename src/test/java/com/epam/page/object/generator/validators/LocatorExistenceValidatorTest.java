@@ -1,27 +1,28 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.model.SearchRule;
-import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.epam.page.object.generator.model.SearchRule;
+import com.google.common.collect.Lists;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
+
 public class LocatorExistenceValidatorTest {
+
     private SearchRule ruleWithCss =
-            new SearchRule("type", "req", null, "css", null, null);
+        new SearchRule("type", "req", null, "css", null, null);
     private SearchRule ruleWithXpath =
-            new SearchRule("type", "req", null, null, "//input", null);
+        new SearchRule("type", "req", null, null, "//input", null);
     private SearchRule ruleNoLocator =
-            new SearchRule("type", "req", null,  null, null, null);
+        new SearchRule("type", "req", null, null, null, null);
     private SearchRule complexRuleWithNoLocatorInnerRule =
-            new SearchRule(null, null, null, "css", null,  Lists.newArrayList(ruleNoLocator));
+        new SearchRule(null, null, null, "css", null, Lists.newArrayList(ruleNoLocator));
     private SearchRule complexRuleWithLocatorsInnerRules =
-            new SearchRule(null, null, null, "css", null,  Lists.newArrayList(ruleWithCss, ruleWithXpath));
+        new SearchRule(null, null, null, "css", null,
+            Lists.newArrayList(ruleWithCss, ruleWithXpath));
 
 
     private LocatorExistenceValidator sut;
@@ -69,27 +70,27 @@ public class LocatorExistenceValidatorTest {
     }
 
     @Test
-    public void validate_TrueSearchRuleValidationWithCss(){
+    public void validate_TrueSearchRuleValidationWithCss() {
         assertTrue(sut.isValid(ruleWithCss, context));
     }
 
     @Test
-    public void validate_TrueSearchRuleValidationWithXpath(){
+    public void validate_TrueSearchRuleValidationWithXpath() {
         assertTrue(sut.isValid(ruleWithXpath, context));
     }
 
     @Test
-    public void validate_FalseSearchRuleValidationNoLocators(){
+    public void validate_FalseSearchRuleValidationNoLocators() {
         assertFalse(sut.isValid(ruleNoLocator, context));
     }
 
     @Test
-    public void validate_TrueInnerSearchRulesValidation(){
+    public void validate_TrueInnerSearchRulesValidation() {
         assertTrue(sut.isValid(complexRuleWithLocatorsInnerRules, context));
     }
 
     @Test
-    public void validate_FalseInnerSearchRuleValidationNoLocators(){
+    public void validate_FalseInnerSearchRuleValidationNoLocators() {
         assertFalse(sut.isValid(complexRuleWithNoLocatorInnerRule, context));
     }
 }

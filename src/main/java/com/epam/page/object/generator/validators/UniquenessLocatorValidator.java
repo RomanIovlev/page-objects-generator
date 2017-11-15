@@ -2,7 +2,6 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
-import org.jsoup.select.Elements;
 
 /**
  * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
@@ -11,7 +10,7 @@ import org.jsoup.select.Elements;
 public class UniquenessLocatorValidator extends AbstractValidator {
 
     public UniquenessLocatorValidator() {
-        super(51);
+        super(52);
     }
 
     public UniquenessLocatorValidator(int order) {
@@ -19,7 +18,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     }
 
     public UniquenessLocatorValidator(boolean isValidateAllSearchRules) {
-        super(51, isValidateAllSearchRules);
+        super(52, isValidateAllSearchRules);
     }
 
     public UniquenessLocatorValidator(int order, boolean isValidateAllSearchRules) {

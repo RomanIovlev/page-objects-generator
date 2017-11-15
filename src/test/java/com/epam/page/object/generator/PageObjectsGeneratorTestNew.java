@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
+import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
@@ -13,7 +14,6 @@ import com.epam.page.object.generator.validators.LocatorExistenceValidator;
 import com.epam.page.object.generator.validators.ValidationContext;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
-import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.junit.Before;
