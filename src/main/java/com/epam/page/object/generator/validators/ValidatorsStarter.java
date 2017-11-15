@@ -7,13 +7,10 @@ import java.util.List;
 import org.assertj.core.util.Lists;
 
 /**
- * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains:
- * <ul>
+ * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains: <ul>
  * <li>Set of the {@link Validator} which will be validate list of {@link
- * com.epam.page.object.generator.model.SearchRule}.</li>
- * <li>{@link ValidationContext} which
- * collect all information about validation process.</li>
- * </ul>
+ * com.epam.page.object.generator.model.SearchRule}.</li> <li>{@link ValidationContext} which
+ * collect all information about validation process.</li> </ul>
  */
 public class ValidatorsStarter {
 
@@ -30,7 +27,7 @@ public class ValidatorsStarter {
         new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
-            new UniquenessLocatorValidator();
+        new UniquenessLocatorValidator();
 
     private ValidationContext validationContext;
 

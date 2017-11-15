@@ -45,28 +45,29 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void validate_TrueUniquenessCommonSearchRule(){
+    public void validate_TrueUniquenessCommonSearchRule() {
         assertTrue(sut.isValid(validCommonSearchRule, validationContext));
     }
 
     @Test
-    public void validate_FalseNotUniquenessCommonSearchRule(){
+    public void validate_FalseNotUniquenessCommonSearchRule() {
         assertFalse(sut.isValid(invalidCommonSearchRule, validationContext));
     }
 
     @Test
-    public void validate_TrueUniquenessComplexSearchRule(){
+    public void validate_TrueUniquenessComplexSearchRule() {
         assertTrue(sut.isValid(validComplexSearchRule, validationContext));
     }
 
     @Test
-    public void validate_FalseNotUniquenessComplexSearchRule(){
+    public void validate_FalseNotUniquenessComplexSearchRule() {
         assertFalse(sut.isValid(invalidComplexSearchRule, validationContext));
     }
 
     @Test
-    public void validate_FalseNotUniquenessComplexSearchRuleWithValidAndInvalidInnerRules(){
-        assertFalse(sut.isValid(invalidComplexSearchRuleWithValidAndInvalidInnerRules, validationContext));
+    public void validate_FalseNotUniquenessComplexSearchRuleWithValidAndInvalidInnerRules() {
+        assertFalse(
+            sut.isValid(invalidComplexSearchRuleWithValidAndInvalidInnerRules, validationContext));
     }
 
 }

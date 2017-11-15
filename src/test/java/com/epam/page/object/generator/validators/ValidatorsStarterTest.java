@@ -22,9 +22,9 @@ public class ValidatorsStarterTest {
     private Set<String> supportedTypes = new HashSet<>();
 
     private SearchRule ruleValid =
-            new SearchRule("button", "value", null, null, "//input[@name='btnK']", null);
+        new SearchRule("button", "value", null, null, "//input[@name='btnK']", null);
     private SearchRule ruleJsonInvalid =
-            new SearchRule("button", "req", null, null, null, null);
+        new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
     private List<String> urls = new ArrayList<>();

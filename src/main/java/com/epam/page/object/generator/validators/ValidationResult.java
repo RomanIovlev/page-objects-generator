@@ -7,6 +7,7 @@ public class ValidationResult {
     private boolean isValid;
     private Validator validator;
     private SearchRule searchRule;
+
     public ValidationResult(boolean isValid,
                             Validator validator,
                             SearchRule searchRule) {

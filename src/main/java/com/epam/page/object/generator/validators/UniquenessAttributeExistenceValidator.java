@@ -5,8 +5,7 @@ import java.io.IOException;
 
 /**
  * {@link UniquenessAttributeExistenceValidator} validate that {@link SearchRule} has correct unique
- * attribute. <br/>
- * Default priority: 52.
+ * attribute. <br/> Default priority: 52.
  */
 public class UniquenessAttributeExistenceValidator extends AbstractValidator {
 
