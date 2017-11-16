@@ -3,10 +3,15 @@ package com.epam.page.object.generator.model;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
+
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import us.codecraft.xsoup.Xsoup;
+
+import static java.util.Arrays.asList;
 
 public class SearchRule {
 
@@ -17,8 +22,23 @@ public class SearchRule {
     private String xpath;
     private List<SearchRule> innerSearchRules;
 
-    public SearchRule() {
+    public SearchRule() { }
+    public String tag;
+    public String requiredAttribute;
+    public List<String> classes;
+    public Pairs attributes;
 
+    public SearchRule(JSONObject jsonObject) {
+        type = ((String) jsonObject.get("type")).toLowerCase();
+        requiredAttribute = (String) jsonObject.get("name");
+        String rulesString = (String) jsonObject.get("rules");
+        Pairs rules = new Pairs(asList(rulesString.split(";")),
+                r -> r.split("=")[0],
+                r -> r.split("=")[1]);
+        tag = rules.first(key -> key.equals("tag"));
+        classes = rules.filter(
+                key -> key.equals("class"));
+        attributes = rules;
     }
 
     public SearchRule(String type, String uniqueness, String title, String css,
@@ -66,6 +86,10 @@ public class SearchRule {
         this.type = type == null ? null : type.toLowerCase();
     }
 
+    private boolean elementAttributesMatch(Element element) {
+        return attributes.stream().noneMatch(elementAttribute -> element.attr(elementAttribute.getName()) == null
+                || !element.attr(elementAttribute.getName()).equals(elementAttribute.getValue()));
+    }
     public String getUniqueness() {
         return uniqueness;
     }

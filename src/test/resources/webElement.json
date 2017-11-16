@@ -1,0 +1,29 @@
+{
+    "elements": [
+        {
+            "type":"WebElement",
+            "name": "text",
+            "rules": "tag=a;class=w3-btn"
+        },
+        {
+            "type":"WebElement",
+            "name": "value",
+            "rules":"tag=input;type=submit"
+        },
+        {
+            "type":"WebElement",
+            "name": "text",
+            "rules":"tag=p"
+        },
+        {
+            "type":"WebElement",
+            "name": "value",
+            "rules":"tag=input;type=checkbox"
+        },
+        {
+            "type":"Image",
+            "name":"src",
+            "rules":"tag=img"
+        }
+    ]
+}
