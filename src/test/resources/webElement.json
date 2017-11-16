@@ -1,29 +1,29 @@
 {
     "elements": [
         {
-            "type":"WebElement",
-            "name": "text",
-            "rules": "tag=a;class=w3-btn"
+            "type":"text",
+            "uniqueness": "text",
+            "xpath": "//a[@class='w3-btn']"
         },
         {
-            "type":"WebElement",
-            "name": "value",
-            "rules":"tag=input;type=submit"
+            "type":"button",
+            "uniqueness": "value",
+            "xpath":"//input[@type='submit']"
         },
         {
-            "type":"WebElement",
-            "name": "text",
-            "rules":"tag=p"
+            "type":"label",
+            "uniqueness": "text",
+            "xpath":"//p"
         },
         {
-            "type":"WebElement",
-            "name": "value",
-            "rules":"tag=input;type=checkbox"
+            "type":"checkbox",
+            "uniqueness": "value",
+            "xpath":"//input[@type='checkbox']"
         },
         {
-            "type":"Image",
-            "name":"src",
-            "rules":"tag=img"
+            "type":"image",
+            "uniqueness":"src",
+            "xpath":"//img"
         }
     ]
 }
