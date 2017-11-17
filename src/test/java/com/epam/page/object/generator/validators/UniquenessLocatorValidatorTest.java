@@ -96,6 +96,11 @@ public class UniquenessLocatorValidatorTest {
         assertFalse(sut.isValid(complexRuleWithNotUniquenessCssInnerRule, context));
     }
 
+    @Test
+    public void  getExceptionMessage() throws Exception {
+        sut.getExceptionMessage(notUniquenessSearchRuleWithCss, context);
+    }
+
     @After
     public void clear() {
         rules.clear();

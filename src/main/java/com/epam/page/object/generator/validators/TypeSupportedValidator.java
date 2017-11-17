@@ -34,7 +34,7 @@ public class TypeSupportedValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "This type is not supported";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return "This type: " + searchRule.getType() + " is not supported";
     }
 }

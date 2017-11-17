@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.errors.ValidationException;
+import com.epam.page.object.generator.model.SearchRule;
 
 public class IntermediateCheckValidator implements Validator {
 
@@ -16,8 +17,6 @@ public class IntermediateCheckValidator implements Validator {
         return 50;
     }
 
-    @Override
-    public String getExceptionMessage() {
-        return null;
-    }
+
+
 }

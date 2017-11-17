@@ -23,8 +23,4 @@ public class UrlsValidator implements Validator {
         return 51;
     }
 
-    @Override
-    public String getExceptionMessage() {
-        return null;
-    }
 }

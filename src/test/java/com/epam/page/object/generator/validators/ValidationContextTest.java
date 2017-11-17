@@ -38,11 +38,11 @@ public class ValidationContextTest {
     @Test
     public void getValidRules() {
         sut.addValidationResult(
-            new ValidationResult(true, new LocatorExistenceValidator(), ruleWithCss));
+            new ValidationResult(true, new LocatorExistenceValidator(), ruleWithCss, null));
         sut.addValidationResult(
-            new ValidationResult(true, new LocatorExistenceValidator(), ruleWithXpath));
+            new ValidationResult(true, new LocatorExistenceValidator(), ruleWithXpath, null));
         sut.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), ruleNoLocator));
+            new ValidationResult(false, new LocatorExistenceValidator(), ruleNoLocator, null));
 
         assertEquals(sut.getValidRules().size(), 2);
         assertTrue(sut.getValidRules().contains(ruleWithCss));

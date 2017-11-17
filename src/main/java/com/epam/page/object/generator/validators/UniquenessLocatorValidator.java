@@ -1,7 +1,10 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import javafx.util.Pair;
+
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 /**
  * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
@@ -40,7 +43,21 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "This element is not uniqueness";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+       // return "This element is not uniqueness";
+        return validationContext.getUrls()
+                .stream()
+                .map(url -> {
+                    try {
+                        return  new Pair<>(url, searchRule.extractElementsFromWebSite(url).size());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                })
+                .filter(pair -> pair.getValue() > 1)
+                .map(pair -> "On url: " + pair.getKey() + " founded " + pair.getValue() + " elements")
+                .collect(Collectors.joining("\n"));
+
     }
 }

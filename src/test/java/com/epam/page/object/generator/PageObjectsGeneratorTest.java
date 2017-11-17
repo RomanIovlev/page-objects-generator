@@ -83,7 +83,7 @@ public class PageObjectsGeneratorTest {
     public void generatePageObjects_ErrorWhenWebValidationFailsWithTrueForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));
+            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule, null));
         sut.setForceGenerateFile(true);
 
         sut.generatePageObjects();
@@ -94,7 +94,7 @@ public class PageObjectsGeneratorTest {
     public void generatePageObjects_ErrorWhenWebValidationFailsWithFalseForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));
+            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule, null));
         sut.setForceGenerateFile(false);
 
         sut.generatePageObjects();

@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public abstract class AbstractValidator implements Validator {
      * and change priories for all default validators if you need. <br/><br/> For priority you need
      * to use int numbers: <br/> <ul> <li>0-49 fot validators which validate format of JSON
      * files</li> <li>51+ for validators which validate SearchRules by the urls</li> </ul>
-     *
+     * <p>
      * For example: <br/> UniquenessLocatorValidator can have priority equals 51, because it checks
      * that the SearchRule is uniqueness on the WebPage by the url. It can be like this:<br/> {@code
      * public UniquenessLocatorValidator() { super(51); } }
@@ -48,14 +49,14 @@ public abstract class AbstractValidator implements Validator {
     /**
      * Validate all inner {@link SearchRule}.
      *
-     * @param searchRule inner {@link SearchRule}
+     * @param searchRule        inner {@link SearchRule}
      * @param validationContext {@link ValidationContext}
      * @return <b>true</b> - if all inner {@link SearchRule} have passed validation<br/>
      * <b>false</b> - if at least one {@link SearchRule} hasn't passed validation
      */
     public boolean isInnerRulesValid(SearchRule searchRule, ValidationContext validationContext) {
         return searchRule.getInnerSearchRules() == null || searchRule.getInnerSearchRules().stream()
-            .allMatch(innerSearchRule -> isValid(innerSearchRule, validationContext));
+                .allMatch(innerSearchRule -> isValid(innerSearchRule, validationContext));
 
     }
 
@@ -64,13 +65,13 @@ public abstract class AbstractValidator implements Validator {
 
         List<SearchRule> searchRules = new ArrayList<>();
         searchRules.addAll(isValidateAllSearchRules ? validationContext.getAllSearchRules()
-            : validationContext.getValidRules());
+                : validationContext.getValidRules());
 
         searchRules.forEach(searchRule -> {
             validationContext
-                .addValidationResult(
-                    !isValid(searchRule, validationContext) ? new ValidationResult(false, this,
-                        searchRule) : new ValidationResult(true, this, searchRule));
+                    .addValidationResult(
+                            !isValid(searchRule, validationContext) ? new ValidationResult(false, this,
+                                    searchRule, validationContext) : new ValidationResult(true, this, searchRule,validationContext));
         });
     }
 
@@ -85,12 +86,22 @@ public abstract class AbstractValidator implements Validator {
      * public boolean isValid(SearchRule searchRule, ValidationContext validationContext) { return
      * !isEmpty(searchRule.getCss()) || !isEmpty(searchRule.getXpath()); } }
      *
-     * @param searchRule searchRule that we validation at the moment.
+     * @param searchRule        searchRule that we validation at the moment.
      * @param validationContext context for our validators, which contains all {@link
-     * ValidationResult} about validation process.
+     *                          ValidationResult} about validation process.
      * @return <b>true</b> - if {@link SearchRule} is valid<br/> <b>false</b> - if {@link
      * SearchRule} is not valid.
      */
     public abstract boolean isValid(SearchRule searchRule, ValidationContext validationContext);
+
+    /**
+     * Method returns the exception message.<br/>
+     * <p>
+     * For example:<br/> {@code public String getExceptionMessage() { return "No xpath or css
+     * locator"; } }
+     *
+     * @return exception message.
+     */
+    public abstract String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext);
 
 }
