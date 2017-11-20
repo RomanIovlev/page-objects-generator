@@ -1,7 +1,9 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
@@ -11,6 +13,10 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
     public UniquenessLocatorValidator() {
         super(52);
+    }
+
+    public UniquenessLocatorValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(supportedSearchRuleTypes);
     }
 
     public UniquenessLocatorValidator(int order) {

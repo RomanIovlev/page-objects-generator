@@ -76,7 +76,7 @@ public abstract class AbstractValidator implements Validator {
 
         searchRules.stream()
             .filter(searchRule ->
-                supportedSearchRuleTypes
+                supportedSearchRuleTypes != null && supportedSearchRuleTypes
                     .stream()
                     .anyMatch(searchRuleType ->
                         searchRuleType.getName().equals(searchRule.getType())))

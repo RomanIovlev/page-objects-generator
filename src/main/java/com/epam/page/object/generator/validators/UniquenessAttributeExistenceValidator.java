@@ -1,7 +1,9 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * {@link UniquenessAttributeExistenceValidator} validate that {@link SearchRule} has correct unique
@@ -11,6 +13,10 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
 
     public UniquenessAttributeExistenceValidator() {
         super(52);
+    }
+
+    public UniquenessAttributeExistenceValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(supportedSearchRuleTypes);
     }
 
     public UniquenessAttributeExistenceValidator(int order) {

@@ -1,9 +1,13 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
+import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import org.assertj.core.util.Lists;
 
 /**
@@ -19,15 +23,15 @@ public class ValidatorsStarter {
      * com.epam.page.object.generator.model.SearchRule}.
      */
     private List<Validator> validators = Lists.newArrayList(
-        new LocatorExistenceValidator(),
-        new TypeSupportedValidator(),
+        new LocatorExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
+        new TypeSupportedValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new IntermediateCheckValidator(),
-        new TitleOfComplexElementValidator(),
-        new UniquenessAttributeExistenceValidator(),
+        new TitleOfComplexElementValidator(SearchRuleTypeGroups.commonAndComplexTypes),
+        new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
-        new UniquenessLocatorValidator();
+        new UniquenessLocatorValidator(SearchRuleTypeGroups.commonAndComplexTypes);
 
     private ValidationContext validationContext;
 
