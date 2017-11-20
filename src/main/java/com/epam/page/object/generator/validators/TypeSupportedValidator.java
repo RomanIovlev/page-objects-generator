@@ -2,6 +2,8 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import java.util.Set;
 
 /**
  * {@link TypeSupportedValidator} validate that {@link SearchRule} has correct "type" attribute
@@ -14,6 +16,11 @@ public class TypeSupportedValidator extends AbstractValidator {
 
     public TypeSupportedValidator() {
         super(1);
+    }
+
+    public TypeSupportedValidator(
+        Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(supportedSearchRuleTypes);
     }
 
     public TypeSupportedValidator(int order) {

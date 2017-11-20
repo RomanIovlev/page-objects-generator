@@ -1,8 +1,10 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * AbstractValidator is the abstract base class for crating a new Validator, which can be used into
@@ -13,6 +15,8 @@ import java.util.List;
  * AbstractValidator#getExceptionMessage()}.</li> </ol>
  */
 public abstract class AbstractValidator implements Validator {
+
+    private Set<SearchRuleType> supportedSearchRuleTypes;
 
     /**
      * Validator priority is a number which specifies the order of executing validators. All
@@ -38,6 +42,10 @@ public abstract class AbstractValidator implements Validator {
 
     public AbstractValidator(int priority) {
         this.priority = priority;
+    }
+
+    public AbstractValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        this.supportedSearchRuleTypes = supportedSearchRuleTypes;
     }
 
     public AbstractValidator(int priority, boolean isValidateAllSearchRules) {
@@ -66,11 +74,18 @@ public abstract class AbstractValidator implements Validator {
         searchRules.addAll(isValidateAllSearchRules ? validationContext.getAllSearchRules()
             : validationContext.getValidRules());
 
-        searchRules.forEach(searchRule -> {
-            validationContext
-                .addValidationResult(
-                    !isValid(searchRule, validationContext) ? new ValidationResult(false, this,
-                        searchRule) : new ValidationResult(true, this, searchRule));
+        searchRules.stream()
+            .filter(searchRule ->
+                supportedSearchRuleTypes
+                    .stream()
+                    .anyMatch(searchRuleType ->
+                        searchRuleType.getName().equals(searchRule.getType())))
+            .forEach(searchRule -> {
+                validationContext
+                    .addValidationResult(!isValid(searchRule, validationContext) ?
+                        new ValidationResult(false, this, searchRule)
+                        : new ValidationResult(true, this, searchRule));
+
         });
     }
 
