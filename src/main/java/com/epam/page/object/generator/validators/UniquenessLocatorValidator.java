@@ -16,7 +16,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     }
 
     public UniquenessLocatorValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
-        super(supportedSearchRuleTypes);
+        super(52, supportedSearchRuleTypes);
     }
 
     public UniquenessLocatorValidator(int order) {

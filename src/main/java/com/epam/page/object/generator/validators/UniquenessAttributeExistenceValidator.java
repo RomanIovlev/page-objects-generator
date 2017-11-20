@@ -16,7 +16,7 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
     }
 
     public UniquenessAttributeExistenceValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
-        super(supportedSearchRuleTypes);
+        super(52, supportedSearchRuleTypes);
     }
 
     public UniquenessAttributeExistenceValidator(int order) {

@@ -21,7 +21,7 @@ public class LocatorExistenceValidator extends AbstractValidator {
     }
 
     public LocatorExistenceValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
-        super(supportedSearchRuleTypes);
+        super(0, supportedSearchRuleTypes);
     }
 
     public LocatorExistenceValidator(boolean isValidateAllSearchRules) {

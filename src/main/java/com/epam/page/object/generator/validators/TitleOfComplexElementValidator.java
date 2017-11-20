@@ -17,7 +17,7 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
     }
 
     public TitleOfComplexElementValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
-        super(supportedSearchRuleTypes);
+        super(2, supportedSearchRuleTypes);
     }
 
     public TitleOfComplexElementValidator(int priority) {

@@ -19,7 +19,7 @@ public class TypeSupportedValidator extends AbstractValidator {
     }
 
     public TypeSupportedValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
-        super(supportedSearchRuleTypes);
+        super(1, supportedSearchRuleTypes);
     }
 
     public TypeSupportedValidator(int order) {

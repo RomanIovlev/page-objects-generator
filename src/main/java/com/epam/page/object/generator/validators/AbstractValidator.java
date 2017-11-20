@@ -44,7 +44,8 @@ public abstract class AbstractValidator implements Validator {
         this.priority = priority;
     }
 
-    public AbstractValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+    public AbstractValidator(int priority, Set<SearchRuleType> supportedSearchRuleTypes) {
+        this.priority = priority;
         this.supportedSearchRuleTypes = supportedSearchRuleTypes;
     }
 
