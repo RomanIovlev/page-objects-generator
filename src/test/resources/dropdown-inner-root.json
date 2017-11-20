@@ -1,0 +1,18 @@
+{
+  "elements": [
+    {
+      "type": "Dropdown",
+      "innerSearchRules": [
+        {
+          "title": "root",
+          "uniqueness": "text",
+          "xpath": "//a[@class='dropdown-button']"
+        },
+        {
+          "title": "list",
+          "css": "ul.dropdown-content"
+        }
+      ]
+    }
+  ]
+}

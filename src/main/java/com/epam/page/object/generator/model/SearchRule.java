@@ -22,7 +22,9 @@ public class SearchRule {
     private String xpath;
     private List<SearchRule> innerSearchRules;
 
-    public SearchRule() { }
+    public SearchRule() {
+    }
+
     public String tag;
     public String requiredAttribute;
     public List<String> classes;
@@ -33,11 +35,11 @@ public class SearchRule {
         requiredAttribute = (String) jsonObject.get("name");
         String rulesString = (String) jsonObject.get("rules");
         Pairs rules = new Pairs(asList(rulesString.split(";")),
-                r -> r.split("=")[0],
-                r -> r.split("=")[1]);
+            r -> r.split("=")[0],
+            r -> r.split("=")[1]);
         tag = rules.first(key -> key.equals("tag"));
         classes = rules.filter(
-                key -> key.equals("class"));
+            key -> key.equals("class"));
         attributes = rules;
     }
 
@@ -67,11 +69,27 @@ public class SearchRule {
     public Elements extractElementsFromWebSite(String url) throws IOException {
         Document document = getDocument(url);
 
+        //TODO check if SearchRule is complex -> xpath or css get from root innerSearchRule
+        String xpath = getXpathForComplexElement();
+        String css = getCssForComplexElement();
+
         if (css == null) {
             return Xsoup.compile(xpath).evaluate(document).getElements();
         }
 
         return document.select(css);
+    }
+
+    private String getCssForComplexElement() {
+        return innerSearchRules == null ? getCss() : innerSearchRules.stream()
+            .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
+            .findFirst().get().getCss();
+    }
+
+    private String getXpathForComplexElement() {
+        return innerSearchRules == null ? getXpath() : innerSearchRules.stream()
+            .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
+            .findFirst().get().getXpath();
     }
 
     private Document getDocument(String url) throws IOException {
@@ -87,9 +105,11 @@ public class SearchRule {
     }
 
     private boolean elementAttributesMatch(Element element) {
-        return attributes.stream().noneMatch(elementAttribute -> element.attr(elementAttribute.getName()) == null
+        return attributes.stream()
+            .noneMatch(elementAttribute -> element.attr(elementAttribute.getName()) == null
                 || !element.attr(elementAttribute.getName()).equals(elementAttribute.getValue()));
     }
+
     public String getUniqueness() {
         return uniqueness;
     }
