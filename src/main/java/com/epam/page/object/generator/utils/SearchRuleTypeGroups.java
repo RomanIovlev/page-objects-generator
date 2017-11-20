@@ -1,14 +1,13 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.assertj.core.internal.cglib.core.CollectionUtils;
 
 public class SearchRuleTypeGroups {
+
     public static final Set<SearchRuleType> commonTypes =
         Sets.newHashSet(
             SearchRuleType.BUTTON,
@@ -45,7 +44,7 @@ public class SearchRuleTypeGroups {
             SearchRuleType.SECTION
         );
 
-    public final static Set<SearchRuleType> commonAndComplexTypes =
+    public static final Set<SearchRuleType> commonAndComplexTypes =
         Stream.of(commonTypes, complexTypes)
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());
@@ -54,4 +53,8 @@ public class SearchRuleTypeGroups {
         Stream.of(commonTypes, complexTypes, formAndSectionTypes)
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());
+
+    private SearchRuleTypeGroups() {
+
+    }
 }

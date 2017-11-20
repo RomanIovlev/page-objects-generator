@@ -19,8 +19,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Each test generate it's own Java objects for JDI.
- * Probably it would be better to run each test in isolation from others
+ * Each test generate it's own Java objects for JDI. Probably it would be better to run each test in
+ * isolation from others
  */
 @Ignore
 public class MainTest {

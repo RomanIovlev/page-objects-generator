@@ -27,7 +27,6 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -117,7 +116,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private ClassName getPageClassName(String packageName, String pageClassName) {
-        return ClassName.get(packageName.substring(0,packageName.length()-5) + ".page", pageClassName);
+        return ClassName
+            .get(packageName.substring(0, packageName.length() - 5) + ".page", pageClassName);
     }
 
     private AnnotationSpec createCommonAnnotation(SearchRule searchRule, String url,

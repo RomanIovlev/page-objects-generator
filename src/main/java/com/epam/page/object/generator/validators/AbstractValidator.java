@@ -82,11 +82,11 @@ public abstract class AbstractValidator implements Validator {
                         searchRuleType.getName().equals(searchRule.getType())))
             .forEach(searchRule -> {
                 validationContext
-                    .addValidationResult(!isValid(searchRule, validationContext) ?
-                        new ValidationResult(false, this, searchRule)
+                    .addValidationResult(!isValid(searchRule, validationContext)
+                        ? new ValidationResult(false, this, searchRule)
                         : new ValidationResult(true, this, searchRule));
 
-        });
+            });
     }
 
     @Override

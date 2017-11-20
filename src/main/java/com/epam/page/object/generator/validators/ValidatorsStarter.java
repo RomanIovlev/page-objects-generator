@@ -1,13 +1,10 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
-import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import org.assertj.core.util.Lists;
 
 /**
