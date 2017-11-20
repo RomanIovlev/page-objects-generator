@@ -33,7 +33,7 @@ public class LocatorExistenceValidatorTest {
 
     @Before
     public void setUp() throws Exception {
-        sut = new LocatorExistenceValidator(SearchRuleTypeGroups.allTypes);
+        sut = new LocatorExistenceValidator(SearchRuleTypeGroups.allExistingTypes);
     }
 
     @Test

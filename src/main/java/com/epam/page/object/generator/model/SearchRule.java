@@ -24,6 +24,7 @@ public class SearchRule {
     private String css;
     private String xpath;
     private List<SearchRule> innerSearchRules;
+
     public SearchRule() {
     }
 

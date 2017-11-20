@@ -1,7 +1,9 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
+import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ValidatorsStarter {
      */
     private List<Validator> validators = Lists.newArrayList(
         new LocatorExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
-        new TypeSupportedValidator(SearchRuleTypeGroups.commonAndComplexTypes),
+        new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL)),
         new IntermediateCheckValidator(),
         new TitleOfComplexElementValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),

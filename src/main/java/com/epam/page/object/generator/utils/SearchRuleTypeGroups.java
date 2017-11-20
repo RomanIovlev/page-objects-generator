@@ -49,7 +49,7 @@ public class SearchRuleTypeGroups {
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());
 
-    public static final Set<SearchRuleType> allTypes =
+    public static final Set<SearchRuleType> allExistingTypes =
         Stream.of(commonTypes, complexTypes, formAndSectionTypes)
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());

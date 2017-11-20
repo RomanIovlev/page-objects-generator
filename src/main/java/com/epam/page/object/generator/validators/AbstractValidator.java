@@ -76,11 +76,13 @@ public abstract class AbstractValidator implements Validator {
             : validationContext.getValidRules());
 
         searchRules.stream()
-            .filter(searchRule ->
-                supportedSearchRuleTypes != null && supportedSearchRuleTypes
-                    .stream()
-                    .anyMatch(searchRuleType ->
-                        searchRuleType.getName().equals(searchRule.getType())))
+            .filter(searchRule -> supportedSearchRuleTypes != null
+                && (supportedSearchRuleTypes.contains(SearchRuleType.ALL)
+                        || supportedSearchRuleTypes.stream()
+                                .anyMatch(searchRuleType ->
+                                    searchRuleType.getName().equals(searchRule.getType()))
+                    )
+            )
             .forEach(searchRule -> {
                 validationContext
                     .addValidationResult(!isValid(searchRule, validationContext)
