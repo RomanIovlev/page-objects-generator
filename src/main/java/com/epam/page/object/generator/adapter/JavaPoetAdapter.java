@@ -70,7 +70,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
         throws XpathToCssTransformerException, IOException {
         AnnotationMember annotationMember;
         String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
-        if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
+        if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
+            .equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
                 xpathToCssTransformation.transformRule(searchRule);
             }
@@ -117,7 +118,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
     }
 
     private ClassName getPageClassName(String packageName, String pageClassName) {
-        return ClassName.get(packageName.substring(0,packageName.length()-5) + ".page", pageClassName);
+        return ClassName
+            .get(packageName.substring(0, packageName.length() - 5) + ".page", pageClassName);
     }
 
     private AnnotationSpec createCommonAnnotation(SearchRule searchRule, String url,
