@@ -11,7 +11,7 @@ import java.util.List;
  * extends from {@link AbstractValidator} and override the main method {@link
  * AbstractValidator#isValid(SearchRule, ValidationContext)}.</li> <li>Create default constructor
  * with {@link AbstractValidator#priority}.</li> <li>Override {@link
- * AbstractValidator#getExceptionMessage()}.</li> </ol>
+ * AbstractValidator#getExceptionMessage(SearchRule searchRule, ValidationContext validationContext)}.</li> </ol>
  */
 public abstract class AbstractValidator implements Validator {
 
@@ -70,8 +70,8 @@ public abstract class AbstractValidator implements Validator {
         searchRules.forEach(searchRule -> {
             validationContext
                     .addValidationResult(
-                            !isValid(searchRule, validationContext) ? new ValidationResult(false, this,
-                                    searchRule, validationContext) : new ValidationResult(true, this, searchRule,validationContext));
+                            !isValid(searchRule, validationContext) ? new ValidationResult(false, this.getExceptionMessage(searchRule,validationContext),
+                                    searchRule) : new ValidationResult(true, this.getExceptionMessage(searchRule,validationContext), searchRule));
         });
     }
 

@@ -48,6 +48,10 @@ public class PageObjectsGeneratorTest {
 
     private PageObjectsGenerator sut;
 
+    private String exceptionMessage = "bla-bla-bla";
+
+
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -83,7 +87,7 @@ public class PageObjectsGeneratorTest {
     public void generatePageObjects_ErrorWhenWebValidationFailsWithTrueForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule, null));
+            new ValidationResult(false, exceptionMessage, invalidSearchRule));
         sut.setForceGenerateFile(true);
 
         sut.generatePageObjects();
@@ -94,7 +98,7 @@ public class PageObjectsGeneratorTest {
     public void generatePageObjects_ErrorWhenWebValidationFailsWithFalseForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule, null));
+            new ValidationResult(false, exceptionMessage, invalidSearchRule));
         sut.setForceGenerateFile(false);
 
         sut.generatePageObjects();

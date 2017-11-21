@@ -7,6 +7,7 @@ import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 public class ValidationContextTest {
 
@@ -19,8 +20,11 @@ public class ValidationContextTest {
 
     private ValidationContext sut;
 
+    private String exceptionMessage;
+
     @Before
     public void setUp() throws Exception {
+        exceptionMessage = "bla-bla-bla";
         sut = new ValidationContext(
             Lists.newArrayList(
                 ruleWithCss,
@@ -38,11 +42,11 @@ public class ValidationContextTest {
     @Test
     public void getValidRules() {
         sut.addValidationResult(
-            new ValidationResult(true, new LocatorExistenceValidator(), ruleWithCss, null));
+            new ValidationResult(true, exceptionMessage, ruleWithCss));
         sut.addValidationResult(
-            new ValidationResult(true, new LocatorExistenceValidator(), ruleWithXpath, null));
+            new ValidationResult(true, exceptionMessage, ruleWithXpath));
         sut.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), ruleNoLocator, null));
+            new ValidationResult(false, exceptionMessage, ruleNoLocator));
 
         assertEquals(sut.getValidRules().size(), 2);
         assertTrue(sut.getValidRules().contains(ruleWithCss));
