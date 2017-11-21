@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
 
+import java.util.Optional;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -69,27 +70,41 @@ public class SearchRule {
     public Elements extractElementsFromWebSite(String url) throws IOException {
         Document document = getDocument(url);
 
-        //TODO check if SearchRule is complex -> xpath or css get from root innerSearchRule
-        String xpath = getXpathForComplexElement();
-        String css = getCssForComplexElement();
+        // Correct xpath or css for Complex element
+        String correctXpath = returnXpathFromSearchRule();
+        String correctCss = returnCssFromSearchRule();
 
-        if (css == null) {
-            return Xsoup.compile(xpath).evaluate(document).getElements();
+        if (correctCss == null) {
+            return Xsoup.compile(correctXpath).evaluate(document).getElements();
         }
 
-        return document.select(css);
+        return document.select(correctCss);
     }
 
-    private String getCssForComplexElement() {
-        return innerSearchRules == null ? getCss() : innerSearchRules.stream()
-            .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
-            .findFirst().get().getCss();
+    private String returnCssFromSearchRule() {
+        return innerSearchRules == null ? getCss() : extractCssFromRootInnerRule();
     }
 
-    private String getXpathForComplexElement() {
-        return innerSearchRules == null ? getXpath() : innerSearchRules.stream()
-            .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
-            .findFirst().get().getXpath();
+    private String returnXpathFromSearchRule() {
+        return innerSearchRules == null ? getXpath() : extractXpathFromRootInnerRule();
+    }
+
+    private String extractCssFromRootInnerRule() {
+        Optional<SearchRule> rootElement = getRootInnerRule();
+
+        return rootElement.isPresent() ? rootElement.get().getCss() : null;
+    }
+
+    private String extractXpathFromRootInnerRule() {
+        Optional<SearchRule> rootElement = getRootInnerRule();
+
+        return rootElement.isPresent() ? rootElement.get().getXpath() : null;
+    }
+
+    public Optional<SearchRule> getRootInnerRule() {
+        return innerSearchRules.stream()
+                .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
+                .findFirst();
     }
 
     private Document getDocument(String url) throws IOException {

@@ -2,10 +2,14 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 
+/**
+ * {@link RootExistenceValidator} validate that complex {@link SearchRule} has 'root' inner element.
+ * <br/> Default priority: 3.
+ */
 public class RootExistenceValidator extends AbstractValidator {
 
     public RootExistenceValidator() {
-        super(0);
+        super(3);
     }
 
     public RootExistenceValidator(int order) {
@@ -13,7 +17,7 @@ public class RootExistenceValidator extends AbstractValidator {
     }
 
     public RootExistenceValidator(boolean isValidateAllSearchRules) {
-        super(0, isValidateAllSearchRules);
+        super(3, isValidateAllSearchRules);
     }
 
     public RootExistenceValidator(int order, boolean isValidateAllSearchRules) {
@@ -22,13 +26,11 @@ public class RootExistenceValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        return
-            searchRule.getInnerSearchRules().stream().filter(o -> o.getUniqueness() != null).count()
-                == 1;
+        return searchRule.getRootInnerRule().isPresent();
     }
 
     @Override
     public String getExceptionMessage() {
-        return "Inner search rule with uniqueness field is missing";
+        return "Search rule hasn't got 'root' inner element";
     }
 }

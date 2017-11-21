@@ -21,6 +21,10 @@ public class ValidatorsStarter {
     private List<Validator> validators = Lists.newArrayList(
         new LocatorExistenceValidator(),
         new TypeSupportedValidator(),
+//TODO need to add supportedTypes for validators
+//        new TitleExistenceIntoInnerRulesValidator(),
+//        new RootExistenceValidator(),
+//        new UniquenessAttributeExistenceIntoComplexElementValidator(),
         new IntermediateCheckValidator(),
         new TitleOfComplexElementValidator(),
         new UniquenessAttributeExistenceValidator(),
