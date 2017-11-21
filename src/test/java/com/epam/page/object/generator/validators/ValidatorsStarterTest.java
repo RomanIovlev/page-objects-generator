@@ -3,6 +3,7 @@ package com.epam.page.object.generator.validators;
 
 import static org.junit.Assert.assertTrue;
 
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class ValidatorsStarterTest {
@@ -37,7 +39,7 @@ public class ValidatorsStarterTest {
 
         urls.add("https://www.google.com");
 
-        sut = new ValidatorsStarter();
+        sut = new ValidatorsStarter(new SupportedTypesContainer());
 
         sut.setCheckLocatorsUniqueness(true);
     }
@@ -49,9 +51,9 @@ public class ValidatorsStarterTest {
 
         Assert.assertEquals(searchRules.size(), validationResults.size());
 
-        //IntermediateCheckValidator and UrlsValidator do not generate validationResult,
-        // that why we should compare amount of validationResults with validators.size() - 2
-        Assert.assertEquals(sut.getValidators().size() - 2,
+        //IntermediateCheckValidator, FormTypeValidator and UrlsValidator do not generate validationResult,
+        // that why we should compare amount of validationResults with validators.size() - 3
+        Assert.assertEquals(sut.getValidators().size() - 3,
             sut.getValidationContext().getValidationResults().size());
     }
 

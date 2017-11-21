@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.google.common.collect.Sets;
@@ -21,6 +22,9 @@ public class AbstractValidatorTest {
 
     @Mock
     private ValidationContext validationContext;
+
+    @Mock
+    private SupportedTypesContainer bc;
 
     private SearchRule ruleWithButtonType =
         new SearchRule("button", null, null, null, null, null);
@@ -40,7 +44,7 @@ public class AbstractValidatorTest {
     public void validate_NotValidateNotSupportedTypesRule() throws Exception {
         when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
 
-        sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.TABS));
+        sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.TABS), bc);
 
         sut.validate(validationContext);
 
@@ -62,7 +66,7 @@ public class AbstractValidatorTest {
     public void validate_ValidateRightSupportedTypesRule() throws Exception {
         when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
 
-        sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.BUTTON));
+        sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.BUTTON), bc);
 
         sut.validate(validationContext);
 
@@ -73,7 +77,7 @@ public class AbstractValidatorTest {
     public void validate_ValidateIfSupportedTypesContainsType_ALL() {
         when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
 
-        sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL));
+        sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL), bc);
 
         sut.validate(validationContext);
 

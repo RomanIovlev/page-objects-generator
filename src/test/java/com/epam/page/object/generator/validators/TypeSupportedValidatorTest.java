@@ -3,6 +3,7 @@ package com.epam.page.object.generator.validators;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import java.util.ArrayList;
 import org.assertj.core.util.Lists;
@@ -27,7 +28,7 @@ public class TypeSupportedValidatorTest {
 
     @Before
     public void setUp() throws Exception {
-        sut = new TypeSupportedValidator();
+        sut = new TypeSupportedValidator(null, new SupportedTypesContainer());
     }
 
     @Test

@@ -18,17 +18,13 @@ import org.assertj.core.util.Lists;
  */
 public class ValidatorsStarter {
 
-    private SupportedTypesContainer supportedTypesContainer;
-
     /**
      * Set of the {@link Validator} by default, which will be validate list of {@link
      * com.epam.page.object.generator.model.SearchRule}.
      */
     private List<Validator> validators = Lists.newArrayList(
         new LocatorExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
-        new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL), supportedTypesContainer),
         new IntermediateCheckValidator(),
-        new FormTypeValidator(SearchRuleTypeGroups.formAndSectionTypes, supportedTypesContainer),
         new TitleOfComplexElementValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new UrlsValidator());
@@ -39,10 +35,12 @@ public class ValidatorsStarter {
     private ValidationContext validationContext;
 
     public ValidatorsStarter(SupportedTypesContainer supportedTypesContainer) {
-        this.supportedTypesContainer = supportedTypesContainer;
+        validators.add(new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL), supportedTypesContainer));
+        validators.add(new FormTypeValidator(SearchRuleTypeGroups.formAndSectionTypes, supportedTypesContainer));
     }
 
-    public ValidatorsStarter(List<Validator> newValidators) {
+    public ValidatorsStarter(List<Validator> newValidators, SupportedTypesContainer supportedTypesContainer) {
+        this(supportedTypesContainer);
         if (newValidators != null) {
             validators.addAll(newValidators);
         }
