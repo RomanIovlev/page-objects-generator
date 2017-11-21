@@ -11,15 +11,16 @@ import java.util.Set;
  */
 public class TypeSupportedValidator extends AbstractValidator {
 
-    //TODO remove BuilderContrainer from Validator
-    private SupportedTypesContainer bc = new SupportedTypesContainer();
+    private SupportedTypesContainer bc;
 
     public TypeSupportedValidator() {
         super(1);
     }
 
-    public TypeSupportedValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+    public TypeSupportedValidator(Set<SearchRuleType> supportedSearchRuleTypes,
+                                  SupportedTypesContainer supportedTypesContainer) {
         super(1, supportedSearchRuleTypes);
+        bc = supportedTypesContainer;
     }
 
     public TypeSupportedValidator(int order) {

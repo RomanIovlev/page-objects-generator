@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.validators;
 
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
@@ -17,14 +18,17 @@ import org.assertj.core.util.Lists;
  */
 public class ValidatorsStarter {
 
+    private SupportedTypesContainer supportedTypesContainer;
+
     /**
      * Set of the {@link Validator} by default, which will be validate list of {@link
      * com.epam.page.object.generator.model.SearchRule}.
      */
     private List<Validator> validators = Lists.newArrayList(
         new LocatorExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
-        new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL)),
+        new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL), supportedTypesContainer),
         new IntermediateCheckValidator(),
+        new FormTypeValidator(SearchRuleTypeGroups.formAndSectionTypes, supportedTypesContainer),
         new TitleOfComplexElementValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
         new UrlsValidator());
@@ -34,7 +38,8 @@ public class ValidatorsStarter {
 
     private ValidationContext validationContext;
 
-    public ValidatorsStarter() {
+    public ValidatorsStarter(SupportedTypesContainer supportedTypesContainer) {
+        this.supportedTypesContainer = supportedTypesContainer;
     }
 
     public ValidatorsStarter(List<Validator> newValidators) {

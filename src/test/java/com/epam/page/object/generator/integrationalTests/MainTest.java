@@ -48,7 +48,7 @@ public class MainTest {
 
         JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
 
-        ValidatorsStarter validatorsStarter = new ValidatorsStarter();
+        ValidatorsStarter validatorsStarter = new ValidatorsStarter(bc);
         validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,

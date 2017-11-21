@@ -22,6 +22,8 @@ import com.epam.jdi.uitests.web.selenium.elements.complex.Selector;
 import com.epam.jdi.uitests.web.selenium.elements.complex.Tabs;
 import com.epam.jdi.uitests.web.selenium.elements.complex.TextList;
 import com.epam.jdi.uitests.web.selenium.elements.complex.table.Table;
+import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
+import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JComboBox;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropList;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
@@ -96,6 +98,10 @@ public class SupportedTypesContainer {
                 new ClassAndAnnotationPair(DropList.class, JDropList.class));
         supportedTypesMap.put(SearchRuleType.MENU.getName(),
             new ClassAndAnnotationPair(Menu.class, JMenu.class));
+        supportedTypesMap.put(SearchRuleType.SECTION.getName(),
+            new ClassAndAnnotationPair(Section.class, FindBy.class));
+        supportedTypesMap.put(SearchRuleType.FORM.getName(),
+            new ClassAndAnnotationPair(Form.class, FindBy.class));
     }
 
     public Map<String, ClassAndAnnotationPair> getSupportedTypesMap() {
