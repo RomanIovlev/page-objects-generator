@@ -25,15 +25,21 @@ public class AbstractValidatorTest {
     private SearchRule ruleWithButtonType =
         new SearchRule("button", null, null, null, null, null);
 
+    private SearchRule ruleWithDropdownType =
+        new SearchRule("dropdown", null, null, null, null, null);
+
+    private SearchRule ruleWithTabsType =
+        new SearchRule("tabs", null, null, null, null, null);
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-
-        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
     }
 
     @Test
     public void validate_NotValidateNotSupportedTypesRule() throws Exception {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
+
         sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.TABS));
 
         sut.validate(validationContext);
@@ -43,6 +49,8 @@ public class AbstractValidatorTest {
 
     @Test
     public void validate_NotValidateWithNullSupportedTypesRule() throws Exception {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
+
         sut = new TypeSupportedValidator();
 
         sut.validate(validationContext);
@@ -52,6 +60,8 @@ public class AbstractValidatorTest {
 
     @Test
     public void validate_ValidateRightSupportedTypesRule() throws Exception {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
+
         sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.BUTTON));
 
         sut.validate(validationContext);
@@ -61,10 +71,53 @@ public class AbstractValidatorTest {
 
     @Test
     public void validate_ValidateIfSupportedTypesContainsType_ALL() {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType));
+
         sut = new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL));
 
         sut.validate(validationContext);
 
         verify(validationContext, times(1)).addValidationResult(Mockito.any());
     }
+
+    @Test
+    public void validate_ValidateMultipleSearchRulesWithAllSupportedTypes() {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType,
+            ruleWithDropdownType, ruleWithTabsType));
+
+        sut = new LocatorExistenceValidator(Sets.newHashSet(SearchRuleType.TABS,
+            SearchRuleType.BUTTON, SearchRuleType.DROPDOWN));
+
+        sut.validate(validationContext);
+
+        verify(validationContext, times(3)).addValidationResult(Mockito.any());
+    }
+
+    @Test
+    public void validate_ValidateOnlySearchRulesWithSupportedTypes() {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType,
+            ruleWithDropdownType, ruleWithTabsType));
+
+        sut = new LocatorExistenceValidator(Sets.newHashSet(SearchRuleType.TABS,
+            SearchRuleType.BUTTON));
+
+        sut.validate(validationContext);
+
+        verify(validationContext, times(2)).addValidationResult(Mockito.any());
+    }
+
+    @Test
+    public void validate_NotValidateSearchRulesWithNotSupportedTypes() {
+        when(validationContext.getValidRules()).thenReturn(Lists.newArrayList(ruleWithButtonType,
+            ruleWithDropdownType, ruleWithTabsType));
+
+        sut = new LocatorExistenceValidator(Sets.newHashSet(SearchRuleType.ELEMENTS,
+            SearchRuleType.CHECKBOX));
+
+        sut.validate(validationContext);
+
+        verify(validationContext, never()).addValidationResult(Mockito.any());
+    }
+
+
 }

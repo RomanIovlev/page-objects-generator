@@ -70,19 +70,16 @@ public abstract class AbstractValidator implements Validator {
 
     @Override
     public void validate(ValidationContext validationContext) {
+        if (supportedSearchRuleTypes == null || supportedSearchRuleTypes.isEmpty()) {
+            return;
+        }
 
         List<SearchRule> searchRules = new ArrayList<>();
         searchRules.addAll(isValidateAllSearchRules ? validationContext.getAllSearchRules()
             : validationContext.getValidRules());
 
         searchRules.stream()
-            .filter(searchRule -> supportedSearchRuleTypes != null
-                && (supportedSearchRuleTypes.contains(SearchRuleType.ALL)
-                        || supportedSearchRuleTypes.stream()
-                                .anyMatch(searchRuleType ->
-                                    searchRuleType.getName().equals(searchRule.getType()))
-                    )
-            )
+            .filter(this::isTypeSupportedForCurrentValidator)
             .forEach(searchRule -> {
                 validationContext
                     .addValidationResult(!isValid(searchRule, validationContext)
@@ -111,4 +108,10 @@ public abstract class AbstractValidator implements Validator {
      */
     public abstract boolean isValid(SearchRule searchRule, ValidationContext validationContext);
 
+    private boolean isTypeSupportedForCurrentValidator(SearchRule searchRule) {
+        return supportedSearchRuleTypes.contains(SearchRuleType.ALL)
+            || supportedSearchRuleTypes.stream()
+            .anyMatch(searchRuleType ->
+                searchRuleType.getName().equals(searchRule.getType()));
+    }
 }
