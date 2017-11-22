@@ -51,9 +51,7 @@ public class ValidatorsStarterTest {
 
         Assert.assertEquals(searchRules.size(), validationResults.size());
 
-        //IntermediateCheckValidator, FormTypeValidator and UrlsValidator do not generate validationResult,
-        // that why we should compare amount of validationResults with validators.size() - 3
-        Assert.assertEquals(sut.getValidators().size() - 3,
+        Assert.assertEquals(sut.getValidators().size() - 4,
             sut.getValidationContext().getValidationResults().size());
     }
 

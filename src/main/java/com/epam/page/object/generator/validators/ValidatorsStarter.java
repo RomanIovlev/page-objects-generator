@@ -23,10 +23,10 @@ public class ValidatorsStarter {
      * com.epam.page.object.generator.model.SearchRule}.
      */
     private List<Validator> validators = Lists.newArrayList(
-        new LocatorExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
+        new LocatorExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
         new IntermediateCheckValidator(),
-        new TitleOfComplexElementValidator(SearchRuleTypeGroups.commonAndComplexTypes),
-        new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.commonAndComplexTypes),
+        new TitleOfComplexElementValidator(SearchRuleTypeGroups.complexTypes),
+        new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
         new UrlsValidator());
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
