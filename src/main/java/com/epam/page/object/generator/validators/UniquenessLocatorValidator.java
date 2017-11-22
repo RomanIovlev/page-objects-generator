@@ -44,20 +44,23 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
-       // return "This element is not uniqueness";
-        return validationContext.getUrls().stream().map(url -> {
-                    try {
-                        return  new Pair<>(url, searchRule.extractElementsFromWebSite(url).size());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                })
-                .filter(pair -> pair.getValue() > 1)
-                .map(pair -> "This element is not uniqueness! On url: " + pair.getKey() + " found " + pair.getValue() + " elements")
-                .collect(Collectors.joining("\n"));
 
-
-
+        return validationContext.getUrls().stream()
+            .map((url -> new Pair<>(url, getCountOfElementsOnWebSite(searchRule, url))))
+            .filter(pair -> pair.getValue() > 1)
+            .map(pair -> "This " + searchRule.getType() + " element is not uniqueness! On url: "
+                + pair.getKey() + " found "
+                + pair.getValue() + " elements")
+            .collect(Collectors.joining("\n"));
     }
+
+    private int getCountOfElementsOnWebSite(SearchRule searchRule, String url) {
+        try {
+            return searchRule.extractElementsFromWebSite(url).size();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
