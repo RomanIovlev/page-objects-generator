@@ -35,11 +35,14 @@ public class ValidatorsStarter {
     private ValidationContext validationContext;
 
     public ValidatorsStarter(SupportedTypesContainer supportedTypesContainer) {
-        validators.add(new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL), supportedTypesContainer));
-        validators.add(new FormTypeValidator(SearchRuleTypeGroups.formAndSectionTypes, supportedTypesContainer));
+        validators.add(new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL),
+            supportedTypesContainer));
+        validators.add(new FormTypeValidator(SearchRuleTypeGroups.formAndSectionTypes,
+            supportedTypesContainer));
     }
 
-    public ValidatorsStarter(List<Validator> newValidators, SupportedTypesContainer supportedTypesContainer) {
+    public ValidatorsStarter(List<Validator> newValidators,
+                             SupportedTypesContainer supportedTypesContainer) {
         this(supportedTypesContainer);
         if (newValidators != null) {
             validators.addAll(newValidators);
