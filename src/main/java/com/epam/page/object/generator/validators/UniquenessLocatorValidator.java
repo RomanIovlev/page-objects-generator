@@ -48,7 +48,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
         return validationContext.getUrls().stream()
             .map((url -> new Pair<>(url, getCountOfElementsOnWebSite(searchRule, url))))
             .filter(pair -> pair.getValue() > 1)
-            .map(pair -> "This " + searchRule.getType() + " element is not uniqueness! On url: "
+            .map(pair -> "This " + searchRule.getType() + " element is not unique! On url: "
                 + pair.getKey() + " found "
                 + pair.getValue() + " elements")
             .collect(Collectors.joining("\n"));
