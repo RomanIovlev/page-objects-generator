@@ -71,6 +71,18 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
+    @Test
+    public void pageObjectGenerator_FormSuccess() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/form.json",
+            "https://www.w3schools.com/html/html_forms.asp",
+            true,
+            false
+        );
+
+        pog.generatePageObjects();
+    }
+
     @Test(expected = NotValidUrlException.class)
     public void pageObjectsGenerator_wrongUrl() throws Exception {
 

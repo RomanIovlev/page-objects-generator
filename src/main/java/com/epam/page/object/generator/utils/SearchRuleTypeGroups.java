@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.utils;
 
+import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Set;
@@ -53,6 +54,24 @@ public class SearchRuleTypeGroups {
         Stream.of(commonTypes, complexTypes, formAndSectionTypes)
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());
+
+    public static boolean isCommonType(SearchRule searchRule) {
+        return commonTypes
+            .stream()
+            .anyMatch(searchRuleType -> searchRuleType.getName().equals(searchRule.getType()));
+    }
+
+    public static boolean isComplexType(SearchRule searchRule) {
+        return complexTypes
+            .stream()
+            .anyMatch(searchRuleType -> searchRuleType.getName().equals(searchRule.getType()));
+    }
+
+    public static boolean isFormOrSectionType(SearchRule searchRule) {
+        return formAndSectionTypes
+            .stream()
+            .anyMatch(searchRuleType -> searchRuleType.getName().equals(searchRule.getType()));
+    }
 
     private SearchRuleTypeGroups() {
 

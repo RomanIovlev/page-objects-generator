@@ -23,6 +23,7 @@ public class SearchRule {
     private String type;
     private String css;
     private String xpath;
+    private String section;
     private List<SearchRule> innerSearchRules;
 
     public SearchRule() {
@@ -49,6 +50,18 @@ public class SearchRule {
         this.css = css;
         this.xpath = xpath;
         this.innerSearchRules = innerSearchRules;
+    }
+
+    public String getRequiredValueFromFoundElement(Element element) throws IOException {
+
+        if (uniqueness == null) {
+            //  TODO: Find out how to name field for found complex element
+            return type;
+        }
+
+        return uniqueness.equals("text")
+            ? element.text()
+            : element.attr(uniqueness);
     }
 
     public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
@@ -131,6 +144,15 @@ public class SearchRule {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
 
     @Override
     public String toString() {
