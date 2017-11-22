@@ -45,9 +45,7 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
        // return "This element is not uniqueness";
-        return validationContext.getUrls()
-                .stream()
-                .map(url -> {
+        return validationContext.getUrls().stream().map(url -> {
                     try {
                         return  new Pair<>(url, searchRule.extractElementsFromWebSite(url).size());
                     } catch (IOException e) {
@@ -56,8 +54,10 @@ public class UniquenessLocatorValidator extends AbstractValidator {
                     return null;
                 })
                 .filter(pair -> pair.getValue() > 1)
-                .map(pair -> "On url: " + pair.getKey() + " founded " + pair.getValue() + " elements")
+                .map(pair -> "This element is not uniqueness! On url: " + pair.getKey() + " found " + pair.getValue() + " elements")
                 .collect(Collectors.joining("\n"));
+
+
 
     }
 }
