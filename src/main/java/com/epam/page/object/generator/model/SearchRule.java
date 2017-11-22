@@ -57,11 +57,25 @@ public class SearchRule {
     public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
         Elements elements = extractElementsFromWebSite(url);
 
-        if (uniqueness == null) {
-            //  TODO: Find out how to name field for found complex element
-            return Lists.newArrayList(type);
+        if (uniqueness == null && this.getInnerSearchRules() == null) {
+            return null;
         }
 
+        if (uniqueness == null) {
+
+            if (this.getRootInnerRule().isPresent()) {
+                String uniqueness = this.getRootInnerRule().get().getUniqueness();
+                return getValueFromUniquenessAttribute(elements, uniqueness);
+            } else {
+                return Lists.newArrayList(type);
+            }
+        }
+
+        return getValueFromUniquenessAttribute(elements, uniqueness);
+    }
+
+    private List<String> getValueFromUniquenessAttribute(Elements elements,
+                                                         String uniqueness) {
         return uniqueness.equals("text")
             ? elements.eachText()
             : elements.eachAttr(uniqueness);
@@ -103,8 +117,8 @@ public class SearchRule {
 
     public Optional<SearchRule> getRootInnerRule() {
         return innerSearchRules.stream()
-                .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
-                .findFirst();
+            .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
+            .findFirst();
     }
 
     private Document getDocument(String url) throws IOException {
