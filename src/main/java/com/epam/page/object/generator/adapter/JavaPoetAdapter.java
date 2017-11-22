@@ -81,16 +81,14 @@ public class JavaPoetAdapter implements JavaFileWriter {
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
             for (Element element : elements) {
-                if (!innerSearchRule.getRequiredValueFromFoundElement(element).isEmpty())
+                if (!innerSearchRule.getRequiredValueFromFoundElement(element).isEmpty()) {
                     fields.add(createField(innerSearchRule, element));
+                }
             }
         }
 
-        if (searchRule.getType().equals(SearchRuleType.FORM.getName())) {
-            superClass = Form.class;
-        } else {
-            superClass = Section.class;
-        }
+        superClass =
+            searchRule.getType().equals(SearchRuleType.FORM.getName()) ? Form.class : Section.class;
 
         return buildTypeSpec(searchRule.getSection(), superClass, fields, PUBLIC);
     }
@@ -199,7 +197,8 @@ public class JavaPoetAdapter implements JavaFileWriter {
                 new AnnotationMember("xpath", "$S", searchRule.getXpath());
         }
 
-        return buildAnnotationSpec(fieldAnnotationClass, Collections.singletonList(annotationMember));
+        return buildAnnotationSpec(fieldAnnotationClass,
+            Collections.singletonList(annotationMember));
     }
 
     private FieldSpec createField(SearchRule searchRule, Element element)
@@ -214,10 +213,12 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         if (SearchRuleTypeGroups.isCommonType(searchRule)) {
             elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-            elementFieldAnnotation = createCommonAnnotation(searchRule, element, fieldAnnotationClass);
-        } else if (SearchRuleTypeGroups.isComplexType(searchRule)){
+            elementFieldAnnotation = createCommonAnnotation(searchRule, element,
+                fieldAnnotationClass);
+        } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
             elementRequiredValue = searchRule.getType();
-            elementFieldAnnotation = createComplexAnnotation(searchRule, element, fieldAnnotationClass);
+            elementFieldAnnotation = createComplexAnnotation(searchRule, element,
+                fieldAnnotationClass);
         } else if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
             elementRequiredValue = searchRule.getSection();
             elementFieldAnnotation = createFormOrSectionAnnotation(searchRule,
