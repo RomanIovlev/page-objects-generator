@@ -87,6 +87,14 @@ public class SearchRule {
         return document.select(css);
     }
 
+    public Elements extractElementsFromElement(Element element) {
+        if (css == null) {
+            return Xsoup.compile(xpath).evaluate(element).getElements();
+        }
+
+        return element.select(css);
+    }
+
     private Document getDocument(String url) throws IOException {
         return Jsoup.connect(url).get();
     }

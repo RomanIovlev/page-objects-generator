@@ -76,8 +76,10 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         List<FieldSpec> fields = new ArrayList<>();
 
+        Elements parentElements = searchRule.extractElementsFromWebSite(url);
+
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-            Elements elements = innerSearchRule.extractElementsFromWebSite(url);
+            Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
             for (Element element : elements) {
                 if (!innerSearchRule.getRequiredValueFromFoundElement(element).isEmpty())
                     fields.add(createField(innerSearchRule, element));
