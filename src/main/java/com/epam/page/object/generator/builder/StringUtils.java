@@ -7,21 +7,21 @@ public class StringUtils {
 
     public static String splitCamelCase(String camel) {
         String trim = camel.replaceAll("[^A-Za-z0-9 ]", "").trim();
-        String result = (trim.charAt(0) + "").toLowerCase();
+        StringBuilder result = new StringBuilder((trim.charAt(0) + "").toLowerCase());
         int spaces = 0;
         for (int i = 1; i < trim.length(); i++) {
-            String letter = trim.charAt(i) + "";
-            if (letter.equals(" ")) {
+            Character letter = trim.charAt(i);
+            if (letter == ' ') {
                 if (++spaces == 3) {
-                    return result;
+                    return result.toString();
                 }
             } else {
-                result += trim.charAt(i - 1) == ' '
-                    ? letter.toUpperCase()
-                    : letter.toLowerCase();
+                result.append(trim.charAt(i - 1) == ' '
+                    ? Character.toUpperCase(letter)
+                    : Character.toLowerCase(letter));
             }
         }
-        return result;
+        return result.toString();
     }
 
     public static String firstLetterUp(String text) {
