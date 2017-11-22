@@ -74,9 +74,20 @@ public class JavaPoetAdapter implements JavaFileWriter {
         throws IOException, XpathToCssTransformerException {
         Class superClass;
 
-        List<FieldSpec> fields = new ArrayList<>();
+        List<FieldSpec> fields = getFieldsFromParentElements(searchRule,
+            searchRule.extractElementsFromWebSite(url));
 
-        Elements parentElements = searchRule.extractElementsFromWebSite(url);
+        superClass =
+            searchRule.getType().equals(SearchRuleType.FORM.getName()) ? Form.class : Section.class;
+
+        return buildTypeSpec(searchRule.getSection(), superClass, fields, PUBLIC);
+    }
+
+    private List<FieldSpec> getFieldsFromParentElements(SearchRule searchRule,
+                                                        Elements parentElements)
+        throws IOException, XpathToCssTransformerException {
+
+        List<FieldSpec> fields = new ArrayList<>();
 
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
@@ -87,10 +98,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
             }
         }
 
-        superClass =
-            searchRule.getType().equals(SearchRuleType.FORM.getName()) ? Form.class : Section.class;
-
-        return buildTypeSpec(searchRule.getSection(), superClass, fields, PUBLIC);
+        return fields;
     }
 
     private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
