@@ -18,10 +18,14 @@ import org.mockito.MockitoAnnotations;
 
 public class UrlsValidatorTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private UrlsValidator sut;
 
     @Mock
     private ValidationContext validationContext;
+
 
     @Before
     public void setUp() throws Exception {
@@ -58,11 +62,8 @@ public class UrlsValidatorTest {
         assertEquals(51, sut.getPriority());
     }
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
-    public void validate_coupleOfInvalidUrls() throws Exception {
+    public void validateCoupleOfInvalidUrls() throws Exception {
 
 
         TestThing testThing = new TestThing();
