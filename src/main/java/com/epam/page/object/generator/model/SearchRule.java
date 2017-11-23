@@ -63,9 +63,9 @@ public class SearchRule {
 
         if (uniqueness == null) {
 
-            if (this.getRootInnerRule().isPresent()) {
-                String uniqueness = this.getRootInnerRule().get().getUniqueness();
-                return getValueFromUniquenessAttribute(elements, uniqueness);
+            if (getRootInnerRule().isPresent()) {
+                String uniquenessForComplexSearchRule = getRootInnerRule().get().getUniqueness();
+                return getValueFromUniquenessAttribute(elements, uniquenessForComplexSearchRule);
             } else {
                 return Lists.newArrayList(type);
             }
@@ -115,6 +115,10 @@ public class SearchRule {
         return rootElement.isPresent() ? rootElement.get().getXpath() : null;
     }
 
+    /**
+     * Get 'root' innerSearchRule from complexSearchRule.
+     * @return {@link Optional} about existence 'root' innerSearchRule.
+     */
     public Optional<SearchRule> getRootInnerRule() {
         return innerSearchRules.stream()
             .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))

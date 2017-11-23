@@ -4,6 +4,12 @@ import com.epam.page.object.generator.model.SearchRule;
 
 public class SelectorUtils {
 
+    /**
+     * Generate string contains css selector for SearchRule.
+     * @param searchRule {@link SearchRule} with css selector
+     * @param elementsRequiredValue value received from webPage by 'uniqueness' attribute
+     * @return css selector
+     */
     public static String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
         if(elementsRequiredValue == null){
             return searchRule.getCss();
@@ -13,6 +19,12 @@ public class SelectorUtils {
             elementsRequiredValue);
     }
 
+    /**
+     * Generate string contains xpath selector for SearchRule.
+     * @param searchRule {@link SearchRule} with xpath selector
+     * @param elementsRequiredValue value received from webPage by 'uniqueness' attribute
+     * @return xpath selector
+     */
     public static String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
         String xpathWithoutCloseBracket = searchRule.getXpath().replace("]", "");
 

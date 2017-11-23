@@ -24,7 +24,7 @@ public class ValidatorsStarter {
 //TODO need to add supportedTypes for validators
 //        new TitleExistenceIntoInnerRulesValidator(),
 //        new RootExistenceValidator(),
-//        new UniquenessAttributeExistenceIntoComplexElementValidator(),
+//        new UniquenessAttributeExistenceIntoComplexRuleValidator(),
         new IntermediateCheckValidator(),
         new TitleOfComplexElementValidator(),
         new UniquenessAttributeExistenceValidator(),

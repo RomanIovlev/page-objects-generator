@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UniquenessAttributeExistenceIntoComplexElementValidatorTest {
+public class UniquenessAttributeExistenceIntoComplexRuleValidatorTest {
 
     private SearchRule ruleWithRootTitle =
         new SearchRule("type", "req", "root", "css", null, null);
@@ -42,13 +42,13 @@ public class UniquenessAttributeExistenceIntoComplexElementValidatorTest {
                 ruleWithoutRootTitleWithoutUniqueness));
 
 
-    private UniquenessAttributeExistenceIntoComplexElementValidator sut;
+    private UniquenessAttributeExistenceIntoComplexRuleValidator sut;
     private ValidationContext context;
     private List<SearchRule> rules = Lists.newArrayList();
 
     @Before
     public void setUp() throws Exception {
-        sut = new UniquenessAttributeExistenceIntoComplexElementValidator();
+        sut = new UniquenessAttributeExistenceIntoComplexRuleValidator();
     }
 
 

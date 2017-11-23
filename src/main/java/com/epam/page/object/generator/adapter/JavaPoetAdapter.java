@@ -159,10 +159,10 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
             List<String> requiredValue = innerSearchRule.getRequiredValueFromFoundElement(url);
             String annotationElementName = innerSearchRule.getTitle();
-            if ((requiredValue != null) && (!requiredValue.isEmpty())) {
+            if (requiredValue != null) {
                 addAnnotationMemberIntoInnerAnnotations(url, innerAnnotations, innerSearchRule,
                     annotationElementName);
-            } else if (requiredValue == null && innerSearchRule.getTitle() != null) {
+            } else if (innerSearchRule.getTitle() != null) {
                 addAnnotationMemberIntoInnerAnnotations(url, innerAnnotations, innerSearchRule,
                     annotationElementName);
             }
@@ -201,10 +201,10 @@ public class JavaPoetAdapter implements JavaFileWriter {
             elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
             elementFieldAnnotation = createCommonAnnotation(searchRule, url, fieldAnnotationClass);
         } else {
-            if(searchRule.getRootInnerRule().isPresent()){
-                elementRequiredValue = searchRule.getRootInnerRule().get().getRequiredValueFromFoundElement(url).get(0);
-            }
-            else{
+            if (searchRule.getRootInnerRule().isPresent()) {
+                elementRequiredValue = searchRule.getRootInnerRule().get()
+                    .getRequiredValueFromFoundElement(url).get(0);
+            } else {
                 elementRequiredValue = searchRule.getType();
             }
             elementFieldAnnotation = createComplexAnnotation(searchRule, url, fieldAnnotationClass);

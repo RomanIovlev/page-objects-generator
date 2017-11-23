@@ -4,27 +4,27 @@ import com.epam.page.object.generator.model.SearchRule;
 import java.util.Optional;
 
 /**
- * {@link UniquenessAttributeExistenceIntoComplexElementValidator} validate that complex {@link
+ * {@link UniquenessAttributeExistenceIntoComplexRuleValidator} validate that complex {@link
  * SearchRule} has only one 'uniqueness' attribute and only 'root' inner element has it. <br/>
  * Default priority: 4.
  */
-public class UniquenessAttributeExistenceIntoComplexElementValidator extends AbstractValidator {
+public class UniquenessAttributeExistenceIntoComplexRuleValidator extends AbstractValidator {
 
-    public UniquenessAttributeExistenceIntoComplexElementValidator() {
+    public UniquenessAttributeExistenceIntoComplexRuleValidator() {
         super(4);
     }
 
-    public UniquenessAttributeExistenceIntoComplexElementValidator(int order) {
+    public UniquenessAttributeExistenceIntoComplexRuleValidator(int order) {
         super(order);
     }
 
-    public UniquenessAttributeExistenceIntoComplexElementValidator(
+    public UniquenessAttributeExistenceIntoComplexRuleValidator(
         boolean isValidateAllSearchRules) {
         super(4, isValidateAllSearchRules);
     }
 
-    public UniquenessAttributeExistenceIntoComplexElementValidator(int order,
-                                                                   boolean isValidateAllSearchRules) {
+    public UniquenessAttributeExistenceIntoComplexRuleValidator(int order,
+                                                                boolean isValidateAllSearchRules) {
         super(order, isValidateAllSearchRules);
     }
 
