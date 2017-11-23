@@ -7,7 +7,7 @@ public class StringUtils {
 
     public static String splitCamelCase(String camel) {
         String trim = camel.replaceAll("[^A-Za-z0-9 ]", "").trim();
-        StringBuilder result = new StringBuilder((trim.charAt(0) + "").toLowerCase());
+        StringBuilder result = new StringBuilder((Character.toString(trim.charAt(0))).toLowerCase());
         int spaces = 0;
         for (int i = 1; i < trim.length(); i++) {
             Character letter = trim.charAt(i);
