@@ -4,6 +4,8 @@ import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import java.io.IOException;
 import java.util.Set;
+import javax.lang.model.element.Element;
+import org.jsoup.select.Elements;
 
 /**
  * {@link UniquenessAttributeExistenceValidator} validate that {@link SearchRule} has correct unique
@@ -33,15 +35,17 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
+
         if (searchRule.getInnerSearchRules() == null) {
             return validationContext.getUrls().stream().anyMatch(url -> {
                 try {
+                    Elements elements = searchRule.extractElementsFromWebSite(url);
                     if (searchRule.getTitle() == null) {
-                        return !searchRule.getRequiredValueFromFoundElement(url).isEmpty();
+                        return !searchRule.getRequiredValueFromFoundElement(elements).isEmpty();
                     }
                     else{
                         if (searchRule.getTitle().equals("root")){
-                            return !searchRule.getRequiredValueFromFoundElement(url).isEmpty();
+                            return !searchRule.getRequiredValueFromFoundElement(elements).isEmpty();
                         }
                         return true;
                     }
