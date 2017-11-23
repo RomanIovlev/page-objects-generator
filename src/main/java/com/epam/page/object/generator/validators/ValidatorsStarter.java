@@ -1,6 +1,10 @@
 package com.epam.page.object.generator.validators;
 
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
+import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -19,26 +23,31 @@ public class ValidatorsStarter {
      * com.epam.page.object.generator.model.SearchRule}.
      */
     private List<Validator> validators = Lists.newArrayList(
-        new LocatorExistenceValidator(),
-        new TypeSupportedValidator(),
-//TODO need to add supportedTypes for validators
-//        new TitleExistenceIntoInnerRulesValidator(),
-//        new RootExistenceValidator(),
-//        new UniquenessAttributeExistenceIntoComplexRuleValidator(),
+        new LocatorExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
         new IntermediateCheckValidator(),
-        new TitleOfComplexElementValidator(),
-        new UniquenessAttributeExistenceValidator(),
-        new UrlsValidator());
+        new TitleOfComplexElementValidator(SearchRuleTypeGroups.complexTypes),
+        new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
+        new UrlsValidator(),
+        new SectionAttributeExistenceValidator(SearchRuleTypeGroups.formAndSectionTypes));
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
-        new UniquenessLocatorValidator();
+        new UniquenessLocatorValidator(SearchRuleTypeGroups.commonAndComplexTypes);
+
+    private UniquenessFormLocatorValidator uniquenessFormLocatorValidator =
+        new UniquenessFormLocatorValidator(SearchRuleTypeGroups.formAndSectionTypes);
 
     private ValidationContext validationContext;
 
-    public ValidatorsStarter() {
+    public ValidatorsStarter(SupportedTypesContainer supportedTypesContainer) {
+        validators.add(new TypeSupportedValidator(Sets.newHashSet(SearchRuleType.ALL),
+            supportedTypesContainer));
+        validators.add(new FormTypeValidator(SearchRuleTypeGroups.formAndSectionTypes,
+            supportedTypesContainer));
     }
 
-    public ValidatorsStarter(List<Validator> newValidators) {
+    public ValidatorsStarter(List<Validator> newValidators,
+                             SupportedTypesContainer supportedTypesContainer) {
+        this(supportedTypesContainer);
         if (newValidators != null) {
             validators.addAll(newValidators);
         }
@@ -73,9 +82,11 @@ public class ValidatorsStarter {
         if (checkLocatorsUniqueness) {
             if (!validators.contains(uniquenessLocatorValidator)) {
                 validators.add(uniquenessLocatorValidator);
+                validators.add(uniquenessFormLocatorValidator);
             }
         } else {
             validators.remove(uniquenessLocatorValidator);
+            validators.remove(uniquenessFormLocatorValidator);
         }
     }
 

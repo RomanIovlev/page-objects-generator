@@ -19,8 +19,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Each test generate it's own Java objects for JDI.
- * Probably it would be better to run each test in isolation from others
+ * Each test generate it's own Java objects for JDI. Probably it would be better to run each test in
+ * isolation from others
  */
 @Ignore
 public class MainTest {
@@ -48,7 +48,7 @@ public class MainTest {
 
         JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
 
-        ValidatorsStarter validatorsStarter = new ValidatorsStarter();
+        ValidatorsStarter validatorsStarter = new ValidatorsStarter(bc);
         validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,
@@ -65,6 +65,29 @@ public class MainTest {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown.json",
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
+            true,
+            false);
+
+        pog.generatePageObjects();
+    }
+
+    @Test
+    public void pageObjectGenerator_FormSuccess() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/form.json",
+            "https://www.w3schools.com/html/html_forms.asp",
+            true,
+            false
+        );
+
+        pog.generatePageObjects();
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_NotSectionAttribute() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/form-wrong-section.json",
+            "https://www.w3schools.com/html/html_forms.asp",
             true,
             false);
 

@@ -3,6 +3,8 @@ package com.epam.page.object.generator.validators;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import java.util.Set;
 
 /**
  * {@link LocatorExistenceValidator} validate that {@link SearchRule} has any locator (xpath or
@@ -16,6 +18,10 @@ public class LocatorExistenceValidator extends AbstractValidator {
 
     public LocatorExistenceValidator(int order) {
         super(order);
+    }
+
+    public LocatorExistenceValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(0, supportedSearchRuleTypes);
     }
 
     public LocatorExistenceValidator(boolean isValidateAllSearchRules) {

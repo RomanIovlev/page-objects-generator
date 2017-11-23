@@ -1,10 +1,17 @@
 package com.epam.page.object.generator.model;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
+import com.epam.page.object.generator.validators.UniquenessFormLocatorValidator;
 import com.google.common.collect.Lists;
 import java.io.IOException;
+import javax.lang.model.util.Elements;
+import org.jsoup.nodes.Element;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class SearchRuleTest {
 
@@ -17,20 +24,30 @@ public class SearchRuleTest {
         new SearchRule("Dropdown", null, null, null, null,
             Lists.newArrayList(ruleWithRootTitle, ruleWithoutRootTitleWithoutUniqueness));
 
+    @Mock
+    private Element element;
+
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
     public void getRequiredValueFromFoundElement_successForComplexSearchRule() throws Exception {
         String expected = "Drop Me!";
+        when(element.text()).thenReturn(expected);
 
-        assertEquals(complexRuleWithOneRootWithOneUniqueness
-                .getRequiredValueFromFoundElement("http://materializecss.com/dropdown.html"),
-            Lists.newArrayList(expected));
+        assertEquals(
+            complexRuleWithOneRootWithOneUniqueness.getRequiredValueFromFoundElement(element),
+            expected);
     }
 
     @Test
     public void getRequiredValueFromFoundElement_successForComplexInnerSearchRule()
         throws Exception {
-
-        assertEquals(ruleWithoutRootTitleWithoutUniqueness
-            .getRequiredValueFromFoundElement("http://materializecss.com/dropdown.html"), null);
+        assertEquals(
+            complexRuleWithOneRootWithOneUniqueness.getRequiredValueFromFoundElement(element),
+            null);
     }
 }

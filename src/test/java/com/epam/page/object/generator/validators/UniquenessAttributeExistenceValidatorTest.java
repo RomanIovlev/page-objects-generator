@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.validators;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;

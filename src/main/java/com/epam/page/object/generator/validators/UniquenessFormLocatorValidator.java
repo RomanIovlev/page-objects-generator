@@ -6,36 +6,26 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.util.Pair;
+import javax.lang.model.element.Element;
+import org.jsoup.select.Elements;
 
-/**
- * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
- * Default priority: 51.
- */
-public class UniquenessLocatorValidator extends AbstractValidator {
+public class UniquenessFormLocatorValidator extends AbstractValidator {
 
-    public UniquenessLocatorValidator() {
+    public UniquenessFormLocatorValidator() {
         super(52);
     }
 
-    public UniquenessLocatorValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+    public UniquenessFormLocatorValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
         super(52, supportedSearchRuleTypes);
     }
 
-    public UniquenessLocatorValidator(int order) {
-        super(order);
-    }
-
-    public UniquenessLocatorValidator(boolean isValidateAllSearchRules) {
+    public UniquenessFormLocatorValidator(boolean isValidateAllSearchRules) {
         super(52, isValidateAllSearchRules);
-    }
-
-    public UniquenessLocatorValidator(int order, boolean isValidateAllSearchRules) {
-        super(order, isValidateAllSearchRules);
     }
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-        return isInnerRulesValid(searchRule, validationContext) && validationContext.getUrls()
+        return validationContext.getUrls()
             .stream()
             .allMatch(url -> {
                 try {
@@ -49,7 +39,6 @@ public class UniquenessLocatorValidator extends AbstractValidator {
 
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
-
         return validationContext.getUrls().stream()
             .map((url -> new Pair<>(url, getCountOfElementsOnWebSite(searchRule, url))))
             .filter(pair -> pair.getValue() > 1)
@@ -67,5 +56,4 @@ public class UniquenessLocatorValidator extends AbstractValidator {
         }
         return 0;
     }
-
 }

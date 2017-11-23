@@ -1,9 +1,10 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
-
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * AbstractValidator is the abstract base class for crating a new Validator, which can be used into
@@ -15,6 +16,8 @@ import java.util.List;
  * validationContext)}.</li> </ol>
  */
 public abstract class AbstractValidator implements Validator {
+
+    private Set<SearchRuleType> supportedSearchRuleTypes;
 
     /**
      * Validator priority is a number which specifies the order of executing validators. All
@@ -41,6 +44,11 @@ public abstract class AbstractValidator implements Validator {
         this.priority = priority;
     }
 
+    public AbstractValidator(int priority, Set<SearchRuleType> supportedSearchRuleTypes) {
+        this.priority = priority;
+        this.supportedSearchRuleTypes = supportedSearchRuleTypes;
+    }
+
     public AbstractValidator(int priority, boolean isValidateAllSearchRules) {
         this.priority = priority;
         this.isValidateAllSearchRules = isValidateAllSearchRules;
@@ -62,19 +70,24 @@ public abstract class AbstractValidator implements Validator {
 
     @Override
     public void validate(ValidationContext validationContext) {
+        if (supportedSearchRuleTypes == null || supportedSearchRuleTypes.isEmpty()) {
+            return;
+        }
 
         List<SearchRule> searchRules = new ArrayList<>();
         searchRules.addAll(isValidateAllSearchRules ? validationContext.getAllSearchRules()
             : validationContext.getValidRules());
 
-        searchRules.forEach(searchRule -> {
-            validationContext
-                .addValidationResult(
-                    !isValid(searchRule, validationContext) ? new ValidationResult(false,
-                        this.getExceptionMessage(searchRule, validationContext),
-                        searchRule) : new ValidationResult(true,
-                        this.getExceptionMessage(searchRule, validationContext), searchRule));
-        });
+        searchRules.stream()
+            .filter(this::isTypeSupportedForCurrentValidator)
+            .forEach(searchRule -> {
+                validationContext
+                    .addValidationResult(
+                        !isValid(searchRule, validationContext) ? new ValidationResult(false,
+                            this.getExceptionMessage(searchRule, validationContext),
+                            searchRule) : new ValidationResult(true,
+                            this.getExceptionMessage(searchRule, validationContext), searchRule));
+            });
     }
 
     @Override
@@ -96,6 +109,13 @@ public abstract class AbstractValidator implements Validator {
      */
     public abstract boolean isValid(SearchRule searchRule, ValidationContext validationContext);
 
+    private boolean isTypeSupportedForCurrentValidator(SearchRule searchRule) {
+        return supportedSearchRuleTypes.contains(SearchRuleType.ALL)
+            || supportedSearchRuleTypes.stream()
+            .anyMatch(searchRuleType ->
+                searchRuleType.getName().equals(searchRule.getType()));
+    }
+
     /**
      * Method returns the exception message.<br/>
      *
@@ -105,6 +125,5 @@ public abstract class AbstractValidator implements Validator {
      * @return exception message.
      */
     public abstract String getExceptionMessage(SearchRule searchRule,
-        ValidationContext validationContext);
-
+                                               ValidationContext validationContext);
 }
