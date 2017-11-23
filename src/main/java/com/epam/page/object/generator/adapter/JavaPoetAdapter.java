@@ -27,7 +27,6 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -71,13 +70,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
         AnnotationMember annotationMember = null;
 
         if (searchRule.getRequiredValueFromFoundElement(url) == null) {
-            if (searchRule.getXpath() != null) {
-                annotationMember = new AnnotationMember("xpath", "$S",
-                    resultXpathSelector(searchRule, null));
-            } else if (searchRule.getCss() != null) {
-                annotationMember = new AnnotationMember("css", "$S",
-                    resultCssSelector(searchRule, null));
-            }
+            annotationMember = createAnnotationMemberForInnerSearchRule(searchRule);
         } else {
             String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
             if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
@@ -85,7 +78,6 @@ public class JavaPoetAdapter implements JavaFileWriter {
                 if (searchRule.getCss() == null) {
                     xpathToCssTransformation.transformRule(searchRule);
                 }
-
                 annotationMember = new AnnotationMember("css", "$S",
                     resultCssSelector(searchRule, elementRequiredValue));
             } else {
@@ -94,6 +86,17 @@ public class JavaPoetAdapter implements JavaFileWriter {
             }
         }
         return annotationMember;
+    }
+
+    private AnnotationMember createAnnotationMemberForInnerSearchRule(SearchRule searchRule) {
+        if (searchRule.getXpath() != null) {
+            return new AnnotationMember("xpath", "$S",
+                resultXpathSelector(searchRule, null));
+        } else if (searchRule.getCss() != null) {
+            return new AnnotationMember("css", "$S",
+                resultCssSelector(searchRule, null));
+        }
+        return null;
     }
 
     private TypeSpec buildSiteClass(String packageName, List<String> urls)
@@ -198,7 +201,12 @@ public class JavaPoetAdapter implements JavaFileWriter {
             elementRequiredValue = searchRule.getRequiredValueFromFoundElement(url).get(0);
             elementFieldAnnotation = createCommonAnnotation(searchRule, url, fieldAnnotationClass);
         } else {
-            elementRequiredValue = searchRule.getType();
+            if(searchRule.getRootInnerRule().isPresent()){
+                elementRequiredValue = searchRule.getRootInnerRule().get().getRequiredValueFromFoundElement(url).get(0);
+            }
+            else{
+                elementRequiredValue = searchRule.getType();
+            }
             elementFieldAnnotation = createComplexAnnotation(searchRule, url, fieldAnnotationClass);
         }
 
