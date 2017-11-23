@@ -24,7 +24,8 @@ public class SectionAttributeExistenceValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "Section attribute does not exist";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return searchRule.getSection() + " is not allowed as section attribute name";
     }
+
 }

@@ -30,7 +30,7 @@ public class FormTypeValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return null;
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return "Type is not supported";
     }
 }
