@@ -16,8 +16,6 @@ public class IntermediateCheckValidator implements Validator {
         return 50;
     }
 
-    @Override
-    public String getExceptionMessage() {
-        return null;
-    }
+
+
 }

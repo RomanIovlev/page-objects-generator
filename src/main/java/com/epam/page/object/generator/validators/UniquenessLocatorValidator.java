@@ -2,6 +2,8 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
+import java.util.stream.Collectors;
+import javafx.util.Pair;
 
 /**
  * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
@@ -40,7 +42,24 @@ public class UniquenessLocatorValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "This element is not uniqueness";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+
+        return validationContext.getUrls().stream()
+            .map((url -> new Pair<>(url, getCountOfElementsOnWebSite(searchRule, url))))
+            .filter(pair -> pair.getValue() > 1)
+            .map(pair -> "This " + searchRule.getType() + " element is not unique! On url: "
+                + pair.getKey() + " found "
+                + pair.getValue() + " elements")
+            .collect(Collectors.joining("\n"));
     }
+
+    private int getCountOfElementsOnWebSite(SearchRule searchRule, String url) {
+        try {
+            return searchRule.extractElementsFromWebSite(url).size();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

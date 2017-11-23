@@ -5,14 +5,13 @@ import com.epam.page.object.generator.model.SearchRule;
 public class ValidationResult {
 
     private boolean isValid;
-    private Validator validator;
+    private String exceptionMessage;
     private SearchRule searchRule;
 
     public ValidationResult(boolean isValid,
-                            Validator validator,
-                            SearchRule searchRule) {
+                                String exceptionMessage, SearchRule searchRule) {
         this.isValid = isValid;
-        this.validator = validator;
+        this.exceptionMessage = exceptionMessage;
         this.searchRule = searchRule;
     }
 
@@ -20,15 +19,11 @@ public class ValidationResult {
         return isValid;
     }
 
-    public Validator getValidator() {
-        return validator;
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 
     public SearchRule getSearchRule() {
         return searchRule;
-    }
-
-    public String getExceptionMessage() {
-        return validator.getExceptionMessage();
     }
 }
