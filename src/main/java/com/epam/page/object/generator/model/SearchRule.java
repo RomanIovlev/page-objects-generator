@@ -61,11 +61,9 @@ public class SearchRule {
             return null;
         }
 
-        if (uniqueness == null) {
-            if (getRootInnerRule().isPresent()) {
-                String uniquenessForComplexSearchRule = getRootInnerRule().get().getUniqueness();
-                return getValueFromUniquenessAttribute(elements, uniquenessForComplexSearchRule);
-            }
+        if (uniqueness == null && getRootInnerRule().isPresent()) {
+            String uniquenessForComplexSearchRule = getRootInnerRule().get().getUniqueness();
+            return getValueFromUniquenessAttribute(elements, uniquenessForComplexSearchRule);
         }
 
         return getValueFromUniquenessAttribute(elements, uniqueness);
@@ -114,6 +112,7 @@ public class SearchRule {
 
     /**
      * Get 'root' innerSearchRule from complexSearchRule.
+     *
      * @return {@link Optional} about existence 'root' innerSearchRule.
      */
     public Optional<SearchRule> getRootInnerRule() {
