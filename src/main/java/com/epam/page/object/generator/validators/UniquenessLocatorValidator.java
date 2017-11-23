@@ -2,8 +2,8 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;
-import javafx.util.Pair;
 import java.util.stream.Collectors;
+import javafx.util.Pair;
 
 /**
  * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
