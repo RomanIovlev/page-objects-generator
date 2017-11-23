@@ -35,8 +35,8 @@ public class LocatorExistenceValidator extends AbstractValidator {
 
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
-        return "No xpath  or css locator" +
-            "xpath: " + searchRule.getXpath() +
-            " css: " + searchRule.getCss() + " ";
+        return "No xpath  or css locator"
+            + "xpath: " + searchRule.getXpath()
+            + " css: " + searchRule.getCss() + " ";
     }
 }
