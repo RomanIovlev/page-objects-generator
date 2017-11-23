@@ -48,7 +48,8 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "Uniqueness attribute does not exist";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+
+        return "Uniqueness: " +searchRule.getUniqueness() + " attribute does not exist" ;
     }
 }
