@@ -27,7 +27,8 @@ public class ValidatorsStarter {
         new IntermediateCheckValidator(),
         new TitleOfComplexElementValidator(SearchRuleTypeGroups.complexTypes),
         new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
-        new UrlsValidator());
+        new UrlsValidator(),
+        new SectionAttributeExistenceValidator(SearchRuleTypeGroups.formAndSectionTypes));
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
         new UniquenessLocatorValidator(SearchRuleTypeGroups.commonAndComplexTypes);

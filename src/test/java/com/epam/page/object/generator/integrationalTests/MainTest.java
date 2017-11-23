@@ -83,6 +83,17 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_NotSectionAttribute() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/form-wrong-section.json",
+            "https://www.w3schools.com/html/html_forms.asp",
+            true,
+            false);
+
+        pog.generatePageObjects();
+    }
+
     @Test(expected = NotValidUrlException.class)
     public void pageObjectsGenerator_wrongUrl() throws Exception {
 
