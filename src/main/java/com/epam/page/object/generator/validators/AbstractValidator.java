@@ -22,7 +22,6 @@ public abstract class AbstractValidator implements Validator {
      * and change priories for all default validators if you need. <br/><br/> For priority you need
      * to use int numbers: <br/> <ul> <li>0-49 fot validators which validate format of JSON
      * files</li> <li>51+ for validators which validate SearchRules by the urls</li> </ul>
-     * <p>
      * For example: <br/> UniquenessLocatorValidator can have priority equals 51, because it checks
      * that the SearchRule is uniqueness on the WebPage by the url. It can be like this:<br/> {@code
      * public UniquenessLocatorValidator() { super(51); } }
@@ -70,8 +69,10 @@ public abstract class AbstractValidator implements Validator {
         searchRules.forEach(searchRule -> {
             validationContext
                     .addValidationResult(
-                            !isValid(searchRule, validationContext) ? new ValidationResult(false, this.getExceptionMessage(searchRule,validationContext),
-                                    searchRule) : new ValidationResult(true, this.getExceptionMessage(searchRule,validationContext), searchRule));
+                            !isValid(searchRule, validationContext) ? new ValidationResult(false,
+                                this.getExceptionMessage(searchRule,validationContext),
+                                    searchRule) : new ValidationResult(true,
+                                        this.getExceptionMessage(searchRule,validationContext), searchRule));
         });
     }
 
@@ -96,12 +97,13 @@ public abstract class AbstractValidator implements Validator {
 
     /**
      * Method returns the exception message.<br/>
-     * <p>
+     *
      * For example:<br/> {@code public String getExceptionMessage() { return "No xpath or css
      * locator"; } }
      *
      * @return exception message.
      */
-    public abstract String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext);
+    public abstract String getExceptionMessage(SearchRule searchRule,
+                                                ValidationContext validationContext);
 
 }

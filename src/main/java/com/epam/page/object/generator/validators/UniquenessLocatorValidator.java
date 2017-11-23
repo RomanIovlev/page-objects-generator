@@ -1,9 +1,8 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
-import javafx.util.Pair;
-
 import java.io.IOException;
+import javafx.util.Pair;
 import java.util.stream.Collectors;
 
 /**
