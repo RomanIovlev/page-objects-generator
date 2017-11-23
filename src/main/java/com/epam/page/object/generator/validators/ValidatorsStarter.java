@@ -32,6 +32,9 @@ public class ValidatorsStarter {
     private UniquenessLocatorValidator uniquenessLocatorValidator =
         new UniquenessLocatorValidator(SearchRuleTypeGroups.commonAndComplexTypes);
 
+    private UniquenessFormLocatorValidator uniquenessFormLocatorValidator =
+        new UniquenessFormLocatorValidator(SearchRuleTypeGroups.formAndSectionTypes);
+
     private ValidationContext validationContext;
 
     public ValidatorsStarter(SupportedTypesContainer supportedTypesContainer) {
@@ -78,9 +81,11 @@ public class ValidatorsStarter {
         if (checkLocatorsUniqueness) {
             if (!validators.contains(uniquenessLocatorValidator)) {
                 validators.add(uniquenessLocatorValidator);
+                validators.add(uniquenessFormLocatorValidator);
             }
         } else {
             validators.remove(uniquenessLocatorValidator);
+            validators.remove(uniquenessFormLocatorValidator);
         }
     }
 
