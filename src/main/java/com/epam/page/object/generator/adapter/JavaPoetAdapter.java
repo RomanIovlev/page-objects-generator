@@ -159,10 +159,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
             List<String> requiredValue = innerSearchRule.getRequiredValueFromFoundElement(url);
             String annotationElementName = innerSearchRule.getTitle();
-            if (requiredValue != null) {
-                addAnnotationMemberIntoInnerAnnotations(url, innerAnnotations, innerSearchRule,
-                    annotationElementName);
-            } else if (innerSearchRule.getTitle() != null) {
+            if (requiredValue != null || innerSearchRule.getTitle() != null) {
                 addAnnotationMemberIntoInnerAnnotations(url, innerAnnotations, innerSearchRule,
                     annotationElementName);
             }

@@ -62,12 +62,9 @@ public class SearchRule {
         }
 
         if (uniqueness == null) {
-
             if (getRootInnerRule().isPresent()) {
                 String uniquenessForComplexSearchRule = getRootInnerRule().get().getUniqueness();
                 return getValueFromUniquenessAttribute(elements, uniquenessForComplexSearchRule);
-            } else {
-                return Lists.newArrayList(type);
             }
         }
 
@@ -137,12 +134,6 @@ public class SearchRule {
         this.type = type == null ? null : type.toLowerCase();
     }
 
-    private boolean elementAttributesMatch(Element element) {
-        return attributes.stream()
-            .noneMatch(elementAttribute -> element.attr(elementAttribute.getName()) == null
-                || !element.attr(elementAttribute.getName()).equals(elementAttribute.getValue()));
-    }
-
     public String getUniqueness() {
         return uniqueness;
     }
@@ -169,10 +160,6 @@ public class SearchRule {
 
     public List<SearchRule> getInnerSearchRules() {
         return innerSearchRules;
-    }
-
-    public void setInnerSearchRules(List<SearchRule> innerSearchRules) {
-        this.innerSearchRules = innerSearchRules;
     }
 
     public String getTitle() {
