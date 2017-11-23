@@ -26,7 +26,6 @@ public class JsonRuleMapper {
     public List<SearchRule> getRulesFromJSON() throws IOException {
 
         SearchRulesContainer elements = objectMapper.readValue(file, SearchRulesContainer.class);
-//        TODO: fix mapping of "title" field
 
         return elements.getSearchRules();
     }

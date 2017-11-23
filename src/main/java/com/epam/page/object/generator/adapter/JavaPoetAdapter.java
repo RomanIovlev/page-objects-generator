@@ -103,20 +103,36 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
     private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
         throws XpathToCssTransformerException, IOException {
-        AnnotationMember annotationMember;
-        String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-        if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
-            if (searchRule.getCss() == null) {
-                xpathToCssTransformation.transformRule(searchRule);
-            }
+        AnnotationMember annotationMember = null;
 
-            annotationMember = new AnnotationMember("css", "$S",
-                resultCssSelector(searchRule, elementRequiredValue));
+        if (searchRule.getRequiredValueFromFoundElement(element) == null) {
+            annotationMember = createAnnotationMemberForInnerSearchRule(searchRule);
         } else {
-            annotationMember = new AnnotationMember("xpath", "$S",
-                resultXpathSelector(searchRule, elementRequiredValue));
+            String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
+            if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
+                .equalsIgnoreCase("text")) {
+                if (searchRule.getCss() == null) {
+                    xpathToCssTransformation.transformRule(searchRule);
+                }
+                annotationMember = new AnnotationMember("css", "$S",
+                    resultCssSelector(searchRule, elementRequiredValue));
+            } else {
+                annotationMember = new AnnotationMember("xpath", "$S",
+                    resultXpathSelector(searchRule, elementRequiredValue));
+            }
         }
         return annotationMember;
+    }
+
+    private AnnotationMember createAnnotationMemberForInnerSearchRule(SearchRule searchRule) {
+        if (searchRule.getXpath() != null) {
+            return new AnnotationMember("xpath", "$S",
+                resultXpathSelector(searchRule, null));
+        } else if (searchRule.getCss() != null) {
+            return new AnnotationMember("css", "$S",
+                resultCssSelector(searchRule, null));
+        }
+        return null;
     }
 
     private TypeSpec buildSiteClass(String packageName, List<String> urls)
@@ -179,20 +195,29 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
             String requiredValue = innerSearchRule.getRequiredValueFromFoundElement(element);
             String annotationElementName = innerSearchRule.getTitle();
-            if ((requiredValue != null) && (!requiredValue.isEmpty())) {
-                AnnotationMember innerAnnotationMember = getAnnotationMemberFromRule(
-                    innerSearchRule,
-                    element);
-
-                AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
-                    Collections.singletonList(innerAnnotationMember));
-                innerAnnotations
-                    .add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
+            if (requiredValue != null || innerSearchRule.getTitle() != null) {
+                addAnnotationMemberIntoInnerAnnotations(element, innerAnnotations, innerSearchRule,
+                    annotationElementName);
             }
         }
 
         return buildAnnotationSpec(fieldAnnotationClass,
             innerAnnotations);
+    }
+
+    private void addAnnotationMemberIntoInnerAnnotations(Element element,
+                                                         List<AnnotationMember> innerAnnotations,
+                                                         SearchRule innerSearchRule,
+                                                         String annotationElementName)
+        throws XpathToCssTransformerException, IOException {
+        AnnotationMember innerAnnotationMember = getAnnotationMemberFromRule(
+            innerSearchRule,
+            element);
+
+        AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
+            Collections.singletonList(innerAnnotationMember));
+        innerAnnotations
+            .add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
     }
 
     private AnnotationSpec createFormOrSectionAnnotation(SearchRule searchRule,
@@ -224,7 +249,12 @@ public class JavaPoetAdapter implements JavaFileWriter {
             elementFieldAnnotation = createCommonAnnotation(searchRule, element,
                 fieldAnnotationClass);
         } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
-            elementRequiredValue = searchRule.getType();
+            if (searchRule.getRootInnerRule().isPresent()) {
+                elementRequiredValue = searchRule.getRootInnerRule().get()
+                    .getRequiredValueFromFoundElement(element);
+            } else {
+                elementRequiredValue = searchRule.getType();
+            }
             elementFieldAnnotation = createComplexAnnotation(searchRule, element,
                 fieldAnnotationClass);
         } else if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
@@ -282,9 +312,16 @@ public class JavaPoetAdapter implements JavaFileWriter {
         AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
 
         for (AnnotationMember annotationMember : annotationMembers) {
-            annotationSpec = annotationSpec.toBuilder()
-                .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
-                .build();
+            if (annotationMember.format.equals("$S")) {
+                annotationSpec = annotationSpec.toBuilder()
+                    .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
+                    .build();
+            } else if (annotationMember.format.equals("$L")) {
+                annotationSpec = annotationSpec.toBuilder()
+                    .addMember(annotationMember.name, annotationMember.format,
+                        annotationMember.annotation)
+                    .build();
+            }
         }
 
         return annotationSpec;

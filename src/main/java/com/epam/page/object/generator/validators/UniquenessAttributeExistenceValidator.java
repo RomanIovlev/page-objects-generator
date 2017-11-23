@@ -36,7 +36,15 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
         if (searchRule.getInnerSearchRules() == null) {
             return validationContext.getUrls().stream().anyMatch(url -> {
                 try {
-                    return !searchRule.getRequiredValueFromFoundElement(url).isEmpty();
+                    if (searchRule.getTitle() == null) {
+                        return !searchRule.getRequiredValueFromFoundElement(url).isEmpty();
+                    }
+                    else{
+                        if (searchRule.getTitle().equals("root")){
+                            return !searchRule.getRequiredValueFromFoundElement(url).isEmpty();
+                        }
+                        return true;
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

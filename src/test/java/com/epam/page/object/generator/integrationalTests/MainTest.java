@@ -128,7 +128,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_wrongSelector() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-selector.json",
@@ -155,6 +155,17 @@ public class MainTest {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/button.json",
             "https://www.google.com",
+            false,
+            false);
+
+        pog.generatePageObjects();
+    }
+
+    @Test
+    public void pageObjectsGenerator_GenerateDropdownElementWithInnerElements() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-inner-root.json",
+            "http://materializecss.com/dropdown.html",
             false,
             false);
 

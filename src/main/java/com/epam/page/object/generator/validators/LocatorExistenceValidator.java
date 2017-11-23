@@ -34,9 +34,11 @@ public class LocatorExistenceValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-
-        return (isInnerRulesValid(searchRule, validationContext)) && (!isEmpty(searchRule.getCss())
-            || !isEmpty(searchRule.getXpath()));
+        boolean isValid = isInnerRulesValid(searchRule, validationContext);
+        if( searchRule.getInnerSearchRules() != null){
+            return isValid;
+        }
+        return isValid && (!isEmpty(searchRule.getCss()) || !isEmpty(searchRule.getXpath()));
     }
 
     @Override
