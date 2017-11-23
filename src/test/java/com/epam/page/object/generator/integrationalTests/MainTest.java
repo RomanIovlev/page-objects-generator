@@ -105,7 +105,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_wrongSelector() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-selector.json",
