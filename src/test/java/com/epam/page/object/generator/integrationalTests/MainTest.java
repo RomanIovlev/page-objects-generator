@@ -68,7 +68,7 @@ public class MainTest {
             true,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test
@@ -80,7 +80,7 @@ public class MainTest {
             false
         );
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test(expected = ValidationException.class)
@@ -91,7 +91,7 @@ public class MainTest {
             true,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test(expected = NotValidUrlException.class)
@@ -103,7 +103,7 @@ public class MainTest {
             true,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test(expected = ValidationException.class)
@@ -114,7 +114,7 @@ public class MainTest {
             true,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test(expected = ValidationException.class)
@@ -125,7 +125,7 @@ public class MainTest {
             true,
             true);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test(expected = ValidationException.class)
@@ -136,7 +136,7 @@ public class MainTest {
             true,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test(expected = ValidationException.class)
@@ -147,7 +147,7 @@ public class MainTest {
             true,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test
@@ -158,7 +158,7 @@ public class MainTest {
             false,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
     @Test
@@ -169,7 +169,7 @@ public class MainTest {
             false,
             false);
 
-        pog.generatePageObjects();
+        pog.generate();
     }
 
 }

@@ -1,5 +1,8 @@
 package com.epam.page.object.generator.builder;
 
+import static java.lang.Character.*;
+import static java.lang.Character.toUpperCase;
+
 /**
  * Created by Roman_Iovlev on 10/16/2017.
  */
@@ -17,8 +20,8 @@ public class StringUtils {
                 }
             } else {
                 result.append(trim.charAt(i - 1) == ' '
-                    ? Character.toUpperCase(letter)
-                    : Character.toLowerCase(letter));
+                    ? toUpperCase(letter)
+                    : toLowerCase(letter));
             }
         }
         return result.toString();

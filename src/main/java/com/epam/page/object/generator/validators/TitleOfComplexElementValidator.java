@@ -34,7 +34,7 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
 
         Class elementAnnotation = supportedTypesContainer.getSupportedTypesMap()
             .get(searchRule.getType())
-            .getElementAnnotation();
+            .getUIAnnotation();
 
         return searchRule.getInnerSearchRules() == null
             || searchRule.getInnerSearchRules().stream()

@@ -29,7 +29,7 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.object
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JMenu;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JTable;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
+import com.epam.page.object.generator.model.UIElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +38,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class SupportedTypesContainer {
 
-    private Map<String, ClassAndAnnotationPair> supportedTypesMap = new HashMap<>();
+    private Map<String, UIElement> supportedTypesMap = new HashMap<>();
 
     public SupportedTypesContainer() {
         fillSupportedTypesMap();
@@ -46,69 +46,69 @@ public class SupportedTypesContainer {
 
     private void fillSupportedTypesMap() {
         supportedTypesMap.put(SearchRuleType.BUTTON.getName(),
-            new ClassAndAnnotationPair(Button.class, FindBy.class));
+            new UIElement(Button.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.TEXT.getName(),
-            new ClassAndAnnotationPair(Text.class, FindBy.class));
+            new UIElement(Text.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.CHECKBOX.getName(),
-            new ClassAndAnnotationPair(CheckBox.class, FindBy.class));
+            new UIElement(CheckBox.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.IMAGE.getName(),
-            new ClassAndAnnotationPair(Image.class, FindBy.class));
+            new UIElement(Image.class, FindBy.class));
         supportedTypesMap
             .put(SearchRuleType.DATEPICKER.getName(),
-                new ClassAndAnnotationPair(DatePicker.class, FindBy.class));
+                new UIElement(DatePicker.class, FindBy.class));
         supportedTypesMap
             .put(SearchRuleType.FILEINPUT.getName(),
-                new ClassAndAnnotationPair(FileInput.class, FindBy.class));
+                new UIElement(FileInput.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.INPUT.getName(),
-            new ClassAndAnnotationPair(Input.class, FindBy.class));
+            new UIElement(Input.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.LABEL.getName(),
-            new ClassAndAnnotationPair(Label.class, FindBy.class));
+            new UIElement(Label.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.LINK.getName(),
-            new ClassAndAnnotationPair(Link.class, FindBy.class));
+            new UIElement(Link.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.TEXTAREA.getName(),
-            new ClassAndAnnotationPair(TextArea.class, FindBy.class));
+            new UIElement(TextArea.class, FindBy.class));
         supportedTypesMap
             .put(SearchRuleType.TEXTFIELD.getName(),
-                new ClassAndAnnotationPair(TextField.class, FindBy.class));
+                new UIElement(TextField.class, FindBy.class));
         supportedTypesMap
             .put(SearchRuleType.RADIOBUTTONS.getName(),
-                new ClassAndAnnotationPair(RadioButtons.class, FindBy.class));
+                new UIElement(RadioButtons.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.SELECTOR.getName(),
-            new ClassAndAnnotationPair(Selector.class, FindBy.class));
+            new UIElement(Selector.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.TABS.getName(),
-            new ClassAndAnnotationPair(Tabs.class, FindBy.class));
+            new UIElement(Tabs.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.TEXTLIST.getName(),
-            new ClassAndAnnotationPair(TextList.class, FindBy.class));
+            new UIElement(TextList.class, FindBy.class));
         supportedTypesMap
             .put(SearchRuleType.CHECKLIST.getName(),
-                new ClassAndAnnotationPair(CheckList.class, FindBy.class));
+                new UIElement(CheckList.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.ELEMENTS.getName(),
-            new ClassAndAnnotationPair(Elements.class, FindBy.class));
+            new UIElement(Elements.class, FindBy.class));
 
         supportedTypesMap.put(SearchRuleType.TABLE.getName(),
-            new ClassAndAnnotationPair(Table.class, JTable.class));
+            new UIElement(Table.class, JTable.class));
         supportedTypesMap
             .put(SearchRuleType.COMBOBOX.getName(),
-                new ClassAndAnnotationPair(ComboBox.class, JComboBox.class));
+                new UIElement(ComboBox.class, JComboBox.class));
         supportedTypesMap
             .put(SearchRuleType.DROPDOWN.getName(),
-                new ClassAndAnnotationPair(Dropdown.class, JDropdown.class));
+                new UIElement(Dropdown.class, JDropdown.class));
         supportedTypesMap
             .put(SearchRuleType.DROPLIST.getName(),
-                new ClassAndAnnotationPair(DropList.class, JDropList.class));
+                new UIElement(DropList.class, JDropList.class));
         supportedTypesMap.put(SearchRuleType.MENU.getName(),
-            new ClassAndAnnotationPair(Menu.class, JMenu.class));
+            new UIElement(Menu.class, JMenu.class));
         supportedTypesMap.put(SearchRuleType.SECTION.getName(),
-            new ClassAndAnnotationPair(Section.class, FindBy.class));
+            new UIElement(Section.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.FORM.getName(),
-            new ClassAndAnnotationPair(Form.class, FindBy.class));
+            new UIElement(Form.class, FindBy.class));
     }
 
-    public Map<String, ClassAndAnnotationPair> getSupportedTypesMap() {
+    public Map<String, UIElement> getSupportedTypesMap() {
         return supportedTypesMap;
     }
 
-    public void addSupportedType(String name, ClassAndAnnotationPair pair) {
+    public void addSupportedType(String name, UIElement pair) {
         supportedTypesMap.put(name.toLowerCase(), pair);
     }
 

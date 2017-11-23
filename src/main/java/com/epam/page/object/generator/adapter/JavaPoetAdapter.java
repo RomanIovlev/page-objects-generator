@@ -19,7 +19,7 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
+import com.epam.page.object.generator.model.UIElement;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
@@ -61,8 +61,7 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
         for (SearchRule searchRule : searchRules) {
             Elements elements = searchRule.extractElementsFromWebSite(url);
-            if (((elements != null)) && (
-                elements.size() == 1)) {
+            if (elements != null && elements.size() == 1) {
                 fields.add(createField(searchRule, elements.first()));
             }
         }
@@ -236,10 +235,10 @@ public class JavaPoetAdapter implements JavaFileWriter {
 
     private FieldSpec createField(SearchRule searchRule, Element element)
         throws IOException, XpathToCssTransformerException {
-        ClassAndAnnotationPair currentElementPair = supportedTypesContainer
+        UIElement currentElementPair = supportedTypesContainer
             .getSupportedTypesMap().get(searchRule.getType());
-        Class fieldClass = currentElementPair.getElementClass();
-        Class fieldAnnotationClass = currentElementPair.getElementAnnotation();
+        Class fieldClass = currentElementPair.getUIClass();
+        Class fieldAnnotationClass = currentElementPair.getUIAnnotation();
 
         String elementRequiredValue;
         AnnotationSpec elementFieldAnnotation;

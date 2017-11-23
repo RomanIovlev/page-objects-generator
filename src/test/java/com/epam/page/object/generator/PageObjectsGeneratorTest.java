@@ -10,7 +10,6 @@ import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
-import com.epam.page.object.generator.validators.LocatorExistenceValidator;
 import com.epam.page.object.generator.validators.ValidationContext;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
@@ -68,7 +67,7 @@ public class PageObjectsGeneratorTest {
     public void generatePageObjects_filesGeneratedWithoutErrors()
         throws Exception {
 
-        sut.generatePageObjects();
+        sut.generate();
 
         verify(validatorsStarter).validate(searchRules, urls);
         verify(javaPoetAdapter).writeFile(TEST_PACKAGE, outputDir, searchRules, urls);
@@ -79,7 +78,7 @@ public class PageObjectsGeneratorTest {
         throws Exception {
         doThrow(new ValidationException("some message")).when(validatorsStarter)
             .validate(searchRules, urls);
-        sut.generatePageObjects();
+        sut.generate();
         verifyZeroInteractions(javaPoetAdapter);
     }
 
@@ -90,7 +89,7 @@ public class PageObjectsGeneratorTest {
             new ValidationResult(false, exceptionMessage, invalidSearchRule));
         sut.setForceGenerateFile(true);
 
-        sut.generatePageObjects();
+        sut.generate();
         verify(javaPoetAdapter).writeFile(TEST_PACKAGE, outputDir, searchRules, urls);
     }
 
@@ -101,7 +100,7 @@ public class PageObjectsGeneratorTest {
             new ValidationResult(false, exceptionMessage, invalidSearchRule));
         sut.setForceGenerateFile(false);
 
-        sut.generatePageObjects();
+        sut.generate();
         verifyZeroInteractions(javaPoetAdapter);
     }
 

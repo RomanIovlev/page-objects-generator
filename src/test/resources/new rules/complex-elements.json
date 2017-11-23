@@ -1,0 +1,69 @@
+{
+  "ComboBox": [
+    {
+      "Root": "[data-toggle=dropdown]",
+      "Value": "",
+      "List": "li",
+      "Expand": ".caret"
+    }
+  ],
+  "Dropdown": [
+    {
+      "Root": "[data-toggle=dropdown]",
+      "Value": "",
+      "List": "li",
+      "Expand": ".caret"
+    },
+    {
+      "Root": "select",
+      "Value": "",
+      "List": "",
+      "Expand": ""
+    }
+  ],
+  "SelectList": [
+    {
+      "Root": "select[multiple]",
+      "Value": "",
+      "List": "",
+      "Expand": ""
+    }
+  ],
+  "Table": [
+    {
+      "Root": "table",
+      "Header": "",
+      "RowHeader": "",
+      "Cell": "",
+      "Column": "",
+      "Row": "",
+      "Footer": ""
+    }
+  ],
+  "Pagination": [
+    {
+      "Root": ".pagination",
+      "Next": "li",
+      "Previous": "li",
+      "First": "li",
+      "Last": "li",
+      "Page": "li"
+    }
+  ],
+  "ModalWindow": [
+    {
+      "Root": ".modal-content",
+      "Ok": "",
+      "Cancel": "",
+      "Close": ""
+    }
+  ],
+  "Search": [
+    {
+      "Root": "[class*=search]",
+      "Value": "input[type=text]",
+      "SearchButton": "input[type=submit]",
+      "Suggestions": "li"
+    }
+  ]
+}

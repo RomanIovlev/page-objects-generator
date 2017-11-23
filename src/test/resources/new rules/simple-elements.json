@@ -1,0 +1,23 @@
+{
+  "Button": ["input[type=submit]", "input[type=button]",
+    "button[type=button]", "button.btn", "a.btn"],
+  "Checkbox": ["input[type=checkbox]", "//label[input[@type='checkbox']]"],
+  "Image": ["img"],
+  "Label": ["label", "h1", "h2", "h3", "h4", "h5"],
+  "Link": ["a"],
+  "Text": ["p"],
+  "TextField": ["input[type=text]", "input[type=password]" ],
+  "Input": ["input[type=text]", "input[type=password]"],
+  "TextArea": ["textarea"],
+  "DataPicker": ["input[type=date]"],
+  "FileInput": ["input[type=file]"],
+  "Section": [".section", "header", "footer", "#sidebar", "#content"],
+  "Form": ["form"],
+  "CheckList": ["<<input[type=checkbox]"],
+  "Menu": [".nav li"],
+  "Breadcrumb": [".breadcrumb"],
+  "RadioButtons": ["<<input[type=radio]"],
+  "Tabs": [".nav-tabs li"],
+  "Pills": [".nav-pills li"],
+  "Pagination": [".pagination li"]
+}

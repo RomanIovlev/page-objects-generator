@@ -30,7 +30,7 @@ public enum SearchRuleType {
 
     private final String name;
 
-    private SearchRuleType(String name) {
+    SearchRuleType(String name) {
         this.name = name;
     }
 

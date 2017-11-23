@@ -36,7 +36,7 @@ public class PageObjectsGenerator {
         this.packageName = packageName;
     }
 
-    public void generatePageObjects()
+    public void generate()
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         List<SearchRule> searchRules = parser.getRulesFromJSON();
         List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules, urls);

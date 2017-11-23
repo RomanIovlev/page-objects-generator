@@ -24,18 +24,19 @@ public class Generate {
     public static void main(String[] args)
         throws ParseException, IOException, URISyntaxException, XpathToCssTransformerException {
         List<String> urls = asList(
+            "https://www.epam.com",
             "https://www.w3schools.com/html/html_forms.asp",
             "https://www.w3schools.com/css/default.asp",
             "https://www.w3schools.com/html/html_form_input_types.asp");
 
         new Generate().initPog(
-            "src/test/resources/webElement.json",
+            "src/test/resources/button.json",
             urls,
             "src/main/java/",
             "w3c.tests",
             false,
             true)
-            .generatePageObjects();
+            .generate();
     }
 
     private PageObjectsGenerator initPog(String jsonPath, List<String> urls,
