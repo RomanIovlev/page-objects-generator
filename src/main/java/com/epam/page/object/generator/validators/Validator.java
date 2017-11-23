@@ -24,13 +24,5 @@ public interface Validator {
      */
     int getPriority();
 
-    /**
-     * Method returns the exception message.<br/>
-     *
-     * For example:<br/> {@code public String getExceptionMessage() { return "No xpath or css
-     * locator"; } }
-     *
-     * @return exception message.
-     */
-    String getExceptionMessage();
+
 }

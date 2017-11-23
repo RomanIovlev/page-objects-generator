@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class PageObjectsGeneratorTestNew {
+public class PageObjectsGeneratorTest {
 
     private static final String TEST_PACKAGE = "testPackage";
 
@@ -47,6 +47,10 @@ public class PageObjectsGeneratorTestNew {
     private ValidationContext validationContext = new ValidationContext(searchRules, urls);
 
     private PageObjectsGenerator sut;
+
+    private String exceptionMessage = "bla-bla-bla";
+
+
 
     @Before
     public void setUp() throws Exception {
@@ -83,7 +87,7 @@ public class PageObjectsGeneratorTestNew {
     public void generatePageObjects_ErrorWhenWebValidationFailsWithTrueForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));
+            new ValidationResult(false, exceptionMessage, invalidSearchRule));
         sut.setForceGenerateFile(true);
 
         sut.generatePageObjects();
@@ -91,10 +95,10 @@ public class PageObjectsGeneratorTestNew {
     }
 
     @Test(expected = ValidationException.class)
-    public void generatePageObjects_ErrorWhenWebValidationFailsWithFlaseForceGenerateFile()
+    public void generatePageObjects_ErrorWhenWebValidationFailsWithFalseForceGenerateFile()
         throws Exception {
         validationContext.addValidationResult(
-            new ValidationResult(false, new LocatorExistenceValidator(), invalidSearchRule));
+            new ValidationResult(false, exceptionMessage, invalidSearchRule));
         sut.setForceGenerateFile(false);
 
         sut.generatePageObjects();

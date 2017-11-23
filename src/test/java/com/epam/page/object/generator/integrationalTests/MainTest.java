@@ -15,8 +15,14 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+/**
+ * Each test generate it's own Java objects for JDI. Probably it would be better to run each test in
+ * isolation from others
+ */
+@Ignore
 public class MainTest {
 
     private String outputDir = "src/test/resources/";
@@ -42,7 +48,7 @@ public class MainTest {
 
         JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
 
-        ValidatorsStarter validatorsStarter = new ValidatorsStarter();
+        ValidatorsStarter validatorsStarter = new ValidatorsStarter(bc);
         validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,
@@ -59,6 +65,29 @@ public class MainTest {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown.json",
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
+            true,
+            false);
+
+        pog.generatePageObjects();
+    }
+
+    @Test
+    public void pageObjectGenerator_FormSuccess() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/form.json",
+            "https://www.w3schools.com/html/html_forms.asp",
+            true,
+            false
+        );
+
+        pog.generatePageObjects();
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_NotSectionAttribute() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/form-wrong-section.json",
+            "https://www.w3schools.com/html/html_forms.asp",
             true,
             false);
 
@@ -99,7 +128,7 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
-    @Test
+    @Test(expected = ValidationException.class)
     public void pageObjectsGenerator_wrongSelector() throws Exception {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/dropdown-wrong-selector.json",
@@ -126,6 +155,17 @@ public class MainTest {
         PageObjectsGenerator pog = initPog(
             "src/test/resources/button.json",
             "https://www.google.com",
+            false,
+            false);
+
+        pog.generatePageObjects();
+    }
+
+    @Test
+    public void pageObjectsGenerator_GenerateDropdownElementWithInnerElements() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-inner-root.json",
+            "http://materializecss.com/dropdown.html",
             false,
             false);
 

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.junit.Before;
@@ -13,11 +14,11 @@ import org.junit.Test;
 public class LocatorExistenceValidatorTest {
 
     private SearchRule ruleWithCss =
-        new SearchRule("type", "req", null, "css", null, null);
+        new SearchRule("button", "req", null, "css", null, null);
     private SearchRule ruleWithXpath =
-        new SearchRule("type", "req", null, null, "//input", null);
+        new SearchRule("button", "req", null, null, "//input", null);
     private SearchRule ruleNoLocator =
-        new SearchRule("type", "req", null, null, null, null);
+        new SearchRule("button", "req", null, null, null, null);
     private SearchRule complexRuleWithNoLocatorInnerRule =
         new SearchRule(null, null, null, "css", null, Lists.newArrayList(ruleNoLocator));
     private SearchRule complexRuleWithLocatorsInnerRules =
@@ -32,7 +33,7 @@ public class LocatorExistenceValidatorTest {
 
     @Before
     public void setUp() throws Exception {
-        sut = new LocatorExistenceValidator();
+        sut = new LocatorExistenceValidator(SearchRuleTypeGroups.allExistingTypes);
     }
 
     @Test

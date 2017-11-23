@@ -1,0 +1,21 @@
+{
+  "elements": [
+    {
+      "type":"Form",
+      "section": "HtmlForm",
+      "css": ".w3-example form",
+      "innerSearchRules": [
+        {
+          "type":"Textfield",
+          "uniqueness": "name",
+          "css": "input[type=text]"
+        },
+        {
+          "type":"Button",
+          "uniqueness": "value",
+          "css":"input[type=submit]"
+        }
+      ]
+    }
+  ]
+}

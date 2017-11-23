@@ -2,7 +2,9 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.Arrays;
+import java.util.Set;
 
 /**
  * {@link TitleOfComplexElementValidator} validate that inner {@link SearchRule} has correct "title"
@@ -12,6 +14,10 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
 
     public TitleOfComplexElementValidator() {
         super(2);
+    }
+
+    public TitleOfComplexElementValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(2, supportedSearchRuleTypes);
     }
 
     public TitleOfComplexElementValidator(int priority) {
@@ -37,7 +43,7 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "Title is not valid for this Type";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return "Title: "+searchRule.getTitle()+" is not valid for Type: "+ searchRule.getType();
     }
 }

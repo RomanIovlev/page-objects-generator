@@ -6,7 +6,11 @@
         {
           "title": "root",
           "uniqueness": "text",
-          "xpath": "//button[@class='dropbtn8']"
+          "xpath": "//a[@class='dropdown-button']"
+        },
+        {
+          "title": "list",
+          "css": "ul.dropdown-content"
         }
       ]
     }

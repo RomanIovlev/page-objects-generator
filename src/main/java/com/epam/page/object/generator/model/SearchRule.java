@@ -1,9 +1,12 @@
 package com.epam.page.object.generator.model;
 
-import com.google.common.collect.Lists;
+import static java.util.Arrays.asList;
+
+import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import java.io.IOException;
 import java.util.List;
 
+import java.util.Optional;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,33 +14,33 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import us.codecraft.xsoup.Xsoup;
 
-import static java.util.Arrays.asList;
-
 public class SearchRule {
 
+    public String tag;
+    public String requiredAttribute;
+    public List<String> classes;
+    public Pairs attributes;
     private String uniqueness;
     private String title;
     private String type;
     private String css;
     private String xpath;
+    private String section;
     private List<SearchRule> innerSearchRules;
 
-    public SearchRule() { }
-    public String tag;
-    public String requiredAttribute;
-    public List<String> classes;
-    public Pairs attributes;
+    public SearchRule() {
+    }
 
     public SearchRule(JSONObject jsonObject) {
         type = ((String) jsonObject.get("type")).toLowerCase();
         requiredAttribute = (String) jsonObject.get("name");
         String rulesString = (String) jsonObject.get("rules");
         Pairs rules = new Pairs(asList(rulesString.split(";")),
-                r -> r.split("=")[0],
-                r -> r.split("=")[1]);
+            r -> r.split("=")[0],
+            r -> r.split("=")[1]);
         tag = rules.first(key -> key.equals("tag"));
         classes = rules.filter(
-                key -> key.equals("class"));
+            key -> key.equals("class"));
         attributes = rules;
     }
 
@@ -51,14 +54,44 @@ public class SearchRule {
         this.innerSearchRules = innerSearchRules;
     }
 
-    public List<String> getRequiredValueFromFoundElement(String url) throws IOException {
-        Elements elements = extractElementsFromWebSite(url);
+    public String getRequiredValueFromFoundElement(Element element) throws IOException {
 
-        if (uniqueness == null) {
-            //  TODO: Find out how to name field for found complex element
-            return Lists.newArrayList(type);
+        if (uniqueness == null && this.getInnerSearchRules() == null) {
+            return null;
         }
 
+        if (SearchRuleTypeGroups.isComplexType(this)) {
+            String uniquenessForComplexSearchRule = getRootInnerRule().get().getUniqueness();
+            return getValueFromUniquenessAttribute(element, uniquenessForComplexSearchRule);
+        }
+
+        return getValueFromUniquenessAttribute(element, uniqueness);
+    }
+
+    public List<String> getRequiredValueFromFoundElement(Elements elements) throws IOException {
+
+        if (uniqueness == null && this.getInnerSearchRules() == null) {
+            return null;
+        }
+
+        if (SearchRuleTypeGroups.isComplexType(this)) {
+            String uniquenessForComplexSearchRule = getRootInnerRule().get().getUniqueness();
+            return getValueFromUniquenessAttribute(elements, uniquenessForComplexSearchRule);
+        }
+
+        return getValueFromUniquenessAttribute(elements, uniqueness);
+
+    }
+
+     private String getValueFromUniquenessAttribute(Element element,
+                                                         String uniqueness) {
+        return uniqueness.equals("text")
+            ? element.text()
+            : element.attr(uniqueness);
+    }
+
+    private List<String> getValueFromUniquenessAttribute(Elements elements,
+                                                         String uniqueness) {
         return uniqueness.equals("text")
             ? elements.eachText()
             : elements.eachAttr(uniqueness);
@@ -67,11 +100,51 @@ public class SearchRule {
     public Elements extractElementsFromWebSite(String url) throws IOException {
         Document document = getDocument(url);
 
-        if (css == null) {
-            return Xsoup.compile(xpath).evaluate(document).getElements();
+        String correctXpath = getXpath();
+        String correctCss = getCss();
+
+        // Correct xpath or css for Complex element
+        if(SearchRuleTypeGroups.isComplexType(this)){
+            correctCss = extractCssFromRootInnerRule();
+            correctXpath = extractXpathFromRootInnerRule();
         }
 
-        return document.select(css);
+        if (correctCss == null) {
+            return Xsoup.compile(correctXpath).evaluate(document).getElements();
+        }
+
+        return document.select(correctCss);
+    }
+
+    private String extractCssFromRootInnerRule() {
+        Optional<SearchRule> rootElement = getRootInnerRule();
+
+        return rootElement.isPresent() ? rootElement.get().getCss() : null;
+    }
+
+    private String extractXpathFromRootInnerRule() {
+        Optional<SearchRule> rootElement = getRootInnerRule();
+
+        return rootElement.isPresent() ? rootElement.get().getXpath() : null;
+    }
+
+    /**
+     * Get 'root' innerSearchRule from complexSearchRule.
+     *
+     * @return {@link Optional} about existence 'root' innerSearchRule.
+     */
+    public Optional<SearchRule> getRootInnerRule() {
+        return innerSearchRules.stream()
+            .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
+            .findFirst();
+    }
+
+    public Elements extractElementsFromElement(Element element) {
+        if (css == null) {
+            return Xsoup.compile(xpath).evaluate(element).getElements();
+        }
+
+        return element.select(css);
     }
 
     private Document getDocument(String url) throws IOException {
@@ -86,10 +159,6 @@ public class SearchRule {
         this.type = type == null ? null : type.toLowerCase();
     }
 
-    private boolean elementAttributesMatch(Element element) {
-        return attributes.stream().noneMatch(elementAttribute -> element.attr(elementAttribute.getName()) == null
-                || !element.attr(elementAttribute.getName()).equals(elementAttribute.getValue()));
-    }
     public String getUniqueness() {
         return uniqueness;
     }
@@ -118,16 +187,20 @@ public class SearchRule {
         return innerSearchRules;
     }
 
-    public void setInnerSearchRules(List<SearchRule> innerSearchRules) {
-        this.innerSearchRules = innerSearchRules;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 
     @Override
@@ -141,4 +214,5 @@ public class SearchRule {
             ", innerSearchRules=" + innerSearchRules +
             '}';
     }
+
 }

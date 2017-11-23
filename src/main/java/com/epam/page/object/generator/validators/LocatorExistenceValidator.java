@@ -3,6 +3,8 @@ package com.epam.page.object.generator.validators;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import java.util.Set;
 
 /**
  * {@link LocatorExistenceValidator} validate that {@link SearchRule} has any locator (xpath or
@@ -18,6 +20,10 @@ public class LocatorExistenceValidator extends AbstractValidator {
         super(order);
     }
 
+    public LocatorExistenceValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(0, supportedSearchRuleTypes);
+    }
+
     public LocatorExistenceValidator(boolean isValidateAllSearchRules) {
         super(0, isValidateAllSearchRules);
     }
@@ -28,13 +34,17 @@ public class LocatorExistenceValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(SearchRule searchRule, ValidationContext validationContext) {
-
-        return (isInnerRulesValid(searchRule, validationContext)) && (!isEmpty(searchRule.getCss())
-            || !isEmpty(searchRule.getXpath()));
+        boolean isValid = isInnerRulesValid(searchRule, validationContext);
+        if( searchRule.getInnerSearchRules() != null){
+            return isValid;
+        }
+        return isValid && (!isEmpty(searchRule.getCss()) || !isEmpty(searchRule.getXpath()));
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "No xpath or css locator";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return "No xpath  or css locator"
+            + "xpath: " + searchRule.getXpath()
+            + " css: " + searchRule.getCss() + " ";
     }
 }

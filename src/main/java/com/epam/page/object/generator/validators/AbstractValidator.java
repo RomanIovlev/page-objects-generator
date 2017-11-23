@@ -1,8 +1,10 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * AbstractValidator is the abstract base class for crating a new Validator, which can be used into
@@ -10,9 +12,12 @@ import java.util.List;
  * extends from {@link AbstractValidator} and override the main method {@link
  * AbstractValidator#isValid(SearchRule, ValidationContext)}.</li> <li>Create default constructor
  * with {@link AbstractValidator#priority}.</li> <li>Override {@link
- * AbstractValidator#getExceptionMessage()}.</li> </ol>
+ * AbstractValidator#getExceptionMessage(SearchRule searchRule, ValidationContext
+ * validationContext)}.</li> </ol>
  */
 public abstract class AbstractValidator implements Validator {
+
+    private Set<SearchRuleType> supportedSearchRuleTypes;
 
     /**
      * Validator priority is a number which specifies the order of executing validators. All
@@ -20,10 +25,9 @@ public abstract class AbstractValidator implements Validator {
      * own validator you must not forget to set priority for you validator into default constructor
      * and change priories for all default validators if you need. <br/><br/> For priority you need
      * to use int numbers: <br/> <ul> <li>0-49 fot validators which validate format of JSON
-     * files</li> <li>51+ for validators which validate SearchRules by the urls</li> </ul>
-     *
-     * For example: <br/> UniquenessLocatorValidator can have priority equals 51, because it checks
-     * that the SearchRule is uniqueness on the WebPage by the url. It can be like this:<br/> {@code
+     * files</li> <li>51+ for validators which validate SearchRules by the urls</li> </ul> For
+     * example: <br/> UniquenessLocatorValidator can have priority equals 51, because it checks that
+     * the SearchRule is uniqueness on the WebPage by the url. It can be like this:<br/> {@code
      * public UniquenessLocatorValidator() { super(51); } }
      */
     private int priority;
@@ -38,6 +42,11 @@ public abstract class AbstractValidator implements Validator {
 
     public AbstractValidator(int priority) {
         this.priority = priority;
+    }
+
+    public AbstractValidator(int priority, Set<SearchRuleType> supportedSearchRuleTypes) {
+        this.priority = priority;
+        this.supportedSearchRuleTypes = supportedSearchRuleTypes;
     }
 
     public AbstractValidator(int priority, boolean isValidateAllSearchRules) {
@@ -61,17 +70,24 @@ public abstract class AbstractValidator implements Validator {
 
     @Override
     public void validate(ValidationContext validationContext) {
+        if (supportedSearchRuleTypes == null || supportedSearchRuleTypes.isEmpty()) {
+            return;
+        }
 
         List<SearchRule> searchRules = new ArrayList<>();
         searchRules.addAll(isValidateAllSearchRules ? validationContext.getAllSearchRules()
             : validationContext.getValidRules());
 
-        searchRules.forEach(searchRule -> {
-            validationContext
-                .addValidationResult(
-                    !isValid(searchRule, validationContext) ? new ValidationResult(false, this,
-                        searchRule) : new ValidationResult(true, this, searchRule));
-        });
+        searchRules.stream()
+            .filter(this::isTypeSupportedForCurrentValidator)
+            .forEach(searchRule -> {
+                validationContext
+                    .addValidationResult(
+                        !isValid(searchRule, validationContext) ? new ValidationResult(false,
+                            this.getExceptionMessage(searchRule, validationContext),
+                            searchRule) : new ValidationResult(true,
+                            this.getExceptionMessage(searchRule, validationContext), searchRule));
+            });
     }
 
     @Override
@@ -93,4 +109,21 @@ public abstract class AbstractValidator implements Validator {
      */
     public abstract boolean isValid(SearchRule searchRule, ValidationContext validationContext);
 
+    private boolean isTypeSupportedForCurrentValidator(SearchRule searchRule) {
+        return supportedSearchRuleTypes.contains(SearchRuleType.ALL)
+            || supportedSearchRuleTypes.stream()
+            .anyMatch(searchRuleType ->
+                searchRuleType.getName().equals(searchRule.getType()));
+    }
+
+    /**
+     * Method returns the exception message.<br/>
+     *
+     * For example:<br/> {@code public String getExceptionMessage() { return "No xpath or css
+     * locator"; } }
+     *
+     * @return exception message.
+     */
+    public abstract String getExceptionMessage(SearchRule searchRule,
+                                               ValidationContext validationContext);
 }

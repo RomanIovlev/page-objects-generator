@@ -2,6 +2,8 @@ package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import java.util.Set;
 
 /**
  * {@link TypeSupportedValidator} validate that {@link SearchRule} has correct "type" attribute
@@ -9,11 +11,16 @@ import com.epam.page.object.generator.model.SearchRule;
  */
 public class TypeSupportedValidator extends AbstractValidator {
 
-    //TODO remove BuilderContrainer from Validator
-    private SupportedTypesContainer bc = new SupportedTypesContainer();
+    private SupportedTypesContainer bc;
 
     public TypeSupportedValidator() {
         super(1);
+    }
+
+    public TypeSupportedValidator(Set<SearchRuleType> supportedSearchRuleTypes,
+                                  SupportedTypesContainer supportedTypesContainer) {
+        super(1, supportedSearchRuleTypes);
+        bc = supportedTypesContainer;
     }
 
     public TypeSupportedValidator(int order) {
@@ -34,7 +41,7 @@ public class TypeSupportedValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
-        return "This type is not supported";
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return "This type: " + searchRule.getType() + " is not supported";
     }
 }
