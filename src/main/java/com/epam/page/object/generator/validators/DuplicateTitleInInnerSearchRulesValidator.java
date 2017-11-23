@@ -41,7 +41,7 @@ public class DuplicateTitleInInnerSearchRulesValidator extends AbstractValidator
     }
 
     @Override
-    public String getExceptionMessage() {
-        return null;
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
+        return "Title = " + searchRule.getTitle() + " are duplicated";
     }
 }

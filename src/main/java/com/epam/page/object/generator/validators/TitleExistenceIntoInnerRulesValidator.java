@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.validators;
 
+import com.codeborne.selenide.commands.Val;
 import com.epam.page.object.generator.model.SearchRule;
 
 /**
@@ -32,7 +33,7 @@ public class TitleExistenceIntoInnerRulesValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
         return "Inner rule 'title' attribute missing";
     }
 }

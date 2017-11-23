@@ -44,7 +44,7 @@ public class UniquenessAttributeExistenceIntoComplexRuleValidator extends Abstra
     }
 
     @Override
-    public String getExceptionMessage() {
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
         return "Only 'root' inner search rule can has got 'uniqueness' attribute";
     }
 }

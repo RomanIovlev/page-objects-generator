@@ -30,7 +30,7 @@ public class RootExistenceValidator extends AbstractValidator {
     }
 
     @Override
-    public String getExceptionMessage() {
+    public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
         return "Search rule hasn't got 'root' inner element";
     }
 }
