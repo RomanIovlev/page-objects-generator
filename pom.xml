@@ -6,7 +6,7 @@
 
     <groupId>com.epam.jdi</groupId>
     <artifactId>page-objects-generator</artifactId>
-    <version>1.0.82</version>
+    <version>0.1</version>
     <name>JDI PageObjects generator</name>
     <description>Generate pageObjects for JDI</description>
     <url>https://www.epam.com/</url>
