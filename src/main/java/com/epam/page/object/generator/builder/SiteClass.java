@@ -5,8 +5,8 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public class SiteClass extends JavaPoetClass {
@@ -41,13 +41,8 @@ public class SiteClass extends JavaPoetClass {
 
     @Override
     public List<JavaField> getFieldsList() {
-        List<JavaField> siteFields = new ArrayList<>();
-
-        for (String url : urls) {
-            siteFields.add(new SiteField(getPackageName(), url));
-        }
-
-        return siteFields;
+        return urls.stream().map(url -> new SiteField(getPackageName(), url))
+            .collect(Collectors.toList());
     }
 
     @Override

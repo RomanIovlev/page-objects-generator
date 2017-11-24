@@ -21,6 +21,9 @@ public class ClassBuilder {
             siteClass.writeClass();
 
             for (String url : urls) {
+                JavaPoetClass pageClass = new PageClass("", "", url, searchRules,
+                    new SupportedTypesContainer(), new XpathToCssTransformation());
+                pageClass.writeClass();
                 for (SearchRule searchRule : searchRules) {
                     JavaPoetClass formClass = new FormClass("", "", searchRule, url,
                         new SupportedTypesContainer(), new XpathToCssTransformation());
