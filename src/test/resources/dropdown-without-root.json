@@ -1,0 +1,13 @@
+{
+  "elements": [
+    {
+      "type": "Dropdown",
+      "innerSearchRules": [
+        {
+          "title": "list",
+          "css": "ul.dropdown-content"
+        }
+      ]
+    }
+  ]
+}

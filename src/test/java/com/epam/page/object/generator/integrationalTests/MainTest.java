@@ -172,4 +172,63 @@ public class MainTest {
         pog.generatePageObjects();
     }
 
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_notExistenceRootTitle() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-without-root.json",
+            "http://materializecss.com/dropdown.html",
+            false,
+            false);
+
+        pog.generatePageObjects();
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_duplicateInnerRoot() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-duplicate-root.json",
+            "http://materializecss.com/dropdown.html",
+            false,
+            false);
+
+        pog.generatePageObjects();
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_notExistenceTitleIntoInnerSearchRule() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-wrong-title.json",
+            "http://materializecss.com/dropdown.html",
+            false,
+            false);
+
+        pog.generatePageObjects();
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_notUniquenessAttributeIntoRoot() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-root-without-uniqueness.json",
+            "http://materializecss.com/dropdown.html",
+            false,
+            false);
+
+        pog.generatePageObjects();
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_DuplicateUniquenessAttributeIntoRule() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "src/test/resources/dropdown-duplicate-uniqueness.json",
+            "http://materializecss.com/dropdown.html",
+            false,
+            false);
+
+        pog.generatePageObjects();
+
+    }
 }
