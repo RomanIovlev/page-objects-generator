@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.util.Pair;
-import javax.lang.model.element.Element;
-import org.jsoup.select.Elements;
 
 public class UniquenessFormLocatorValidator extends AbstractValidator {
 

@@ -1,30 +1,29 @@
-package com.epam.page.object.generator.validators;
+package com.epam.page.object.generator.model;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import java.io.IOException;
-import org.jsoup.Jsoup;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UrlsValidator implements Validator {
+public class WebPageGenerator {
 
-    @Override
-    public void validate(ValidationContext validationContext) {
+    public List<WebPage> generate(List<String> urls) {
+        WebPageBuilder webPageBuilder = new WebPageBuilder();
         StringBuilder invalidUrls = new StringBuilder();
-        for (String url : validationContext.getUrls()) {
+        List<WebPage> webPages = new ArrayList<>();
+
+        for (String url : urls) {
             try {
-                Jsoup.connect(url).get();
+                webPages.add( webPageBuilder.buildWebPage(url));
             } catch (IOException | IllegalArgumentException e) {
                 invalidUrls.append("\n Not valid url: ").append(url);
             }
-
         }
         if (invalidUrls.length() > 0){
             throw new NotValidUrlException(String.valueOf(invalidUrls));
         }
-    }
 
-    @Override
-    public int getPriority() {
-        return 51;
+        return webPages;
     }
 
 }

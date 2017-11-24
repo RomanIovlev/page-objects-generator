@@ -24,7 +24,7 @@ public class UniquenessAttributeExistenceIntoComplexRuleValidator extends Abstra
     }
 
     public UniquenessAttributeExistenceIntoComplexRuleValidator(int order,
-                                                                boolean isValidateAllSearchRules) {
+        boolean isValidateAllSearchRules) {
         super(order, isValidateAllSearchRules);
     }
 

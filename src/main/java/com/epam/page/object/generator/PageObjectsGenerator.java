@@ -3,11 +3,14 @@ package com.epam.page.object.generator;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.model.WebPageGenerator;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +43,17 @@ public class PageObjectsGenerator {
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         List<SearchRule> searchRules = parser.getRulesFromJSON();
         List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules, urls);
+
+        WebPageGenerator webPageGenerator = new WebPageGenerator();
+        List<WebPage> webPages = webPageGenerator.generate(urls);
+        webPages.forEach(wp -> wp.addSearchRulesForCurrentWebPage(searchRules));
+        List <SearchRule> searchRules1 = new ArrayList<>();
+        List<String> urls1 = new ArrayList<>();
+        for (WebPage wp:webPages) {
+            searchRules1.addAll(wp.getValidSearchRulesOfCurrentWebPage());
+            urls1.add(wp.getUrl());
+        }
+
         generateJavaFiles(validSearchRules);
     }
 

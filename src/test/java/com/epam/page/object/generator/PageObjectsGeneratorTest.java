@@ -10,7 +10,6 @@ import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
-import com.epam.page.object.generator.validators.LocatorExistenceValidator;
 import com.epam.page.object.generator.validators.ValidationContext;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
@@ -34,7 +33,7 @@ public class PageObjectsGeneratorTest {
     @Mock
     private ValidatorsStarter validatorsStarter;
 
-    private SearchRule searchRule = new SearchRule();
+    private SearchRule searchRule = new SearchRule("type", "uniqueness", "title", "css", "xpath", null);
     private SearchRule invalidSearchRule =
         new SearchRule("button", "req", null, null, null, null);
 
