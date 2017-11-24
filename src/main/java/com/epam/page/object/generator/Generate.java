@@ -2,12 +2,12 @@ package com.epam.page.object.generator;
 
 import static java.util.Arrays.asList;
 
-import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
+import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -50,13 +50,13 @@ public class Generate {
 
         XpathToCssTransformation xpathToCssTransformation = new XpathToCssTransformation();
 
-        JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
+        JavaFileWriter javaFileWriter = new JavaFileWriter(bc, xpathToCssTransformation);
 
         ValidatorsStarter validatorsStarter = new ValidatorsStarter(bc);
         validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,
-            javaPoetAdapter, outputDir, urls, packageName);
+            javaFileWriter, outputDir, urls, packageName);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 

@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
@@ -7,8 +7,6 @@ import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.SearchRule;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import javax.lang.model.element.Modifier;

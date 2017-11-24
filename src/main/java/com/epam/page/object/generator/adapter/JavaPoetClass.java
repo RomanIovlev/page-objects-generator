@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.squareup.javapoet.AnnotationSpec;
@@ -35,17 +35,23 @@ public abstract class JavaPoetClass implements JavaClass {
             fieldSpecList.add(buildFieldSpec(field));
         }
 
-        return TypeSpec.classBuilder(getClassName())
+        TypeSpec.Builder builder =  TypeSpec.classBuilder(getClassName())
             .addModifiers(getModifiers())
             .superclass(getSuperClass())
-            .addAnnotation(buildAnnotationSpec(getAnnotation()))
-            .addFields(fieldSpecList)
-            .build();
+            .addFields(fieldSpecList);
+
+        if (getAnnotation() != null) builder.addAnnotation(buildAnnotationSpec(getAnnotation()));
+
+        return builder.build();
     }
 
     private FieldSpec buildFieldSpec(JavaField field)
         throws IOException, XpathToCssTransformerException {
-        return FieldSpec.builder(field.getFieldClassName(), field.getFieldName())
+        FieldSpec.Builder builder =
+            field.getFieldClassName() == null
+                ? FieldSpec.builder(field.getFieldClass(), field.getFieldName())
+                : FieldSpec.builder(field.getFieldClassName(), field.getFieldName());
+        return builder
             .addModifiers(field.getModifiers())
             .addAnnotation(buildAnnotationSpec(field.getAnnotation()))
             .build();

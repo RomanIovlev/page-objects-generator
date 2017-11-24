@@ -1,10 +1,10 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
-import com.epam.page.object.generator.builder.JavaPoetClass.AnnotationMember;
+import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;

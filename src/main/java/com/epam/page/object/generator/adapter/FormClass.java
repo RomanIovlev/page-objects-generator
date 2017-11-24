@@ -1,6 +1,4 @@
-package com.epam.page.object.generator.builder;
-
-import static java.lang.reflect.Modifier.PUBLIC;
+package com.epam.page.object.generator.adapter;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;

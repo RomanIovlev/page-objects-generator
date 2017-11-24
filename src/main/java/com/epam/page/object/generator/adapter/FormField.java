@@ -1,11 +1,10 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;

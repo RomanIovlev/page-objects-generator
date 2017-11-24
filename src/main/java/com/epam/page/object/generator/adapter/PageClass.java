@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
@@ -17,10 +17,10 @@ import org.jsoup.select.Elements;
 
 public class PageClass extends JavaPoetClass {
 
-    String url;
-    List<SearchRule> searchRules;
-    SupportedTypesContainer typesContainer;
-    XpathToCssTransformation xpathToCssTransformation;
+    private String url;
+    private List<SearchRule> searchRules;
+    private SupportedTypesContainer typesContainer;
+    private XpathToCssTransformation xpathToCssTransformation;
 
     public PageClass(String outputDir, String packageName, String url, List<SearchRule> searchRules,
                      SupportedTypesContainer typesContainer,

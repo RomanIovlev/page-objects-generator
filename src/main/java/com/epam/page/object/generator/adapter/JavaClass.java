@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import java.io.IOException;
 import java.util.List;

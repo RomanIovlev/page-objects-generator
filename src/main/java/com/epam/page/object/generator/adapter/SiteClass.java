@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.URLUtils.getDomainName;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -13,7 +13,7 @@ public class SiteClass extends JavaPoetClass {
 
     private List<String> urls;
 
-    public SiteClass(List<String> urls, String outputDir, String packageName) {
+    public SiteClass(String outputDir, String packageName, List<String> urls) {
         super(outputDir, packageName);
         this.urls = urls;
     }

@@ -48,13 +48,13 @@ public class PageObjectsGenerator {
 
         if (validatorsStarter.getValidationContext().hasInvalidRules()) {
             if (forceGenerateFile) {
-                javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
+                javaFileWriter.writeFiles(outPutDir, packageName, searchRules, urls);
             }
 
             throw new ValidationException(validatorsStarter.getValidationContext());
         }
 
-        javaFileWriter.writeFile(packageName, outPutDir, searchRules, urls);
+        javaFileWriter.writeFiles(outPutDir, packageName, searchRules, urls);
     }
 
     public void setForceGenerateFile(boolean forceGenerateFile) {
