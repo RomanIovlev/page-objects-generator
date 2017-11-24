@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.builder;
 
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -21,13 +22,13 @@ public abstract class JavaPoetClass implements JavaClass {
     }
 
     public void writeClass()
-        throws IOException {
+        throws IOException, XpathToCssTransformerException {
         JavaFile.builder(packageName, buildTypeSpec())
             .build()
             .writeTo(Paths.get(outputDir));
     }
 
-    private TypeSpec buildTypeSpec() throws IOException {
+    private TypeSpec buildTypeSpec() throws IOException, XpathToCssTransformerException {
         List<FieldSpec> fieldSpecList = new ArrayList<>();
 
         for (JavaField field : getFieldsList()) {
@@ -42,14 +43,16 @@ public abstract class JavaPoetClass implements JavaClass {
             .build();
     }
 
-    private FieldSpec buildFieldSpec(JavaField field) {
+    private FieldSpec buildFieldSpec(JavaField field)
+        throws IOException, XpathToCssTransformerException {
         return FieldSpec.builder(field.getFieldClassName(), field.getFieldName())
             .addModifiers(field.getModifiers())
             .addAnnotation(buildAnnotationSpec(field.getAnnotation()))
             .build();
     }
 
-    private AnnotationSpec buildAnnotationSpec(JavaAnnotation annotation) {
+    private AnnotationSpec buildAnnotationSpec(JavaAnnotation annotation)
+        throws IOException, XpathToCssTransformerException {
         AnnotationSpec annotationSpec =
             AnnotationSpec
                 .builder(annotation.getAnnotationClass())

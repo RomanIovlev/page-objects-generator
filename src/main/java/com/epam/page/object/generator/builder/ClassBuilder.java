@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.builder;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
@@ -13,7 +14,8 @@ import java.util.List;
 public class ClassBuilder {
 
 
-    public ClassBuilder(List<SearchRule> searchRules, List<String> urls) {
+    public ClassBuilder(List<SearchRule> searchRules, List<String> urls)
+        throws XpathToCssTransformerException {
         try {
             JavaPoetClass siteClass = new SiteClass(urls, "", "");
             siteClass.writeClass();
