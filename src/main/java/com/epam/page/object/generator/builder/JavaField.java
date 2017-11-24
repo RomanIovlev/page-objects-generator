@@ -1,12 +1,14 @@
 package com.epam.page.object.generator.builder;
 
 import com.squareup.javapoet.ClassName;
+import java.io.IOException;
 import javax.lang.model.element.Modifier;
 
 public interface JavaField {
 
+    Class getFieldClass();
     ClassName getFieldClassName();
     JavaAnnotation getAnnotation();
-    String getFieldName();
+    String getFieldName() throws IOException;
     Modifier[] getModifiers();
 }

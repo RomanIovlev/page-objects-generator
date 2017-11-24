@@ -11,7 +11,7 @@ public interface JavaClass {
 
     JavaAnnotation getAnnotation();
 
-    List<JavaField> getFieldsList();
+    List<JavaField> getFieldsList() throws IOException;
 
     Modifier[] getModifiers();
 

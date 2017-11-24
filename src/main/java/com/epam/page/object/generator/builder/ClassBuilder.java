@@ -1,7 +1,9 @@
 package com.epam.page.object.generator.builder;
 
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
+import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
@@ -13,8 +15,16 @@ public class ClassBuilder {
 
     public ClassBuilder(List<SearchRule> searchRules, List<String> urls) {
         try {
-            JavaPoetClass javaPoetClass = new SiteClass(urls, "", "");
-            javaPoetClass.writeClass();
+            JavaPoetClass siteClass = new SiteClass(urls, "", "");
+            siteClass.writeClass();
+
+            for (String url : urls) {
+                for (SearchRule searchRule : searchRules) {
+                    JavaPoetClass formClass = new FormClass("", "", searchRule, url,
+                        new SupportedTypesContainer(), new XpathToCssTransformation());
+                    formClass.writeClass();
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

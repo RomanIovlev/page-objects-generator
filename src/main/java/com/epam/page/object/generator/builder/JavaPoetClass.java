@@ -85,7 +85,7 @@ public abstract class JavaPoetClass implements JavaClass {
 
     public abstract JavaAnnotation getAnnotation();
 
-    public abstract List<JavaField> getFieldsList();
+    public abstract List<JavaField> getFieldsList() throws IOException;
 
     public abstract Modifier[] getModifiers();
 
