@@ -27,7 +27,7 @@ public abstract class JavaPoetClass implements JavaClass {
             .writeTo(Paths.get(outputDir));
     }
 
-    private TypeSpec buildTypeSpec() {
+    private TypeSpec buildTypeSpec() throws IOException {
         List<FieldSpec> fieldSpecList = new ArrayList<>();
 
         for (JavaField field : getFieldsList()) {
@@ -79,7 +79,7 @@ public abstract class JavaPoetClass implements JavaClass {
         return packageName;
     }
 
-    public abstract String getClassName();
+    public abstract String getClassName() throws IOException;
 
     public abstract Class getSuperClass();
 

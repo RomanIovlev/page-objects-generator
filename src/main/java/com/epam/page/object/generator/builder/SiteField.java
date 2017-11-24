@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.builder;
 
-import static com.epam.page.object.generator.builder.StringUtils.firstLetterUp;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.lang.model.element.Modifier;
 
 public class SiteField implements JavaField {
+
     private String packageName;
     private String url;
 
@@ -30,7 +31,7 @@ public class SiteField implements JavaField {
 
     @Override
     public ClassName getFieldClassName() {
-        return getPageClassName(packageName,firstLetterUp(titleName) );
+        return getPageClassName(packageName, firstLetterUp(titleName));
     }
 
     @Override
