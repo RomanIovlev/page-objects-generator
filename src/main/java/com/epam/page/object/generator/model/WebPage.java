@@ -39,7 +39,7 @@ public class WebPage {
     public void addSearchRulesForCurrentWebPage(List<SearchRule> searchRules) {
         validSearchRulesOfCurrentWebPage = new ArrayList<>();
         invalidSearchRulesOfCurrentWebPage = new ArrayList<>();
-        for (SearchRule searchRule:searchRules)
+        for (SearchRule searchRule : searchRules)
             {
               if(searchRule.extractElementsFromElement(document).size() == 0){
                   invalidSearchRulesOfCurrentWebPage.add(searchRule);

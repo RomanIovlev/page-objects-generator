@@ -6,13 +6,11 @@ import org.jsoup.nodes.Document;
 
 public class WebPageBuilder {
 
-    public WebPageBuilder() {
-
-    }
+    public WebPageBuilder() {}
 
     public WebPage buildWebPage(String url) throws IOException {
-        Document document = Jsoup.connect(url).get();
 
+        Document document = Jsoup.connect(url).get();
         return new WebPage(url, document);
     }
 }

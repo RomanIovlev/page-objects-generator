@@ -42,7 +42,6 @@ public class PageObjectsGenerator {
     public void generatePageObjects()
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         List<SearchRule> searchRules = parser.getRulesFromJSON();
-        List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules, urls);
 
         WebPageGenerator webPageGenerator = new WebPageGenerator();
         List<WebPage> webPages = webPageGenerator.generate(urls);
@@ -51,8 +50,10 @@ public class PageObjectsGenerator {
         List<String> urls1 = new ArrayList<>();
         for (WebPage wp:webPages) {
             searchRules1.addAll(wp.getValidSearchRulesOfCurrentWebPage());
+            searchRules1.addAll(wp.getInvalidSearchRulesOfCurrentWebPage());
             urls1.add(wp.getUrl());
         }
+        List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules1, urls1);
 
         generateJavaFiles(validSearchRules);
     }
