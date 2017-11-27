@@ -1,13 +1,13 @@
 package com.epam.page.object.generator.integrationalTests;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
-import com.epam.page.object.generator.adapter.JavaPoetAdapter;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
+import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class MainTest {
 
         XpathToCssTransformation xpathToCssTransformation = new XpathToCssTransformation();
 
-        JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
+        JavaFileWriter javaPoetAdapter = new JavaFileWriter(bc, xpathToCssTransformation);
 
         ValidatorsStarter validatorsStarter = new ValidatorsStarter(bc);
         validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);

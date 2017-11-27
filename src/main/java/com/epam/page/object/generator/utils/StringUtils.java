@@ -20,17 +20,17 @@ public class StringUtils {
         int spaces = 0;
 
         for (int i = 1; i < trim.length(); i++) {
-            String letter = trim.charAt(i) + "";
+            Character letter = trim.charAt(i);
 
-            if (letter.equals(" ")) {
+            if (letter.equals(' ')) {
                 if (++spaces == MAX_NUMBER_OF_WORDS_IN_NAME) {
 
                     return result.toString();
                 }
             } else {
                 result.append(trim.charAt(i - 1) == ' '
-                    ? letter.toUpperCase()
-                    : letter.toLowerCase());
+                    ? Character.toUpperCase(letter)
+                    : Character.toLowerCase(letter));
             }
         }
 
@@ -39,13 +39,13 @@ public class StringUtils {
 
     public static String firstLetterUp(String text) {
         return text.length() > 0
-            ? (text.charAt(0) + "").toUpperCase() + text.substring(1)
+            ? Character.toUpperCase(text.charAt(0)) + text.substring(1)
             : text;
     }
 
     public static String firstLetterDown(String text) {
         return text.length() > 0
-            ? (text.charAt(0) + "").toLowerCase() + text.substring(1)
+            ? Character.toLowerCase(text.charAt(0)) + text.substring(1)
             : text;
     }
 
