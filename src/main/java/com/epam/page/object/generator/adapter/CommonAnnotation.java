@@ -12,22 +12,24 @@ import java.util.Collections;
 import java.util.List;
 import org.jsoup.nodes.Element;
 
-public class CommonAnnotation implements JavaAnnotation {
+public class CommonAnnotation extends Annotation {
 
     private SearchRule searchRule;
     private Element element;
     private Class fieldAnnotationClass;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public CommonAnnotation(SearchRule searchRule,
-                            Element element,
-                            Class fieldAnnotationClass,
+    public CommonAnnotation(SearchRule searchRule, Element element,
                             XpathToCssTransformation xpathToCssTransformation) {
-        this.searchRule = searchRule;
-        this.element = element;
-        this.fieldAnnotationClass = fieldAnnotationClass;
-        this.xpathToCssTransformation = xpathToCssTransformation;
+        super(searchRule, element, xpathToCssTransformation);
     }
+
+    public CommonAnnotation(SearchRule searchRule, Element element,
+                            XpathToCssTransformation xpathToCssTransformation, Class fieldAnnotationClass) {
+        super(searchRule, element, xpathToCssTransformation);
+        this.fieldAnnotationClass = fieldAnnotationClass;
+    }
+
 
     @Override
     public Class getAnnotationClass() {
@@ -41,40 +43,6 @@ public class CommonAnnotation implements JavaAnnotation {
         if ((requiredValue != null) && (!requiredValue.isEmpty())) {
             return Collections.singletonList(getAnnotationMemberFromRule(
                 searchRule, element));
-        }
-        return null;
-    }
-
-    private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
-        throws XpathToCssTransformerException, IOException {
-        AnnotationMember annotationMember = null;
-
-        if (searchRule.getRequiredValueFromFoundElement(element) == null) {
-            annotationMember = createAnnotationMemberForInnerSearchRule(searchRule);
-        } else {
-            String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-            if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
-                .equalsIgnoreCase("text")) {
-                if (searchRule.getCss() == null) {
-                    xpathToCssTransformation.transformRule(searchRule);
-                }
-                annotationMember = new AnnotationMember("css", "$S",
-                    resultCssSelector(searchRule, elementRequiredValue));
-            } else {
-                annotationMember = new AnnotationMember("xpath", "$S",
-                    resultXpathSelector(searchRule, elementRequiredValue));
-            }
-        }
-        return annotationMember;
-    }
-
-    private AnnotationMember createAnnotationMemberForInnerSearchRule(SearchRule searchRule) {
-        if (searchRule.getXpath() != null) {
-            return new AnnotationMember("xpath", "$S",
-                resultXpathSelector(searchRule, null));
-        } else if (searchRule.getCss() != null) {
-            return new AnnotationMember("css", "$S",
-                resultCssSelector(searchRule, null));
         }
         return null;
     }

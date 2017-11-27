@@ -15,18 +15,15 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.support.FindBy;
 
-public class ComplexAnnotation implements JavaAnnotation {
+public class ComplexAnnotation extends Annotation {
 
     private SearchRule searchRule;
     private Element element;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public ComplexAnnotation(SearchRule searchRule,
-                             Element element,
+    public ComplexAnnotation(SearchRule searchRule, Element element,
                              XpathToCssTransformation xpathToCssTransformation) {
-        this.searchRule = searchRule;
-        this.element = element;
-        this.xpathToCssTransformation = xpathToCssTransformation;
+        super(searchRule, element, xpathToCssTransformation);
     }
 
     @Override
@@ -86,39 +83,4 @@ public class ComplexAnnotation implements JavaAnnotation {
 
         return annotationSpec;
     }
-
-    private AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
-        throws XpathToCssTransformerException, IOException {
-        AnnotationMember annotationMember = null;
-
-        if (searchRule.getRequiredValueFromFoundElement(element) == null) {
-            annotationMember = createAnnotationMemberForInnerSearchRule(searchRule);
-        } else {
-            String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-            if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
-                .equalsIgnoreCase("text")) {
-                if (searchRule.getCss() == null) {
-                    xpathToCssTransformation.transformRule(searchRule);
-                }
-                annotationMember = new AnnotationMember("css", "$S",
-                    resultCssSelector(searchRule, elementRequiredValue));
-            } else {
-                annotationMember = new AnnotationMember("xpath", "$S",
-                    resultXpathSelector(searchRule, elementRequiredValue));
-            }
-        }
-        return annotationMember;
-    }
-
-    private AnnotationMember createAnnotationMemberForInnerSearchRule(SearchRule searchRule) {
-        if (searchRule.getXpath() != null) {
-            return new AnnotationMember("xpath", "$S",
-                resultXpathSelector(searchRule, null));
-        } else if (searchRule.getCss() != null) {
-            return new AnnotationMember("css", "$S",
-                resultCssSelector(searchRule, null));
-        }
-        return null;
-    }
-
 }
