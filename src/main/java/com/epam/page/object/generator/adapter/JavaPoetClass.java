@@ -35,12 +35,14 @@ public abstract class JavaPoetClass implements JavaClass {
             fieldSpecList.add(buildFieldSpec(field));
         }
 
-        TypeSpec.Builder builder =  TypeSpec.classBuilder(getClassName())
+        TypeSpec.Builder builder = TypeSpec.classBuilder(getClassName())
             .addModifiers(getModifiers())
             .superclass(getSuperClass())
             .addFields(fieldSpecList);
 
-        if (getAnnotation() != null) builder.addAnnotation(buildAnnotationSpec(getAnnotation()));
+        if (getAnnotation() != null) {
+            builder.addAnnotation(buildAnnotationSpec(getAnnotation()));
+        }
 
         return builder.build();
     }

@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class FormClass extends JavaPoetClass {
+
     private SearchRule searchRule;
     private String url;
     private SupportedTypesContainer typesContainer;
@@ -39,7 +40,8 @@ public class FormClass extends JavaPoetClass {
 
     @Override
     public Class getSuperClass() {
-        return searchRule.getType().equals(SearchRuleType.FORM.getName()) ? Form.class : Section.class;
+        return searchRule.getType().equals(SearchRuleType.FORM.getName()) ? Form.class
+            : Section.class;
 
     }
 
@@ -57,7 +59,8 @@ public class FormClass extends JavaPoetClass {
             Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
             for (Element element : elements) {
                 if (!innerSearchRule.getRequiredValueFromFoundElement(element).isEmpty()) {
-                    fields.add(new FormField(innerSearchRule, element, typesContainer, xpathToCssTransformation));
+                    fields.add(new FormField(innerSearchRule, element, typesContainer,
+                        xpathToCssTransformation));
                 }
             }
         }
