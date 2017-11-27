@@ -17,7 +17,7 @@ public class UrlsValidator implements Validator {
             }
 
         }
-        if (invalidUrls.length() > 0){
+        if (invalidUrls.length() > 0) {
             throw new NotValidUrlException(String.valueOf(invalidUrls));
         }
     }

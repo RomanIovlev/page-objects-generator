@@ -1,12 +1,10 @@
 package com.epam.page.object.generator.validators;
 
-import com.codeborne.selenide.commands.Val;
 import com.epam.page.object.generator.model.SearchRule;
 
 /**
  * {@link TitleExistenceIntoInnerRulesValidator} validate that all inner rules into complex {@link
- * SearchRule} has 'title' attribute.<br/>
- * Default priority: 5.
+ * SearchRule} has 'title' attribute.<br/> Default priority: 5.
  */
 public class TitleExistenceIntoInnerRulesValidator extends AbstractValidator {
 

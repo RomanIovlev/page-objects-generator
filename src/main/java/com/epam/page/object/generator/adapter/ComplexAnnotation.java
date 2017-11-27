@@ -1,25 +1,15 @@
 package com.epam.page.object.generator.adapter;
 
-import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
-import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
-
-import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.squareup.javapoet.AnnotationSpec;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.support.FindBy;
 
 public class ComplexAnnotation extends Annotation {
-
-    private SearchRule searchRule;
-    private Element element;
-    private XpathToCssTransformation xpathToCssTransformation;
 
     public ComplexAnnotation(SearchRule searchRule, Element element,
                              XpathToCssTransformation xpathToCssTransformation) {
@@ -41,46 +31,14 @@ public class ComplexAnnotation extends Annotation {
             String requiredValue = innerSearchRule.getRequiredValueFromFoundElement(element);
             String annotationElementName = innerSearchRule.getTitle();
             if (requiredValue != null || innerSearchRule.getTitle() != null) {
-                addAnnotationMemberIntoInnerAnnotations(element, innerAnnotations, innerSearchRule,
-                    annotationElementName);
+                JavaAnnotation innerAnnotation = new CommonAnnotation(innerSearchRule, element,
+                    FindBy.class, xpathToCssTransformation);
+
+                innerAnnotations
+                    .add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
             }
         }
 
         return innerAnnotations;
-    }
-
-    private void addAnnotationMemberIntoInnerAnnotations(Element element,
-                                                         List<AnnotationMember> innerAnnotations,
-                                                         SearchRule innerSearchRule,
-                                                         String annotationElementName)
-        throws XpathToCssTransformerException, IOException {
-        AnnotationMember innerAnnotationMember = getAnnotationMemberFromRule(
-            innerSearchRule,
-            element);
-
-        AnnotationSpec innerAnnotation = buildAnnotationSpec(FindBy.class,
-            Collections.singletonList(innerAnnotationMember));
-        innerAnnotations
-            .add(new AnnotationMember(annotationElementName, "$L", innerAnnotation));
-    }
-
-    private AnnotationSpec buildAnnotationSpec(Class annotationClass,
-                                               List<AnnotationMember> annotationMembers) {
-        AnnotationSpec annotationSpec = AnnotationSpec.builder(annotationClass).build();
-
-        for (AnnotationMember annotationMember : annotationMembers) {
-            if (annotationMember.format.equals("$S")) {
-                annotationSpec = annotationSpec.toBuilder()
-                    .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
-                    .build();
-            } else if (annotationMember.format.equals("$L")) {
-                annotationSpec = annotationSpec.toBuilder()
-                    .addMember(annotationMember.name, annotationMember.format,
-                        annotationMember.annotation)
-                    .build();
-            }
-        }
-
-        return annotationSpec;
     }
 }

@@ -4,13 +4,13 @@ import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
-import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SiteFieldAnnotation implements JavaAnnotation {
+
     private String url;
 
     public SiteFieldAnnotation(String url) {

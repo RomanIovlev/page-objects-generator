@@ -1,9 +1,5 @@
 package com.epam.page.object.generator.adapter;
 
-import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
-import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
-
-import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
@@ -14,18 +10,11 @@ import org.jsoup.nodes.Element;
 
 public class CommonAnnotation extends Annotation {
 
-    private SearchRule searchRule;
-    private Element element;
     private Class fieldAnnotationClass;
-    private XpathToCssTransformation xpathToCssTransformation;
 
     public CommonAnnotation(SearchRule searchRule, Element element,
+                            Class fieldAnnotationClass,
                             XpathToCssTransformation xpathToCssTransformation) {
-        super(searchRule, element, xpathToCssTransformation);
-    }
-
-    public CommonAnnotation(SearchRule searchRule, Element element,
-                            XpathToCssTransformation xpathToCssTransformation, Class fieldAnnotationClass) {
         super(searchRule, element, xpathToCssTransformation);
         this.fieldAnnotationClass = fieldAnnotationClass;
     }

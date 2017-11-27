@@ -13,15 +13,16 @@ import java.io.IOException;
 import javax.lang.model.element.Modifier;
 import org.jsoup.nodes.Element;
 
-public class FormField implements JavaField {
+public class SearchRuleField implements JavaField {
+
     private SearchRule searchRule;
     private Element element;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public FormField(SearchRule searchRule, Element element,
-                     SupportedTypesContainer typesContainer,
-                     XpathToCssTransformation xpathToCssTransformation) {
+    public SearchRuleField(SearchRule searchRule, Element element,
+                           SupportedTypesContainer typesContainer,
+                           XpathToCssTransformation xpathToCssTransformation) {
         this.searchRule = searchRule;
         this.element = element;
         this.typesContainer = typesContainer;
@@ -43,7 +44,7 @@ public class FormField implements JavaField {
         Class fieldAnnotationClass = typesContainer.getSupportedTypesMap().get(searchRule.getType())
             .getElementAnnotation();
         if (SearchRuleTypeGroups.isCommonType(searchRule)) {
-            return  new CommonAnnotation(searchRule, element,
+            return new CommonAnnotation(searchRule, element,
                 fieldAnnotationClass, xpathToCssTransformation);
         } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
             return new ComplexAnnotation(searchRule, element, xpathToCssTransformation);
@@ -62,7 +63,7 @@ public class FormField implements JavaField {
         String elementRequiredValue;
         if (SearchRuleTypeGroups.isCommonType(searchRule)) {
             elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-         } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
+        } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
             if (searchRule.getRootInnerRule().isPresent()) {
                 elementRequiredValue = searchRule.getRootInnerRule().get()
                     .getRequiredValueFromFoundElement(element);

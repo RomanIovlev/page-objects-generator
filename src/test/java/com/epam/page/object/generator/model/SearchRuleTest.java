@@ -1,12 +1,9 @@
 package com.epam.page.object.generator.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.epam.page.object.generator.validators.UniquenessFormLocatorValidator;
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import javax.lang.model.util.Elements;
 import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;

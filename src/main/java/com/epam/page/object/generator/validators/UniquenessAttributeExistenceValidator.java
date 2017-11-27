@@ -4,7 +4,6 @@ import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import java.io.IOException;
 import java.util.Set;
-import javax.lang.model.element.Element;
 import org.jsoup.select.Elements;
 
 /**
@@ -42,9 +41,8 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
                     Elements elements = searchRule.extractElementsFromWebSite(url);
                     if (searchRule.getTitle() == null) {
                         return !searchRule.getRequiredValueFromFoundElement(elements).isEmpty();
-                    }
-                    else{
-                        if (searchRule.getTitle().equals("root")){
+                    } else {
+                        if (searchRule.getTitle().equals("root")) {
                             return !searchRule.getRequiredValueFromFoundElement(elements).isEmpty();
                         }
                         return true;
@@ -62,6 +60,6 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
 
-        return "Uniqueness: " +searchRule.getUniqueness() + " attribute does not exist" ;
+        return "Uniqueness: " + searchRule.getUniqueness() + " attribute does not exist";
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.adapter;
 
+import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
@@ -74,7 +75,7 @@ public abstract class JavaPoetClass implements JavaClass {
             } else if (annotationMember.format.equals("$L")) {
                 annotationSpec = annotationSpec.toBuilder()
                     .addMember(annotationMember.name, annotationMember.format,
-                        annotationMember.annotation)
+                        buildAnnotationSpec(annotationMember.annotation))
                     .build();
             }
         }
@@ -99,25 +100,4 @@ public abstract class JavaPoetClass implements JavaClass {
     public abstract List<JavaField> getFieldsList() throws IOException;
 
     public abstract Modifier[] getModifiers();
-
-    protected static class AnnotationMember {
-
-        String name;
-        String format;
-        String arg;
-        AnnotationSpec annotation;
-
-        AnnotationMember(String name, String format, String arg) {
-            this.name = name;
-            this.format = format;
-            this.arg = arg;
-        }
-
-        AnnotationMember(String name, String format, AnnotationSpec annotation) {
-            this.name = name;
-            this.format = format;
-            this.annotation = annotation;
-        }
-
-    }
 }

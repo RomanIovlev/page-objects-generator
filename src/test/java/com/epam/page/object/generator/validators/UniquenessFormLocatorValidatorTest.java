@@ -1,14 +1,13 @@
 package com.epam.page.object.generator.validators;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.never;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;

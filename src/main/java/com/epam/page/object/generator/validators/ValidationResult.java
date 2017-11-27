@@ -9,7 +9,7 @@ public class ValidationResult {
     private SearchRule searchRule;
 
     public ValidationResult(boolean isValid,
-                                String exceptionMessage, SearchRule searchRule) {
+                            String exceptionMessage, SearchRule searchRule) {
         this.isValid = isValid;
         this.exceptionMessage = exceptionMessage;
         this.searchRule = searchRule;

@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.adapter;
 
-import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import java.io.IOException;

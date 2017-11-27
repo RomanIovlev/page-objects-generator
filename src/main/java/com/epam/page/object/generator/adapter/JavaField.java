@@ -7,8 +7,12 @@ import javax.lang.model.element.Modifier;
 public interface JavaField {
 
     Class getFieldClass();
+
     ClassName getFieldClassName();
+
     JavaAnnotation getAnnotation();
+
     String getFieldName() throws IOException;
+
     Modifier[] getModifiers();
 }

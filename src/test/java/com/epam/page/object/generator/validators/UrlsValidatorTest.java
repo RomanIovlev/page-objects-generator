@@ -65,7 +65,6 @@ public class UrlsValidatorTest {
     @Test
     public void validateCoupleOfInvalidUrls() throws Exception {
 
-
         TestThing testThing = new TestThing();
         thrown.expect(NotValidUrlException.class);
         thrown.expectMessage(containsString("http://lalala.ga.1"));
@@ -75,7 +74,9 @@ public class UrlsValidatorTest {
 
 
     }
+
     private class TestThing {
+
         public void chuck() {
             List<String> urls = new ArrayList<>();
             String validUrl = "http://google.com";

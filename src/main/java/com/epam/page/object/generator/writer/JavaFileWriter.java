@@ -26,9 +26,9 @@ public class JavaFileWriter {
     }
 
     public void writeFiles(String outputDir,
-                          String packageName,
-                          List<SearchRule> searchRules,
-                          List<String> urls)
+                           String packageName,
+                           List<SearchRule> searchRules,
+                           List<String> urls)
         throws XpathToCssTransformerException {
 
         List<JavaPoetClass> classes = new ArrayList<>();

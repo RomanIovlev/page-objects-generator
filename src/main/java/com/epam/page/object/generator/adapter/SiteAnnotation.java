@@ -1,11 +1,11 @@
 package com.epam.page.object.generator.adapter;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import java.util.Collections;
 import java.util.List;
 
 public class SiteAnnotation implements JavaAnnotation {
+
     private String domainUrl;
 
     public SiteAnnotation(String domainUrl) {

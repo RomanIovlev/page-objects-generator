@@ -55,6 +55,10 @@ public class SearchRuleTypeGroups {
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());
 
+    private SearchRuleTypeGroups() {
+
+    }
+
     public static boolean isCommonType(SearchRule searchRule) {
         return commonTypes
             .stream()
@@ -71,9 +75,5 @@ public class SearchRuleTypeGroups {
         return formAndSectionTypes
             .stream()
             .anyMatch(searchRuleType -> searchRuleType.getName().equals(searchRule.getType()));
-    }
-
-    private SearchRuleTypeGroups() {
-
     }
 }

@@ -55,7 +55,7 @@ public class PageClass extends JavaPoetClass {
             Elements elements = searchRule.extractElementsFromWebSite(url);
             if ((elements != null) && (
                 elements.size() == 1)) {
-                fields.add(new FormField(searchRule, elements.first(), typesContainer,
+                fields.add(new SearchRuleField(searchRule, elements.first(), typesContainer,
                     xpathToCssTransformation));
             }
         }
