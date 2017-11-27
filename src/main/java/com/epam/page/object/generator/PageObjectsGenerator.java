@@ -10,7 +10,6 @@ import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,34 +41,30 @@ public class PageObjectsGenerator {
     public void generatePageObjects()
         throws IOException, URISyntaxException, XpathToCssTransformerException {
         List<SearchRule> searchRules = parser.getRulesFromJSON();
+// searchRules validation
+
+      List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules,urls);
 
         WebPageGenerator webPageGenerator = new WebPageGenerator();
         List<WebPage> webPages = webPageGenerator.generate(urls);
-        webPages.forEach(wp -> wp.addSearchRulesForCurrentWebPage(searchRules));
-        List <SearchRule> searchRules1 = new ArrayList<>();
-        List<String> urls1 = new ArrayList<>();
-        for (WebPage wp:webPages) {
-            searchRules1.addAll(wp.getValidSearchRulesOfCurrentWebPage());
-            searchRules1.addAll(wp.getInvalidSearchRulesOfCurrentWebPage());
-            urls1.add(wp.getUrl());
-        }
-        List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules1, urls1);
-
-        generateJavaFiles(validSearchRules);
+        webPages.forEach(wp -> wp.addSearchRulesForCurrentWebPage(validSearchRules));
+        // TODO: web validation
+        //
+        generateJavaFiles(webPages);
     }
 
-    private void generateJavaFiles(List<SearchRule> searchRules)
+    private void generateJavaFiles(List<WebPage> webPages)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
 
         if (validatorsStarter.getValidationContext().hasInvalidRules()) {
             if (forceGenerateFile) {
-                javaFileWriter.writeFiles(outPutDir, packageName, searchRules, urls);
+                javaFileWriter.writeFiles(outPutDir, packageName, webPages);
             }
 
             throw new ValidationException(validatorsStarter.getValidationContext());
         }
 
-        javaFileWriter.writeFiles(outPutDir, packageName, searchRules, urls);
+        javaFileWriter.writeFiles(outPutDir, packageName, webPages);
     }
 
     public void setForceGenerateFile(boolean forceGenerateFile) {

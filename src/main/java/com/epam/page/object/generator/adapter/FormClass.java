@@ -4,6 +4,7 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.io.IOException;
@@ -16,19 +17,19 @@ import org.jsoup.select.Elements;
 public class FormClass extends JavaPoetClass {
 
     private SearchRule searchRule;
-    private String url;
+    private WebPage webPage;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
     public FormClass(String outputDir,
                      String packageName,
                      SearchRule searchRule,
-                     String url,
+                     WebPage webPage,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
         super(outputDir, packageName);
         this.searchRule = searchRule;
-        this.url = url;
+        this.webPage = webPage;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
     }
@@ -54,7 +55,7 @@ public class FormClass extends JavaPoetClass {
     public List<JavaField> getFieldsList() throws IOException {
         List<JavaField> fields = new ArrayList<>();
 
-        Elements parentElements = searchRule.extractElementsFromWebSite(url);
+        Elements parentElements = searchRule.extractElementsFromElement(webPage.getDocument());
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
             for (Element element : elements) {

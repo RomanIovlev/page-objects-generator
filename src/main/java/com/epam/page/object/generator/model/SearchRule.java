@@ -97,8 +97,8 @@ public class SearchRule {
             : elements.eachAttr(uniqueness);
     }
 
-    public Elements extractElementsFromWebSite(String url) throws IOException {
-        Document document = getDocument(url);
+    public Elements extractElementsFromWebSite(WebPage webPage) throws IOException {
+        Document document = webPage.getDocument();
 
         String correctXpath = getXpath();
         String correctCss = getCss();

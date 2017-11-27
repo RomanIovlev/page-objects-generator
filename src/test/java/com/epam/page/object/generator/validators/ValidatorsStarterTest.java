@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ValidatorsStarterTest {
         new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = new ArrayList<>();
-    private List<String> urls = new ArrayList<>();
+    private List<URI> urls = new ArrayList<java.net.URI>();
 
     @Before
     public void setUp() {

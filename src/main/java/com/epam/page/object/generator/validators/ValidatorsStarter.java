@@ -5,11 +5,10 @@ import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.google.common.collect.Sets;
-import org.assertj.core.util.Lists;
-
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import org.assertj.core.util.Lists;
 
 /**
  * It is a main class which start validation process.<br/> {@link ValidatorsStarter} contains: <ul>

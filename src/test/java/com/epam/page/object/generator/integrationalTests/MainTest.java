@@ -10,6 +10,7 @@ import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
@@ -33,10 +34,10 @@ public class MainTest {
         FileUtils.deleteDirectory(new File(outputDir + packageName));
     }
 
-    private PageObjectsGenerator initPog(String jsonPath, String url,
+    private PageObjectsGenerator initPog(String jsonPath, URI url,
                                          boolean checkLocatorUniqueness,
                                          boolean forceGenerateFiles) throws IOException {
-        List<String> urls = new ArrayList<>();
+        List<URI> urls = new ArrayList<>();
 
         urls.add(url);
 

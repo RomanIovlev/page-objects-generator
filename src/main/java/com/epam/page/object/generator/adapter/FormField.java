@@ -43,14 +43,25 @@ public class FormField implements JavaField {
         Class fieldAnnotationClass = typesContainer.getSupportedTypesMap().get(searchRule.getType())
             .getElementAnnotation();
         if (SearchRuleTypeGroups.isCommonType(searchRule)) {
-            return  new CommonAnnotation(searchRule, element,
-                fieldAnnotationClass, xpathToCssTransformation);
-        } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
+
+            return  new CommonAnnotation(
+                searchRule,
+                element,
+                xpathToCssTransformation,
+                fieldAnnotationClass
+                );
+        }
+
+        else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
             return new ComplexAnnotation(searchRule, element, xpathToCssTransformation);
-        } else if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
+        }
+
+        else if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
             return new FormOrSectionAnnotation(searchRule,
                 fieldAnnotationClass);
-        } else {
+        }
+
+        else {
             //This type of search rule does not supported
             throw new UnsupportedOperationException(searchRule.getType()
                 + " search rule type does not supported");

@@ -7,6 +7,7 @@ import com.epam.page.object.generator.adapter.SiteClass;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.io.IOException;
@@ -27,30 +28,32 @@ public class JavaFileWriter {
 
     public void writeFiles(String outputDir,
                           String packageName,
-                          List<SearchRule> searchRules,
-                          List<String> urls)
+                          List<WebPage> webPages)
         throws XpathToCssTransformerException {
 
         List<JavaPoetClass> classes = new ArrayList<>();
-        classes.add(new SiteClass(outputDir, packageName + ".site", urls));
+        classes.add(new SiteClass(outputDir, packageName + ".site", webPages));
 
-        for (String url : urls) {
+
+
+
+        for (WebPage webPage : webPages) {
             classes.add(new PageClass(
                 outputDir,
                 packageName + ".page",
-                url,
-                searchRules,
+                webPage,
                 typesContainer,
                 xpathToCssTransformation)
+
             );
 
-            for (SearchRule searchRule : searchRules) {
+            for (SearchRule searchRule : webPage.getValidSearchRulesOfCurrentWebPage()) {
                 if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
                     classes.add(new FormClass(
                         outputDir,
                         packageName + ".form",
                         searchRule,
-                        url,
+                        webPage,
                         typesContainer,
                         xpathToCssTransformation)
                     );

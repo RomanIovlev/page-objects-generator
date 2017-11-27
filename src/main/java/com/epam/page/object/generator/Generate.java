@@ -38,7 +38,8 @@ public class Generate {
             .generatePageObjects();
     }
 
-    private PageObjectsGenerator initPog(String jsonPath, List<String> urls,
+    private PageObjectsGenerator initPog(String jsonPath,
+                                         List<String> urls,
                                          String outputDir,
                                          String packageName,
                                          boolean checkLocatorUniqueness,

@@ -14,6 +14,7 @@ import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import com.epam.page.object.generator.writer.JavaFileWriter;
 import com.google.common.collect.Lists;
+import java.net.URI;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class PageObjectsGeneratorTest {
 
     private String outputDir = "";
 
-    private List<String> urls = Lists.newArrayList("https://www.google.com");
+    private List<URI> urls = Lists.newArrayList("https://www.google.com");
 
     private ValidationContext validationContext = new ValidationContext(searchRules, urls);
 

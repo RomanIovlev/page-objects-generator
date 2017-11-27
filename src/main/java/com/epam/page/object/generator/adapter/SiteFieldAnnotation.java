@@ -1,20 +1,17 @@
 package com.epam.page.object.generator.adapter;
 
-import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
-import static com.epam.page.object.generator.utils.URLUtils.getUrlWithoutDomain;
-
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SiteFieldAnnotation implements JavaAnnotation {
-    private String url;
 
-    public SiteFieldAnnotation(String url) {
-        this.url = url;
+    private WebPage webPage;
+
+    public SiteFieldAnnotation(WebPage webPage) {
+        this.webPage = webPage;
     }
 
     @Override
@@ -25,16 +22,10 @@ public class SiteFieldAnnotation implements JavaAnnotation {
     @Override
     public List<AnnotationMember> getAnnotationMembers() {
         List<AnnotationMember> pageAnnotations = new ArrayList<>();
-        try {
-            pageAnnotations.add(new AnnotationMember("url", "$S", getUrlWithoutDomain(url)));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        try {
-            pageAnnotations.add(new AnnotationMember("title", "$S", getPageTitle(url)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        pageAnnotations
+            .add(new AnnotationMember("webPage", "$S", webPage.getUrlWithoutDomain()));
+
+        pageAnnotations.add(new AnnotationMember("title", "$S", webPage.getTitle()));
 
         return pageAnnotations;
     }

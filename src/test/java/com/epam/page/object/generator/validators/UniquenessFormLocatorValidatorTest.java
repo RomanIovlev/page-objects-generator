@@ -1,14 +1,13 @@
 package com.epam.page.object.generator.validators;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +19,9 @@ public class UniquenessFormLocatorValidatorTest {
 
     private UniquenessFormLocatorValidator sut;
 
-    private String webSite1 = "webSite1";
+    private WebPage webSite1 = "webSite1";
 
-    private String webSite2 = "webSite2";
+    private WebPage webSite2 = "webSite2";
 
     @Mock
     private ValidationContext validationContext;

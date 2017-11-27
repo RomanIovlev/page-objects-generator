@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -22,7 +23,7 @@ public class WebPageGeneratorTest {
     WebPageBuilder webPageBuilder;
     StringBuilder invalidUrls;
     List<WebPage> webPages;
-    List<String> urls;
+    List<URI> urls;
 
     @Before
     public void setUp() throws Exception {
@@ -30,7 +31,7 @@ public class WebPageGeneratorTest {
         MockitoAnnotations.initMocks(this);
 
         sut = new WebPageGenerator();
-        urls = new ArrayList<>();
+        urls = new ArrayList<URI>();
 
 
     }
@@ -69,11 +70,11 @@ public class WebPageGeneratorTest {
 
         public void chuck() {
 
-            List<String> urls = new ArrayList<>();
+            List<URI> urls = new ArrayList<>();
 
-            String validUrl = "http://google.com";
-            String invalidUrl = "http://lalala.ga.1";
-            String invalidUr2 = "iAmNotValid.url";
+            URI validUrl = "http://google.com";
+            URI invalidUrl = "http://lalala.ga.1";
+            URI invalidUr2 = "iAmNotValid.url";
 
             urls.add(validUrl);
             urls.add(invalidUrl);
