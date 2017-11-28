@@ -29,41 +29,33 @@ public class JavaFileWriter {
                            String packageName,
                            List<SearchRule> searchRules,
                            List<String> urls)
-        throws XpathToCssTransformerException {
+        throws XpathToCssTransformerException, IOException {
 
-        List<JavaPoetClass> classes = new ArrayList<>();
-        classes.add(new SiteClass(outputDir, packageName + ".site", urls));
+        new SiteClass(outputDir, packageName + ".site", urls).writeClass();
 
         for (String url : urls) {
-            classes.add(new PageClass(
+            new PageClass(
                 outputDir,
                 packageName + ".page",
                 url,
                 searchRules,
                 typesContainer,
-                xpathToCssTransformation)
-            );
+                xpathToCssTransformation).writeClass();
 
-            for (SearchRule searchRule : searchRules) {
-                if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
-                    classes.add(new FormClass(
-                        outputDir,
-                        packageName + ".form",
-                        searchRule,
-                        url,
-                        typesContainer,
-                        xpathToCssTransformation)
-                    );
-                }
-            }
+            searchRules.stream().filter(SearchRuleTypeGroups::isFormOrSectionType)
+                .forEach(searchRule -> {
+                    try {
+                        new FormClass(
+                            outputDir,
+                            packageName + ".form",
+                            searchRule,
+                            url,
+                            typesContainer,
+                            xpathToCssTransformation).writeClass();
+                    } catch (IOException | XpathToCssTransformerException e) {
+                        e.printStackTrace();
+                    }
+                });
         }
-
-        classes.forEach(javaPoetClass -> {
-            try {
-                javaPoetClass.writeClass();
-            } catch (IOException | XpathToCssTransformerException e) {
-                e.printStackTrace();
-            }
-        });
     }
 }

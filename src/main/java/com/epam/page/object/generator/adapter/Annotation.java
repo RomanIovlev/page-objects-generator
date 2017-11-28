@@ -24,7 +24,7 @@ public abstract class Annotation implements JavaAnnotation {
 
     public AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
         throws XpathToCssTransformerException, IOException {
-        AnnotationMember annotationMember = null;
+        AnnotationMember annotationMember;
 
         if (searchRule.getRequiredValueFromFoundElement(element) == null) {
             annotationMember = createAnnotationMemberForInnerSearchRule(searchRule);
