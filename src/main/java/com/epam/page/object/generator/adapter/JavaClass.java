@@ -5,6 +5,7 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 
 public interface JavaClass {
+
     String getClassName() throws IOException;
 
     Class getSuperClass();

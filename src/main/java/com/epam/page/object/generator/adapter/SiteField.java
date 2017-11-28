@@ -24,13 +24,10 @@ public class SiteField implements JavaField {
     }
 
     @Override
-    public Class getFieldClass() {
-        return null;
-    }
+    public String getFieldClassName() {
+        return packageName.substring(0, packageName.length() - 5) + ".page" + "."
+            + firstLetterUp(titleName);
 
-    @Override
-    public ClassName getFieldClassName() {
-        return getPageClassName(packageName, firstLetterUp(titleName));
     }
 
     @Override
@@ -46,10 +43,5 @@ public class SiteField implements JavaField {
     @Override
     public Modifier[] getModifiers() {
         return new Modifier[]{PUBLIC, STATIC};
-    }
-
-    private ClassName getPageClassName(String packageName, String pageClassName) {
-        return ClassName
-            .get(packageName.substring(0, packageName.length() - 5) + ".page", pageClassName);
     }
 }

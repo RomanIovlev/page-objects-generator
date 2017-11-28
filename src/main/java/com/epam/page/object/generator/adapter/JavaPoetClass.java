@@ -1,7 +1,9 @@
 package com.epam.page.object.generator.adapter;
 
+import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -49,11 +51,8 @@ public abstract class JavaPoetClass implements JavaClass {
 
     private FieldSpec buildFieldSpec(JavaField field)
         throws IOException, XpathToCssTransformerException {
-        FieldSpec.Builder builder =
-            field.getFieldClassName() == null
-                ? FieldSpec.builder(field.getFieldClass(), field.getFieldName())
-                : FieldSpec.builder(field.getFieldClassName(), field.getFieldName());
-        return builder
+        return FieldSpec
+            .builder(ClassName.bestGuess(field.getFieldClassName()), field.getFieldName())
             .addModifiers(field.getModifiers())
             .addAnnotation(buildAnnotationSpec(field.getAnnotation()))
             .build();
@@ -74,7 +73,7 @@ public abstract class JavaPoetClass implements JavaClass {
             } else if (annotationMember.format.equals("$L")) {
                 annotationSpec = annotationSpec.toBuilder()
                     .addMember(annotationMember.name, annotationMember.format,
-                        annotationMember.annotation)
+                        buildAnnotationSpec(annotationMember.annotation))
                     .build();
             }
         }
@@ -99,25 +98,4 @@ public abstract class JavaPoetClass implements JavaClass {
     public abstract List<JavaField> getFieldsList() throws IOException;
 
     public abstract Modifier[] getModifiers();
-
-    protected static class AnnotationMember {
-
-        String name;
-        String format;
-        String arg;
-        AnnotationSpec annotation;
-
-        AnnotationMember(String name, String format, String arg) {
-            this.name = name;
-            this.format = format;
-            this.arg = arg;
-        }
-
-        AnnotationMember(String name, String format, AnnotationSpec annotation) {
-            this.name = name;
-            this.format = format;
-            this.annotation = annotation;
-        }
-
-    }
 }

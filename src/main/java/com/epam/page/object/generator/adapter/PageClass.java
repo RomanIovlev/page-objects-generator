@@ -55,7 +55,8 @@ public class PageClass extends JavaPoetClass {
 //                (elements != null) &&
                     (
                 elements.size() == 1)) {
-                fields.add(new FormField(searchRule, elements.first(), typesContainer,
+                fields.add(new SearchRuleField(searchRule, elements.first(), getPackageName(),
+                    typesContainer,
                     xpathToCssTransformation));
             }
         }

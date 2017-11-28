@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.Lists;

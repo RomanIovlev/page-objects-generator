@@ -51,7 +51,6 @@ public class PageObjectsGeneratorTest {
     private String exceptionMessage = "bla-bla-bla";
 
 
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);

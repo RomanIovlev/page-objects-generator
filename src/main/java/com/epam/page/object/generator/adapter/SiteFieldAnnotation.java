@@ -1,7 +1,6 @@
 package com.epam.page.object.generator.adapter;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
-import com.epam.page.object.generator.adapter.JavaPoetClass.AnnotationMember;
 import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;
 import java.util.List;

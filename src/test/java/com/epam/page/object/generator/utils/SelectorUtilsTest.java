@@ -19,14 +19,15 @@ public class SelectorUtilsTest {
     }
 
     @Test
-    public void resultCssSelector_successWithoutElementsRequiredValue() throws Exception{
+    public void resultCssSelector_successWithoutElementsRequiredValue() throws Exception {
         String expected = "css";
 
         Assert.assertEquals(expected,
             SelectorUtils.resultCssSelector(searchRule, null));
     }
+
     @Test
-    public void resultXpathSelector_successWithoutElementsRequiredValue() throws Exception{
+    public void resultXpathSelector_successWithoutElementsRequiredValue() throws Exception {
         String expected = "//input[@type='submit']";
 
         Assert.assertEquals(expected,

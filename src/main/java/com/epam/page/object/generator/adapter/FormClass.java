@@ -60,7 +60,8 @@ public class FormClass extends JavaPoetClass {
             Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
             for (Element element : elements) {
                 if (!innerSearchRule.getRequiredValueFromFoundElement(element).isEmpty()) {
-                    fields.add(new FormField(innerSearchRule, element, typesContainer,
+                    fields.add(new SearchRuleField(innerSearchRule, element, getPackageName(),
+                        typesContainer,
                         xpathToCssTransformation));
                 }
             }

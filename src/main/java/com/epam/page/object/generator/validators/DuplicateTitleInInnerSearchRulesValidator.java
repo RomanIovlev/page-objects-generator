@@ -6,8 +6,8 @@ import java.util.Set;
 
 /**
  * {@link DuplicateTitleInInnerSearchRulesValidator} validate that all inner {@link SearchRule} has
- * not any duplicates in titles. <br/> Flag {@link AbstractValidator#isValidateAllSearchRules}
- * = false by default.  <br/> Default priority: 6, must go only after {@link
+ * not any duplicates in titles. <br/> Flag {@link AbstractValidator#isValidateAllSearchRules} =
+ * false by default.  <br/> Default priority: 6, must go only after {@link
  * TitleExistenceIntoInnerRulesValidator}.
  */
 public class DuplicateTitleInInnerSearchRulesValidator extends AbstractValidator {

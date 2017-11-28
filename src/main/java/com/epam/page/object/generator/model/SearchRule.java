@@ -5,7 +5,6 @@ import static java.util.Arrays.asList;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import java.io.IOException;
 import java.util.List;
-
 import java.util.Optional;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
@@ -83,8 +82,8 @@ public class SearchRule {
 
     }
 
-     private String getValueFromUniquenessAttribute(Element element,
-                                                         String uniqueness) {
+    private String getValueFromUniquenessAttribute(Element element,
+                                                   String uniqueness) {
         return uniqueness.equals("text")
             ? element.text()
             : element.attr(uniqueness);
@@ -104,7 +103,7 @@ public class SearchRule {
         String correctCss = getCss();
 
         // Correct xpath or css for Complex element
-        if(SearchRuleTypeGroups.isComplexType(this)){
+        if (SearchRuleTypeGroups.isComplexType(this)) {
             correctCss = extractCssFromRootInnerRule();
             correctXpath = extractXpathFromRootInnerRule();
         }

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class RootExistenceValidatorTest {
+
     private SearchRule ruleWithRootTitle =
         new SearchRule("type", "req", "root", "css", null, null);
     private SearchRule ruleWithoutRootTitle =

@@ -44,6 +44,7 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
 
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
-        return "Title: "+searchRule.getTitle()+" is not valid for Type: "+ searchRule.getType();
+        return "Title: " + searchRule.getTitle() + " is not valid for Type: " + searchRule
+            .getType();
     }
 }
