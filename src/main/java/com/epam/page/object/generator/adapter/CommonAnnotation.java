@@ -28,11 +28,7 @@ public class CommonAnnotation extends Annotation {
     @Override
     public List<AnnotationMember> getAnnotationMembers()
         throws IOException, XpathToCssTransformerException {
-        String requiredValue = searchRule.getRequiredValueFromFoundElement(element);
-        if ((requiredValue != null) && (!requiredValue.isEmpty())) {
-            return Collections.singletonList(getAnnotationMemberFromRule(
-                searchRule, element));
-        }
-        return null;
+        return Collections.singletonList(getAnnotationMemberFromRule(
+            searchRule, element));
     }
 }
