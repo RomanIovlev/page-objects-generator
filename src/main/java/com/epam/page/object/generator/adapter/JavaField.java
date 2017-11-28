@@ -6,7 +6,7 @@ import javax.lang.model.element.Modifier;
 
 public interface JavaField {
 
-    ClassName getFieldClassName();
+    String getFieldClassName();
 
     JavaAnnotation getAnnotation();
 

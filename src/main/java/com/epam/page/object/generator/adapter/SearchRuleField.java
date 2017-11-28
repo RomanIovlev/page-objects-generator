@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
@@ -17,22 +18,29 @@ public class SearchRuleField implements JavaField {
 
     private SearchRule searchRule;
     private Element element;
+    private String packageName;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public SearchRuleField(SearchRule searchRule, Element element,
+    public SearchRuleField(SearchRule searchRule,
+                           Element element,
+                           String packageName,
                            SupportedTypesContainer typesContainer,
                            XpathToCssTransformation xpathToCssTransformation) {
         this.searchRule = searchRule;
         this.element = element;
+        this.packageName = packageName;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
     @Override
-    public ClassName getFieldClassName() {
-        return ClassName
-            .get(typesContainer.getSupportedTypesMap().get(searchRule.getType()).getElementClass());
+    public String getFieldClassName() {
+        if (SearchRuleTypeGroups.isFormOrSectionType(searchRule))
+            return packageName.substring(0, packageName.length() - 5) + ".form" + "."
+                + searchRule.getSection();
+        return typesContainer
+            .getSupportedTypesMap().get(searchRule.getType()).getElementClass().getName();
     }
 
     @Override

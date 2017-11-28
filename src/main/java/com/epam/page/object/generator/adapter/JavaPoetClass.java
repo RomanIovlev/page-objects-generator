@@ -3,6 +3,7 @@ package com.epam.page.object.generator.adapter;
 import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -50,7 +51,8 @@ public abstract class JavaPoetClass implements JavaClass {
 
     private FieldSpec buildFieldSpec(JavaField field)
         throws IOException, XpathToCssTransformerException {
-        return FieldSpec.builder(field.getFieldClassName(), field.getFieldName())
+        return FieldSpec
+            .builder(ClassName.bestGuess(field.getFieldClassName()), field.getFieldName())
             .addModifiers(field.getModifiers())
             .addAnnotation(buildAnnotationSpec(field.getAnnotation()))
             .build();
