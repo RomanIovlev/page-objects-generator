@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.web.UniquenessLocatorValidator;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.junit.After;

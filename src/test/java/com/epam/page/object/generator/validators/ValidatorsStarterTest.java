@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.web.UniquenessLocatorValidator;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,7 +16,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class ValidatorsStarterTest {

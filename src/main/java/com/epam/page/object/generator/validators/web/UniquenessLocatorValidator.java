@@ -1,8 +1,10 @@
-package com.epam.page.object.generator.validators;
+package com.epam.page.object.generator.validators.web;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.validators.AbstractValidator;
+import com.epam.page.object.generator.validators.ValidationContext;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
