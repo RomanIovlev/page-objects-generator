@@ -24,25 +24,21 @@ public abstract class Annotation implements JavaAnnotation {
 
     public AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
         throws XpathToCssTransformerException, IOException {
-        AnnotationMember annotationMember;
 
         if (searchRule.getRequiredValueFromFoundElement(element) == null) {
-            annotationMember = createAnnotationMemberForInnerSearchRule(searchRule);
-        } else {
-            String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-            if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
-                .equalsIgnoreCase("text")) {
-                if (searchRule.getCss() == null) {
-                    xpathToCssTransformation.transformRule(searchRule);
-                }
-                annotationMember = new AnnotationMember("css", "$S",
-                    resultCssSelector(searchRule, elementRequiredValue));
-            } else {
-                annotationMember = new AnnotationMember("xpath", "$S",
-                    resultXpathSelector(searchRule, elementRequiredValue));
-            }
+            return createAnnotationMemberForInnerSearchRule(searchRule);
         }
-        return annotationMember;
+        String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
+        if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
+            .equalsIgnoreCase("text")) {
+            if (searchRule.getCss() == null) {
+                xpathToCssTransformation.transformRule(searchRule);
+            }
+            return new AnnotationMember("css", "$S",
+                resultCssSelector(searchRule, elementRequiredValue));
+        }
+        return new AnnotationMember("xpath", "$S",
+            resultXpathSelector(searchRule, elementRequiredValue));
     }
 
     private AnnotationMember createAnnotationMemberForInnerSearchRule(SearchRule searchRule) {
