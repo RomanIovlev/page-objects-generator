@@ -60,25 +60,23 @@ public class SearchRuleField implements JavaField {
 
     @Override
     public String getFieldName() throws IOException {
-        String elementRequiredValue;
         if (SearchRuleTypeGroups.isCommonType(searchRule)) {
-            elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
-        } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
-            if (searchRule.getRootInnerRule().isPresent()) {
-                elementRequiredValue = searchRule.getRootInnerRule().get()
-                    .getRequiredValueFromFoundElement(element);
-            } else {
-                elementRequiredValue = searchRule.getType();
-            }
-        } else if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
-            elementRequiredValue = searchRule.getSection();
-        } else {
-            //This type of search rule does not supported
-            throw new UnsupportedOperationException(searchRule.getType()
-                + " search rule type does not supported");
+            return firstLetterDown(
+                splitCamelCase(searchRule.getRequiredValueFromFoundElement(element)));
         }
-
-        return firstLetterDown(splitCamelCase(elementRequiredValue));
+        if (SearchRuleTypeGroups.isComplexType(searchRule)) {
+            if (searchRule.getRootInnerRule().isPresent()) {
+                return firstLetterDown(splitCamelCase(searchRule.getRootInnerRule().get()
+                    .getRequiredValueFromFoundElement(element)));
+            }
+            return firstLetterDown(splitCamelCase(searchRule.getType()));
+        }
+        if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
+            return firstLetterDown(splitCamelCase(searchRule.getSection()));
+        }
+        //This type of search rule does not supported
+        throw new UnsupportedOperationException(searchRule.getType()
+            + " search rule type does not supported");
     }
 
     @Override
