@@ -29,11 +29,6 @@ public class SiteField implements JavaField {
     }
 
     @Override
-    public Class getFieldClass() {
-        return null;
-    }
-
-    @Override
     public ClassName getFieldClassName() {
         return getPageClassName(packageName, firstLetterUp(titleName));
     }

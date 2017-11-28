@@ -30,13 +30,9 @@ public class SearchRuleField implements JavaField {
     }
 
     @Override
-    public Class getFieldClass() {
-        return typesContainer.getSupportedTypesMap().get(searchRule.getType()).getElementClass();
-    }
-
-    @Override
     public ClassName getFieldClassName() {
-        return null;
+        return ClassName
+            .get(typesContainer.getSupportedTypesMap().get(searchRule.getType()).getElementClass());
     }
 
     @Override

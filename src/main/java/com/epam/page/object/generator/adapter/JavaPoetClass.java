@@ -50,11 +50,7 @@ public abstract class JavaPoetClass implements JavaClass {
 
     private FieldSpec buildFieldSpec(JavaField field)
         throws IOException, XpathToCssTransformerException {
-        FieldSpec.Builder builder =
-            field.getFieldClassName() == null
-                ? FieldSpec.builder(field.getFieldClass(), field.getFieldName())
-                : FieldSpec.builder(field.getFieldClassName(), field.getFieldName());
-        return builder
+        return FieldSpec.builder(field.getFieldClassName(), field.getFieldName())
             .addModifiers(field.getModifiers())
             .addAnnotation(buildAnnotationSpec(field.getAnnotation()))
             .build();
