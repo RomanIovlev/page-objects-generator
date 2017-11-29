@@ -53,7 +53,7 @@ public class SearchRule {
         this.innerSearchRules = innerSearchRules;
     }
 
-    public String getRequiredValueFromFoundElement(Element element) throws IOException {
+    public String getRequiredValueFromFoundElement(Element element) {
 
         if (uniqueness == null && this.getInnerSearchRules() == null) {
             return null;

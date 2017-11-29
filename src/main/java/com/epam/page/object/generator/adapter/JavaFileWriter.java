@@ -3,7 +3,7 @@ package com.epam.page.object.generator.adapter;
 import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.squareup.javapoet.AnnotationSpec;
@@ -29,26 +29,24 @@ public class JavaFileWriter {
     }
 
     public void writeFiles(String outputDir,
-                           String packageName,
-                           List<SearchRule> searchRules,
-                           List<String> urls)
+                           String packageName, List<WebPage> webPages)
         throws XpathToCssTransformerException, IOException {
 
-        writeClass(outputDir, new SiteClass(packageName + ".site", urls));
+        writeClass(outputDir, new SiteClass(packageName + ".site", webPages));
 
-        for (String url : urls) {
+        for (WebPage webPage : webPages) {
             writeClass(outputDir, new PageClass(packageName + ".page",
-                url,
-                searchRules,
+                webPage,
                 typesContainer,
                 xpathToCssTransformation));
 
-            searchRules.stream().filter(SearchRuleTypeGroups::isFormOrSectionType)
+            webPage.getValidSearchRulesOfCurrentWebPage().stream()
+                .filter(SearchRuleTypeGroups::isFormOrSectionType)
                 .forEach(searchRule -> {
                     try {
                         writeClass(outputDir,
                             new FormClass(packageName + ".form",
-                                url,
+                                webPage,
                                 searchRule,
                                 typesContainer,
                                 xpathToCssTransformation));

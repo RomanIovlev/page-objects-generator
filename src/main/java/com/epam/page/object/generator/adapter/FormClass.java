@@ -4,9 +4,9 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,18 +16,18 @@ import org.jsoup.select.Elements;
 public class FormClass implements JavaClass {
 
     private String packageName;
-    private String url;
+    private WebPage webPage;
     private SearchRule searchRule;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
     public FormClass(String packageName,
-                     String url,
+                     WebPage webPage,
                      SearchRule searchRule,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
         this.packageName = packageName;
-        this.url = url;
+        this.webPage = webPage;
         this.searchRule = searchRule;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
@@ -56,22 +56,15 @@ public class FormClass implements JavaClass {
     }
 
     @Override
-    public List<JavaField> getFieldsList() throws IOException {
+    public List<JavaField> getFieldsList() {
         List<JavaField> fields = new ArrayList<>();
 
-        Elements parentElements = searchRule.extractElementsFromWebSite(url);
+        Elements parentElements = webPage.getDocument().getAllElements();
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             fields.addAll(
                 innerSearchRule.extractElementsFromElement(parentElements.first()).stream().filter(
-                    element -> {
-                        try {
-                            return !innerSearchRule.getRequiredValueFromFoundElement(element)
-                                .isEmpty();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        return false;
-                    }).map(
+                    element -> !innerSearchRule.getRequiredValueFromFoundElement(element)
+                        .isEmpty()).map(
                     element -> new SearchRuleField(innerSearchRule, element, getPackageName(),
                         typesContainer,
                         xpathToCssTransformation)).collect(Collectors.toList()));
