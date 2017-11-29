@@ -34,10 +34,10 @@ public class MainTest {
         FileUtils.deleteDirectory(new File(outputDir + packageName));
     }
 
-    private PageObjectsGenerator initPog(String jsonPath, URI url,
+    private PageObjectsGenerator initPog(String jsonPath, String url,
                                          boolean checkLocatorUniqueness,
                                          boolean forceGenerateFiles) throws IOException {
-        List<URI> urls = new ArrayList<>();
+        ArrayList<String> urls = new ArrayList<>();
 
         urls.add(url);
 

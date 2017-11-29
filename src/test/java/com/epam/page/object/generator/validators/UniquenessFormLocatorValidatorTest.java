@@ -1,12 +1,12 @@
 package com.epam.page.object.generator.validators;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.validators.web.UniquenessFormLocatorValidator;
 import com.google.common.collect.Lists;
 import org.jsoup.select.Elements;
@@ -19,10 +19,6 @@ import org.mockito.MockitoAnnotations;
 public class UniquenessFormLocatorValidatorTest {
 
     private UniquenessFormLocatorValidator sut;
-
-    private WebPage webSite1 = "webSite1";
-
-    private WebPage webSite2 = "webSite2";
 
     @Mock
     private ValidationContext validationContext;
@@ -42,6 +38,8 @@ public class UniquenessFormLocatorValidatorTest {
 
         sut = new UniquenessFormLocatorValidator();
 
+        String webSite1 = "webSite1";
+        String webSite2 = "webSite2";
         when(validationContext.getUrls())
             .thenReturn(Lists.newArrayList(webSite1, webSite2));
         when(searchRule.extractElementsFromWebSite(webSite1)).thenReturn(elementsFromWebSite1);
@@ -56,7 +54,7 @@ public class UniquenessFormLocatorValidatorTest {
         assertTrue(sut.isValid(searchRule, validationContext));
 
         verify(searchRule, times(validationContext.getUrls().size()))
-            .extractElementsFromWebSite(Mockito.any());
+            .extractElementsFromWebSite(Mockito.anyString());
     }
 
     @Test
@@ -66,7 +64,7 @@ public class UniquenessFormLocatorValidatorTest {
         assertFalse(sut.isValid(searchRule, validationContext));
 
         verify(searchRule, times(1))
-            .extractElementsFromWebSite(Mockito.any());
+            .extractElementsFromWebSite(Mockito.anyString());
     }
 
     @Test
@@ -77,7 +75,7 @@ public class UniquenessFormLocatorValidatorTest {
         assertFalse(sut.isValid(searchRule, validationContext));
 
         verify(searchRule, times(2))
-            .extractElementsFromWebSite(Mockito.any());
+            .extractElementsFromWebSite(Mockito.anyString());
     }
 
     @Test

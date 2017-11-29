@@ -114,6 +114,24 @@ public class SearchRule {
 
         return document.select(correctCss);
     }
+    public Elements extractElementsFromWebSite(String url) throws IOException {
+        Document document = Jsoup.connect(url).get();
+
+        String correctXpath = getXpath();
+        String correctCss = getCss();
+
+        // Correct xpath or css for Complex element
+        if (SearchRuleTypeGroups.isComplexType(this)) {
+            correctCss = extractCssFromRootInnerRule();
+            correctXpath = extractXpathFromRootInnerRule();
+        }
+
+        if (correctCss == null) {
+            return Xsoup.compile(correctXpath).evaluate(document).getElements();
+        }
+
+        return document.select(correctCss);
+    }
 
     private String extractCssFromRootInnerRule() {
         Optional<SearchRule> rootElement = getRootInnerRule();

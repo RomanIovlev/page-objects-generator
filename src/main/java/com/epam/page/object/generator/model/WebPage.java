@@ -14,7 +14,7 @@ public class WebPage {
     private List<SearchRule> invalidSearchRulesOfCurrentWebPage;
 
 
-    public WebPage(URI uri, Document document) {
+    protected WebPage(URI  uri, Document document) {
         this.uri = uri;
         this.document = document;
     }

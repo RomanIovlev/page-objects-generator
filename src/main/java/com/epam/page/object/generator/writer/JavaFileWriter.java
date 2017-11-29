@@ -27,15 +27,12 @@ public class JavaFileWriter {
     }
 
     public void writeFiles(String outputDir,
-                          String packageName,
-                          List<WebPage> webPages)
+        String packageName,
+        List<WebPage> webPages)
         throws XpathToCssTransformerException {
 
         List<JavaPoetClass> classes = new ArrayList<>();
         classes.add(new SiteClass(outputDir, packageName + ".site", webPages));
-
-
-
 
         for (WebPage webPage : webPages) {
             classes.add(new PageClass(
@@ -46,7 +43,6 @@ public class JavaFileWriter {
                 xpathToCssTransformation)
 
             );
-
             for (SearchRule searchRule : webPage.getValidSearchRulesOfCurrentWebPage()) {
                 if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
                     classes.add(new FormClass(
@@ -70,3 +66,4 @@ public class JavaFileWriter {
         });
     }
 }
+

@@ -60,7 +60,7 @@ public class ValidatorsStarter {
      *
      * @throws com.epam.page.object.generator.errors.ValidationException if JSON file is not valid.
      */
-    public List<SearchRule> validate(List<SearchRule> searchRules, List<String> urls)
+    public List<SearchRule> validate(List<SearchRule> searchRules,List<String> urls)
         throws IOException {
 
         validationContext = new ValidationContext(searchRules, urls);

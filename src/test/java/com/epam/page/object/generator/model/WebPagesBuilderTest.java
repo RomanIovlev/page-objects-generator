@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -13,25 +12,25 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.MockitoAnnotations;
 
-public class WebPageGeneratorTest {
+public class WebPagesBuilderTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
 
-    private WebPageGenerator sut;
-    WebPageBuilder webPageBuilder;
+    private WebPagesBuilder sut;
+    WebPagesBuilder webPagesBuilder;
     StringBuilder invalidUrls;
     List<WebPage> webPages;
-    List<URI> urls;
+    List<String> urls;
 
     @Before
     public void setUp() throws Exception {
 
         MockitoAnnotations.initMocks(this);
 
-        sut = new WebPageGenerator();
-        urls = new ArrayList<URI>();
+        sut = new WebPagesBuilder();
+        urls = new ArrayList<>();
 
 
     }
@@ -70,11 +69,11 @@ public class WebPageGeneratorTest {
 
         public void chuck() {
 
-            List<URI> urls = new ArrayList<>();
+            List<String> urls = new ArrayList<>();
 
-            URI validUrl = "http://google.com";
-            URI invalidUrl = "http://lalala.ga.1";
-            URI invalidUr2 = "iAmNotValid.url";
+            String validUrl = "http://google.com";
+            String invalidUrl = "http://lalala.ga.1";
+            String invalidUr2 = "iAmNotValid.url";
 
             urls.add(validUrl);
             urls.add(invalidUrl);
