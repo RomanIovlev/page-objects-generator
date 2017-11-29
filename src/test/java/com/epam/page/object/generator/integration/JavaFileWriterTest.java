@@ -1,7 +1,8 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.integration;
 
 import static org.junit.Assert.assertTrue;
 
+import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.WebPagesBuilder;
