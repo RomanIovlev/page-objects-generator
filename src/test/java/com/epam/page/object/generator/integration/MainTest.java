@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.integrationalTests;
+package com.epam.page.object.generator.integration;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
