@@ -1,21 +1,24 @@
 package com.epam.page.object.generator.model;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
-import com.epam.page.object.generator.errors.WebPageBuilderException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jsoup.Jsoup;
 
-public class WebPageGenerator {
+public class WebPagesBuilder {
+
 
     public List<WebPage> generate(List<String> urls) {
-        WebPageBuilder webPageBuilder = new WebPageBuilder();
         StringBuilder invalidUrls = new StringBuilder();
         List<WebPage> webPages = new ArrayList<>();
 
         for (String url : urls) {
             try {
-                webPages.add( webPageBuilder.buildWebPage(url));
-            } catch (WebPageBuilderException e) {
+                webPages.add( new WebPage(new URI(url), Jsoup.connect(url).get()));
+            } catch (IOException | URISyntaxException e) {
                 invalidUrls.append("\n Not valid url: ").append(url);
             }
         }

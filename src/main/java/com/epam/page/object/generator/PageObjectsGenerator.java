@@ -5,7 +5,7 @@ import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.model.WebPageGenerator;
+import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class PageObjectsGenerator {
 
       List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules,urls);
 
-        WebPageGenerator webPageGenerator = new WebPageGenerator();
+        WebPagesBuilder webPageGenerator = new WebPagesBuilder();
         List<WebPage> webPages = webPageGenerator.generate(urls);
         webPages.forEach(wp -> wp.addSearchRulesForCurrentWebPage(validSearchRules));
         // TODO: web validation

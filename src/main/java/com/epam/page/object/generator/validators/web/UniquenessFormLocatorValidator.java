@@ -1,7 +1,6 @@
 package com.epam.page.object.generator.validators.web;
 
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.validators.AbstractValidator;
 import com.epam.page.object.generator.validators.ValidationContext;
@@ -49,7 +48,7 @@ public class UniquenessFormLocatorValidator extends AbstractValidator {
             .collect(Collectors.joining("\n"));
     }
 
-    private int getCountOfElementsOnWebSite(SearchRule searchRule, WebPage url) {
+    private int getCountOfElementsOnWebSite(SearchRule searchRule, String url) {
         try {
             return searchRule.extractElementsFromWebSite(url).size();
         } catch (IOException e) {
