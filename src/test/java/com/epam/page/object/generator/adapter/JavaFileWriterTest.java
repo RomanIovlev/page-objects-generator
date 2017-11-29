@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.writer.JavaFileWriter;
 import com.google.common.collect.Lists;
 import java.io.File;
 import org.junit.Before;

@@ -5,7 +5,7 @@ import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
-import com.epam.page.object.generator.writer.JavaFileWriter;
+import com.epam.page.object.generator.adapter.JavaFileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;

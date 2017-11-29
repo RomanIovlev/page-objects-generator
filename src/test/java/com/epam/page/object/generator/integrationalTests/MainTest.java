@@ -7,7 +7,7 @@ import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
-import com.epam.page.object.generator.writer.JavaFileWriter;
+import com.epam.page.object.generator.adapter.JavaFileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

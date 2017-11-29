@@ -15,21 +15,29 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.jsoup.select.Elements;
 
-public class PageClass extends JavaPoetClass {
+public class PageClass implements JavaClass {
 
     private String url;
+    private String packageName;
     private List<SearchRule> searchRules;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public PageClass(String outputDir, String packageName, String url, List<SearchRule> searchRules,
+    public PageClass(String packageName,
+                     String url,
+                     List<SearchRule> searchRules,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
-        super(outputDir, packageName);
+        this.packageName = packageName;
         this.url = url;
         this.searchRules = searchRules;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
+    }
+
+    @Override
+    public String getPackageName() {
+        return packageName;
     }
 
     @Override

@@ -13,24 +13,29 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import org.jsoup.select.Elements;
 
-public class FormClass extends JavaPoetClass {
+public class FormClass implements JavaClass {
 
-    private SearchRule searchRule;
+    private String packageName;
     private String url;
+    private SearchRule searchRule;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public FormClass(String outputDir,
-                     String packageName,
-                     SearchRule searchRule,
+    public FormClass(String packageName,
                      String url,
+                     SearchRule searchRule,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
-        super(outputDir, packageName);
-        this.searchRule = searchRule;
+        this.packageName = packageName;
         this.url = url;
+        this.searchRule = searchRule;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
+    }
+
+    @Override
+    public String getPackageName() {
+        return packageName;
     }
 
     @Override

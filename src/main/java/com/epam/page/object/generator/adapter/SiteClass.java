@@ -9,13 +9,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public class SiteClass extends JavaPoetClass {
+public class SiteClass implements JavaClass {
 
     private List<String> urls;
+    private String packageName;
 
-    public SiteClass(String outputDir, String packageName, List<String> urls) {
-        super(outputDir, packageName);
+    public SiteClass(String packageName, List<String> urls) {
+        this.packageName = packageName;
         this.urls = urls;
+    }
+
+    @Override
+    public String getPackageName() {
+        return packageName;
     }
 
     @Override
