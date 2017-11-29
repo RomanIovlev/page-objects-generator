@@ -23,7 +23,7 @@ public class ComplexAnnotation extends Annotation {
 
     @Override
     public List<AnnotationMember> getAnnotationMembers()
-        throws IOException, XpathToCssTransformerException {
+        throws  XpathToCssTransformerException {
         List<AnnotationMember> innerAnnotations = new ArrayList<>();
 
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {

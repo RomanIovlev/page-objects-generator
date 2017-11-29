@@ -3,6 +3,7 @@ package com.epam.page.object.generator.adapter;
 import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
@@ -40,20 +41,16 @@ public class JavaFileWriter {
                 typesContainer,
                 xpathToCssTransformation));
 
-            webPage.getValidSearchRulesOfCurrentWebPage().stream()
-                .filter(SearchRuleTypeGroups::isFormOrSectionType)
-                .forEach(searchRule -> {
-                    try {
-                        writeClass(outputDir,
-                            new FormClass(packageName + ".form",
-                                webPage,
-                                searchRule,
-                                typesContainer,
-                                xpathToCssTransformation));
-                    } catch (IOException | XpathToCssTransformerException e) {
-                        e.printStackTrace();
-                    }
-                });
+            for (SearchRule searchRule: webPage.getValidSearchRules()) {
+                if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
+                    writeClass(outputDir,
+                        new FormClass(packageName + ".form",
+                            webPage,
+                            searchRule,
+                            typesContainer,
+                            xpathToCssTransformation));
+                }
+            }
         }
     }
 

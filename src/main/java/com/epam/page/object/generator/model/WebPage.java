@@ -39,11 +39,11 @@ public class WebPage {
         return uri.getHost();
     }
 
-    public List<SearchRule> getValidSearchRulesOfCurrentWebPage() {
+    public List<SearchRule> getValidSearchRules() {
         return validSearchRulesOfCurrentWebPage;
     }
 
-    public List<SearchRule> getInvalidSearchRulesOfCurrentWebPage() {
+    public List<SearchRule> getInvalidSearchRules() {
         return invalidSearchRulesOfCurrentWebPage;
     }
 

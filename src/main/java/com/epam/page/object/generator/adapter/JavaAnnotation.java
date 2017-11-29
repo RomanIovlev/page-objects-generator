@@ -9,7 +9,7 @@ public interface JavaAnnotation {
     Class getAnnotationClass();
 
     List<AnnotationMember> getAnnotationMembers()
-        throws IOException, XpathToCssTransformerException;
+        throws XpathToCssTransformerException;
 
     class AnnotationMember {
 

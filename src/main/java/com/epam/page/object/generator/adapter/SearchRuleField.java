@@ -62,7 +62,7 @@ public class SearchRuleField implements JavaField {
     }
 
     @Override
-    public String getFieldName() throws IOException {
+    public String getFieldName() {
         if (SearchRuleTypeGroups.isCommonType(searchRule)) {
             return firstLetterDown(
                 splitCamelCase(searchRule.getRequiredValueFromFoundElement(element)));

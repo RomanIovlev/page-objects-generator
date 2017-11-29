@@ -55,7 +55,7 @@ public class PageClass implements JavaClass {
     public List<JavaField> getFieldsList() {
         List<JavaField> fields = new ArrayList<>();
 
-        for (SearchRule searchRule : webPage.getValidSearchRulesOfCurrentWebPage()) {
+        for (SearchRule searchRule : webPage.getValidSearchRules()) {
             Elements elements = webPage.getDocument().getAllElements();
             if ((elements != null) && (
                 elements.size() == 1)) {

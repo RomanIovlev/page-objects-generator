@@ -9,7 +9,7 @@ public interface JavaField {
 
     JavaAnnotation getAnnotation();
 
-    String getFieldName() throws IOException;
+    String getFieldName();
 
     Modifier[] getModifiers();
 }

@@ -23,7 +23,7 @@ public class FormOrSectionAnnotation implements JavaAnnotation {
 
     @Override
     public List<AnnotationMember> getAnnotationMembers()
-        throws IOException, XpathToCssTransformerException {
+        throws XpathToCssTransformerException {
         AnnotationMember annotationMember;
         if (searchRule.getCss() != null) {
             annotationMember = new AnnotationMember("css", "$S", searchRule.getCss());

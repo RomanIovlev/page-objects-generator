@@ -54,8 +54,8 @@ public class WebPageTest {
 
         sut.addSearchRulesForCurrentWebPage(Arrays.asList(searchRule1,searchRule2));
 
-        assertTrue(sut.getValidSearchRulesOfCurrentWebPage().size()==1);
-        assertTrue(sut.getValidSearchRulesOfCurrentWebPage().size()==1);
+        assertTrue(sut.getValidSearchRules().size()==1);
+        assertTrue(sut.getValidSearchRules().size()==1);
     }
 
 }

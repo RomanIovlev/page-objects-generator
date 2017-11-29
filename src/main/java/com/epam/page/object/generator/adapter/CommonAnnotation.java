@@ -27,7 +27,7 @@ public class CommonAnnotation extends Annotation {
 
     @Override
     public List<AnnotationMember> getAnnotationMembers()
-        throws IOException, XpathToCssTransformerException {
+        throws XpathToCssTransformerException {
         return Collections.singletonList(getAnnotationMemberFromRule(
             searchRule, element));
     }
