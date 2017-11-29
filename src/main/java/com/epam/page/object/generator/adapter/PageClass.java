@@ -2,37 +2,47 @@ package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
+import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.jsoup.select.Elements;
-public class PageClass extends JavaPoetClass {
 
-    private WebPage webPage;
+public class PageClass implements JavaClass {
+
+    private String packageName;
+    private String url;
     private List<SearchRule> searchRules;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public PageClass(String outputDir, String packageName, WebPage webPage,
+    public PageClass(String packageName,
+                     String url,
+                     List<SearchRule> searchRules,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
-        super(outputDir, packageName);
-        this.webPage = webPage;
-        this.searchRules = webPage.getValidSearchRulesOfCurrentWebPage();
+        this.packageName = packageName;
+        this.url = url;
+        this.searchRules = searchRules;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
     @Override
+    public String getPackageName() {
+        return packageName;
+    }
+
+    @Override
     public String getClassName() throws IOException {
-        return firstLetterUp(splitCamelCase(webPage.getTitle()));
+        return firstLetterUp(splitCamelCase(getPageTitle(url)));
     }
 
     @Override
@@ -50,10 +60,8 @@ public class PageClass extends JavaPoetClass {
         List<JavaField> fields = new ArrayList<>();
 
         for (SearchRule searchRule : searchRules) {
-            Elements elements = searchRule.extractElementsFromElement(webPage.getDocument());
-            if (
-//                (elements != null) &&
-                    (
+            Elements elements = searchRule.extractElementsFromWebSite(url);
+            if ((elements != null) && (
                 elements.size() == 1)) {
                 fields.add(new SearchRuleField(searchRule, elements.first(), getPackageName(),
                     typesContainer,

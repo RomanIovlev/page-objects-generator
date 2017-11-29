@@ -4,7 +4,6 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.io.IOException;
@@ -14,24 +13,29 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import org.jsoup.select.Elements;
 
-public class FormClass extends JavaPoetClass {
+public class FormClass implements JavaClass {
 
+    private String packageName;
+    private String url;
     private SearchRule searchRule;
-    private WebPage webPage;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public FormClass(String outputDir,
-                     String packageName,
+    public FormClass(String packageName,
+                     String url,
                      SearchRule searchRule,
-                     WebPage webPage,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
-        super(outputDir, packageName);
+        this.packageName = packageName;
+        this.url = url;
         this.searchRule = searchRule;
-        this.webPage = webPage;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
+    }
+
+    @Override
+    public String getPackageName() {
+        return packageName;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class FormClass extends JavaPoetClass {
     public List<JavaField> getFieldsList() throws IOException {
         List<JavaField> fields = new ArrayList<>();
 
-        Elements parentElements = searchRule.extractElementsFromElement(webPage.getDocument());
+        Elements parentElements = searchRule.extractElementsFromWebSite(url);
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             fields.addAll(
                 innerSearchRule.extractElementsFromElement(parentElements.first()).stream().filter(

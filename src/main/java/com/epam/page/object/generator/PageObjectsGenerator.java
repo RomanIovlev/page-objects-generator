@@ -1,5 +1,6 @@
 package com.epam.page.object.generator;
 
+import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
@@ -7,7 +8,6 @@ import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.WebPageGenerator;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
-import com.epam.page.object.generator.writer.JavaFileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;

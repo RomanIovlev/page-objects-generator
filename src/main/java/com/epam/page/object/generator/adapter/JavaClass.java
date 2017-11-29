@@ -6,6 +6,8 @@ import javax.lang.model.element.Modifier;
 
 public interface JavaClass {
 
+    String getPackageName();
+
     String getClassName() throws IOException;
 
     Class getSuperClass();

@@ -1,19 +1,19 @@
 {
   "elements": [
     {
-      "type":"Form",
+      "type": "Form",
       "section": "",
       "css": ".w3-example form",
       "innerSearchRules": [
         {
-          "type":"Textfield",
+          "type": "Textfield",
           "uniqueness": "name",
           "css": "input[type=text]"
         },
         {
-          "type":"Button",
+          "type": "Button",
           "uniqueness": "value",
-          "css":"input[type=submit]"
+          "css": "input[type=submit]"
         }
       ]
     }
