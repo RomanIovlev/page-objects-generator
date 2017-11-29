@@ -2,9 +2,9 @@ package com.epam.page.object.generator.model;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -20,9 +20,11 @@ public class WebPagesBuilderTest {
 
 
     private WebPagesBuilder sut;
-     private List<String> urls;
+    private List<String> urls;
+    private List<WebPage> webPages;
 
     @Before
+
     public void setUp() throws Exception {
 
         MockitoAnnotations.initMocks(this);
@@ -38,15 +40,18 @@ public class WebPagesBuilderTest {
 
         urls.add("http://ya.ru");
         urls.add("http://google.com");
-        sut.generate(urls);
+        webPages = sut.generate(urls);
+        assertTrue(webPages.size() > 0);
+
 
     }
 
-    @Test(expected = URISyntaxException.class)
+    @Test(expected = NotValidUrlException.class)
     public void validate_NotValidUrl() throws Exception {
 
-        urls.add("http:lalala.ru");
+        urls.add("123123");
         sut.generate(urls);
+
     }
 
 

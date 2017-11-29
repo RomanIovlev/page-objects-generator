@@ -6,7 +6,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class WebPagesBuilder {
 
@@ -17,8 +19,11 @@ public class WebPagesBuilder {
 
         for (String url : urls) {
             try {
-                webPages.add( new WebPage(new URI(url), Jsoup.connect(url).get()));
-            } catch (IOException | URISyntaxException e) {
+                URI uri = new URI(url);
+                Connection connect = Jsoup.connect(url);
+                Document document = connect.get();
+                webPages.add( new WebPage(uri,document));
+            } catch (IOException | URISyntaxException | IllegalArgumentException e) {
                 invalidUrls.append("\n Not valid url: ").append(url);
             }
         }
