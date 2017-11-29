@@ -7,7 +7,6 @@ import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
-import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import javax.lang.model.element.Modifier;
 

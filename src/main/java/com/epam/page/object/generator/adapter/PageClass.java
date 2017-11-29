@@ -17,8 +17,8 @@ import org.jsoup.select.Elements;
 
 public class PageClass implements JavaClass {
 
-    private String url;
     private String packageName;
+    private String url;
     private List<SearchRule> searchRules;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;

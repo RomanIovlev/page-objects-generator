@@ -21,7 +21,7 @@ public class JavaFileWriter {
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public JavaFileWriter (
+    public JavaFileWriter(
         SupportedTypesContainer typesContainer,
         XpathToCssTransformation xpathToCssTransformation) {
         this.typesContainer = typesContainer;
@@ -66,7 +66,8 @@ public class JavaFileWriter {
             .writeTo(Paths.get(outputDir));
     }
 
-    private TypeSpec buildTypeSpec(JavaClass javaClass) throws IOException, XpathToCssTransformerException {
+    private TypeSpec buildTypeSpec(JavaClass javaClass)
+        throws IOException, XpathToCssTransformerException {
         List<FieldSpec> fieldSpecList = new ArrayList<>();
 
         for (JavaField field : javaClass.getFieldsList()) {

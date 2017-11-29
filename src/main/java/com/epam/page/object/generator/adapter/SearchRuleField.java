@@ -1,7 +1,6 @@
 package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
-import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
@@ -9,7 +8,6 @@ import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import javax.lang.model.element.Modifier;
 import org.jsoup.nodes.Element;
