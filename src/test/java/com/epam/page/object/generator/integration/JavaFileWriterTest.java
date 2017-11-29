@@ -31,7 +31,7 @@ public class JavaFileWriterTest {
         webPages = webPageGenerator.generate(Collections.singletonList(TEST_URL));
 
     }
-//TODO apply new logic (WebPages + SearchRules)
+
 //    @Test
 //    public void writeFile() throws Exception {
 //        sut.writeFiles(
