@@ -2,14 +2,13 @@ package com.epam.page.object.generator.adapter;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
-import static com.epam.page.object.generator.utils.URLUtils.getPageTitle;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
-import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
+
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
@@ -18,19 +17,16 @@ import org.jsoup.select.Elements;
 public class PageClass implements JavaClass {
 
     private String packageName;
-    private String url;
-    private List<SearchRule> searchRules;
+    private WebPage webPage;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
     public PageClass(String packageName,
-                     String url,
-                     List<SearchRule> searchRules,
+                     WebPage webPage,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
         this.packageName = packageName;
-        this.url = url;
-        this.searchRules = searchRules;
+        this.webPage = webPage;
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
     }
@@ -41,13 +37,13 @@ public class PageClass implements JavaClass {
     }
 
     @Override
-    public String getClassName() throws IOException {
-        return firstLetterUp(splitCamelCase(getPageTitle(url)));
+    public String getClassName() {
+        return firstLetterUp(splitCamelCase(webPage.getTitle()));
     }
 
     @Override
     public Class getSuperClass() {
-        return WebPage.class;
+        return com.epam.jdi.uitests.web.selenium.elements.composite.WebPage.class;
     }
 
     @Override
@@ -56,11 +52,11 @@ public class PageClass implements JavaClass {
     }
 
     @Override
-    public List<JavaField> getFieldsList() throws IOException {
+    public List<JavaField> getFieldsList() {
         List<JavaField> fields = new ArrayList<>();
 
-        for (SearchRule searchRule : searchRules) {
-            Elements elements = searchRule.extractElementsFromWebSite(url);
+        for (SearchRule searchRule : webPage.getValidSearchRulesOfCurrentWebPage()) {
+            Elements elements = webPage.getDocument().getAllElements();
             if ((elements != null) && (
                 elements.size() == 1)) {
                 fields.add(new SearchRuleField(searchRule, elements.first(), getPackageName(),

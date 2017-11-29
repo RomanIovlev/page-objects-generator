@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.adapter;
 
-import java.io.IOException;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 
@@ -8,13 +7,13 @@ public interface JavaClass {
 
     String getPackageName();
 
-    String getClassName() throws IOException;
+    String getClassName();
 
     Class getSuperClass();
 
     JavaAnnotation getAnnotation();
 
-    List<JavaField> getFieldsList() throws IOException;
+    List<JavaField> getFieldsList();
 
     Modifier[] getModifiers();
 
