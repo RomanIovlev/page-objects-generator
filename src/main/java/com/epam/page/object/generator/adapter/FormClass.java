@@ -10,8 +10,8 @@ import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class FormClass extends JavaPoetClass {
@@ -57,14 +57,20 @@ public class FormClass extends JavaPoetClass {
 
         Elements parentElements = searchRule.extractElementsFromElement(webPage.getDocument());
         for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-            Elements elements = innerSearchRule.extractElementsFromElement(parentElements.first());
-            for (Element element : elements) {
-                if (!innerSearchRule.getRequiredValueFromFoundElement(element).isEmpty()) {
-                    fields.add(new SearchRuleField(innerSearchRule, element, getPackageName(),
+            fields.addAll(
+                innerSearchRule.extractElementsFromElement(parentElements.first()).stream().filter(
+                    element -> {
+                        try {
+                            return !innerSearchRule.getRequiredValueFromFoundElement(element)
+                                .isEmpty();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+                    }).map(
+                    element -> new SearchRuleField(innerSearchRule, element, getPackageName(),
                         typesContainer,
-                        xpathToCssTransformation));
-                }
-            }
+                        xpathToCssTransformation)).collect(Collectors.toList()));
         }
 
         return fields;
