@@ -37,8 +37,8 @@ public class SearchRuleField implements JavaField {
     @Override
     public String getFieldClassName() {
         if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
-            return packageName.substring(0, packageName.length() - 5) + ".form" + "."
-                + searchRule.getSection();
+            return packageName.substring(0, packageName.length() - ".page".length())
+                + ".form" + "." + searchRule.getSection();
         }
         return typesContainer
             .getSupportedTypesMap().get(searchRule.getType()).getElementClass().getName();

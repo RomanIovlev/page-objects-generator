@@ -30,8 +30,8 @@ public class SiteField implements JavaField {
 
     @Override
     public String getFieldClassName() {
-        return packageName.substring(0, packageName.length() - 5) + ".page" + "."
-            + firstLetterUp(titleName);
+        return packageName.substring(0, packageName.length() - ".site".length())
+            + ".page" + "." + firstLetterUp(titleName);
 
     }
 
