@@ -15,6 +15,8 @@ public class WebPage {
 
 
     protected WebPage(URI  uri, Document document) {
+        this.validSearchRulesOfCurrentWebPage = new ArrayList<>();
+        this.invalidSearchRulesOfCurrentWebPage = new ArrayList<>();
         this.uri = uri;
         this.document = document;
     }
@@ -48,8 +50,6 @@ public class WebPage {
     }
 
     public void addSearchRulesForCurrentWebPage(List<SearchRule> searchRules) {
-        validSearchRulesOfCurrentWebPage = new ArrayList<>();
-        invalidSearchRulesOfCurrentWebPage = new ArrayList<>();
         for (SearchRule searchRule : searchRules) {
             if (searchRule.extractElementsFromElement(document).size() == 0) {
                 invalidSearchRulesOfCurrentWebPage.add(searchRule);

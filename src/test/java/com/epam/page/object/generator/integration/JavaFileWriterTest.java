@@ -7,14 +7,13 @@ import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.google.common.collect.Lists;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockitoAnnotations;
 
 public class JavaFileWriterTest {
 
@@ -26,22 +25,24 @@ public class JavaFileWriterTest {
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
         sut = new JavaFileWriter(new SupportedTypesContainer(), new XpathToCssTransformation());
-        WebPagesBuilder webPageGenerator = new WebPagesBuilder();
-        webPages = webPageGenerator.generate(Collections.singletonList(TEST_URL));
+        WebPagesBuilder webPagesBuilder = new WebPagesBuilder();
+        webPages = webPagesBuilder.generate(Collections.singletonList(TEST_URL));
 
+        FileUtils.deleteDirectory(new File(OUTPUT_DIR + PACKAGE_NAME));
     }
 
-//    @Test
-//    public void writeFile() throws Exception {
-//        sut.writeFiles(
-//            OUTPUT_DIR,
-//            PACKAGE_NAME,
-//            webPages
-//        );
-//
-//        assertTrue((new File(OUTPUT_DIR + PACKAGE_NAME + "/page")).exists());
-//        assertTrue((new File(OUTPUT_DIR + PACKAGE_NAME + "/site")).exists());
-//    }
+    @Test
+    public void writeFile() throws Exception {
+        sut.writeFiles(
+            OUTPUT_DIR,
+            PACKAGE_NAME,
+            webPages
+        );
+
+        assertTrue((new File(OUTPUT_DIR + PACKAGE_NAME + "/page")).exists());
+        assertTrue((new File(OUTPUT_DIR + PACKAGE_NAME + "/site")).exists());
+    }
 
 }

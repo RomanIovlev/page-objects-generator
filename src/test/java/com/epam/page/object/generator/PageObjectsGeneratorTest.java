@@ -38,7 +38,8 @@ public class PageObjectsGeneratorTest {
 
     private List<WebPage> webPages;
 
-    private SearchRule searchRule = new SearchRule("type", "uniqueness", "title", "css", "xpath", null);
+    private SearchRule searchRule = new SearchRule("type", "uniqueness", "title", "css", "xpath",
+        null);
     private SearchRule invalidSearchRule =
         new SearchRule("button", "req", null, null, null, null);
 
@@ -46,7 +47,7 @@ public class PageObjectsGeneratorTest {
 
     private String outputDir = "";
 
-    private List<String> urls = Collections.singletonList("http://google.com") ;
+    private List<String> urls = Collections.singletonList("http://google.com");
 
     private ValidationContext validationContext = new ValidationContext(searchRules, urls);
 
@@ -63,7 +64,6 @@ public class PageObjectsGeneratorTest {
         WebPagesBuilder webPagesBuilder = new WebPagesBuilder();
         webPages = webPagesBuilder.generate(urls);
 
-
         when(parser.getRulesFromJSON()).thenReturn(searchRules);
         when(validatorsStarter.validate(anyList(), anyList())).thenReturn(searchRules);
         when(validatorsStarter.getValidationContext()).thenReturn(validationContext);
@@ -79,7 +79,7 @@ public class PageObjectsGeneratorTest {
         sut.generatePageObjects();
 
         verify(validatorsStarter).validate(searchRules, urls);
-        verify(javaFileWriter).writeFiles(outputDir, TEST_PACKAGE,webPages );
+        verify(javaFileWriter).writeFiles(outputDir, TEST_PACKAGE, webPages);
     }
 
     @Test(expected = ValidationException.class)
