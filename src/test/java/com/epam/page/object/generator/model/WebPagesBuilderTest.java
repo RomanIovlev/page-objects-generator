@@ -2,6 +2,7 @@ package com.epam.page.object.generator.model;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import java.util.ArrayList;
@@ -19,12 +20,11 @@ public class WebPagesBuilderTest {
 
 
     private WebPagesBuilder sut;
-    WebPagesBuilder webPagesBuilder;
-    StringBuilder invalidUrls;
-    List<WebPage> webPages;
-    List<String> urls;
+    private List<String> urls;
+    private List<WebPage> webPages;
 
     @Before
+
     public void setUp() throws Exception {
 
         MockitoAnnotations.initMocks(this);
@@ -40,15 +40,18 @@ public class WebPagesBuilderTest {
 
         urls.add("http://ya.ru");
         urls.add("http://google.com");
-        sut.generate(urls);
+        webPages = sut.generate(urls);
+        assertTrue(webPages.size() > 0);
+
 
     }
 
     @Test(expected = NotValidUrlException.class)
     public void validate_NotValidUrl() throws Exception {
 
-        urls.add("C:/documents/santa_barbara");
+        urls.add("123123");
         sut.generate(urls);
+
     }
 
 
@@ -67,7 +70,7 @@ public class WebPagesBuilderTest {
 
     private class TestThing {
 
-        public void chuck() {
+        void chuck() {
 
             List<String> urls = new ArrayList<>();
 
