@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -19,10 +20,7 @@ public class WebPagesBuilderTest {
 
 
     private WebPagesBuilder sut;
-    WebPagesBuilder webPagesBuilder;
-    StringBuilder invalidUrls;
-    List<WebPage> webPages;
-    List<String> urls;
+     private List<String> urls;
 
     @Before
     public void setUp() throws Exception {
@@ -44,10 +42,10 @@ public class WebPagesBuilderTest {
 
     }
 
-    @Test(expected = NotValidUrlException.class)
+    @Test(expected = URISyntaxException.class)
     public void validate_NotValidUrl() throws Exception {
 
-        urls.add("C:/documents/santa_barbara");
+        urls.add("http:lalala.ru");
         sut.generate(urls);
     }
 
@@ -67,7 +65,7 @@ public class WebPagesBuilderTest {
 
     private class TestThing {
 
-        public void chuck() {
+        void chuck() {
 
             List<String> urls = new ArrayList<>();
 

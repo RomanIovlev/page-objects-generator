@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.Collections;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Before;
@@ -15,8 +14,6 @@ import org.mockito.MockitoAnnotations;
 public class WebPageTest {
 
     private WebPage sut;
-
-    private WebPagesBuilder webPagesBuilder;
 
     @Mock
     private Elements elementsFromWebSite1;
@@ -39,9 +36,7 @@ public class WebPageTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        webPagesBuilder = new WebPagesBuilder();
-        sut = webPagesBuilder.generate(Collections.singletonList("http://google.com")).get(0);
-
+        sut = new WebPage(null, document);
     }
 
     @Test
