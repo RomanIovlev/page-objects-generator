@@ -4,11 +4,13 @@ import static java.util.Arrays.asList;
 
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -19,7 +21,7 @@ public class Generate {
 
     // EXAMPLE
     public static void main(String[] args)
-        throws ParseException, IOException, URISyntaxException, XpathToCssTransformerException {
+        throws IOException, URISyntaxException, XpathToCssTransformerException {
         List<String> urls = asList(
             "https://www.w3schools.com/html/html_forms.asp",
             "https://www.w3schools.com/css/default.asp",
