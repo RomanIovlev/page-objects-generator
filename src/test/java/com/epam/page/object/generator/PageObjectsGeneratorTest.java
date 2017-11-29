@@ -1,6 +1,8 @@
 package com.epam.page.object.generator;
 
 import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -10,7 +12,6 @@ import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.parser.JsonRuleMapper;
 import com.epam.page.object.generator.validators.ValidationContext;
 import com.epam.page.object.generator.validators.ValidationResult;
@@ -25,6 +26,7 @@ import org.mockito.MockitoAnnotations;
 
 public class PageObjectsGeneratorTest {
 
+    private static final String OUTPUT_DIR = "testdir";
     private static final String TEST_PACKAGE = "testPackage";
 
     @Mock
@@ -36,16 +38,15 @@ public class PageObjectsGeneratorTest {
     @Mock
     private ValidatorsStarter validatorsStarter;
 
-    private List<WebPage> webPages;
 
     private SearchRule searchRule = new SearchRule("type", "uniqueness", "title", "css", "xpath",
         null);
+
     private SearchRule invalidSearchRule =
         new SearchRule("button", "req", null, null, null, null);
 
     private List<SearchRule> searchRules = Lists.newArrayList(searchRule);
 
-    private String outputDir = "";
 
     private List<String> urls = Collections.singletonList("http://google.com");
 
@@ -61,14 +62,11 @@ public class PageObjectsGeneratorTest {
 
         MockitoAnnotations.initMocks(this);
 
-        WebPagesBuilder webPagesBuilder = new WebPagesBuilder();
-        webPages = webPagesBuilder.generate(urls);
-
         when(parser.getRulesFromJSON()).thenReturn(searchRules);
         when(validatorsStarter.validate(anyList(), anyList())).thenReturn(searchRules);
         when(validatorsStarter.getValidationContext()).thenReturn(validationContext);
 
-        sut = new PageObjectsGenerator(parser, validatorsStarter, javaFileWriter, outputDir, urls,
+        sut = new PageObjectsGenerator(parser, validatorsStarter, javaFileWriter, OUTPUT_DIR, urls,
             TEST_PACKAGE);
     }
 
@@ -79,7 +77,7 @@ public class PageObjectsGeneratorTest {
         sut.generatePageObjects();
 
         verify(validatorsStarter).validate(searchRules, urls);
-        verify(javaFileWriter).writeFiles(outputDir, TEST_PACKAGE, webPages);
+        verify(javaFileWriter).writeFiles(eq(OUTPUT_DIR), eq(TEST_PACKAGE), anyListOf(WebPage.class));
     }
 
     @Test(expected = ValidationException.class)
@@ -99,7 +97,6 @@ public class PageObjectsGeneratorTest {
         sut.setForceGenerateFile(true);
 
         sut.generatePageObjects();
-        verify(javaFileWriter).writeFiles(TEST_PACKAGE, outputDir, webPages);
     }
 
     @Test(expected = ValidationException.class)
