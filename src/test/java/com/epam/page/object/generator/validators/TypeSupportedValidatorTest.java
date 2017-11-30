@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.oldValidators.TypeSupportedValidator;
 import java.util.ArrayList;
 import org.assertj.core.util.Lists;
 import org.junit.Before;

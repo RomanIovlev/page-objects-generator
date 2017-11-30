@@ -4,9 +4,9 @@ import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelect
 import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import java.io.IOException;
 import org.jsoup.nodes.Element;
 
 public abstract class Annotation implements JavaAnnotation {
@@ -25,10 +25,10 @@ public abstract class Annotation implements JavaAnnotation {
     public AnnotationMember getAnnotationMemberFromRule(SearchRule searchRule, Element element)
         throws XpathToCssTransformerException {
 
-        if (searchRule.getRequiredValueFromFoundElement(element) == null) {
+        if (searchRule.getRequiredValue(element) == null) {
             return createAnnotationMemberForInnerSearchRule(searchRule);
         }
-        String elementRequiredValue = searchRule.getRequiredValueFromFoundElement(element);
+        String elementRequiredValue = searchRule.getRequiredValue(element);
         if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
             .equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
@@ -42,10 +42,11 @@ public abstract class Annotation implements JavaAnnotation {
     }
 
     private AnnotationMember createAnnotationMemberForInnerSearchRule(SearchRule searchRule) {
-        if (searchRule.getXpath() != null) {
+        Selector selector = searchRule.getSelector();
+        if (selector.isXpath()) {
             return new AnnotationMember("xpath", "$S",
                 resultXpathSelector(searchRule, null));
-        } else if (searchRule.getCss() != null) {
+        } else if (selector.isCss()) {
             return new AnnotationMember("css", "$S",
                 resultCssSelector(searchRule, null));
         }

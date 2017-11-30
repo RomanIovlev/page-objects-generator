@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import com.epam.page.object.generator.validators.web.UniquenessFormLocatorValidator;
 import com.google.common.collect.Lists;
 import org.jsoup.select.Elements;

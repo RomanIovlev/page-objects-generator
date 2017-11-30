@@ -3,27 +3,29 @@ package com.epam.page.object.generator.adapter;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
+import com.epam.page.object.generator.model.searchRules.FormSearchRule;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
 public class FormClass implements JavaClass {
 
     private String packageName;
     private WebPage webPage;
-    private SearchRule searchRule;
+    private FormSearchRule searchRule;
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
     public FormClass(String packageName,
                      WebPage webPage,
-                     SearchRule searchRule,
+                     FormSearchRule searchRule,
                      SupportedTypesContainer typesContainer,
                      XpathToCssTransformation xpathToCssTransformation) {
         this.packageName = packageName;
@@ -59,13 +61,14 @@ public class FormClass implements JavaClass {
     public List<JavaField> getFieldsList() {
         List<JavaField> fields = new ArrayList<>();
 
-        Elements parentElements = webPage.getDocument().getAllElements();
-        for (SearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+        Element parentElement = webPage.extractElement(searchRule);
+
+        for (FormInnerSearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
             fields.addAll(
-                innerSearchRule.extractElementsFromElement(parentElements.first()).stream().filter(
-                    element -> !innerSearchRule.getRequiredValueFromFoundElement(element)
-                        .isEmpty()).map(
-                    element -> new SearchRuleField(innerSearchRule, element, getPackageName(),
+                SearchRuleExtractor.extractElementsFromElement(parentElement, innerSearchRule)
+                    .stream()
+                    .filter(element -> !innerSearchRule.getRequiredValue(element).isEmpty())
+                    .map(element -> new SearchRuleField(innerSearchRule, element, getPackageName(),
                         typesContainer,
                         xpathToCssTransformation)).collect(Collectors.toList()));
         }

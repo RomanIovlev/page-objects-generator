@@ -3,10 +3,14 @@ package com.epam.page.object.generator;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.WebPagesBuilder;
-import com.epam.page.object.generator.parser.JsonRuleMapper;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
+import com.epam.page.object.generator.utils.PropertyLoader;
+import com.epam.page.object.generator.utils.RawSearchRuleMapper;
+import com.epam.page.object.generator.utils.TypeTransformer;
+import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.ValidatorsStarter;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -15,56 +19,62 @@ import java.util.List;
 
 public class PageObjectsGenerator {
 
-    private JsonRuleMapper parser;
+    private RawSearchRuleMapper rawSearchRuleMapper;
+    private JsonSchemaValidator jsonSchemaValidator;
+    private TypeTransformer typeTransformer;
     private ValidatorsStarter validatorsStarter;
     private JavaFileWriter javaFileWriter;
-    private String outPutDir;
-    private List<String> urls;
-    private String packageName;
+    private WebPagesBuilder webPagesBuilder;
 
     private boolean forceGenerateFile = false;
 
-    public PageObjectsGenerator(JsonRuleMapper parser,
+    public PageObjectsGenerator(RawSearchRuleMapper rawSearchRuleMapper,
+                                JsonSchemaValidator jsonSchemaValidator,
+                                TypeTransformer typeTransformer,
                                 ValidatorsStarter validatorsStarter,
                                 JavaFileWriter javaFileWriter,
-                                String outPutDir,
-                                List<String> urls,
-                                String packageName) {
-        this.parser = parser;
+                                WebPagesBuilder webPagesBuilder) {
+        this.rawSearchRuleMapper = rawSearchRuleMapper;
+        this.jsonSchemaValidator = jsonSchemaValidator;
+        this.typeTransformer = typeTransformer;
         this.validatorsStarter = validatorsStarter;
         this.javaFileWriter = javaFileWriter;
-        this.outPutDir = outPutDir;
-        this.urls = urls;
-        this.packageName = packageName;
+        this.webPagesBuilder = webPagesBuilder;
     }
 
-    public void generatePageObjects()
+    public void generatePageObjects(String jsonPath,
+                                    String outputDir,
+                                    String packageName,
+                                    List<String> urls)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
-        List<SearchRule> searchRules = parser.getRulesFromJSON();
-// searchRules validation
 
-      List<SearchRule> validSearchRules = validatorsStarter.validate(searchRules,urls);
+        PropertyLoader.loadProperties();
 
-        WebPagesBuilder webPageGenerator = new WebPagesBuilder();
-        List<WebPage> webPages = webPageGenerator.generate(urls);
-        webPages.forEach(wp -> wp.addSearchRulesForCurrentWebPage(validSearchRules));
+        List<RawSearchRule> rawSearchRuleList = rawSearchRuleMapper.getRawSearchRuleList(jsonPath);
+        rawSearchRuleList = jsonSchemaValidator.validate(rawSearchRuleList);
+
+        //TODO write exception message if some rawSearchRule is invalid
+        List<SearchRule> searchRuleList = typeTransformer.transform(rawSearchRuleList);
+
+        //TODO business json validation
+        List<SearchRule> validSearchRules = validatorsStarter.validate(searchRuleList);
+
+        List<WebPage> webPages = webPagesBuilder.generate(urls);
+        webPages.forEach(wp -> wp.addSearchRules(validSearchRules));
+
         // TODO: web validation
-        //
-        generateJavaFiles(webPages);
-    }
 
-    private void generateJavaFiles(List<WebPage> webPages)
-        throws IOException, URISyntaxException, XpathToCssTransformerException {
 
-        if (validatorsStarter.getValidationContext().hasInvalidRules()) {
+        //TODO check for invalid SearchRules
+        if (validatorsStarter.hasInvalidRules()) {
             if (forceGenerateFile) {
-                javaFileWriter.writeFiles(outPutDir, packageName, webPages);
+                javaFileWriter.writeFiles(outputDir, packageName, webPages);
             }
 
             throw new ValidationException(validatorsStarter.getValidationContext());
         }
 
-        javaFileWriter.writeFiles(outPutDir, packageName, webPages);
+        javaFileWriter.writeFiles(outputDir, packageName, webPages);
     }
 
     public void setForceGenerateFile(boolean forceGenerateFile) {

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
+import com.epam.page.object.generator.validators.oldValidators.ValidationResult;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;

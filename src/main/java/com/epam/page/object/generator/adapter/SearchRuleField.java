@@ -5,10 +5,10 @@ import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import java.io.IOException;
 import javax.lang.model.element.Modifier;
 import org.jsoup.nodes.Element;
 
@@ -46,7 +46,7 @@ public class SearchRuleField implements JavaField {
     public JavaAnnotation getAnnotation() {
         Class fieldAnnotationClass = typesContainer.getSupportedTypesMap().get(searchRule.getType())
             .getElementAnnotation();
-        if (SearchRuleTypeGroups.isCommonType(searchRule)) {
+        if (searchRule instanceof CommonSearchRule) {
             return new CommonAnnotation(searchRule, element,
                 fieldAnnotationClass, xpathToCssTransformation);
         } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {

@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.validators;
+package com.epam.page.object.generator.validators.oldValidators;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.google.common.collect.Lists;

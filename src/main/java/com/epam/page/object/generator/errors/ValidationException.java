@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.errors;
 
-import com.epam.page.object.generator.validators.ValidationContext;
+import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 
 public class ValidationException extends RuntimeException {
 

@@ -1,0 +1,19 @@
+{
+  "typeGroups": [
+    {
+      "name": "commonSearchRule",
+      "searchRuleTypes": ["button", "text"],
+      "schema": "/scheme/commonSearchRule_schema.json"
+    },
+    {
+      "name": "complexSearchRule",
+      "searchRuleTypes": ["dropdown", "menu"],
+      "schema": "/scheme/complexSearchRule_schema.json"
+    },
+    {
+      "name": "formSearchRule",
+      "searchRuleTypes": ["form", "section"],
+      "schema": "/scheme/formSearchRule_schema.json"
+    }
+  ]
+}

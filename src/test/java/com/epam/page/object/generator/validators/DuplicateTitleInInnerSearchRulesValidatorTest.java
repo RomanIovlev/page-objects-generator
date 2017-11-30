@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.oldValidators.DuplicateTitleInInnerSearchRulesValidator;
+import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;

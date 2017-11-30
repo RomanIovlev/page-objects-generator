@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.validators;
+package com.epam.page.object.generator.validators.oldValidators;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 

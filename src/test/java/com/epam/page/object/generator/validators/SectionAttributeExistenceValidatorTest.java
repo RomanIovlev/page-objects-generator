@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.validators.oldValidators.SectionAttributeExistenceValidator;
+import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
 
 public class SelectorUtils {
 
@@ -13,10 +13,10 @@ public class SelectorUtils {
      */
     public static String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
         if (elementsRequiredValue == null) {
-            return searchRule.getCss();
+            return searchRule.getSelector().getValue();
         }
 
-        return String.format("%s[%s='%s']", searchRule.getCss(), searchRule.getUniqueness(),
+        return String.format("%s[%s='%s']", searchRule.getSelector().getValue(), searchRule.getUniqueness(),
             elementsRequiredValue);
     }
 

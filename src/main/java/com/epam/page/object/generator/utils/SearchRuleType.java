@@ -37,4 +37,13 @@ public enum SearchRuleType {
     public String getName() {
         return name;
     }
+
+    public static SearchRuleType getSearchRuleTypeByString(String name) {
+        for (SearchRuleType searchRuleType : SearchRuleType.values()) {
+            if (searchRuleType.getName().equals(name)) {
+                return searchRuleType;
+            }
+        }
+        return null;
+    }
 }

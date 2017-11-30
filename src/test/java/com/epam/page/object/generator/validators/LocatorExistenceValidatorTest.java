@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
+import com.epam.page.object.generator.validators.oldValidators.LocatorExistenceValidator;
+import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.junit.Before;

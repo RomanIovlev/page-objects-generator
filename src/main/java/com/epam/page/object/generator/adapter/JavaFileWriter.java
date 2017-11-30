@@ -3,8 +3,9 @@ package com.epam.page.object.generator.adapter;
 import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.model.searchRules.FormSearchRule;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.squareup.javapoet.AnnotationSpec;
@@ -41,12 +42,12 @@ public class JavaFileWriter {
                 typesContainer,
                 xpathToCssTransformation));
 
-            for (SearchRule searchRule: webPage.getValidSearchRules()) {
-                if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
+            for (SearchRule searchRule: webPage.getSearchRules()) {
+                if(searchRule instanceof FormSearchRule){
                     writeClass(outputDir,
                         new FormClass(packageName + ".form",
                             webPage,
-                            searchRule,
+                            (FormSearchRule) searchRule,
                             typesContainer,
                             xpathToCssTransformation));
                 }
