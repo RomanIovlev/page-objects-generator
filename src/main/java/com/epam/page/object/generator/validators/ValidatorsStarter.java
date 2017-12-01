@@ -5,6 +5,8 @@ import com.epam.page.object.generator.model.searchRules.Validatable;
 import com.epam.page.object.generator.utils.SearchRuleTypeGroups;
 import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import com.epam.page.object.generator.validators.oldValidators.Validator;
+import com.epam.page.object.generator.validators.searchRuleValidators.DuplicateTitleInnerSearchRuleValidator;
+import com.epam.page.object.generator.validators.searchRuleValidators.RootExistenceValidator;
 import com.epam.page.object.generator.validators.searchRuleValidators.ValidatorVisitor;
 import com.epam.page.object.generator.validators.web.UniquenessFormLocatorValidator;
 import com.epam.page.object.generator.validators.web.UniquenessLocatorValidator;
@@ -24,7 +26,10 @@ public class ValidatorsStarter {
      * Set of the {@link Validator} by default, which will be validate list of {@link
      * com.epam.page.object.generator.model.SearchRule}.
      */
-    private List<ValidatorVisitor> validators = Lists.newArrayList();
+    private List<ValidatorVisitor> validators = Lists.newArrayList(
+        new DuplicateTitleInnerSearchRuleValidator(),
+        new RootExistenceValidator()
+    );
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
         new UniquenessLocatorValidator(SearchRuleTypeGroups.commonAndComplexTypes);

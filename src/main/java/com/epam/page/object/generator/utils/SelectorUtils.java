@@ -1,6 +1,8 @@
 package com.epam.page.object.generator.utils;
 
+import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
+import org.jsoup.nodes.Element;
 
 public class SelectorUtils {
 
@@ -47,4 +49,29 @@ public class SelectorUtils {
         return "";
     }
 
+    public static Selector resultSelector(Selector selector, Element element){
+        if()
+
+        String selectorValueWithoutClosedBracket = selector.getValue();
+
+
+        if(selector.isXpath()){
+            selectorValueWithoutClosedBracket = selector.getValue().replace("]", "");
+        }
+
+
+
+
+
+
+        if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
+
+            if (searchRule.getSelector().isXpath()) {
+                XpathToCssTransformation.getCssSelector(searchRule);
+            }
+
+
+
+
+        }
 }

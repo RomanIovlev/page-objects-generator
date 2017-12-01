@@ -32,7 +32,7 @@ public abstract class Annotation implements JavaAnnotation {
         if (searchRule.getUniqueness() == null || !searchRule.getUniqueness()
             .equalsIgnoreCase("text")) {
             if (searchRule.getCss() == null) {
-                xpathToCssTransformation.transformRule(searchRule);
+                xpathToCssTransformation.getCssSelector(searchRule);
             }
             return new AnnotationMember("css", "$S",
                 resultCssSelector(searchRule, elementRequiredValue));

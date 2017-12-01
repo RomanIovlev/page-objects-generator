@@ -2,16 +2,18 @@ package com.epam.page.object.generator.adapter;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.searchRules.FormSearchRule;
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class FormOrSectionAnnotation implements JavaAnnotation {
+public class FormSearchRuleAnnotation implements JavaAnnotation {
 
-    private SearchRule searchRule;
+    private FormSearchRule searchRule;
     private Class fieldAnnotationClass;
 
-    public FormOrSectionAnnotation(SearchRule searchRule, Class fieldAnnotationClass) {
+    public FormSearchRuleAnnotation(FormSearchRule searchRule, Class fieldAnnotationClass) {
         this.searchRule = searchRule;
         this.fieldAnnotationClass = fieldAnnotationClass;
     }
@@ -24,14 +26,8 @@ public class FormOrSectionAnnotation implements JavaAnnotation {
     @Override
     public List<AnnotationMember> getAnnotationMembers()
         throws XpathToCssTransformerException {
-        AnnotationMember annotationMember;
-        if (searchRule.getCss() != null) {
-            annotationMember = new AnnotationMember("css", "$S", searchRule.getCss());
-        } else {
-            annotationMember =
-                new AnnotationMember("xpath", "$S", searchRule.getXpath());
-        }
 
-        return Collections.singletonList(annotationMember);
+        return Lists.newArrayList(new AnnotationMember(searchRule.getSelector().getType(), "$S",
+            searchRule.getSelector().getValue()));
     }
 }

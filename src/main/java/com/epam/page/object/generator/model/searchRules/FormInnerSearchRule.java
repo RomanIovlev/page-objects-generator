@@ -2,7 +2,10 @@ package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.searchRuleValidators.ValidatorVisitor;
+import java.util.ArrayList;
+import java.util.List;
 import org.jsoup.nodes.Element;
 
 public class FormInnerSearchRule implements SearchRule {
@@ -10,6 +13,8 @@ public class FormInnerSearchRule implements SearchRule {
     private String uniqueness;
     private SearchRuleType type;
     private Selector selector;
+
+    private List<ValidationResultNew> validationResults = new ArrayList<>();
 
     public FormInnerSearchRule(String uniqueness, SearchRuleType type, Selector selector) {
         this.uniqueness = uniqueness;
@@ -29,7 +34,6 @@ public class FormInnerSearchRule implements SearchRule {
         return selector;
     }
 
-    @Override
     public String getRequiredValue(Element element) {
         return uniqueness.equals("text")
             ? element.text()
@@ -37,8 +41,23 @@ public class FormInnerSearchRule implements SearchRule {
     }
 
     @Override
-    public boolean beValidated(ValidatorVisitor validatorVisitor) {
+    public ValidationResultNew beValidated(ValidatorVisitor validatorVisitor) {
         return validatorVisitor.validate(this);
+    }
+
+    @Override
+    public List<ValidationResultNew> getValidationResults() {
+        return validationResults;
+    }
+
+    @Override
+    public boolean isValid() {
+        return validationResults.stream().allMatch(ValidationResultNew::isValid);
+    }
+
+    @Override
+    public boolean isInvalid() {
+        return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
     }
 
     @Override

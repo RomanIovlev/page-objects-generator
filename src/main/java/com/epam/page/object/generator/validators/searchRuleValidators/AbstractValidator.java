@@ -6,31 +6,32 @@ import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
+import com.epam.page.object.generator.validators.ValidationResultNew;
 
 public abstract class AbstractValidator implements ValidatorVisitor{
 
     @Override
-    public boolean validate(CommonSearchRule commonSearchRule) {
-        return true;
+    public ValidationResultNew validate(CommonSearchRule commonSearchRule) {
+        return new ValidationResultNew(true, this + " passed!");
     }
 
     @Override
-    public boolean validate(ComplexSearchRule complexSearchRule) {
-        return true;
+    public ValidationResultNew validate(ComplexSearchRule complexSearchRule) {
+        return new ValidationResultNew(true, this + " passed!");
     }
 
     @Override
-    public boolean validate(ComplexInnerSearchRule complexInnerSearchRule) {
-        return true;
+    public ValidationResultNew validate(ComplexInnerSearchRule complexInnerSearchRule) {
+        return new ValidationResultNew(true, this + " passed!");
     }
 
     @Override
-    public boolean validate(FormSearchRule formSearchRule) {
-        return true;
+    public ValidationResultNew validate(FormSearchRule formSearchRule) {
+        return new ValidationResultNew(true, this + " passed!");
     }
 
     @Override
-    public boolean validate(FormInnerSearchRule formInnerSearchRule) {
-        return true;
+    public ValidationResultNew validate(FormInnerSearchRule formInnerSearchRule) {
+        return new ValidationResultNew(true, this + " passed!");
     }
 }

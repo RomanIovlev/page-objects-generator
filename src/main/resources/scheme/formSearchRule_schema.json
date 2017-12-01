@@ -6,7 +6,11 @@
   "properties": {
     "type": {
       "description": "Type of the SearchRule",
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "Form",
+        "Section"
+      ]
     },
     "section": {
       "description": "Section of the formSearchRule",
@@ -61,7 +65,10 @@
         "type": {
           "description": "Type of the selector",
           "type": "string",
-          "enum": ["xpath", "css"]
+          "enum": [
+            "xpath",
+            "css"
+          ]
         },
         "value": {
           "description": "Value of the selector",

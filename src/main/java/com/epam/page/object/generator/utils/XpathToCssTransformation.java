@@ -1,7 +1,7 @@
 package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.model.Selector;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import javax.script.Invocable;
@@ -11,7 +11,7 @@ import javax.script.ScriptException;
 
 public class XpathToCssTransformation {
 
-    public void transformRule(SearchRule searchRule) throws XpathToCssTransformerException {
+    public static Selector getCssSelector(Selector selector) throws XpathToCssTransformerException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
         try {
@@ -19,12 +19,11 @@ public class XpathToCssTransformation {
 
             Invocable invocable = (Invocable) engine;
 
-            searchRule.setCss(invocable.invokeFunction("cssify", searchRule.getXpath()).toString());
-            searchRule.setXpath(null);
+            return new Selector("css", invocable.invokeFunction("cssify", selector.getValue()).toString());
         } catch (NoSuchMethodException | ScriptException | FileNotFoundException ex) {
             throw new XpathToCssTransformerException(
-                "Failed to transform Xpath to Css locator in this search rule:"
-                    + searchRule);
+                "Failed to transform Xpath to Css locator in this selector:"
+                    + selector);
         }
     }
 

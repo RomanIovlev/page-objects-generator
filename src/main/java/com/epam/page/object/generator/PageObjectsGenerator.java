@@ -66,13 +66,13 @@ public class PageObjectsGenerator {
 
 
         //TODO check for invalid SearchRules
-        if (validatorsStarter.hasInvalidRules()) {
-            if (forceGenerateFile) {
-                javaFileWriter.writeFiles(outputDir, packageName, webPages);
-            }
-
-            throw new ValidationException(validatorsStarter.getValidationContext());
-        }
+//        if (validatorsStarter.hasInvalidRules()) {
+//            if (forceGenerateFile) {
+//                javaFileWriter.writeFiles(outputDir, packageName, webPages);
+//            }
+//
+//            throw new ValidationException(validatorsStarter.getValidationContext());
+//        }
 
         javaFileWriter.writeFiles(outputDir, packageName, webPages);
     }

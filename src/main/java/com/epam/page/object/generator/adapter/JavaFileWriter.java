@@ -23,15 +23,13 @@ public class JavaFileWriter {
     private SupportedTypesContainer typesContainer;
     private XpathToCssTransformation xpathToCssTransformation;
 
-    public JavaFileWriter(
-        SupportedTypesContainer typesContainer,
-        XpathToCssTransformation xpathToCssTransformation) {
+    public JavaFileWriter(SupportedTypesContainer typesContainer,
+                          XpathToCssTransformation xpathToCssTransformation) {
         this.typesContainer = typesContainer;
         this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
-    public void writeFiles(String outputDir,
-                           String packageName, List<WebPage> webPages)
+    public void writeFiles(String outputDir, String packageName, List<WebPage> webPages)
         throws XpathToCssTransformerException, IOException {
 
         writeClass(outputDir, new SiteClass(packageName + ".site", webPages));
@@ -42,8 +40,8 @@ public class JavaFileWriter {
                 typesContainer,
                 xpathToCssTransformation));
 
-            for (SearchRule searchRule: webPage.getSearchRules()) {
-                if(searchRule instanceof FormSearchRule){
+            for (SearchRule searchRule : webPage.getSearchRules()) {
+                if (searchRule instanceof FormSearchRule) {
                     writeClass(outputDir,
                         new FormClass(packageName + ".form",
                             webPage,

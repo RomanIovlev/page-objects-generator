@@ -4,6 +4,8 @@ import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
+import com.epam.page.object.generator.adapter.searchRuleAnnotations.CommonSearchRuleAnnotation;
+import com.epam.page.object.generator.adapter.searchRuleAnnotations.ComplexSearchRuleAnnotation;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
@@ -47,12 +49,12 @@ public class SearchRuleField implements JavaField {
         Class fieldAnnotationClass = typesContainer.getSupportedTypesMap().get(searchRule.getType())
             .getElementAnnotation();
         if (searchRule instanceof CommonSearchRule) {
-            return new CommonAnnotation(searchRule, element,
+            return new CommonSearchRuleAnnotation(searchRule, element,
                 fieldAnnotationClass, xpathToCssTransformation);
         } else if (SearchRuleTypeGroups.isComplexType(searchRule)) {
-            return new ComplexAnnotation(searchRule, element, xpathToCssTransformation);
+            return new ComplexSearchRuleAnnotation(searchRule, element, xpathToCssTransformation);
         } else if (SearchRuleTypeGroups.isFormOrSectionType(searchRule)) {
-            return new FormOrSectionAnnotation(searchRule,
+            return new FormSearchRuleAnnotation(searchRule,
                 fieldAnnotationClass);
         } else {
             //This type of search rule does not supported

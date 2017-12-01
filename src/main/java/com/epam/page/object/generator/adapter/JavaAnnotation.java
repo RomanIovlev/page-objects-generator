@@ -18,13 +18,13 @@ public interface JavaAnnotation {
         String arg;
         JavaAnnotation annotation;
 
-        AnnotationMember(String name, String format, String arg) {
+        public AnnotationMember(String name, String format, String arg) {
             this.name = name;
             this.format = format;
             this.arg = arg;
         }
 
-        AnnotationMember(String name, String format, JavaAnnotation annotation) {
+        public AnnotationMember(String name, String format, JavaAnnotation annotation) {
             this.name = name;
             this.format = format;
             this.annotation = annotation;
