@@ -21,12 +21,9 @@ import java.util.List;
 public class JavaFileWriter {
 
     private SupportedTypesContainer typesContainer;
-    private XpathToCssTransformation xpathToCssTransformation;
 
-    public JavaFileWriter(SupportedTypesContainer typesContainer,
-                          XpathToCssTransformation xpathToCssTransformation) {
+    public JavaFileWriter(SupportedTypesContainer typesContainer) {
         this.typesContainer = typesContainer;
-        this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
     public void writeFiles(String outputDir, String packageName, List<WebPage> webPages)
@@ -37,8 +34,7 @@ public class JavaFileWriter {
         for (WebPage webPage : webPages) {
             writeClass(outputDir, new PageClass(packageName + ".page",
                 webPage,
-                typesContainer,
-                xpathToCssTransformation));
+                typesContainer));
 
             for (SearchRule searchRule : webPage.getSearchRules()) {
                 if (searchRule instanceof FormSearchRule) {
@@ -46,8 +42,7 @@ public class JavaFileWriter {
                         new FormClass(packageName + ".form",
                             webPage,
                             (FormSearchRule) searchRule,
-                            typesContainer,
-                            xpathToCssTransformation));
+                            typesContainer));
                 }
             }
         }

@@ -18,46 +18,46 @@ public class SelectorUtilsTest {
         searchRule.setUniqueness("name");
     }
 
-    @Test
-    public void resultCssSelector_successWithoutElementsRequiredValue() throws Exception {
-        String expected = "css";
-
-        Assert.assertEquals(expected,
-            SelectorUtils.resultCssSelector(searchRule, null));
-    }
-
-    @Test
-    public void resultXpathSelector_successWithoutElementsRequiredValue() throws Exception {
-        String expected = "//input[@type='submit']";
-
-        Assert.assertEquals(expected,
-            SelectorUtils.resultXpathSelector(searchRule, null));
-    }
-
-    @Test
-    public void resultCssSelector_success() throws Exception {
-        String expected = "css[name='button']";
-
-        Assert.assertEquals(expected,
-            SelectorUtils.resultCssSelector(searchRule, elementsRequiredValue));
-
-    }
-
-    @Test
-    public void resultXpathSelector_withoutText() throws Exception {
-        String expected = "//input[@type='submit' and @name='button']";
-
-        Assert.assertEquals(expected,
-            SelectorUtils.resultXpathSelector(searchRule, elementsRequiredValue));
-    }
-
-    @Test
-    public void resultXpathSelector_withText() throws Exception {
-        searchRule.setUniqueness("text");
-        String expected = "//input[@type='submit' and text()='button']";
-
-        Assert.assertEquals(expected,
-            SelectorUtils.resultXpathSelector(searchRule, elementsRequiredValue));
-    }
+//    @Test
+//    public void resultCssSelector_successWithoutElementsRequiredValue() throws Exception {
+//        String expected = "css";
+//
+//        Assert.assertEquals(expected,
+//            SelectorUtils.resultCssSelector(searchRule, null));
+//    }
+//
+//    @Test
+//    public void resultXpathSelector_successWithoutElementsRequiredValue() throws Exception {
+//        String expected = "//input[@type='submit']";
+//
+//        Assert.assertEquals(expected,
+//            SelectorUtils.resultXpathSelector(searchRule, null));
+//    }
+//
+//    @Test
+//    public void resultCssSelector_success() throws Exception {
+//        String expected = "css[name='button']";
+//
+//        Assert.assertEquals(expected,
+//            SelectorUtils.resultCssSelector(searchRule, elementsRequiredValue));
+//
+//    }
+//
+//    @Test
+//    public void resultXpathSelector_withoutText() throws Exception {
+//        String expected = "//input[@type='submit' and @name='button']";
+//
+//        Assert.assertEquals(expected,
+//            SelectorUtils.resultXpathSelector(searchRule, elementsRequiredValue));
+//    }
+//
+//    @Test
+//    public void resultXpathSelector_withText() throws Exception {
+//        searchRule.setUniqueness("text");
+//        String expected = "//input[@type='submit' and text()='button']";
+//
+//        Assert.assertEquals(expected,
+//            SelectorUtils.resultXpathSelector(searchRule, elementsRequiredValue));
+//    }
 
 }

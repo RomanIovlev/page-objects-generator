@@ -4,7 +4,7 @@ import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
-import com.epam.page.object.generator.adapter.FormSearchRuleAnnotation;
+import com.epam.page.object.generator.adapter.searchRuleAnnotations.FormSearchRuleAnnotation;
 import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
@@ -19,7 +19,9 @@ public class FormSearchRuleField implements JavaField {
     private String packageName;
     private SupportedTypesContainer typesContainer;
 
-    public FormSearchRuleField(FormSearchRule searchRule, Element element, String packageName,
+    public FormSearchRuleField(FormSearchRule searchRule,
+                               Element element,
+                               String packageName,
                                SupportedTypesContainer typesContainer) {
         this.searchRule = searchRule;
         this.element = element;
@@ -35,7 +37,7 @@ public class FormSearchRuleField implements JavaField {
 
     @Override
     public JavaAnnotation getAnnotation() {
-        Class fieldAnnotationClass = typesContainer.getSupportedTypesMap().get(searchRule.getType())
+        Class fieldAnnotationClass = typesContainer.getSupportedTypesMap().get(searchRule.getTypeName())
             .getElementAnnotation();
         return new FormSearchRuleAnnotation(searchRule, fieldAnnotationClass);
     }

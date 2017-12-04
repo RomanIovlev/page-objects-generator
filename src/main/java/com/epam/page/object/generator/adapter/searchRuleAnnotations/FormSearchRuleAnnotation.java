@@ -1,5 +1,6 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.adapter.searchRuleAnnotations;
 
+import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
@@ -7,6 +8,7 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FormSearchRuleAnnotation implements JavaAnnotation {
 
@@ -27,7 +29,7 @@ public class FormSearchRuleAnnotation implements JavaAnnotation {
     public List<AnnotationMember> getAnnotationMembers()
         throws XpathToCssTransformerException {
 
-        return Lists.newArrayList(new AnnotationMember(searchRule.getSelector().getType(), "$S",
+        return Collections.singletonList(new AnnotationMember(searchRule.getSelector().getType(), "$S",
             searchRule.getSelector().getValue()));
     }
 }

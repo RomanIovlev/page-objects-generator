@@ -1,12 +1,14 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webSearchRules.WebSearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class ComplexSearchRule implements SearchRule {
 
@@ -23,6 +25,10 @@ public class ComplexSearchRule implements SearchRule {
 
     public SearchRuleType getType() {
         return type;
+    }
+
+    public String getTypeName(){
+        return type.getName();
     }
 
     public List<ComplexInnerSearchRule> getInnerSearchRules() {
@@ -43,8 +49,8 @@ public class ComplexSearchRule implements SearchRule {
     }
 
     @Override
-    public ValidationResultNew beValidated(ValidatorVisitor validatorVisitor) {
-        return validatorVisitor.validate(this);
+    public void accept(ValidatorVisitor validatorVisitor) {
+        validationResults.add(validatorVisitor.visit(this));
     }
 
     @Override
@@ -63,6 +69,11 @@ public class ComplexSearchRule implements SearchRule {
     }
 
     @Override
+    public void addValidationResult(ValidationResultNew validationResult) {
+        validationResults.add(validationResult);
+    }
+
+    @Override
     public String toString() {
         return "ComplexSearchRule{" +
             "type='" + type + '\'' +
@@ -73,5 +84,10 @@ public class ComplexSearchRule implements SearchRule {
     @Override
     public Selector getSelector() {
         return getRoot().getSelector();
+    }
+
+    @Override
+    public WebSearchRule getWebSearchRule(Elements elements) {
+        return null;
     }
 }

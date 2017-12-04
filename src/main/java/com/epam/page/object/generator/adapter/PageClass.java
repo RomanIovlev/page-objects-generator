@@ -25,16 +25,13 @@ public class PageClass implements JavaClass {
     private String packageName;
     private WebPage webPage;
     private SupportedTypesContainer typesContainer;
-    private XpathToCssTransformation xpathToCssTransformation;
 
     public PageClass(String packageName,
                      WebPage webPage,
-                     SupportedTypesContainer typesContainer,
-                     XpathToCssTransformation xpathToCssTransformation) {
+                     SupportedTypesContainer typesContainer) {
         this.packageName = packageName;
         this.webPage = webPage;
         this.typesContainer = typesContainer;
-        this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
     @Override
@@ -63,33 +60,19 @@ public class PageClass implements JavaClass {
 
         for (SearchRule searchRule : webPage.getSearchRules()) {
             Element element = webPage.extractElement(searchRule);
-            if (searchRule instanceof CommonSearchRule){
-                fields.add(new CommonSearchRuleField((CommonSearchRule) searchRule, element, typesContainer));
-            } else if (searchRule instanceof ComplexSearchRule){
-                fields.add(new ComplexSearchRuleField((ComplexSearchRule) searchRule, element, typesContainer));
+            if (searchRule instanceof CommonSearchRule) {
+                fields.add(
+                    new CommonSearchRuleField((CommonSearchRule) searchRule, element,
+                        typesContainer));
+            } else if (searchRule instanceof ComplexSearchRule) {
+                fields.add(
+                    new ComplexSearchRuleField((ComplexSearchRule) searchRule, element,
+                        typesContainer));
+            } else if (searchRule instanceof FormSearchRule) {
+                fields.add(
+                    new FormSearchRuleField((FormSearchRule) searchRule, element, packageName,
+                        typesContainer));
             }
-            else if (searchRule instanceof FormSearchRule){
-                fields.add(new FormSearchRuleField((FormSearchRule) searchRule, element, packageName, typesContainer));
-            }
-
-//
-//            Elements elements = webPage.getDocument().getAllElements();
-//
-//            if (elements != null && elements.size() == 1) {
-//                if (searchRule instanceof CommonSearchRule) {
-//                    fields.add(
-//                        new CommonSearchRuleField((CommonSearchRule) searchRule,
-//                            elements.first(),
-//                            getPackageName(),
-//                            typesContainer));
-//                } else if(searchRule instanceof ComplexSearchRule){
-//                    new ComplexSearchRuleField()
-//                }
-//
-//                fields.add(new SearchRuleField(searchRule, elements.first(), getPackageName(),
-//                    typesContainer,
-//                    xpathToCssTransformation));
-//            }
         }
 
         return fields;

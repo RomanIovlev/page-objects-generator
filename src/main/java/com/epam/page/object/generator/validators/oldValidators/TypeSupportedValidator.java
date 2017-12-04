@@ -6,7 +6,7 @@ import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.Set;
 
 /**
- * {@link TypeSupportedValidator} validate that {@link SearchRule} has correct "type" attribute
+ * {@link TypeSupportedValidator} visit that {@link SearchRule} has correct "type" attribute
  * which supported by the program. <br/> Default priority: 1.
  */
 public class TypeSupportedValidator extends AbstractValidator {

@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.model;
 
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
+import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class WebPage {
     private Document document;
     private List<SearchRule> searchRules;
 
-    protected WebPage(URI  uri, Document document) {
+    protected WebPage(URI uri, Document document) {
         this.searchRules = new ArrayList<>();
         this.uri = uri;
         this.document = document;
@@ -47,7 +48,8 @@ public class WebPage {
 
     public void addSearchRules(List<SearchRule> searchRules) {
         for (SearchRule searchRule : searchRules) {
-            if (extractElements(searchRule).size() != 0) {
+            Elements elements = extractElements(searchRule);
+            if (elements.size() != 0) {
                 this.searchRules.add(searchRule);
             }
         }

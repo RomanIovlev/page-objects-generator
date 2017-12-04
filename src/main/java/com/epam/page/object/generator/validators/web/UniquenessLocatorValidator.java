@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import javafx.util.Pair;
 
 /**
- * {@link UniquenessLocatorValidator} validate that {@link SearchRule} has uniqueness locator. <br/>
+ * {@link UniquenessLocatorValidator} visit that {@link SearchRule} has uniqueness locator. <br/>
  * Default priority: 51.
  */
 public class UniquenessLocatorValidator extends AbstractValidator {

@@ -33,7 +33,7 @@ public class RawSearchRuleMapper {
             rawSearchRuleList.add(rawSearchRule);
             logger.info("Add SearchRule ='" + rawSearchRule + "'");
         }
-        logger.info("Finish creating list of SearchRules");
+        logger.info("Finish creating list of SearchRules\n");
 
         return rawSearchRuleList;
     }
@@ -53,7 +53,7 @@ public class RawSearchRuleMapper {
             innerRawSearchRules.add(rawSearchRule);
             logger.info("Add complexInnerSearchRule ='" + rawSearchRule + "'");
         }
-        logger.info("Finish creating list of complexInnerSearchRules");
+        logger.info("Finish creating list of complexInnerSearchRules\n");
 
         return innerRawSearchRules;
     }
@@ -75,7 +75,7 @@ public class RawSearchRuleMapper {
             innerRawSearchRules.add(rawSearchRule);
             logger.info("Add formInnerSearchRule ='" + rawSearchRule + "'");
         }
-        logger.info("Finish creating list of formInnerSearchRule");
+        logger.info("Finish creating list of formInnerSearchRule\n");
 
         return innerRawSearchRules;
     }

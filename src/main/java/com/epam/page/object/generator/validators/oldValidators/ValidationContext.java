@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * Context which creates for validation process. {@link ValidationContext} contains: <ul> <li>{@link
- * ValidationContext#searchRules} - list of {@link SearchRule} which need to validate.</li>
+ * ValidationContext#searchRules} - list of {@link SearchRule} which need to visit.</li>
  * <li>{@link ValidationContext#validationResults} - list of {@link ValidationResult} which contains
  * information about previous validation processes.</li> <li>{@link ValidationContext#urls} - list
  * of urls which used by some validators for validation elements on the web pages.</li> </ul>
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ValidationContext {
 
     /**
-     * List of {@link SearchRule} which need to validate.
+     * List of {@link SearchRule} which need to visit.
      */
     private List<SearchRule> searchRules;
 

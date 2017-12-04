@@ -9,69 +9,46 @@ public class SelectorUtils {
     /**
      * Generate string contains css selector for SearchRule.
      *
-     * @param searchRule {@link SearchRule} with css selector
-     * @param elementsRequiredValue value received from webPage by 'uniqueness' attribute
+     * @param selector {@link Selector} css selector
+     * @param requiredValue value received from webPage by 'uniqueness' attribute
+     * @param uniquenessAttribute name of the 'uniqueness' attribute
      * @return css selector
      */
-    public static String resultCssSelector(SearchRule searchRule, String elementsRequiredValue) {
-        if (elementsRequiredValue == null) {
-            return searchRule.getSelector().getValue();
+    public static String resultCssSelector(Selector selector, String requiredValue,
+                                           String uniquenessAttribute) {
+        if (requiredValue == null) {
+            return selector.getValue();
         }
 
-        return String.format("%s[%s='%s']", searchRule.getSelector().getValue(), searchRule.getUniqueness(),
-            elementsRequiredValue);
+        return String
+            .format("%s[%s=%s]", selector.getValue(), uniquenessAttribute, requiredValue);
     }
 
     /**
      * Generate string contains xpath selector for SearchRule.
      *
-     * @param searchRule {@link SearchRule} with xpath selector
-     * @param elementsRequiredValue value received from webPage by 'uniqueness' attribute
+     * @param selector {@link Selector} xpath selector
+     * @param requiredValue value received from webPage by 'uniqueness' attribute
+     * @param uniquenessAttribute name of the 'uniqueness' attribute
      * @return xpath selector
      */
-    public static String resultXpathSelector(SearchRule searchRule, String elementsRequiredValue) {
-        String xpathWithoutCloseBracket = searchRule.getXpath().replace("]", "");
+    public static String resultXpathSelector(Selector selector, String requiredValue,
+                                             String uniquenessAttribute) {
+        String xpathWithoutCloseBracket = selector.getValue().replace("]", "");
 
-        if (elementsRequiredValue == null) {
+        if (requiredValue == null) {
             return xpathWithoutCloseBracket + "]";
         }
 
-        if (searchRule.getInnerSearchRules() == null) {
+//        if (searchRule.getInnerSearchRules() == null) {
 
-            if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
-                return xpathWithoutCloseBracket + " and @"
-                    + searchRule.getUniqueness() + "='" + elementsRequiredValue + "']";
-            } else {
-                return xpathWithoutCloseBracket + " and text()='" + elementsRequiredValue + "']";
-            }
+        if (uniquenessAttribute.equalsIgnoreCase("text")) {
+            return xpathWithoutCloseBracket + " and text()='" + requiredValue + "']";
+        } else {
+            return xpathWithoutCloseBracket + " and @"
+                + uniquenessAttribute + "='" + requiredValue + "']";
         }
-
-        return "";
+//        }
+//        return "";
     }
-
-    public static Selector resultSelector(Selector selector, Element element){
-        if()
-
-        String selectorValueWithoutClosedBracket = selector.getValue();
-
-
-        if(selector.isXpath()){
-            selectorValueWithoutClosedBracket = selector.getValue().replace("]", "");
-        }
-
-
-
-
-
-
-        if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
-
-            if (searchRule.getSelector().isXpath()) {
-                XpathToCssTransformation.getCssSelector(searchRule);
-            }
-
-
-
-
-        }
 }

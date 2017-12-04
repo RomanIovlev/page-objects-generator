@@ -34,7 +34,7 @@ public class PropertyLoader {
     private final static Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
 
     public static void loadProperties() {
-        logger.info("Start read property file = '" + PROPERTY_FILE + "'" );
+        logger.info("Start read property file = '" + PROPERTY_FILE + "'\n" );
         searchRuleGroups = new SearchRuleGroups(getSearchRuleGroupList());
         searchRuleGroupsScheme = new SearchRuleGroupsScheme(getMapWithScheme());
         rawSearchRuleBuilders = new RawSearchRuleBuilders(getMapWithBuilders());
@@ -76,7 +76,7 @@ public class PropertyLoader {
             schemeMap.put(groupName, schema);
             logger.info("Add scheme = '" + schemaPath + "' for '" + groupName + "' group");
         }
-        logger.info("Finish reading list of schemes");
+        logger.info("Finish reading list of schemes\n");
 
         return schemeMap;
     }
@@ -101,9 +101,9 @@ public class PropertyLoader {
                 logger.info("Add type = '" + types.getString(j) + "' in '" + groupName + "' group");
             }
             searchRuleGroups.add(new SearchRuleGroup(groupName, searchRuleTypes));
-            logger.info("Finish read group types - '" + groupName + "'");
+            logger.info("Finish read group types - '" + groupName + "'\n");
         }
-        logger.info("Finish reading list of group types");
+        logger.info("Finish reading list of group types\n");
 
         return searchRuleGroups;
     }

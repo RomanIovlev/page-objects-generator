@@ -47,7 +47,7 @@ public class WebPageTest {
         when(elementsFromWebSite1.size()).thenReturn(0);
         when(elementsFromWebSite2.size()).thenReturn(1);
 
-        sut.addSearchRules(Arrays.asList(searchRule1,searchRule2));
+//        sut.addSearchRules(Arrays.asList(searchRule1,searchRule2));
 
         assertTrue(sut.getSearchRules().size()==1);
         assertTrue(sut.getSearchRules().size()==1);

@@ -9,7 +9,7 @@ import java.util.Set;
 import org.jsoup.select.Elements;
 
 /**
- * {@link UniquenessAttributeExistenceValidator} validate that {@link SearchRule} has correct unique
+ * {@link UniquenessAttributeExistenceValidator} visit that {@link SearchRule} has correct unique
  * attribute. <br/> Default priority: 52.
  */
 public class UniquenessAttributeExistenceValidator extends AbstractValidator {

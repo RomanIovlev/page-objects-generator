@@ -7,7 +7,6 @@ import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.util.Collections;
 import java.util.List;
@@ -35,24 +34,28 @@ public class CommonSearchRuleAnnotation implements JavaAnnotation {
     public List<AnnotationMember> getAnnotationMembers()
         throws XpathToCssTransformerException {
 
-        Selector resultSelector = SelectorUtils.resultSelector(searchRule.getSelector(), element);
-
-        return Collections.singletonList(new AnnotationMember(resultSelector.getType(), "$S", resultSelector.getValue()));
+        return Collections.singletonList(getAnnotationMemberFromRule(searchRule, element));
     }
 
-    private AnnotationMember getAnnotationMemberFromRule(CommonSearchRule searchRule, Element element)
+    private AnnotationMember getAnnotationMemberFromRule(CommonSearchRule searchRule,
+                                                         Element element)
         throws XpathToCssTransformerException {
 
         String requiredValue = searchRule.getRequiredValue(element);
 
         if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
 
-            if (searchRule.getSelector().isXpath()) {
-                XpathToCssTransformation.getCssSelector(searchRule);
+            Selector cssSelector = searchRule.getSelector();
+
+            if (cssSelector.isXpath()) {
+                cssSelector = XpathToCssTransformation.getCssSelector(cssSelector);
             }
 
-            return new AnnotationMember("css", "$S", resultCssSelector(searchRule, requiredValue));
+            return new AnnotationMember("css", "$S",
+                resultCssSelector(cssSelector, requiredValue, searchRule.getUniqueness()));
         }
-        return new AnnotationMember("xpath", "$S", resultXpathSelector(searchRule, requiredValue));
+        return new AnnotationMember("xpath", "$S",
+            resultXpathSelector(searchRule.getSelector(), requiredValue,
+                searchRule.getUniqueness()));
     }
 }

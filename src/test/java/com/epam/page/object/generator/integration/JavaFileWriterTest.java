@@ -26,7 +26,7 @@ public class JavaFileWriterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        sut = new JavaFileWriter(new SupportedTypesContainer(), new XpathToCssTransformation());
+        sut = new JavaFileWriter(new SupportedTypesContainer());
         WebPagesBuilder webPagesBuilder = new WebPagesBuilder();
         webPages = webPagesBuilder.generate(Collections.singletonList(TEST_URL));
 

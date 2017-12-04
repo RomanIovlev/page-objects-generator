@@ -3,7 +3,7 @@ package com.epam.page.object.generator.validators.oldValidators;
 import com.epam.page.object.generator.model.SearchRule;
 
 /**
- * {@link RootExistenceValidator} validate that complex {@link SearchRule} has 'root' inner element.
+ * {@link RootExistenceValidator} visit that complex {@link SearchRule} has 'root' inner element.
  * <br/> Default priority: 3.
  */
 public class RootExistenceValidator extends AbstractValidator {

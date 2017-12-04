@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * AbstractValidator is the abstract base class for crating a new Validator, which can be used into
- * ValidatorsStarter. <p> For creating a new Validator you need: <ol> <li>Create a new class which
+ * JsonValidators. <p> For creating a new Validator you need: <ol> <li>Create a new class which
  * extends from {@link AbstractValidator} and override the main method {@link
  * AbstractValidator#isValid(SearchRule, ValidationContext)}.</li> <li>Create default constructor
  * with {@link AbstractValidator#priority}.</li> <li>Override {@link
@@ -24,8 +24,8 @@ public abstract class AbstractValidator implements Validator {
      * validators which present by the default have some default priority, but if you create your
      * own validator you must not forget to set priority for you validator into default constructor
      * and change priories for all default validators if you need. <br/><br/> For priority you need
-     * to use int numbers: <br/> <ul> <li>0-49 fot validators which validate format of JSON
-     * files</li> <li>51+ for validators which validate SearchRules by the urls</li> </ul> For
+     * to use int numbers: <br/> <ul> <li>0-49 fot validators which visit format of JSON
+     * files</li> <li>51+ for validators which visit SearchRules by the urls</li> </ul> For
      * example: <br/> UniquenessLocatorValidator can have priority equals 51, because it checks that
      * the SearchRule is uniqueness on the WebPage by the url. It can be like this:<br/> {@code
      * public UniquenessLocatorValidator() { super(51); } }

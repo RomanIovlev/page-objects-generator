@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * {@link DuplicateTitleInInnerSearchRulesValidator} validate that all inner {@link SearchRule} has
+ * {@link DuplicateTitleInInnerSearchRulesValidator} visit that all inner {@link SearchRule} has
  * not any duplicates in titles. <br/> Flag {@link AbstractValidator#isValidateAllSearchRules} =
  * false by default.  <br/> Default priority: 6, must go only after {@link
  * TitleExistenceIntoInnerRulesValidator}.

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 /**
- * {@link TitleOfComplexElementValidator} validate that inner {@link SearchRule} has correct "title"
+ * {@link TitleOfComplexElementValidator} visit that inner {@link SearchRule} has correct "title"
  * attribute which supported by complex annotation. <br/> Default priority: 2.
  */
 public class TitleOfComplexElementValidator extends AbstractValidator {

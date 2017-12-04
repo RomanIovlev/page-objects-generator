@@ -2,6 +2,7 @@ package com.epam.page.object.generator.adapter;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
+import com.epam.page.object.generator.adapter.searchRuleFields.FormInnerSearchRuleField;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
@@ -21,18 +22,15 @@ public class FormClass implements JavaClass {
     private WebPage webPage;
     private FormSearchRule searchRule;
     private SupportedTypesContainer typesContainer;
-    private XpathToCssTransformation xpathToCssTransformation;
 
     public FormClass(String packageName,
                      WebPage webPage,
                      FormSearchRule searchRule,
-                     SupportedTypesContainer typesContainer,
-                     XpathToCssTransformation xpathToCssTransformation) {
+                     SupportedTypesContainer typesContainer) {
         this.packageName = packageName;
         this.webPage = webPage;
         this.searchRule = searchRule;
         this.typesContainer = typesContainer;
-        this.xpathToCssTransformation = xpathToCssTransformation;
     }
 
     @Override
@@ -47,9 +45,8 @@ public class FormClass implements JavaClass {
 
     @Override
     public Class getSuperClass() {
-        return searchRule.getType().equals(SearchRuleType.FORM.getName()) ? Form.class
+        return searchRule.getTypeName().equals(SearchRuleType.FORM.getName()) ? Form.class
             : Section.class;
-
     }
 
     @Override
@@ -68,9 +65,8 @@ public class FormClass implements JavaClass {
                 SearchRuleExtractor.extractElementsFromElement(parentElement, innerSearchRule)
                     .stream()
                     .filter(element -> !innerSearchRule.getRequiredValue(element).isEmpty())
-                    .map(element -> new SearchRuleField(innerSearchRule, element, getPackageName(),
-                        typesContainer,
-                        xpathToCssTransformation)).collect(Collectors.toList()));
+                    .map(element -> new FormInnerSearchRuleField(innerSearchRule, element,
+                        typesContainer)).collect(Collectors.toList()));
         }
 
         return fields;

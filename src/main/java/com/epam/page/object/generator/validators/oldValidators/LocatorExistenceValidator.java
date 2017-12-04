@@ -7,7 +7,7 @@ import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.Set;
 
 /**
- * {@link LocatorExistenceValidator} validate that {@link SearchRule} has any locator (xpath or
+ * {@link LocatorExistenceValidator} visit that {@link SearchRule} has any locator (xpath or
  * css).<br/> Default priority: 0.
  */
 public class LocatorExistenceValidator extends AbstractValidator {

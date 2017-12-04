@@ -3,10 +3,11 @@ package com.epam.page.object.generator.validators;
 
 import static org.junit.Assert.assertTrue;
 
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.ValidationException;
-import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.validators.web.UniquenessLocatorValidator;
+import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,16 +18,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
-public class ValidatorsStarterTest {
+public class JsonValidatorsTest {
 
-    private ValidatorsStarter sut;
+    private JsonValidators sut;
 
     private Set<String> supportedTypes = new HashSet<>();
 
     private SearchRule ruleValid =
-        new SearchRule("button", "value", null, null, "//input[@name='btnK']", null);
+        new CommonSearchRule("value", SearchRuleType.BUTTON, new Selector(null, "//input[@name='btnK']"));
     private SearchRule ruleJsonInvalid =
-        new SearchRule("button", "req", null, null, null, null);
+        new CommonSearchRule("req", SearchRuleType.BUTTON, new Selector(null, null));
 
     private List<SearchRule> searchRules = new ArrayList<>();
     private List<String> urls = new ArrayList<>();
@@ -39,15 +40,15 @@ public class ValidatorsStarterTest {
 
         urls.add("https://www.google.com");
 
-        sut = new ValidatorsStarter(new SupportedTypesContainer());
+        sut = new JsonValidators();
 
-        sut.setCheckLocatorsUniqueness(true);
+//        sut.setCheckLocatorsUniqueness(true);
     }
 
     @Test
     public void validateSearchRules_Success() throws Exception {
         searchRules.add(ruleValid);
-        List<SearchRule> validationResults = sut.validate(searchRules, urls);
+        List<SearchRule> validationResults = sut.validate(searchRules);
 
         Assert.assertEquals(searchRules.size(), validationResults.size());
 
@@ -58,28 +59,28 @@ public class ValidatorsStarterTest {
     @Test(expected = ValidationException.class)
     public void validateSearchRules_NotLocatorExist() throws Exception {
         searchRules.add(ruleJsonInvalid);
-        sut.validate(searchRules, urls);
+        sut.validate(searchRules);
     }
 
-    @Test
-    public void setCheckLocatorsUniquenessTrue() {
-        sut.setCheckLocatorsUniqueness(true);
+//    @Test
+//    public void setCheckLocatorsUniquenessTrue() {
+//        sut.setCheckLocatorsUniqueness(true);
+//
+//        assertTrue(sut.getValidators()
+//            .stream()
+//            .anyMatch(validator -> validator instanceof UniquenessLocatorValidator));
+//
+//    }
 
-        assertTrue(sut.getValidators()
-            .stream()
-            .anyMatch(validator -> validator instanceof UniquenessLocatorValidator));
-
-    }
-
-    @Test
-    public void setCheckLocatorsUniquenessFalse() {
-        sut.setCheckLocatorsUniqueness(false);
-
-        assertTrue(sut.getValidators()
-            .stream()
-            .noneMatch(validator -> validator instanceof UniquenessLocatorValidator));
-
-    }
+//    @Test
+//    public void setCheckLocatorsUniquenessFalse() {
+//        sut.setCheckLocatorsUniqueness(false);
+//
+//        assertTrue(sut.getValidators()
+//            .stream()
+//            .noneMatch(validator -> validator instanceof UniquenessLocatorValidator));
+//
+//    }
 
 
     @After

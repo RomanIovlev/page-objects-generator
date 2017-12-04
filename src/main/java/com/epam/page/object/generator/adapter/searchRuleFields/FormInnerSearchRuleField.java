@@ -4,23 +4,24 @@ import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
-import com.epam.page.object.generator.adapter.searchRuleAnnotations.ComplexSearchRuleAnnotation;
 import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.searchRuleAnnotations.ComplexSearchRuleAnnotation;
+import com.epam.page.object.generator.adapter.searchRuleAnnotations.FormInnerSearchRuleAnnotation;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
+import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import javax.lang.model.element.Modifier;
 import org.jsoup.nodes.Element;
 
-public class ComplexSearchRuleField implements JavaField {
+public class FormInnerSearchRuleField implements JavaField {
 
-    private ComplexSearchRule searchRule;
+    private FormInnerSearchRule searchRule;
     private Element element;
     private SupportedTypesContainer typesContainer;
 
-    public ComplexSearchRuleField(ComplexSearchRule searchRule,
-                                  Element element,
-                                  SupportedTypesContainer typesContainer) {
+    public FormInnerSearchRuleField(FormInnerSearchRule searchRule,
+                                    Element element,
+                                    SupportedTypesContainer typesContainer) {
         this.searchRule = searchRule;
         this.element = element;
         this.typesContainer = typesContainer;
@@ -37,7 +38,7 @@ public class ComplexSearchRuleField implements JavaField {
         Class fieldAnnotationClass = typesContainer.getSupportedTypesMap()
             .get(searchRule.getTypeName())
             .getElementAnnotation();
-        return new ComplexSearchRuleAnnotation(searchRule, element, fieldAnnotationClass);
+        return new FormInnerSearchRuleAnnotation(searchRule, element, fieldAnnotationClass);
     }
 
     @Override

@@ -2,10 +2,12 @@ package com.epam.page.object.generator.model.searchRules;
 
 
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webSearchRules.WebSearchRule;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
+import org.jsoup.select.Elements;
 
 public class ComplexInnerSearchRule implements SearchRule {
 
@@ -29,14 +31,23 @@ public class ComplexInnerSearchRule implements SearchRule {
         return title;
     }
 
+    public boolean isRoot(){
+        return title.equals("root");
+    }
+
     @Override
     public Selector getSelector() {
         return selector;
     }
 
     @Override
-    public ValidationResultNew beValidated(ValidatorVisitor validatorVisitor) {
-        return validatorVisitor.validate(this);
+    public WebSearchRule getWebSearchRule(Elements elements) {
+        return null;
+    }
+
+    @Override
+    public void accept(ValidatorVisitor validatorVisitor) {
+        validationResults.add(validatorVisitor.visit(this));
     }
 
     @Override
@@ -52,6 +63,11 @@ public class ComplexInnerSearchRule implements SearchRule {
     @Override
     public boolean isInvalid() {
         return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
+    }
+
+    @Override
+    public void addValidationResult(ValidationResultNew validationResult) {
+        validationResults.add(validationResult);
     }
 
     @Override

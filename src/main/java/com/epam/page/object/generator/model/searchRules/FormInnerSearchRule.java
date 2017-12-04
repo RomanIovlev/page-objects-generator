@@ -1,12 +1,14 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webSearchRules.WebSearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class FormInnerSearchRule implements SearchRule {
 
@@ -30,8 +32,17 @@ public class FormInnerSearchRule implements SearchRule {
         return type;
     }
 
+    public String getTypeName(){
+        return type.getName();
+    }
+
     public Selector getSelector() {
         return selector;
+    }
+
+    @Override
+    public WebSearchRule getWebSearchRule(Elements elements) {
+        return null;
     }
 
     public String getRequiredValue(Element element) {
@@ -41,8 +52,8 @@ public class FormInnerSearchRule implements SearchRule {
     }
 
     @Override
-    public ValidationResultNew beValidated(ValidatorVisitor validatorVisitor) {
-        return validatorVisitor.validate(this);
+    public void accept(ValidatorVisitor validatorVisitor) {
+        validationResults.add(validatorVisitor.visit(this));
     }
 
     @Override
@@ -58,6 +69,11 @@ public class FormInnerSearchRule implements SearchRule {
     @Override
     public boolean isInvalid() {
         return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
+    }
+
+    @Override
+    public void addValidationResult(ValidationResultNew validationResult) {
+        validationResults.add(validationResult);
     }
 
     @Override

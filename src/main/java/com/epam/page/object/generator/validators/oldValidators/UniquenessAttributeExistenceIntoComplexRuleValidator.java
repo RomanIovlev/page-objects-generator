@@ -4,7 +4,7 @@ import com.epam.page.object.generator.model.SearchRule;
 import java.util.Optional;
 
 /**
- * {@link UniquenessAttributeExistenceIntoComplexRuleValidator} validate that complex {@link
+ * {@link UniquenessAttributeExistenceIntoComplexRuleValidator} visit that complex {@link
  * SearchRule} has only one 'uniqueness' attribute and only 'root' inner element has it. <br/>
  * Default priority: 4.
  */

@@ -8,7 +8,7 @@ public interface Validator {
     /**
      * Main method which start validating process.<br/> Input receives: the {@link
      * ValidationContext} from which is taken list of {@link com.epam.page.object.generator.model.SearchRule}
-     * which need to validate.<br/> Each {@link com.epam.page.object.generator.model.SearchRule} go
+     * which need to visit.<br/> Each {@link com.epam.page.object.generator.model.SearchRule} go
      * throw {@link AbstractValidator#isValid(SearchRule, ValidationContext)} method, which
      * determines the validity of the rule.<br/> At the end of the validation process, {@link
      * ValidationContext} collect all information about validation into his {@link

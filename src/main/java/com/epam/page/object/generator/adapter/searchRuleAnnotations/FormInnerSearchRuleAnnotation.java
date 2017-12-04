@@ -7,51 +7,40 @@ import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
+import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.util.Collections;
 import java.util.List;
 import org.jsoup.nodes.Element;
-import org.openqa.selenium.support.FindBy;
 
-public class ComplexInnerSearchRuleAnnotation implements JavaAnnotation {
+public class FormInnerSearchRuleAnnotation implements JavaAnnotation {
 
-    private ComplexInnerSearchRule searchRule;
+    private FormInnerSearchRule searchRule;
     private Element element;
+    private Class fieldAnnotationClass;
 
-    public ComplexInnerSearchRuleAnnotation(ComplexInnerSearchRule searchRule, Element element) {
+    public FormInnerSearchRuleAnnotation(FormInnerSearchRule searchRule, Element element,
+                                         Class fieldAnnotationClass) {
         this.searchRule = searchRule;
         this.element = element;
+        this.fieldAnnotationClass = fieldAnnotationClass;
     }
 
     @Override
     public Class getAnnotationClass() {
-        return FindBy.class;
+        return fieldAnnotationClass;
     }
 
     @Override
     public List<AnnotationMember> getAnnotationMembers() throws XpathToCssTransformerException {
-        if (element == null) {
-            return Collections
-                .singletonList(new AnnotationMember(searchRule.getSelector().getType(), "$S",
-                    searchRule.getSelector().getValue()));
-        } else {
-
-            return Collections.singletonList(getAnnotationMemberFromRule(searchRule, element));
-        }
+        return Collections.singletonList(getAnnotationMemberFromRule(searchRule, element));
     }
 
-    private AnnotationMember getAnnotationMemberFromRule(ComplexInnerSearchRule searchRule,
+    private AnnotationMember getAnnotationMemberFromRule(FormInnerSearchRule searchRule,
                                                          Element element)
         throws XpathToCssTransformerException {
 
-        String requiredValue = null;
-
-        if (searchRule.isRoot()) {
-            requiredValue = searchRule.getUniqueness().equals("text")
-                ? element.text()
-                : element.attr(searchRule.getUniqueness());
-        }
+        String requiredValue = searchRule.getRequiredValue(element);
 
         if (!searchRule.getUniqueness().equalsIgnoreCase("text")) {
 

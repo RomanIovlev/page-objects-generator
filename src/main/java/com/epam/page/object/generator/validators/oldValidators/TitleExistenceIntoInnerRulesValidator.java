@@ -3,7 +3,7 @@ package com.epam.page.object.generator.validators.oldValidators;
 import com.epam.page.object.generator.model.SearchRule;
 
 /**
- * {@link TitleExistenceIntoInnerRulesValidator} validate that all inner rules into complex {@link
+ * {@link TitleExistenceIntoInnerRulesValidator} visit that all inner rules into complex {@link
  * SearchRule} has 'title' attribute.<br/> Default priority: 5.
  */
 public class TitleExistenceIntoInnerRulesValidator extends AbstractValidator {
