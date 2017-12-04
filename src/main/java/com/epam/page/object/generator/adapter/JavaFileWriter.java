@@ -3,6 +3,7 @@ package com.epam.page.object.generator.adapter;
 import com.epam.page.object.generator.adapter.JavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.model.WebElementGroup;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
@@ -36,7 +37,8 @@ public class JavaFileWriter {
                 webPage,
                 typesContainer));
 
-            for (SearchRule searchRule : webPage.getSearchRules()) {
+            for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
+                SearchRule searchRule = webElementGroup.getSearchRule();
                 if (searchRule instanceof FormSearchRule) {
                     writeClass(outputDir,
                         new FormClass(packageName + ".form",

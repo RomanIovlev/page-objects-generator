@@ -2,11 +2,13 @@ package com.epam.page.object.generator.model.searchRules;
 
 
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.webSearchRules.WebSearchRule;
+import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.model.WebElementGroup;
 import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ComplexInnerSearchRule implements SearchRule {
@@ -31,7 +33,7 @@ public class ComplexInnerSearchRule implements SearchRule {
         return title;
     }
 
-    public boolean isRoot(){
+    public boolean isRoot() {
         return title.equals("root");
     }
 
@@ -41,8 +43,22 @@ public class ComplexInnerSearchRule implements SearchRule {
     }
 
     @Override
-    public WebSearchRule getWebSearchRule(Elements elements) {
-        return null;
+    public List<WebElement> getWebElements(Elements elements) {
+        List<WebElement> webElements = new ArrayList<>();
+
+        if (uniqueness != null) {
+            for (Element element : elements) {
+                webElements.add(new WebElement(element, uniqueness.equals("text")
+                    ? element.text()
+                    : element.attr(uniqueness)));
+            }
+        } else {
+            for (Element element : elements) {
+                webElements.add(new WebElement(element, null));
+            }
+        }
+
+        return webElements;
     }
 
     @Override
@@ -62,7 +78,8 @@ public class ComplexInnerSearchRule implements SearchRule {
 
     @Override
     public boolean isInvalid() {
-        return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
+        return validationResults.stream()
+            .anyMatch(validationResultNew -> !validationResultNew.isValid());
     }
 
     @Override
@@ -73,9 +90,9 @@ public class ComplexInnerSearchRule implements SearchRule {
     @Override
     public String toString() {
         return "{" +
-                "uniqueness='" + uniqueness + '\'' +
-                ", title='" + title + '\'' +
-                ", selector=" + selector +
-                '}';
+            "uniqueness='" + uniqueness + '\'' +
+            ", title='" + title + '\'' +
+            ", selector=" + selector +
+            '}';
     }
 }

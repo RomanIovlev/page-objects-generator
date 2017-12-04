@@ -1,9 +1,9 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.webSearchRules.WebSearchRule;
+import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.model.WebElementGroup;
 import com.epam.page.object.generator.utils.SearchRuleType;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.util.ArrayList;
@@ -49,8 +49,12 @@ public class CommonSearchRule implements SearchRule {
     }
 
     @Override
-    public WebSearchRule getWebSearchRule(Elements elements) {
-        return null;
+    public List<WebElement> getWebElements(Elements elements) {
+        List<WebElement> webElements = new ArrayList<>();
+        for (Element element : elements) {
+            webElements.add(new WebElement(element, getRequiredValue(element)));
+        }
+        return webElements;
     }
 
     @Override

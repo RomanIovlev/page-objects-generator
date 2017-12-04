@@ -1,11 +1,11 @@
 package com.epam.page.object.generator.validators.searchRuleJsonValidators;
 
+import com.epam.page.object.generator.model.WebElementGroup;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
-import com.epam.page.object.generator.model.webSearchRules.WebCommonSearchRule;
 import com.epam.page.object.generator.validators.ValidationResultNew;
 
 public abstract class AbstractValidator implements ValidatorVisitor {
@@ -36,7 +36,7 @@ public abstract class AbstractValidator implements ValidatorVisitor {
     }
 
     @Override
-    public ValidationResultNew visit(WebCommonSearchRule commonSearchRule) {
+    public ValidationResultNew visit(WebElementGroup webElementGroup) {
         return new ValidationResultNew(true, this + " passed!");
     }
 }

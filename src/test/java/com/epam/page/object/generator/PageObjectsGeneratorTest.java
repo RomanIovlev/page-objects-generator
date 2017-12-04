@@ -14,6 +14,7 @@ import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
+import com.epam.page.object.generator.validators.WebValidators;
 import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import com.google.common.collect.Lists;
 import java.util.Collections;
@@ -46,6 +47,9 @@ public class PageObjectsGeneratorTest {
     private JsonValidators jsonValidators;
 
     @Mock
+    private WebValidators webValidators;
+
+    @Mock
     private WebPagesBuilder builder;
 
 
@@ -76,7 +80,7 @@ public class PageObjectsGeneratorTest {
         when(jsonValidators.validate(anyList())).thenReturn(searchRules);
 //        when(jsonValidators.getValidationContext()).thenReturn(validationContext);
 
-        sut = new PageObjectsGenerator(parser, validator, transformer, checker, jsonValidators, javaFileWriter, builder);
+        sut = new PageObjectsGenerator(parser, validator, transformer, checker, jsonValidators, webValidators, javaFileWriter, builder);
     }
 
 //    @Test

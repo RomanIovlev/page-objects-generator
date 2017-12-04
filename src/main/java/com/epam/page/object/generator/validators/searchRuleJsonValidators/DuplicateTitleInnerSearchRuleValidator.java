@@ -18,7 +18,6 @@ public class DuplicateTitleInnerSearchRuleValidator extends AbstractValidator {
             }
         }
         return new ValidationResultNew(true, this + " passed!");
-
     }
 
 }

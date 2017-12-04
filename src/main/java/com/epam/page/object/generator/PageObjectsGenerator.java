@@ -12,6 +12,7 @@ import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
+import com.epam.page.object.generator.validators.WebValidators;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -24,6 +25,7 @@ public class PageObjectsGenerator {
     private TypeTransformer typeTransformer;
     private ValidationChecker checker;
     private JsonValidators jsonValidators;
+    private WebValidators webValidators;
     private JavaFileWriter javaFileWriter;
     private WebPagesBuilder webPagesBuilder;
 
@@ -34,6 +36,7 @@ public class PageObjectsGenerator {
                                 TypeTransformer typeTransformer,
                                 ValidationChecker checker,
                                 JsonValidators jsonValidators,
+                                WebValidators webValidators,
                                 JavaFileWriter javaFileWriter,
                                 WebPagesBuilder webPagesBuilder) {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
@@ -41,6 +44,7 @@ public class PageObjectsGenerator {
         this.typeTransformer = typeTransformer;
         this.checker = checker;
         this.jsonValidators = jsonValidators;
+        this.webValidators = webValidators;
         this.javaFileWriter = javaFileWriter;
         this.webPagesBuilder = webPagesBuilder;
     }
@@ -74,6 +78,8 @@ public class PageObjectsGenerator {
         webPages.forEach(wp -> wp.addSearchRules(validSearchRules));
 
         // TODO: web validation
+        webValidators.validate(webPages);
+
 
 
 

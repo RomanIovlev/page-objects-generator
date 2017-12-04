@@ -1,7 +1,8 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.webSearchRules.WebSearchRule;
+import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
@@ -32,7 +33,7 @@ public class FormInnerSearchRule implements SearchRule {
         return type;
     }
 
-    public String getTypeName(){
+    public String getTypeName() {
         return type.getName();
     }
 
@@ -41,8 +42,16 @@ public class FormInnerSearchRule implements SearchRule {
     }
 
     @Override
-    public WebSearchRule getWebSearchRule(Elements elements) {
-        return null;
+    public List<WebElement> getWebElements(Elements elements) {
+        List<WebElement> webElements = new ArrayList<>();
+        for (Element element : elements) {
+            Elements extractElements = SearchRuleExtractor
+                .extractElementsFromElement(element, this);
+            for (Element extractElement : extractElements) {
+                webElements.add(new WebElement(extractElement, getRequiredValue(extractElement)));
+            }
+        }
+        return webElements;
     }
 
     public String getRequiredValue(Element element) {
@@ -68,7 +77,8 @@ public class FormInnerSearchRule implements SearchRule {
 
     @Override
     public boolean isInvalid() {
-        return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
+        return validationResults.stream()
+            .anyMatch(validationResultNew -> !validationResultNew.isValid());
     }
 
     @Override
@@ -79,9 +89,9 @@ public class FormInnerSearchRule implements SearchRule {
     @Override
     public String toString() {
         return "{" +
-                "uniqueness='" + uniqueness + '\'' +
-                ", type='" + type + '\'' +
-                ", selector=" + selector +
-                '}';
+            "uniqueness='" + uniqueness + '\'' +
+            ", type='" + type + '\'' +
+            ", selector=" + selector +
+            '}';
     }
 }

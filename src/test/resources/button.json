@@ -3,7 +3,10 @@
     {
       "type": "Button",
       "uniqueness": "value",
-      "xpath": "//input[@type='submit']"
+      "selector": {
+        "type": "xpath",
+        "value": "//input[@type='submit']"
+      }
     }
   ]
 }

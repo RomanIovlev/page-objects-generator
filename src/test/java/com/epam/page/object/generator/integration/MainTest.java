@@ -13,6 +13,7 @@ import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
 import com.epam.page.object.generator.validators.ValidationExceptionConverter;
+import com.epam.page.object.generator.validators.WebValidators;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,10 +56,12 @@ public class MainTest {
 
         JsonValidators jsonValidators = new JsonValidators();
 
+        WebValidators webValidators = new WebValidators();
+
         WebPagesBuilder builder = new WebPagesBuilder();
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validator, transformer, checker,
-            jsonValidators, javaPoetAdapter, builder);
+            jsonValidators, webValidators, javaPoetAdapter, builder);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 
@@ -148,7 +151,7 @@ public class MainTest {
             "https://www.google.com",
             false);
 
-        pog.generatePageObjects("src/test/resources/button.json", outputDir, packageName, urls);
+        pog.generatePageObjects("/button.json", outputDir, packageName, urls);
     }
 
     @Test

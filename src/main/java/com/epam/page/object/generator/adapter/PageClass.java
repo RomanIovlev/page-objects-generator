@@ -9,6 +9,8 @@ import com.epam.page.object.generator.adapter.searchRuleFields.CommonSearchRuleF
 import com.epam.page.object.generator.adapter.searchRuleFields.ComplexSearchRuleField;
 import com.epam.page.object.generator.adapter.searchRuleFields.FormSearchRuleField;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.model.WebElementGroup;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
@@ -58,20 +60,24 @@ public class PageClass implements JavaClass {
     public List<JavaField> getFieldsList() {
         List<JavaField> fields = new ArrayList<>();
 
-        for (SearchRule searchRule : webPage.getSearchRules()) {
-            Element element = webPage.extractElement(searchRule);
-            if (searchRule instanceof CommonSearchRule) {
-                fields.add(
-                    new CommonSearchRuleField((CommonSearchRule) searchRule, element,
-                        typesContainer));
-            } else if (searchRule instanceof ComplexSearchRule) {
-                fields.add(
-                    new ComplexSearchRuleField((ComplexSearchRule) searchRule, element,
-                        typesContainer));
-            } else if (searchRule instanceof FormSearchRule) {
-                fields.add(
-                    new FormSearchRuleField((FormSearchRule) searchRule, element, packageName,
-                        typesContainer));
+        for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
+            SearchRule searchRule = webElementGroup.getSearchRule();
+            List<WebElement> webElements = webElementGroup.getWebElements();
+            for (WebElement webElement : webElements) {
+                Element element = webElement.getElement();
+                if (searchRule instanceof CommonSearchRule) {
+                    fields.add(
+                        new CommonSearchRuleField((CommonSearchRule) searchRule, element,
+                            typesContainer));
+                } else if (searchRule instanceof ComplexSearchRule) {
+                    fields.add(
+                        new ComplexSearchRuleField((ComplexSearchRule) searchRule, element,
+                            typesContainer));
+                } else if (searchRule instanceof FormSearchRule) {
+                    fields.add(
+                        new FormSearchRuleField((FormSearchRule) searchRule, element, packageName,
+                            typesContainer));
+                }
             }
         }
 

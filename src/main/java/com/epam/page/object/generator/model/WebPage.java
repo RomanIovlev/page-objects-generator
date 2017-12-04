@@ -14,10 +14,10 @@ public class WebPage {
 
     private final URI uri;
     private Document document;
-    private List<SearchRule> searchRules;
+    private List<WebElementGroup> webElementGroups;
 
     protected WebPage(URI uri, Document document) {
-        this.searchRules = new ArrayList<>();
+        this.webElementGroups = new ArrayList<>();
         this.uri = uri;
         this.document = document;
     }
@@ -42,15 +42,15 @@ public class WebPage {
         return uri.getHost();
     }
 
-    public List<SearchRule> getSearchRules() {
-        return searchRules;
+    public List<WebElementGroup> getWebElementGroups() {
+        return webElementGroups;
     }
 
     public void addSearchRules(List<SearchRule> searchRules) {
         for (SearchRule searchRule : searchRules) {
             Elements elements = extractElements(searchRule);
             if (elements.size() != 0) {
-                this.searchRules.add(searchRule);
+                this.webElementGroups.add(new WebElementGroup(searchRule, searchRule.getWebElements(elements)));
             }
         }
     }
