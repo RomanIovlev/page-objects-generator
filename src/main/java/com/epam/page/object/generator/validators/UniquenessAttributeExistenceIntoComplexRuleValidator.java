@@ -1,7 +1,9 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * {@link UniquenessAttributeExistenceIntoComplexRuleValidator} validate that complex {@link
@@ -12,6 +14,11 @@ public class UniquenessAttributeExistenceIntoComplexRuleValidator extends Abstra
 
     public UniquenessAttributeExistenceIntoComplexRuleValidator() {
         super(4);
+    }
+
+    public UniquenessAttributeExistenceIntoComplexRuleValidator(
+        Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(4, supportedSearchRuleTypes);
     }
 
     public UniquenessAttributeExistenceIntoComplexRuleValidator(int order) {
@@ -45,6 +52,6 @@ public class UniquenessAttributeExistenceIntoComplexRuleValidator extends Abstra
 
     @Override
     public String getExceptionMessage(SearchRule searchRule, ValidationContext validationContext) {
-        return "Only 'root' inner search rule can has got 'uniqueness' attribute";
+        return "Only 'root' inner search rule can have 'uniqueness' attribute";
     }
 }

@@ -1,15 +1,21 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.model.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleType;
+import java.util.Set;
 
 /**
  * {@link RootExistenceValidator} validate that complex {@link SearchRule} has 'root' inner element.
- * <br/> Default priority: 3.
+ * <br/> Default priority: 2.
  */
 public class RootExistenceValidator extends AbstractValidator {
 
     public RootExistenceValidator() {
-        super(3);
+        super(2);
+    }
+
+    public RootExistenceValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
+        super(2, supportedSearchRuleTypes);
     }
 
     public RootExistenceValidator(int order) {
@@ -17,7 +23,7 @@ public class RootExistenceValidator extends AbstractValidator {
     }
 
     public RootExistenceValidator(boolean isValidateAllSearchRules) {
-        super(3, isValidateAllSearchRules);
+        super(2, isValidateAllSearchRules);
     }
 
     public RootExistenceValidator(int order, boolean isValidateAllSearchRules) {

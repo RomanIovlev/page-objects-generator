@@ -8,16 +8,16 @@ import java.util.Set;
 
 /**
  * {@link TitleOfComplexElementValidator} validate that inner {@link SearchRule} has correct "title"
- * attribute which supported by complex annotation. <br/> Default priority: 2.
+ * attribute which supported by complex annotation. <br/> Default priority: 7.
  */
 public class TitleOfComplexElementValidator extends AbstractValidator {
 
     public TitleOfComplexElementValidator() {
-        super(2);
+        super(7);
     }
 
     public TitleOfComplexElementValidator(Set<SearchRuleType> supportedSearchRuleTypes) {
-        super(2, supportedSearchRuleTypes);
+        super(7, supportedSearchRuleTypes);
     }
 
     public TitleOfComplexElementValidator(int priority) {

@@ -24,10 +24,14 @@ public class ValidatorsStarter {
      */
     private List<Validator> validators = Lists.newArrayList(
         new LocatorExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
-        new IntermediateCheckValidator(),
+        new RootExistenceValidator(SearchRuleTypeGroups.complexTypes),
+        new TitleExistenceIntoInnerRulesValidator(SearchRuleTypeGroups.complexTypes),
+        new UniquenessAttributeExistenceIntoComplexRuleValidator(SearchRuleTypeGroups.complexTypes),
+        new DuplicateTitleInInnerSearchRulesValidator(SearchRuleTypeGroups.complexTypes),
         new TitleOfComplexElementValidator(SearchRuleTypeGroups.complexTypes),
-        new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
+        new IntermediateCheckValidator(),
         new UrlsValidator(),
+        new UniquenessAttributeExistenceValidator(SearchRuleTypeGroups.allExistingTypes),
         new SectionAttributeExistenceValidator(SearchRuleTypeGroups.formAndSectionTypes));
 
     private UniquenessLocatorValidator uniquenessLocatorValidator =
