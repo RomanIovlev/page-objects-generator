@@ -2,6 +2,9 @@ package com.epam.page.object.generator.integration;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
+import com.epam.page.object.generator.builders.JavaAnnotationBuilder;
+import com.epam.page.object.generator.builders.JavaClassBuilder;
+import com.epam.page.object.generator.builders.JavaFieldBuilder;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import com.epam.page.object.generator.errors.ValidationException;
@@ -9,7 +12,6 @@ import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
 import com.epam.page.object.generator.validators.ValidationExceptionConverter;
@@ -58,10 +60,13 @@ public class MainTest {
 
         WebValidators webValidators = new WebValidators();
 
+        JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName,
+            new JavaFieldBuilder(new JavaAnnotationBuilder(), bc));
+
         WebPagesBuilder builder = new WebPagesBuilder();
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validator, transformer, checker,
-            jsonValidators, webValidators, javaPoetAdapter, builder);
+            jsonValidators, webValidators, javaClassBuilder, javaPoetAdapter, builder);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 
@@ -74,7 +79,7 @@ public class MainTest {
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
             false);
 
-        pog.generatePageObjects("/dropdown.json", outputDir, packageName, urls);
+        pog.generatePageObjects("/dropdown.json", outputDir, urls);
     }
 
     @Test
@@ -83,7 +88,7 @@ public class MainTest {
             "https://www.w3schools.com/html/html_forms.asp",
             false);
 
-        pog.generatePageObjects("/form.json", outputDir, packageName, urls);
+        pog.generatePageObjects("/form.json", outputDir, urls);
     }
 
     @Test(expected = ValidationException.class)
@@ -92,8 +97,7 @@ public class MainTest {
             "https://www.w3schools.com/html/html_forms.asp",
             false);
 
-        pog.generatePageObjects("src/test/resources/form-wrong-section.json", outputDir,
-            packageName, urls);
+        pog.generatePageObjects("/form-wrong-section.json", outputDir, urls);
     }
 
     @Test(expected = NotValidUrlException.class)
@@ -103,7 +107,7 @@ public class MainTest {
             "https://www.w3schoolsd.com/howto/howto_js_dropdown.asp",
             false);
 
-        pog.generatePageObjects("src/test/resources/dropdown.json", outputDir, packageName, urls);
+        pog.generatePageObjects("/dropdown.json", outputDir, urls);
     }
 
     @Test(expected = ValidationException.class)
@@ -112,8 +116,7 @@ public class MainTest {
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
             false);
 
-        pog.generatePageObjects("src/test/resources/dropdown-wrong-type.json", outputDir,
-            packageName, urls);
+        pog.generatePageObjects("/dropdown-wrong-type.json", outputDir, urls);
     }
 
     @Test(expected = ValidationException.class)
@@ -122,8 +125,7 @@ public class MainTest {
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
             true);
 
-        pog.generatePageObjects("src/test/resources/dropdown-wrong-type.json", outputDir,
-            packageName, urls);
+        pog.generatePageObjects("/dropdown-wrong-type.json", outputDir, urls);
     }
 
     @Test(expected = ValidationException.class)
@@ -132,8 +134,7 @@ public class MainTest {
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
             false);
 
-        pog.generatePageObjects("src/test/resources/dropdown-wrong-selector.json", outputDir,
-            packageName, urls);
+        pog.generatePageObjects("/dropdown-wrong-selector.json", outputDir, urls);
     }
 
     @Test(expected = ValidationException.class)
@@ -142,7 +143,7 @@ public class MainTest {
             "https://www.google.com",
             false);
 
-        pog.generatePageObjects("src/test/resources/button.json", outputDir, packageName, urls);
+        pog.generatePageObjects("/button.json", outputDir, urls);
     }
 
     @Test
@@ -151,7 +152,7 @@ public class MainTest {
             "https://www.google.com",
             false);
 
-        pog.generatePageObjects("/button.json", outputDir, packageName, urls);
+        pog.generatePageObjects("/button.json", outputDir, urls);
     }
 
     @Test
@@ -160,8 +161,7 @@ public class MainTest {
             "http://materializecss.com/dropdown.html",
             false);
 
-        pog.generatePageObjects("/dropdown-inner-root.json", outputDir,
-            packageName, urls);
+        pog.generatePageObjects("/dropdown-inner-root.json", outputDir, urls);
     }
 
 }

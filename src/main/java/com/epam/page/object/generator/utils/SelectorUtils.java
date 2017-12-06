@@ -21,7 +21,7 @@ public class SelectorUtils {
         }
 
         return String
-            .format("%s[%s=%s]", selector.getValue(), uniquenessAttribute, requiredValue);
+            .format("%s[%s='%s']", selector.getValue(), uniquenessAttribute, requiredValue);
     }
 
     /**

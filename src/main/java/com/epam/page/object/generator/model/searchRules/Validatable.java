@@ -2,7 +2,7 @@ package com.epam.page.object.generator.model.searchRules;
 
 
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.List;
 
 public interface Validatable {

@@ -9,27 +9,24 @@ import static javax.lang.model.element.Modifier.STATIC;
 import com.epam.page.object.generator.model.WebPage;
 import javax.lang.model.element.Modifier;
 
-public class SiteField implements JavaField {
+public class SiteField implements IJavaField {
 
-    private String packageName;
     private WebPage webPage;
     private String titleName;
 
-    public SiteField(String packageName, WebPage webPage) {
-        this.packageName = packageName;
+    public SiteField(WebPage webPage) {
         this.webPage = webPage;
         titleName = splitCamelCase(webPage.getTitle());
     }
 
     @Override
     public String getFieldClassName() {
-        return packageName.substring(0, packageName.length() - ".site".length())
-            + ".page" + "." + firstLetterUp(titleName);
+        return firstLetterUp(titleName);
 
     }
 
     @Override
-    public JavaAnnotation getAnnotation() {
+    public IJavaAnnotation getAnnotation() {
         return new SiteFieldAnnotation(webPage);
     }
 

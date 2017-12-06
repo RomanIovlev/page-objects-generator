@@ -1,5 +1,6 @@
-package com.epam.page.object.generator.builders;
+package com.epam.page.object.generator.builders.searchRuleBuilders;
 
+import com.epam.page.object.generator.builders.RawSearchRuleBuilder;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;

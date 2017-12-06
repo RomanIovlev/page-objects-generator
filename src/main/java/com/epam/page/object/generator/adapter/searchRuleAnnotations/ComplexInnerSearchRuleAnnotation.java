@@ -3,10 +3,9 @@ package com.epam.page.object.generator.adapter.searchRuleAnnotations;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 
-import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.util.Collections;
@@ -14,7 +13,7 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.support.FindBy;
 
-public class ComplexInnerSearchRuleAnnotation implements JavaAnnotation {
+public class ComplexInnerSearchRuleAnnotation implements IJavaAnnotation {
 
     private ComplexInnerSearchRule searchRule;
     private Element element;

@@ -3,17 +3,16 @@ package com.epam.page.object.generator.adapter.searchRuleAnnotations;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 
-import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.util.Collections;
 import java.util.List;
 import org.jsoup.nodes.Element;
 
-public class FormInnerSearchRuleAnnotation implements JavaAnnotation {
+public class FormInnerSearchRuleAnnotation implements IJavaAnnotation {
 
     private FormInnerSearchRule searchRule;
     private Element element;

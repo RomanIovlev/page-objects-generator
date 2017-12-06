@@ -2,13 +2,38 @@ package com.epam.page.object.generator.adapter;
 
 import javax.lang.model.element.Modifier;
 
-public interface JavaField {
+public class JavaField implements IJavaField {
 
-    String getFieldClassName();
+    private String fieldClass;
+    private String fieldName;
+    private IJavaAnnotation annotation;
+    private Modifier[] modifiers;
 
-    JavaAnnotation getAnnotation();
+    public JavaField(String fieldClass, String fieldName,
+                     IJavaAnnotation annotation, Modifier[] modifiers) {
+        this.fieldClass = fieldClass;
+        this.fieldName = fieldName;
+        this.annotation = annotation;
+        this.modifiers = modifiers;
+    }
 
-    String getFieldName();
+    @Override
+    public String getFieldClassName() {
+        return fieldClass;
+    }
 
-    Modifier[] getModifiers();
+    @Override
+    public IJavaAnnotation getAnnotation() {
+        return annotation;
+    }
+
+    @Override
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    @Override
+    public Modifier[] getModifiers() {
+        return modifiers;
+    }
 }

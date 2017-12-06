@@ -1,11 +1,13 @@
 package com.epam.page.object.generator.model.searchRules;
 
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.WebElement;
-import com.epam.page.object.generator.model.WebElementGroup;
+import com.epam.page.object.generator.model.webElements.CommonWebElement;
+import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
@@ -43,6 +45,20 @@ public class CommonSearchRule implements SearchRule {
             : element.attr(uniqueness);
     }
 
+    public Selector getTransformedSelector() {
+        if (!uniqueness.equalsIgnoreCase("text")) {
+            if (selector.isXpath()) {
+                try {
+                    return XpathToCssTransformation.getCssSelector(selector);
+                } catch (XpathToCssTransformerException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return selector;
+    }
+
     @Override
     public Selector getSelector() {
         return selector;
@@ -52,7 +68,7 @@ public class CommonSearchRule implements SearchRule {
     public List<WebElement> getWebElements(Elements elements) {
         List<WebElement> webElements = new ArrayList<>();
         for (Element element : elements) {
-            webElements.add(new WebElement(element, getRequiredValue(element)));
+            webElements.add(new CommonWebElement(element, getRequiredValue(element)));
         }
         return webElements;
     }
@@ -84,7 +100,7 @@ public class CommonSearchRule implements SearchRule {
 
     @Override
     public String toString() {
-        return "CommonSearchRule{" +
+        return "SearchRule{" +
                 "uniqueness='" + uniqueness + '\'' +
                 ", type='" + type + '\'' +
                 ", selector=" + selector +

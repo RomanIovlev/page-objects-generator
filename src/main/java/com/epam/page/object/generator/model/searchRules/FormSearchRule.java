@@ -1,13 +1,13 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.model.webElements.CommonWebElement;
+import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class FormSearchRule implements SearchRule {
@@ -83,7 +83,7 @@ public class FormSearchRule implements SearchRule {
 
     @Override
     public String toString() {
-        return "FormSearchRule{" +
+        return "SearchRule{" +
                 "section='" + section + '\'' +
                 ", type='" + type + '\'' +
                 ", selector=" + selector +

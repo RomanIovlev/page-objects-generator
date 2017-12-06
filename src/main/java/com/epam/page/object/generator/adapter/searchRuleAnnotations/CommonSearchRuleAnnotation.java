@@ -3,7 +3,7 @@ package com.epam.page.object.generator.adapter.searchRuleAnnotations;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
 import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 
-import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import org.jsoup.nodes.Element;
 
-public class CommonSearchRuleAnnotation implements JavaAnnotation {
+public class CommonSearchRuleAnnotation implements IJavaAnnotation {
 
     private Class fieldAnnotationClass;
     private CommonSearchRule searchRule;

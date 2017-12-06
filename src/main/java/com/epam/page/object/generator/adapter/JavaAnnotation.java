@@ -1,34 +1,26 @@
 package com.epam.page.object.generator.adapter;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import java.io.IOException;
 import java.util.List;
 
-public interface JavaAnnotation {
+public class JavaAnnotation implements IJavaAnnotation {
 
-    Class getAnnotationClass();
+    private Class annotationClass;
+    private List<AnnotationMember> annotationMembers;
 
-    List<AnnotationMember> getAnnotationMembers()
-        throws XpathToCssTransformerException;
+    public JavaAnnotation(Class annotationClass,
+                          List<AnnotationMember> annotationMembers) {
+        this.annotationClass = annotationClass;
+        this.annotationMembers = annotationMembers;
+    }
 
-    class AnnotationMember {
+    @Override
+    public Class getAnnotationClass() {
+        return annotationClass;
+    }
 
-        String name;
-        String format;
-        String arg;
-        JavaAnnotation annotation;
-
-        public AnnotationMember(String name, String format, String arg) {
-            this.name = name;
-            this.format = format;
-            this.arg = arg;
-        }
-
-        public AnnotationMember(String name, String format, JavaAnnotation annotation) {
-            this.name = name;
-            this.format = format;
-            this.annotation = annotation;
-        }
-
+    @Override
+    public List<AnnotationMember> getAnnotationMembers() throws XpathToCssTransformerException {
+        return annotationMembers;
     }
 }

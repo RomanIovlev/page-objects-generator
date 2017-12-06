@@ -1,17 +1,22 @@
 package com.epam.page.object.generator;
 
+import com.epam.page.object.generator.adapter.IJavaClass;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
+import com.epam.page.object.generator.builders.JavaClassBuilder;
+import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.PropertyLoader;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
+import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.WebValidators;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -26,6 +31,7 @@ public class PageObjectsGenerator {
     private ValidationChecker checker;
     private JsonValidators jsonValidators;
     private WebValidators webValidators;
+    private JavaClassBuilder javaClassBuilder;
     private JavaFileWriter javaFileWriter;
     private WebPagesBuilder webPagesBuilder;
 
@@ -37,6 +43,7 @@ public class PageObjectsGenerator {
                                 ValidationChecker checker,
                                 JsonValidators jsonValidators,
                                 WebValidators webValidators,
+                                JavaClassBuilder javaClassBuilder,
                                 JavaFileWriter javaFileWriter,
                                 WebPagesBuilder webPagesBuilder) {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
@@ -45,13 +52,13 @@ public class PageObjectsGenerator {
         this.checker = checker;
         this.jsonValidators = jsonValidators;
         this.webValidators = webValidators;
+        this.javaClassBuilder = javaClassBuilder;
         this.javaFileWriter = javaFileWriter;
         this.webPagesBuilder = webPagesBuilder;
     }
 
     public void generatePageObjects(String jsonPath,
                                     String outputDir,
-                                    String packageName,
                                     List<String> urls)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
 
@@ -64,36 +71,39 @@ public class PageObjectsGenerator {
         // visit list of RawSearchRules with using json schema
         rawSearchRuleList = jsonSchemaValidator.validate(rawSearchRuleList);
 
-        //TODO write exception message if some rawSearchRule is invalid
         checker.checkRawSearchRules(rawSearchRuleList);
 
         List<SearchRule> searchRuleList = typeTransformer.transform(rawSearchRuleList);
 
-        //TODO business json validation
-        List<SearchRule> validSearchRules = jsonValidators.validate(searchRuleList);
-
-
+        jsonValidators.validate(searchRuleList);
 
         List<WebPage> webPages = webPagesBuilder.generate(urls);
-        webPages.forEach(wp -> wp.addSearchRules(validSearchRules));
+        webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
 
-        // TODO: web validation
         webValidators.validate(webPages);
 
+        List<IJavaClass> javaClasses = javaClassBuilder.build(webPages);
 
+        if (webPages.stream().anyMatch(WebPage::hasInvalidWebElementGroup)) {
+            if (forceGenerateFile) {
+                javaFileWriter.writeFiles(outputDir, javaClasses);
+            }
+            StringBuilder stringBuilder = new StringBuilder("\n");
+            for (WebPage webPage : webPages) {
+                if (webPage.hasInvalidWebElementGroup()) {
+                    for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
+                        webElementGroup.getValidationResults().stream()
+                            .filter(ValidationResultNew::isInvalid)
+                            .forEach(validationResultNew -> stringBuilder
+                                .append(validationResultNew.getReason()).append("\n"));
+                    }
+                }
+            }
 
+            throw new ValidationException(stringBuilder.toString());
+        }
 
-
-        //TODO check for invalid SearchRules
-//        if (jsonValidators.hasInvalidRules()) {
-//            if (forceGenerateFile) {
-//                javaFileWriter.writeFiles(outputDir, packageName, webPages);
-//            }
-//
-//            throw new ValidationException(jsonValidators.getValidationContext());
-//        }
-
-        javaFileWriter.writeFiles(outputDir, packageName, webPages);
+        javaFileWriter.writeFiles(outputDir, javaClasses);
     }
 
     public void setForceGenerateFile(boolean forceGenerateFile) {

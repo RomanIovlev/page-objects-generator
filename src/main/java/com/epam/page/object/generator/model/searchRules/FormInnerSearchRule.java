@@ -1,11 +1,15 @@
 package com.epam.page.object.generator.model.searchRules;
 
+import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.model.webElements.CommonWebElement;
+import com.epam.page.object.generator.model.webElements.FormWebElement;
+import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
@@ -41,6 +45,20 @@ public class FormInnerSearchRule implements SearchRule {
         return selector;
     }
 
+    public Selector getTransformedSelector() {
+        if (!uniqueness.equalsIgnoreCase("text")) {
+            if (selector.isXpath()) {
+                try {
+                    return XpathToCssTransformation.getCssSelector(selector);
+                } catch (XpathToCssTransformerException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return selector;
+    }
+
     @Override
     public List<WebElement> getWebElements(Elements elements) {
         List<WebElement> webElements = new ArrayList<>();
@@ -48,7 +66,8 @@ public class FormInnerSearchRule implements SearchRule {
             Elements extractElements = SearchRuleExtractor
                 .extractElementsFromElement(element, this);
             for (Element extractElement : extractElements) {
-                webElements.add(new WebElement(extractElement, getRequiredValue(extractElement)));
+                webElements.add(
+                    new FormWebElement(extractElement, getRequiredValue(extractElement), this));
             }
         }
         return webElements;

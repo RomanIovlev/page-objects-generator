@@ -1,5 +1,7 @@
 package com.epam.page.object.generator.adapter;
 
+import static javax.lang.model.element.Modifier.*;
+
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.adapter.searchRuleFields.FormInnerSearchRuleField;
@@ -9,14 +11,13 @@ import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import org.jsoup.nodes.Element;
 
-public class FormClass implements JavaClass {
+public class FormClass implements IJavaClass {
 
     private String packageName;
     private WebPage webPage;
@@ -50,13 +51,13 @@ public class FormClass implements JavaClass {
     }
 
     @Override
-    public JavaAnnotation getAnnotation() {
+    public IJavaAnnotation getAnnotation() {
         return null;
     }
 
     @Override
-    public List<JavaField> getFieldsList() {
-        List<JavaField> fields = new ArrayList<>();
+    public List<IJavaField> getFieldsList() {
+        List<IJavaField> fields = new ArrayList<>();
 
         Element parentElement = webPage.extractElement(searchRule);
 
@@ -73,7 +74,7 @@ public class FormClass implements JavaClass {
     }
 
     @Override
-    public Modifier[] getModifiers() {
-        return new Modifier[]{Modifier.PUBLIC};
+    public Modifier getModifier() {
+        return PUBLIC;
     }
 }

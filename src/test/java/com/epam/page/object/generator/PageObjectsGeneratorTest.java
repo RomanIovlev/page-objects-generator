@@ -1,12 +1,11 @@
 package com.epam.page.object.generator;
 
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import com.epam.page.object.generator.adapter.JavaFileWriter;
+import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
@@ -50,6 +49,9 @@ public class PageObjectsGeneratorTest {
     private WebValidators webValidators;
 
     @Mock
+    private JavaClassBuilder javaClassBuilder;
+
+    @Mock
     private WebPagesBuilder builder;
 
 
@@ -77,10 +79,11 @@ public class PageObjectsGeneratorTest {
         MockitoAnnotations.initMocks(this);
 
 //        when(parser.getRawSearchRuleList(anyString())).thenReturn(searchRules);
-        when(jsonValidators.validate(anyList())).thenReturn(searchRules);
+//        when(jsonValidators.validate(anyList())).thenReturn(searchRules);
 //        when(jsonValidators.getValidationContext()).thenReturn(validationContext);
 
-        sut = new PageObjectsGenerator(parser, validator, transformer, checker, jsonValidators, webValidators, javaFileWriter, builder);
+        sut = new PageObjectsGenerator(parser, validator, transformer, checker, jsonValidators, webValidators,
+            javaClassBuilder, javaFileWriter, builder);
     }
 
 //    @Test

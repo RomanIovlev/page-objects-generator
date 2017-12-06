@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.adapter.searchRuleAnnotations;
 
-import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
 
-public class ComplexSearchRuleAnnotation implements JavaAnnotation {
+public class ComplexSearchRuleAnnotation implements IJavaAnnotation {
 
     private ComplexSearchRule searchRule;
     private Element element;

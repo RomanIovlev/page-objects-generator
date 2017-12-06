@@ -5,7 +5,7 @@ import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SiteFieldAnnotation implements JavaAnnotation {
+public class SiteFieldAnnotation implements IJavaAnnotation {
 
     private WebPage webPage;
 

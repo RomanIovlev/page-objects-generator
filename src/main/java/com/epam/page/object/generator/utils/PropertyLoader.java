@@ -1,10 +1,10 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.builders.CommonSearchRuleBuilder;
-import com.epam.page.object.generator.builders.ComplexInnerSearchRuleBuilder;
-import com.epam.page.object.generator.builders.ComplexSearchRuleBuilder;
-import com.epam.page.object.generator.builders.FormInnerSearchRuleBuilder;
-import com.epam.page.object.generator.builders.FormSearchRuleBuilder;
+import com.epam.page.object.generator.builders.searchRuleBuilders.CommonSearchRuleBuilder;
+import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexInnerSearchRuleBuilder;
+import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexSearchRuleBuilder;
+import com.epam.page.object.generator.builders.searchRuleBuilders.FormInnerSearchRuleBuilder;
+import com.epam.page.object.generator.builders.searchRuleBuilders.FormSearchRuleBuilder;
 import com.epam.page.object.generator.builders.RawSearchRuleBuilder;
 import com.epam.page.object.generator.builders.RawSearchRuleBuilders;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;

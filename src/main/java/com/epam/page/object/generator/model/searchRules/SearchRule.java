@@ -1,7 +1,8 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.WebElement;
+import com.epam.page.object.generator.model.webElements.CommonWebElement;
+import com.epam.page.object.generator.model.webElements.WebElement;
 import java.util.List;
 import org.jsoup.select.Elements;
 

@@ -7,7 +7,6 @@ import com.epam.page.object.generator.validators.oldValidators.Validator;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.DuplicateTitleInnerSearchRuleValidator;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.RootExistenceValidator;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.TitleOfComplexElementValidator;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.io.IOException;
 import java.util.List;
 import org.assertj.core.util.Lists;
@@ -44,16 +43,13 @@ public class JsonValidators {
      *
      * @throws com.epam.page.object.generator.errors.ValidationException if JSON file is not valid.
      */
-    public List<SearchRule> validate(List<SearchRule> searchRules)
-        throws IOException {
+    public void validate(List<SearchRule> searchRules){
 
         for (ValidatorVisitor validator : validators) {
             for (Validatable searchRule : searchRules) {
                 searchRule.accept(validator);
             }
         }
-
-        return searchRules;
     }
 
     /**

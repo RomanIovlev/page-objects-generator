@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public class SiteClass implements JavaClass {
+public class SiteClass implements IJavaClass {
 
     private List<WebPage> webPages;
     private String packageName;
@@ -33,18 +33,18 @@ public class SiteClass implements JavaClass {
     }
 
     @Override
-    public JavaAnnotation getAnnotation() {
+    public IJavaAnnotation getAnnotation() {
         return new SiteAnnotation(webPages.get(0).getDomainName());
     }
 
     @Override
-    public List<JavaField> getFieldsList() {
-        return webPages.stream().map(webPage -> new SiteField(getPackageName(), webPage))
+    public List<IJavaField> getFieldsList() {
+        return webPages.stream().map(SiteField::new)
             .collect(Collectors.toList());
     }
 
     @Override
-    public Modifier[] getModifiers() {
-        return new Modifier[]{PUBLIC};
+    public Modifier getModifier() {
+        return PUBLIC;
     }
 }

@@ -15,6 +15,8 @@ public class ValidationResultNew {
         return isValid;
     }
 
+    public boolean isInvalid() {return !isValid;}
+
     public String getReason() {
         return reason;
     }

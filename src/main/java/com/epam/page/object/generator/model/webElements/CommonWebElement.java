@@ -1,22 +1,29 @@
-package com.epam.page.object.generator.model;
+package com.epam.page.object.generator.model.webElements;
 
 import org.jsoup.nodes.Element;
 
-public class WebElement {
+public class CommonWebElement implements WebElement {
 
     private Element element;
     private String uniquenessValue;
 
-    public WebElement(Element element, String uniquenessValue) {
+    public CommonWebElement(Element element, String uniquenessValue) {
         this.element = element;
         this.uniquenessValue = uniquenessValue;
     }
 
+    @Override
     public Element getElement() {
         return element;
     }
 
+    @Override
     public String getUniquenessValue() {
         return uniquenessValue;
+    }
+
+    @Override
+    public String toString() {
+        return "WebElement{" + element + '}';
     }
 }

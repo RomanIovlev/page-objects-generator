@@ -1,7 +1,15 @@
 package com.epam.page.object.generator.model;
 
+import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
+import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
+import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
+import com.epam.page.object.generator.model.searchRules.FormSearchRule;
+import com.epam.page.object.generator.model.searchRules.Validatable;
+import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
+import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
+import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +58,25 @@ public class WebPage {
         for (SearchRule searchRule : searchRules) {
             Elements elements = extractElements(searchRule);
             if (elements.size() != 0) {
-                this.webElementGroups.add(new WebElementGroup(searchRule, searchRule.getWebElements(elements)));
+                if (searchRule instanceof CommonSearchRule) {
+                    webElementGroups.add(new CommonWebElementGroup((CommonSearchRule) searchRule,
+                        searchRule.getWebElements(elements)));
+                }
+                else if(searchRule instanceof ComplexSearchRule){
+                    webElementGroups.add(new ComplexWebElementGroup((ComplexSearchRule) searchRule,
+                        searchRule.getWebElements(elements)));
+                }
+                else if(searchRule instanceof FormSearchRule){
+                    webElementGroups.add(new FormWebElementGroup((FormSearchRule) searchRule,
+                        searchRule.getWebElements(elements)));
+                }
             }
         }
+    }
+
+    public boolean isContainedFormSearchRule() {
+        return webElementGroups.stream()
+            .anyMatch(webElementGroup -> webElementGroup.getSearchRule() instanceof FormSearchRule);
     }
 
     public Elements extractElements(SearchRule searchRule) {
@@ -62,4 +86,9 @@ public class WebPage {
     public Element extractElement(SearchRule searchRule) {
         return SearchRuleExtractor.extractElement(document, searchRule);
     }
+
+    public boolean hasInvalidWebElementGroup(){
+        return webElementGroups.stream().anyMatch(Validatable::isInvalid);
+    }
+
 }

@@ -1,47 +1,42 @@
-package com.epam.page.object.generator.model;
+package com.epam.page.object.generator.model.webElementGroups;
 
-import com.epam.page.object.generator.model.searchRules.SearchRule;
-import com.epam.page.object.generator.model.searchRules.Validatable;
+import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
+import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import com.epam.page.object.generator.validators.searchRuleJsonValidators.ValidatorVisitor;
+import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class WebElementGroup implements Validatable {
+public class CommonWebElementGroup implements WebElementGroup{
 
-    private SearchRule searchRule;
+    private CommonSearchRule searchRule;
     private List<WebElement> webElements;
 
     private List<ValidationResultNew> validationResults = new ArrayList<>();
 
-    public WebElementGroup(SearchRule searchRule, List<WebElement> webElements) {
+    public CommonWebElementGroup(CommonSearchRule searchRule, List<WebElement> webElements) {
         this.searchRule = searchRule;
         this.webElements = webElements;
     }
 
-    public SearchRule getSearchRule() {
+    @Override
+    public CommonSearchRule getSearchRule() {
         return searchRule;
     }
 
+    @Override
     public List<WebElement> getWebElements() {
         return webElements;
     }
 
-    public boolean isUniqueness() {
-        Set<String> uniquenessValues = new HashSet<>();
-        for (WebElement webElement : webElements) {
-            if(!uniquenessValues.add(webElement.getUniquenessValue())){
-                return false;
-            }
-        }
-        return true;
+    @Override
+    public boolean isJavaClass() {
+        return false;
     }
 
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
-        validatorVisitor.visit(this);
+        validationResults.add(validatorVisitor.visit(this));
     }
 
     @Override
@@ -62,5 +57,10 @@ public class WebElementGroup implements Validatable {
     @Override
     public void addValidationResult(ValidationResultNew validationResult) {
         validationResults.add(validationResult);
+    }
+
+    @Override
+    public String toString() {
+        return searchRule.toString();
     }
 }

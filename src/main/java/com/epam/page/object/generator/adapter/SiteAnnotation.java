@@ -4,7 +4,7 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
 import java.util.Collections;
 import java.util.List;
 
-public class SiteAnnotation implements JavaAnnotation {
+public class SiteAnnotation implements IJavaAnnotation {
 
     private String domainUrl;
 

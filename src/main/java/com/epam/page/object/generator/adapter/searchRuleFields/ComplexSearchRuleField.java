@@ -4,15 +4,15 @@ import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
+import com.epam.page.object.generator.adapter.IJavaField;
 import com.epam.page.object.generator.adapter.searchRuleAnnotations.ComplexSearchRuleAnnotation;
-import com.epam.page.object.generator.adapter.JavaAnnotation;
-import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import javax.lang.model.element.Modifier;
 import org.jsoup.nodes.Element;
 
-public class ComplexSearchRuleField implements JavaField {
+public class ComplexSearchRuleField implements IJavaField {
 
     private ComplexSearchRule searchRule;
     private Element element;
@@ -33,7 +33,7 @@ public class ComplexSearchRuleField implements JavaField {
     }
 
     @Override
-    public JavaAnnotation getAnnotation() {
+    public IJavaAnnotation getAnnotation() {
         Class fieldAnnotationClass = typesContainer.getSupportedTypesMap()
             .get(searchRule.getTypeName())
             .getElementAnnotation();
