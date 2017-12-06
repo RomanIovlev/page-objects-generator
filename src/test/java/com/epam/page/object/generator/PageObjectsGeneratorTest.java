@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
+import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.SearchRule;
 import com.epam.page.object.generator.model.WebPagesBuilder;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
@@ -52,6 +53,9 @@ public class PageObjectsGeneratorTest {
     private JavaClassBuilder javaClassBuilder;
 
     @Mock
+    private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
+
+    @Mock
     private WebPagesBuilder builder;
 
 
@@ -83,7 +87,7 @@ public class PageObjectsGeneratorTest {
 //        when(jsonValidators.getValidationContext()).thenReturn(validationContext);
 
         sut = new PageObjectsGenerator(parser, validator, transformer, checker, jsonValidators, webValidators,
-            javaClassBuilder, javaFileWriter, builder);
+            javaClassBuilder, webElementGroupFieldBuilder, javaFileWriter, builder);
     }
 
 //    @Test

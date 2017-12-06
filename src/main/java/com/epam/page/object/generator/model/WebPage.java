@@ -1,8 +1,10 @@
 package com.epam.page.object.generator.model;
 
+import com.epam.page.object.generator.adapter.FormClass;
+import com.epam.page.object.generator.adapter.JavaClassBuildable;
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
-import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.searchRules.Validatable;
 import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
@@ -89,6 +91,18 @@ public class WebPage {
 
     public boolean hasInvalidWebElementGroup(){
         return webElementGroups.stream().anyMatch(Validatable::isInvalid);
+    }
+
+    public List<JavaClassBuildable> getFormClasses(){
+        List<JavaClassBuildable> javaClasses = new ArrayList<>();
+
+        for (WebElementGroup webElementGroup : webElementGroups) {
+            if(webElementGroup instanceof FormWebElementGroup){
+                javaClasses.add(new FormClass((FormWebElementGroup) webElementGroup));
+            }
+        }
+
+        return javaClasses;
     }
 
 }

@@ -1,8 +1,12 @@
 package com.epam.page.object.generator;
 
 import com.epam.page.object.generator.adapter.IJavaClass;
+import com.epam.page.object.generator.adapter.JavaClassBuildable;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
+import com.epam.page.object.generator.adapter.PageClass;
+import com.epam.page.object.generator.adapter.SiteClass;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
+import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.RawSearchRule;
@@ -20,6 +24,7 @@ import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.WebValidators;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +37,7 @@ public class PageObjectsGenerator {
     private JsonValidators jsonValidators;
     private WebValidators webValidators;
     private JavaClassBuilder javaClassBuilder;
+    private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
     private JavaFileWriter javaFileWriter;
     private WebPagesBuilder webPagesBuilder;
 
@@ -44,6 +50,7 @@ public class PageObjectsGenerator {
                                 JsonValidators jsonValidators,
                                 WebValidators webValidators,
                                 JavaClassBuilder javaClassBuilder,
+                                WebElementGroupFieldBuilder webElementGroupFieldBuilder,
                                 JavaFileWriter javaFileWriter,
                                 WebPagesBuilder webPagesBuilder) {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
@@ -53,6 +60,7 @@ public class PageObjectsGenerator {
         this.jsonValidators = jsonValidators;
         this.webValidators = webValidators;
         this.javaClassBuilder = javaClassBuilder;
+        this.webElementGroupFieldBuilder = webElementGroupFieldBuilder;
         this.javaFileWriter = javaFileWriter;
         this.webPagesBuilder = webPagesBuilder;
     }
@@ -82,7 +90,22 @@ public class PageObjectsGenerator {
 
         webValidators.validate(webPages);
 
-        List<IJavaClass> javaClasses = javaClassBuilder.build(webPages);
+        List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
+
+        rawJavaClasses.add(new SiteClass(webPages));
+
+        for (WebPage webPage : webPages) {
+            rawJavaClasses.add(new PageClass(webPage, webElementGroupFieldBuilder));
+            if(webPage.isContainedFormSearchRule()){
+                rawJavaClasses.addAll(webPage.getFormClasses());
+            }
+        }
+
+        List<IJavaClass> javaClasses = new ArrayList<>();
+
+        for (JavaClassBuildable javaClass : rawJavaClasses) {
+            javaClasses.add(javaClass.accept(javaClassBuilder));
+        }
 
         if (webPages.stream().anyMatch(WebPage::hasInvalidWebElementGroup)) {
             if (forceGenerateFile) {

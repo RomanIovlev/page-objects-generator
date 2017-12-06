@@ -2,9 +2,8 @@ package com.epam.page.object.generator.integration;
 
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.epam.page.object.generator.builders.JavaAnnotationBuilder;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
-import com.epam.page.object.generator.builders.JavaFieldBuilder;
+import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import com.epam.page.object.generator.errors.ValidationException;
@@ -50,23 +49,24 @@ public class MainTest {
 
         JsonSchemaValidator validator = new JsonSchemaValidator(new ValidationExceptionConverter());
 
-        TypeTransformer transformer = new TypeTransformer();
+        TypeTransformer transformer = new TypeTransformer(bc);
 
         ValidationChecker checker = new ValidationChecker();
 
-        JavaFileWriter javaPoetAdapter = new JavaFileWriter(bc);
+        JavaFileWriter javaPoetAdapter = new JavaFileWriter();
 
         JsonValidators jsonValidators = new JsonValidators();
 
         WebValidators webValidators = new WebValidators();
 
-        JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName,
-            new JavaFieldBuilder(new JavaAnnotationBuilder(), bc, fieldBuilder));
+        JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName);
+
+        WebElementGroupFieldBuilder webElementGroupFieldBuilder = new WebElementGroupFieldBuilder();
 
         WebPagesBuilder builder = new WebPagesBuilder();
 
         PageObjectsGenerator pog = new PageObjectsGenerator(parser, validator, transformer, checker,
-            jsonValidators, webValidators, javaClassBuilder, javaPoetAdapter, builder);
+            jsonValidators, webValidators, javaClassBuilder, webElementGroupFieldBuilder, javaPoetAdapter, builder);
 
         pog.setForceGenerateFile(forceGenerateFiles);
 

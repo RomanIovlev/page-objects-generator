@@ -16,5 +16,4 @@ public interface IJavaClass {
     List<IJavaField> getFieldsList();
 
     Modifier getModifier();
-
 }

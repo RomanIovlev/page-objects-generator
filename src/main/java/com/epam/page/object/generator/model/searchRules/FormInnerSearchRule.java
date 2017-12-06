@@ -1,8 +1,8 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.FormWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
@@ -20,13 +20,16 @@ public class FormInnerSearchRule implements SearchRule {
     private String uniqueness;
     private SearchRuleType type;
     private Selector selector;
+    private ClassAndAnnotationPair classAndAnnotation;
 
     private List<ValidationResultNew> validationResults = new ArrayList<>();
 
-    public FormInnerSearchRule(String uniqueness, SearchRuleType type, Selector selector) {
+    public FormInnerSearchRule(String uniqueness, SearchRuleType type, Selector selector,
+                               ClassAndAnnotationPair classAndAnnotation) {
         this.uniqueness = uniqueness;
         this.type = type;
         this.selector = selector;
+        this.classAndAnnotation = classAndAnnotation;
     }
 
     public String getUniqueness() {
@@ -39,6 +42,10 @@ public class FormInnerSearchRule implements SearchRule {
 
     public String getTypeName() {
         return type.getName();
+    }
+
+    public ClassAndAnnotationPair getClassAndAnnotation() {
+        return classAndAnnotation;
     }
 
     public Selector getSelector() {

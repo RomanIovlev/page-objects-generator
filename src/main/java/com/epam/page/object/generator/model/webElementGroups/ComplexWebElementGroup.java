@@ -1,13 +1,22 @@
 package com.epam.page.object.generator.model.webElementGroups;
 
+import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
+import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
+
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.adapter.IJavaField;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
+import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
+import org.openqa.selenium.support.FindBy;
 
 public class ComplexWebElementGroup implements WebElementGroup {
 
@@ -69,5 +78,52 @@ public class ComplexWebElementGroup implements WebElementGroup {
     @Override
     public String toString() {
         return searchRule.toString();
+    }
+
+    public IJavaAnnotation getAnnotation(Class annotationClass, WebElement webElement) {
+        List<AnnotationMember> annotationMembers = new ArrayList<>();
+
+        for (ComplexInnerSearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
+
+            String annotationElementName = innerSearchRule.getTitle();
+            IJavaAnnotation innerSearchRuleAnnotation;
+
+            if (annotationElementName.equals("root")) {
+                Selector selector = innerSearchRule.getTransformedSelector();
+                String uniquenessValue = webElement.getUniquenessValue();
+                String annotationValue = getAnnotationValue(selector, uniquenessValue,
+                    searchRule.getUniqueness());
+
+                List<AnnotationMember> innerAnnotation = new ArrayList<>();
+                innerAnnotation
+                    .add(new AnnotationMember(selector.getType(), "$S", annotationValue));
+
+                innerSearchRuleAnnotation = new JavaAnnotation(FindBy.class, innerAnnotation);
+            } else {
+                Selector selector = innerSearchRule.getSelector();
+
+                List<AnnotationMember> innerAnnotation = new ArrayList<>();
+                innerAnnotation
+                    .add(new AnnotationMember(selector.getType(), "$S", selector.getValue()));
+
+                innerSearchRuleAnnotation = new JavaAnnotation(FindBy.class, innerAnnotation);
+            }
+
+            annotationMembers
+                .add(new AnnotationMember(annotationElementName, "$L",
+                    innerSearchRuleAnnotation));
+        }
+
+        return new JavaAnnotation(annotationClass, annotationMembers);
+    }
+
+    private String getAnnotationValue(Selector selector, String uniquenessValue,
+                                      String uniqueness) {
+        if (selector.isXpath()) {
+            return resultXpathSelector(selector, uniquenessValue, uniqueness);
+        } else if (selector.isCss()) {
+            return resultCssSelector(selector, uniquenessValue, uniqueness);
+        }
+        return null;
     }
 }

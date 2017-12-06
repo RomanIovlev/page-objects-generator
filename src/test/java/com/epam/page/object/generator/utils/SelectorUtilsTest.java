@@ -3,20 +3,19 @@ package com.epam.page.object.generator.utils;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 public class SelectorUtilsTest {
 
     private SearchRule searchRule;
     private String elementsRequiredValue;
 
-    @Before
-    public void setUp() {
-        searchRule = new CommonSearchRule("name", SearchRuleType.BUTTON, new Selector("css", "//input[@type='submit']"));
-        elementsRequiredValue = "button";
-    }
+//    @Before
+//    public void setUp() {
+//        searchRule = new CommonSearchRule("name", SearchRuleType.BUTTON, new Selector("css", "//input[@type='submit']"),
+//            classAndAnnotation);
+//        elementsRequiredValue = "button";
+//    }
 
 //    @Test
 //    public void resultCssSelector_successWithoutElementsRequiredValue() throws Exception {

@@ -24,29 +24,15 @@ import javax.lang.model.element.Modifier;
 
 public class WebElementGroupFieldBuilder {
 
-    private SupportedTypesContainer typesContainer;
-    private JavaAnnotationBuilder javaAnnotationBuilder;
-
-    public WebElementGroupFieldBuilder(SupportedTypesContainer typesContainer,
-                                       JavaAnnotationBuilder javaAnnotationBuilder) {
-        this.typesContainer = typesContainer;
-        this.javaAnnotationBuilder = javaAnnotationBuilder;
-    }
-
     public List<IJavaField> visit(CommonWebElementGroup commonWebElementGroup) {
         List<IJavaField> javaFields = new ArrayList<>();
         CommonSearchRule searchRule = commonWebElementGroup.getSearchRule();
 
         for (WebElement webElement : commonWebElementGroup.getWebElements()) {
-            String className = typesContainer
-                .getSupportedTypesMap().get(searchRule.getTypeName()).getElementClass().getName();
+            String className = searchRule.getClassAndAnnotation().getElementClass().getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
-
-            Class annotationClass = typesContainer.getSupportedTypesMap()
-                .get(searchRule.getTypeName())
-                .getElementAnnotation();
-            IJavaAnnotation annotation = javaAnnotationBuilder
-                .buildAnnotation(annotationClass, (CommonWebElement) webElement, searchRule);
+            Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
+            IJavaAnnotation annotation = commonWebElementGroup.getAnnotation(annotationClass, webElement);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
             javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
@@ -60,15 +46,10 @@ public class WebElementGroupFieldBuilder {
         ComplexSearchRule searchRule = complexWebElementGroup.getSearchRule();
 
         for (WebElement webElement : complexWebElementGroup.getWebElements()) {
-            String className = typesContainer
-                .getSupportedTypesMap().get(searchRule.getTypeName()).getElementClass().getName();
+            String className = searchRule.getClassAndAnnotation().getElementClass().getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
-
-            Class annotationClass = typesContainer.getSupportedTypesMap()
-                .get(searchRule.getTypeName())
-                .getElementAnnotation();
-            IJavaAnnotation annotation = javaAnnotationBuilder
-                .buildAnnotation(annotationClass, (ComplexWebElement) webElement, searchRule);
+            Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
+            IJavaAnnotation annotation = complexWebElementGroup.getAnnotation(annotationClass, webElement);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
             javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
@@ -80,17 +61,10 @@ public class WebElementGroupFieldBuilder {
     public List<IJavaField> visit(FormWebElementGroup formWebElementGroup) {
         FormSearchRule searchRule = formWebElementGroup.getSearchRule();
 
-        String className = typesContainer
-            .getSupportedTypesMap().get(searchRule.getTypeName()).getElementClass()
-            .getName();
+        String className = searchRule.getClassAndAnnotation().getElementClass().getName();
         String fieldName = firstLetterDown(splitCamelCase(searchRule.getSection()));
-
-        Class annotationClass = typesContainer.getSupportedTypesMap()
-            .get(searchRule.getTypeName())
-            .getElementAnnotation();
-
-        IJavaAnnotation annotation = javaAnnotationBuilder
-            .buildAnnotation(annotationClass, searchRule);
+        Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
+        IJavaAnnotation annotation = formWebElementGroup.getAnnotation(annotationClass);
         Modifier[] modifiers = new Modifier[]{PUBLIC};
 
         return Collections

@@ -1,53 +1,76 @@
 package com.epam.page.object.generator.adapter;
 
+import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
+import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.*;
 
-import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
-import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
-import com.epam.page.object.generator.adapter.searchRuleFields.FormInnerSearchRuleField;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
+import com.epam.page.object.generator.builders.JavaClassBuilder;
+import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
-import com.epam.page.object.generator.model.searchRules.FormSearchRule;
-import com.epam.page.object.generator.utils.SearchRuleExtractor;
-import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
+import com.epam.page.object.generator.model.webElements.FormWebElement;
+import com.epam.page.object.generator.model.webElements.WebElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import org.jsoup.nodes.Element;
 
-public class FormClass implements IJavaClass {
+public class FormClass implements JavaClassBuildable {
 
-    private String packageName;
-    private WebPage webPage;
-    private FormSearchRule searchRule;
-    private SupportedTypesContainer typesContainer;
+    private FormWebElementGroup formWebElementGroup;
 
-    public FormClass(String packageName,
-                     WebPage webPage,
-                     FormSearchRule searchRule,
-                     SupportedTypesContainer typesContainer) {
-        this.packageName = packageName;
-        this.webPage = webPage;
-        this.searchRule = searchRule;
-        this.typesContainer = typesContainer;
+    public FormClass(FormWebElementGroup formWebElementGroup) {
+        this.formWebElementGroup = formWebElementGroup;
+    }
+
+    public FormWebElementGroup getFormWebElementGroup() {
+        return formWebElementGroup;
     }
 
     @Override
-    public String getPackageName() {
-        return packageName;
+    public List<IJavaField> getFields() {
+        List<IJavaField> javaFields = new ArrayList<>();
+
+        for (WebElement webElement : formWebElementGroup.getWebElements()) {
+            FormInnerSearchRule innerSearchRule = ((FormWebElement) webElement).getSearchRule();
+
+            String className = innerSearchRule.getClassAndAnnotation().getElementClass().getName();
+            String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
+            Class annotationClass = innerSearchRule.getClassAndAnnotation().getElementAnnotation();
+            IJavaAnnotation annotation = buildAnnotation(annotationClass,
+                (FormWebElement) webElement, innerSearchRule);
+            Modifier[] modifiers = new Modifier[]{PUBLIC};
+
+            javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
+        }
+
+        return javaFields;
     }
 
-    @Override
-    public String getClassName() {
-        return searchRule.getSection();
+    private IJavaAnnotation buildAnnotation(Class annotationClass, FormWebElement webElement,
+                                            FormInnerSearchRule searchRule) {
+        List<AnnotationMember> annotationMembers = new ArrayList<>();
+
+        String uniquenessValue = webElement.getUniquenessValue();
+        Selector selector = searchRule.getTransformedSelector();
+        String annotationValue = getAnnotationValue(selector, uniquenessValue,
+            searchRule.getUniqueness());
+
+        annotationMembers.add(new AnnotationMember(selector.getType(), "$S", annotationValue));
+
+        return new JavaAnnotation(annotationClass, annotationMembers);
     }
 
-    @Override
-    public Class getSuperClass() {
-        return searchRule.getTypeName().equals(SearchRuleType.FORM.getName()) ? Form.class
-            : Section.class;
+    private String getAnnotationValue(Selector selector, String uniquenessValue,
+                                      String uniqueness) {
+        if (selector.isXpath()) {
+            return resultXpathSelector(selector, uniquenessValue, uniqueness);
+        } else if (selector.isCss()) {
+            return resultCssSelector(selector, uniquenessValue, uniqueness);
+        }
+        return null;
     }
 
     @Override
@@ -56,25 +79,7 @@ public class FormClass implements IJavaClass {
     }
 
     @Override
-    public List<IJavaField> getFieldsList() {
-        List<IJavaField> fields = new ArrayList<>();
-
-        Element parentElement = webPage.extractElement(searchRule);
-
-        for (FormInnerSearchRule innerSearchRule : searchRule.getInnerSearchRules()) {
-            fields.addAll(
-                SearchRuleExtractor.extractElementsFromElement(parentElement, innerSearchRule)
-                    .stream()
-                    .filter(element -> !innerSearchRule.getRequiredValue(element).isEmpty())
-                    .map(element -> new FormInnerSearchRuleField(innerSearchRule, element,
-                        typesContainer)).collect(Collectors.toList()));
-        }
-
-        return fields;
-    }
-
-    @Override
-    public Modifier getModifier() {
-        return PUBLIC;
+    public IJavaClass accept(JavaClassBuilder javaClassBuilder) {
+        return javaClassBuilder.visit(this);
     }
 }

@@ -12,7 +12,6 @@ import org.jsoup.nodes.Document;
 
 public class WebPagesBuilder {
 
-
     public List<WebPage> generate(List<String> urls) {
         StringBuilder invalidUrls = new StringBuilder();
         List<WebPage> webPages = new ArrayList<>();
@@ -33,5 +32,4 @@ public class WebPagesBuilder {
 
         return webPages;
     }
-
 }

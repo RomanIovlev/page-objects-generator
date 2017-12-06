@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
@@ -19,12 +20,16 @@ public class CommonSearchRule implements SearchRule {
     private SearchRuleType type;
     private Selector selector;
 
+    private ClassAndAnnotationPair classAndAnnotation;
+
     private List<ValidationResultNew> validationResults = new ArrayList<>();
 
-    public CommonSearchRule(String uniqueness, SearchRuleType type, Selector selector) {
+    public CommonSearchRule(String uniqueness, SearchRuleType type, Selector selector,
+                            ClassAndAnnotationPair classAndAnnotation) {
         this.uniqueness = uniqueness;
         this.type = type;
         this.selector = selector;
+        this.classAndAnnotation = classAndAnnotation;
     }
 
     public String getUniqueness() {
@@ -43,6 +48,10 @@ public class CommonSearchRule implements SearchRule {
         return uniqueness.equals("text")
             ? element.text()
             : element.attr(uniqueness);
+    }
+
+    public ClassAndAnnotationPair getClassAndAnnotation() {
+        return classAndAnnotation;
     }
 
     public Selector getTransformedSelector() {

@@ -1,6 +1,8 @@
 package com.epam.page.object.generator.builders.searchRuleBuilders;
 
 import com.epam.page.object.generator.builders.RawSearchRuleBuilder;
+import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
@@ -20,7 +22,8 @@ public class ComplexSearchRuleBuilder extends RawSearchRuleBuilder {
     }
 
     @Override
-    public SearchRule buildSearchRule(RawSearchRule rawSearchRule) {
+    public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
+                                      SupportedTypesContainer typesContainer) {
 
         SearchRuleType type = rawSearchRule.getType();
         List<ComplexInnerSearchRule> innerSearchRules = new ArrayList<>();
@@ -28,12 +31,15 @@ public class ComplexSearchRuleBuilder extends RawSearchRuleBuilder {
         List<RawSearchRule> innerRawSearchRules = rawSearchRuleMapper
             .getComplexInnerRawSearchRules(rawSearchRule);
 
+        ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
+            .get(type.getName());
+
         ComplexInnerSearchRuleBuilder builder = new ComplexInnerSearchRuleBuilder();
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
             innerSearchRules.add(
-                (ComplexInnerSearchRule) builder.buildSearchRule(innerRawSearchRule));
+                (ComplexInnerSearchRule) builder.buildSearchRule(innerRawSearchRule, typesContainer));
         }
 
-        return new ComplexSearchRule(type, innerSearchRules);
+        return new ComplexSearchRule(type, innerSearchRules, classAndAnnotation);
     }
 }

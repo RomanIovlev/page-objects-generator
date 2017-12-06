@@ -1,50 +1,61 @@
 package com.epam.page.object.generator.adapter;
 
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
+import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
 
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
+import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
+import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
+import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.model.WebPage;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public class SiteClass implements IJavaClass {
+public class SiteClass implements JavaClassBuildable {
 
     private List<WebPage> webPages;
-    private String packageName;
 
-    public SiteClass(String packageName, List<WebPage> webPages) {
-        this.packageName = packageName;
+    public SiteClass(List<WebPage> webPages) {
         this.webPages = webPages;
     }
 
-    @Override
-    public String getPackageName() {
-        return packageName;
-    }
-
-    @Override
-    public String getClassName() {
-        return "Site";
-    }
-
-    @Override
-    public Class getSuperClass() {
-        return com.epam.jdi.uitests.web.selenium.elements.composite.WebSite.class;
+    public List<WebPage> getWebPages() {
+        return webPages;
     }
 
     @Override
     public IJavaAnnotation getAnnotation() {
-        return new SiteAnnotation(webPages.get(0).getDomainName());
+        List<AnnotationMember> annotationMembers = new ArrayList<>();
+        annotationMembers.add(new AnnotationMember("value", "$S", webPages.get(0).getDomainName()));
+
+        return new JavaAnnotation(JSite.class, annotationMembers);
     }
 
     @Override
-    public List<IJavaField> getFieldsList() {
-        return webPages.stream().map(SiteField::new)
-            .collect(Collectors.toList());
+    public List<IJavaField> getFields() {
+        List<IJavaField> fields = new ArrayList<>();
+
+        for (WebPage webPage : webPages) {
+            String className = firstLetterUp(splitCamelCase(webPage.getTitle()));
+            String fieldName = splitCamelCase(webPage.getTitle());
+            List<AnnotationMember> pageAnnotations = new ArrayList<>();
+            pageAnnotations
+                .add(new AnnotationMember("webPage", "$S", webPage.getUrlWithoutDomain()));
+            pageAnnotations.add(new AnnotationMember("title", "$S", webPage.getTitle()));
+            IJavaAnnotation annotation = new JavaAnnotation(JPage.class, pageAnnotations);
+            Modifier[] modifiers = new Modifier[]{PUBLIC, STATIC};
+
+            fields.add(new JavaField(className, fieldName, annotation, modifiers));
+        }
+
+        return fields;
     }
 
     @Override
-    public Modifier getModifier() {
-        return PUBLIC;
+    public IJavaClass accept(JavaClassBuilder javaClassBuilder) {
+        return javaClassBuilder.visit(this);
     }
 }

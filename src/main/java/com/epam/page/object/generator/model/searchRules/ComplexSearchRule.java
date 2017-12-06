@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.ComplexWebElement;
@@ -18,13 +19,16 @@ public class ComplexSearchRule implements SearchRule {
 
     private SearchRuleType type;
     private List<ComplexInnerSearchRule> complexInnerSearchRules;
+    private ClassAndAnnotationPair classAndAnnotation;
 
     private List<ValidationResultNew> validationResults = new ArrayList<>();
 
     public ComplexSearchRule(SearchRuleType type,
-                             List<ComplexInnerSearchRule> complexInnerSearchRules) {
+                             List<ComplexInnerSearchRule> complexInnerSearchRules,
+                             ClassAndAnnotationPair classAndAnnotation) {
         this.type = type;
         this.complexInnerSearchRules = complexInnerSearchRules;
+        this.classAndAnnotation = classAndAnnotation;
     }
 
     public SearchRuleType getType() {
@@ -50,6 +54,10 @@ public class ComplexSearchRule implements SearchRule {
         return uniqueness.equals("text")
             ? element.text()
             : element.attr(uniqueness);
+    }
+
+    public ClassAndAnnotationPair getClassAndAnnotation() {
+        return classAndAnnotation;
     }
 
     public String getUniqueness() {

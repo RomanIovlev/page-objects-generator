@@ -1,13 +1,7 @@
 package com.epam.page.object.generator.adapter;
 
 import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
-import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.model.searchRules.FormSearchRule;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
-import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -20,32 +14,10 @@ import java.util.List;
 
 public class JavaFileWriter {
 
-    private SupportedTypesContainer typesContainer;
-
-    public JavaFileWriter(SupportedTypesContainer typesContainer) {
-        this.typesContainer = typesContainer;
-    }
-
-    public void writeFiles(String outputDir, String packageName, List<WebPage> webPages)
-        throws XpathToCssTransformerException, IOException {
-
-        writeClass(outputDir, new SiteClass(packageName + ".site", webPages));
-
-        for (WebPage webPage : webPages) {
-            writeClass(outputDir, new PageClass(packageName + ".page",
-                webPage,
-                typesContainer));
-
-            for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
-                SearchRule searchRule = webElementGroup.getSearchRule();
-                if (searchRule instanceof FormSearchRule) {
-                    writeClass(outputDir,
-                        new FormClass(packageName + ".form",
-                            webPage,
-                            (FormSearchRule) searchRule,
-                            typesContainer));
-                }
-            }
+    public void writeFiles(String outputDir, List<IJavaClass> javaClasses)
+        throws IOException, XpathToCssTransformerException {
+        for (IJavaClass javaClass : javaClasses) {
+            writeClass(outputDir, javaClass);
         }
     }
 
@@ -106,12 +78,5 @@ public class JavaFileWriter {
         }
 
         return annotationSpec;
-    }
-
-    public void writeFiles(String outputDir, List<IJavaClass> javaClasses)
-        throws IOException, XpathToCssTransformerException {
-        for (IJavaClass javaClass : javaClasses) {
-            writeClass(outputDir, javaClass);
-        }
     }
 }

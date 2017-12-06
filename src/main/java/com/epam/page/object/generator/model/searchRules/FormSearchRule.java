@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.model.searchRules;
 
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
@@ -17,14 +18,18 @@ public class FormSearchRule implements SearchRule {
     private Selector selector;
     private List<FormInnerSearchRule> innerSearchRules;
 
+    private ClassAndAnnotationPair classAndAnnotation;
+
     private List<ValidationResultNew> validationResults = new ArrayList<>();
 
     public FormSearchRule(String section, SearchRuleType type, Selector selector,
-                          List<FormInnerSearchRule> innerSearchRules) {
+                          List<FormInnerSearchRule> innerSearchRules,
+                          ClassAndAnnotationPair classAndAnnotation) {
         this.section = section;
         this.type = type;
         this.selector = selector;
         this.innerSearchRules = innerSearchRules;
+        this.classAndAnnotation = classAndAnnotation;
     }
 
     public String getSection() {
@@ -54,6 +59,10 @@ public class FormSearchRule implements SearchRule {
 
     public List<FormInnerSearchRule> getInnerSearchRules() {
         return innerSearchRules;
+    }
+
+    public ClassAndAnnotationPair getClassAndAnnotation() {
+        return classAndAnnotation;
     }
 
     @Override
