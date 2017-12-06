@@ -61,7 +61,7 @@ public class MainTest {
         WebValidators webValidators = new WebValidators();
 
         JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName,
-            new JavaFieldBuilder(new JavaAnnotationBuilder(), bc));
+            new JavaFieldBuilder(new JavaAnnotationBuilder(), bc, fieldBuilder));
 
         WebPagesBuilder builder = new WebPagesBuilder();
 

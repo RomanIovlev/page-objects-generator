@@ -1,5 +1,7 @@
 package com.epam.page.object.generator.model.webElementGroups;
 
+import com.epam.page.object.generator.adapter.IJavaField;
+import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.validators.ValidationResultNew;
@@ -32,6 +34,11 @@ public class CommonWebElementGroup implements WebElementGroup{
     @Override
     public boolean isJavaClass() {
         return false;
+    }
+
+    @Override
+    public List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
+        return webElementGroupFieldBuilder.visit(this);
     }
 
     @Override

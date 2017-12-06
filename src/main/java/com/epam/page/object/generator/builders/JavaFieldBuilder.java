@@ -11,19 +11,11 @@ import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
 import com.epam.page.object.generator.adapter.IJavaField;
 import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.JavaField;
-import com.epam.page.object.generator.adapter.searchRuleFields.ComplexSearchRuleField;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
-import com.epam.page.object.generator.model.webElements.CommonWebElement;
-import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
-import com.epam.page.object.generator.model.searchRules.FormSearchRule;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
-import com.epam.page.object.generator.model.webElements.ComplexWebElement;
 import com.epam.page.object.generator.model.webElements.FormWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import java.util.ArrayList;
@@ -34,12 +26,15 @@ public class JavaFieldBuilder {
 
     private JavaAnnotationBuilder javaAnnotationBuilder;
     private SupportedTypesContainer typesContainer;
+    private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
 
     public JavaFieldBuilder(
         JavaAnnotationBuilder javaAnnotationBuilder,
-        SupportedTypesContainer typesContainer) {
+        SupportedTypesContainer typesContainer,
+        WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
         this.javaAnnotationBuilder = javaAnnotationBuilder;
         this.typesContainer = typesContainer;
+        this.webElementGroupFieldBuilder = webElementGroupFieldBuilder;
     }
 
     public List<IJavaField> buildSiteFields(List<WebPage> webPages) {
@@ -69,85 +64,10 @@ public class JavaFieldBuilder {
             if(webElementGroup.isInvalid()) {
                 continue;
             }
-            SearchRule searchRule = webElementGroup.getSearchRule();
-            List<WebElement> webElements = webElementGroup.getWebElements();
-
-            if (searchRule instanceof CommonSearchRule) {
-                List<IJavaField> javaFields = getFields(
-                    (CommonSearchRule) searchRule, webElements);
-                fields.addAll(javaFields);
-            } else if (searchRule instanceof ComplexSearchRule) {
-                List<IJavaField> javaFields = getFields(
-                    (ComplexSearchRule) searchRule, webElements);
-                fields.addAll(javaFields);
-            } else if (searchRule instanceof FormSearchRule) {
-                JavaField javaField = getField((FormSearchRule) searchRule);
-                fields.add(javaField);
-            }
+            fields.addAll(webElementGroup.accept(webElementGroupFieldBuilder));
         }
 
         return fields;
-    }
-
-    private JavaField getField(FormSearchRule searchRule) {
-        String className = typesContainer
-            .getSupportedTypesMap().get(searchRule.getTypeName()).getElementClass()
-            .getName();
-        String fieldName = firstLetterDown(splitCamelCase(searchRule.getSection()));
-
-        Class annotationClass = typesContainer.getSupportedTypesMap()
-            .get(searchRule.getTypeName())
-            .getElementAnnotation();
-
-        IJavaAnnotation annotation = javaAnnotationBuilder
-            .buildAnnotation(annotationClass, searchRule);
-        Modifier[] modifiers = new Modifier[]{PUBLIC};
-
-        return new JavaField(className, fieldName, annotation, modifiers);
-    }
-
-    private List<IJavaField> getFields(CommonSearchRule searchRule,
-                                       List<WebElement> webElements) {
-        List<IJavaField> javaFields = new ArrayList<>();
-
-        for (WebElement webElement : webElements) {
-            String className = typesContainer
-                .getSupportedTypesMap().get(searchRule.getTypeName()).getElementClass().getName();
-            String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
-
-            Class annotationClass = typesContainer.getSupportedTypesMap()
-                .get(searchRule.getTypeName())
-                .getElementAnnotation();
-            IJavaAnnotation annotation = javaAnnotationBuilder
-                .buildAnnotation(annotationClass, (CommonWebElement) webElement, searchRule);
-            Modifier[] modifiers = new Modifier[]{PUBLIC};
-
-            javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
-        }
-
-        return javaFields;
-    }
-
-    private List<IJavaField> getFields(ComplexSearchRule searchRule,
-                                       List<WebElement> webElements) {
-        List<IJavaField> javaFields = new ArrayList<>();
-
-        for (WebElement webElement : webElements) {
-            String className = typesContainer
-                .getSupportedTypesMap().get(searchRule.getTypeName()).getElementClass().getName();
-            String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
-
-            Class annotationClass = typesContainer.getSupportedTypesMap()
-                .get(searchRule.getTypeName())
-                .getElementAnnotation();
-            IJavaAnnotation annotation = javaAnnotationBuilder
-                .buildAnnotation(annotationClass, (ComplexWebElement) webElement, searchRule);
-            Modifier[] modifiers = new Modifier[]{PUBLIC};
-
-            javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
-        }
-
-        return javaFields;
     }
 
     public List<IJavaField> buildFormFields(FormWebElementGroup formWebElementGroup) {
