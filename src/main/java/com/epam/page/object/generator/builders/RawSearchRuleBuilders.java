@@ -20,7 +20,7 @@ public class RawSearchRuleBuilders {
         this.builders = builders;
     }
 
-    public RawSearchRuleBuilder getBuilder(RawSearchRule rawSearchRule){
+    public RawSearchRuleBuilder getBuilder(RawSearchRule rawSearchRule) {
         return builders.get(rawSearchRule.getGroupName());
     }
 

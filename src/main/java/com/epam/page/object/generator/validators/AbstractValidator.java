@@ -8,7 +8,6 @@ import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
-import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 
 public abstract class AbstractValidator implements ValidatorVisitor {
 

@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.adapter.javaClassBuildable;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
@@ -7,7 +7,12 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
+import com.epam.page.object.generator.adapter.IJavaField;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;

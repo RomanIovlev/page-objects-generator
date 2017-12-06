@@ -11,18 +11,10 @@ public class SearchRuleGroups {
         this.ruleGroupList = ruleGroupList;
     }
 
-    public List<SearchRuleGroup> getRuleGroupList() {
-        return ruleGroupList;
-    }
-
-    public void setRuleGroupList(List<SearchRuleGroup> ruleGroupList) {
-        this.ruleGroupList = ruleGroupList;
-    }
-
-    public SearchRuleGroup getGroupByType(SearchRuleType type){
+    public SearchRuleGroup getGroupByType(SearchRuleType type) {
         return ruleGroupList.stream()
-                .filter(searchRuleGroup -> searchRuleGroup.getSearchRuleTypes().contains(type))
-                .findFirst()
-                .orElse(null);
+            .filter(searchRuleGroup -> searchRuleGroup.getSearchRuleTypes().contains(type))
+            .findFirst()
+            .orElse(null);
     }
 }

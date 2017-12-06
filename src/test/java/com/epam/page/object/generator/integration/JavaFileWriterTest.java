@@ -3,17 +3,8 @@ package com.epam.page.object.generator.integration;
 import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.model.WebPagesBuilder;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import java.io.File;
-import java.util.Collections;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 public class JavaFileWriterTest {
 

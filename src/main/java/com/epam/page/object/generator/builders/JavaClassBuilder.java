@@ -5,22 +5,16 @@ import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
-import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.adapter.FormClass;
-import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.IJavaClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.FormClass;
+import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
 import com.epam.page.object.generator.adapter.IJavaField;
 import com.epam.page.object.generator.adapter.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.JavaAnnotation;
-import com.epam.page.object.generator.adapter.JavaClass;
-import com.epam.page.object.generator.adapter.PageClass;
-import com.epam.page.object.generator.adapter.SiteClass;
-import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.adapter.javaClasses.JavaClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.PageClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.SiteClass;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
-import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.SearchRuleType;
-import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 

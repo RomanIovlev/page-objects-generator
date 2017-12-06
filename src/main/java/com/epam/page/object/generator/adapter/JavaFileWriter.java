@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.adapter;
 
 import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
+import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;

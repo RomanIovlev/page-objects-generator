@@ -8,9 +8,10 @@ import org.slf4j.LoggerFactory;
 
 public class ValidationExceptionConverter {
 
-    private final static Logger logger = LoggerFactory.getLogger(ValidationExceptionConverter.class);
+    private final static Logger logger = LoggerFactory
+        .getLogger(ValidationExceptionConverter.class);
 
-    public List<ValidationResultNew> toValidationResult(ValidationException e){
+    public List<ValidationResultNew> toValidationResult(ValidationException e) {
 
         List<ValidationResultNew> validationResults = new ArrayList<>();
         if (e.getCausingExceptions().isEmpty()) {

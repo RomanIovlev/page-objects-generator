@@ -37,7 +37,8 @@ public class ComplexSearchRuleBuilder extends RawSearchRuleBuilder {
         ComplexInnerSearchRuleBuilder builder = new ComplexInnerSearchRuleBuilder();
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
             innerSearchRules.add(
-                (ComplexInnerSearchRule) builder.buildSearchRule(innerRawSearchRule, typesContainer));
+                (ComplexInnerSearchRule) builder
+                    .buildSearchRule(innerRawSearchRule, typesContainer));
         }
 
         return new ComplexSearchRule(type, innerSearchRules, classAndAnnotation);

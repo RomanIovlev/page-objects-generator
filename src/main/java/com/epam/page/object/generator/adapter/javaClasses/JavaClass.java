@@ -1,5 +1,7 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.adapter.javaClasses;
 
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaField;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 

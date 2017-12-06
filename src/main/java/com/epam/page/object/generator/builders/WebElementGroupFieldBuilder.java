@@ -7,15 +7,12 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 import com.epam.page.object.generator.adapter.IJavaAnnotation;
 import com.epam.page.object.generator.adapter.IJavaField;
 import com.epam.page.object.generator.adapter.JavaField;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
-import com.epam.page.object.generator.model.webElements.CommonWebElement;
-import com.epam.page.object.generator.model.webElements.ComplexWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +29,8 @@ public class WebElementGroupFieldBuilder {
             String className = searchRule.getClassAndAnnotation().getElementClass().getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
             Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
-            IJavaAnnotation annotation = commonWebElementGroup.getAnnotation(annotationClass, webElement);
+            IJavaAnnotation annotation = commonWebElementGroup
+                .getAnnotation(annotationClass, webElement);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
             javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
@@ -49,7 +47,8 @@ public class WebElementGroupFieldBuilder {
             String className = searchRule.getClassAndAnnotation().getElementClass().getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
             Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
-            IJavaAnnotation annotation = complexWebElementGroup.getAnnotation(annotationClass, webElement);
+            IJavaAnnotation annotation = complexWebElementGroup
+                .getAnnotation(annotationClass, webElement);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
             javaFields.add(new JavaField(className, fieldName, annotation, modifiers));

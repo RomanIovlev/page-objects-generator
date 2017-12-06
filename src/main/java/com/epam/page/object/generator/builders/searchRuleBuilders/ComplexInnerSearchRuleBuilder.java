@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.builders.searchRuleBuilders;
 
-
 import com.epam.page.object.generator.builders.RawSearchRuleBuilder;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.RawSearchRule;
@@ -17,7 +16,7 @@ public class ComplexInnerSearchRuleBuilder extends RawSearchRuleBuilder {
         String title = rawSearchRule.getValue("title");
 
         String uniqueness = null;
-        if(title.equals("root")){
+        if (title.equals("root")) {
             uniqueness = rawSearchRule.getValue("uniqueness");
         }
 

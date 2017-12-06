@@ -2,7 +2,6 @@ package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.model.RawSearchRule;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
 import java.util.List;
 
 public class ValidationChecker {

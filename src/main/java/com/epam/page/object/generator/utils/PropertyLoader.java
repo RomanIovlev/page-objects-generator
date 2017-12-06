@@ -34,7 +34,7 @@ public class PropertyLoader {
     private final static Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
 
     public static void loadProperties() {
-        logger.info("Start read property file = '" + PROPERTY_FILE + "'\n" );
+        logger.info("Start read property file = '" + PROPERTY_FILE + "'\n");
         searchRuleGroups = new SearchRuleGroups(getSearchRuleGroupList());
         searchRuleGroupsScheme = new SearchRuleGroupsScheme(getMapWithScheme());
         rawSearchRuleBuilders = new RawSearchRuleBuilders(getMapWithBuilders());
@@ -45,7 +45,8 @@ public class PropertyLoader {
 
         logger.info("Create map with builders");
         builderMap.put("commonSearchRule", new CommonSearchRuleBuilder());
-        builderMap.put("complexSearchRule", new ComplexSearchRuleBuilder(new RawSearchRuleMapper()));
+        builderMap
+            .put("complexSearchRule", new ComplexSearchRuleBuilder(new RawSearchRuleMapper()));
         builderMap.put("complexInnerSearchRule", new ComplexInnerSearchRuleBuilder());
         builderMap.put("formSearchRule", new FormSearchRuleBuilder(new RawSearchRuleMapper()));
         builderMap.put("formInnerSearchRule", new FormInnerSearchRuleBuilder());

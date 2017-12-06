@@ -1,5 +1,8 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.adapter.javaClassBuildable;
 
+import com.epam.page.object.generator.adapter.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.IJavaField;
+import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.WebPage;

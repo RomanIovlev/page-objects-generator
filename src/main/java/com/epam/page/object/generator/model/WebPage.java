@@ -1,8 +1,7 @@
 package com.epam.page.object.generator.model;
 
-import com.epam.page.object.generator.adapter.FormClass;
-import com.epam.page.object.generator.adapter.JavaClassBuildable;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
+import com.epam.page.object.generator.adapter.javaClassBuildable.FormClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.JavaClassBuildable;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
@@ -26,7 +25,7 @@ public class WebPage {
     private Document document;
     private List<WebElementGroup> webElementGroups;
 
-    protected WebPage(URI uri, Document document) {
+    public WebPage(URI uri, Document document) {
         this.webElementGroups = new ArrayList<>();
         this.uri = uri;
         this.document = document;

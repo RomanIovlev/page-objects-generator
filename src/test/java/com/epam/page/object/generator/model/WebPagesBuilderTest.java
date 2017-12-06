@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertTrue;
 
+import com.epam.page.object.generator.builders.WebPagesBuilder;
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import java.util.ArrayList;
 import java.util.List;

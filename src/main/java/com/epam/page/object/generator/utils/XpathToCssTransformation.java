@@ -19,7 +19,8 @@ public class XpathToCssTransformation {
 
             Invocable invocable = (Invocable) engine;
 
-            return new Selector("css", invocable.invokeFunction("cssify", selector.getValue()).toString());
+            return new Selector("css",
+                invocable.invokeFunction("cssify", selector.getValue()).toString());
         } catch (NoSuchMethodException | ScriptException | FileNotFoundException ex) {
             throw new XpathToCssTransformerException(
                 "Failed to transform Xpath to Css locator in this selector:"

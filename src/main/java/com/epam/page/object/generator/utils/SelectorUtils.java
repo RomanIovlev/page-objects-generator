@@ -1,8 +1,6 @@
 package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
-import org.jsoup.nodes.Element;
 
 public class SelectorUtils {
 
@@ -40,15 +38,11 @@ public class SelectorUtils {
             return xpathWithoutCloseBracket + "]";
         }
 
-//        if (searchRule.getInnerSearchRules() == null) {
-
         if (uniquenessAttribute.equalsIgnoreCase("text")) {
             return xpathWithoutCloseBracket + " and text()='" + requiredValue + "']";
         } else {
             return xpathWithoutCloseBracket + " and @"
                 + uniquenessAttribute + "='" + requiredValue + "']";
         }
-//        }
-//        return "";
     }
 }

@@ -10,7 +10,7 @@ public class SearchRuleExtractor {
 
     public static Elements extractElementsFromElement(Element element, SearchRule searchRule) {
         Selector selector = searchRule.getSelector();
-        if(selector.isXpath()){
+        if (selector.isXpath()) {
             return Xsoup.compile(selector.getValue()).evaluate(element).getElements();
         }
         return element.select(selector.getValue());
@@ -19,15 +19,17 @@ public class SearchRuleExtractor {
     public static Element extractElement(Element element, SearchRule searchRule) {
         Selector selector = searchRule.getSelector();
         Elements elements;
-        if(selector.isXpath()){
+        if (selector.isXpath()) {
             elements = Xsoup.compile(selector.getValue()).evaluate(element).getElements();
-        } else if (selector.isCss()){
+        } else if (selector.isCss()) {
             elements = element.select(selector.getValue());
         } else {
             throw new NullPointerException("wrong selector type");
         }
 
-        if (elements.size() != 1) throw new RuntimeException("wrong elements number");
+        if (elements.size() != 1) {
+            throw new RuntimeException("wrong elements number");
+        }
 
         return elements.first();
     }

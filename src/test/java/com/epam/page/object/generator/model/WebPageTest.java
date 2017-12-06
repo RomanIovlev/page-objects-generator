@@ -3,6 +3,7 @@ package com.epam.page.object.generator.model;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.epam.page.object.generator.model.searchRules.SearchRule;
 import java.util.Arrays;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -39,18 +40,18 @@ public class WebPageTest {
         sut = new WebPage(null, document);
     }
 
-    @Test
-    public void addSearchRulesForCurrentWebPage() throws Exception {
-        when(searchRule1.extractElementsFromElement(document)).thenReturn(elementsFromWebSite1);
-        when(searchRule2.extractElementsFromElement(document)).thenReturn(elementsFromWebSite2);
-
-        when(elementsFromWebSite1.size()).thenReturn(0);
-        when(elementsFromWebSite2.size()).thenReturn(1);
-
-//        sut.addSearchRules(Arrays.asList(searchRule1,searchRule2));
-
-//        assertTrue(sut.getSearchRules().size()==1);
-//        assertTrue(sut.getSearchRules().size()==1);
-    }
+//    @Test
+//    public void addSearchRulesForCurrentWebPage() throws Exception {
+//        when(searchRule1.extractElementsFromElement(document)).thenReturn(elementsFromWebSite1);
+//        when(searchRule2.extractElementsFromElement(document)).thenReturn(elementsFromWebSite2);
+//
+//        when(elementsFromWebSite1.size()).thenReturn(0);
+//        when(elementsFromWebSite2.size()).thenReturn(1);
+//
+////        sut.addSearchRules(Arrays.asList(searchRule1,searchRule2));
+//
+////        assertTrue(sut.getSearchRules().size()==1);
+////        assertTrue(sut.getSearchRules().size()==1);
+//    }
 
 }

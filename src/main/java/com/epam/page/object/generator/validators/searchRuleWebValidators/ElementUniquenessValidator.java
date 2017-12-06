@@ -3,7 +3,6 @@ package com.epam.page.object.generator.validators.searchRuleWebValidators;
 import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
-import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.validators.ValidationResultNew;
 import com.epam.page.object.generator.validators.AbstractValidator;

@@ -5,7 +5,6 @@ public class StringUtils {
     public static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
 
     private StringUtils() {
-
     }
 
     public static String splitCamelCase(String camel) {

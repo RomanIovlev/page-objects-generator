@@ -9,8 +9,8 @@ public class JavaField implements IJavaField {
     private IJavaAnnotation annotation;
     private Modifier[] modifiers;
 
-    public JavaField(String fieldClass, String fieldName,
-                     IJavaAnnotation annotation, Modifier[] modifiers) {
+    public JavaField(String fieldClass, String fieldName, IJavaAnnotation annotation,
+                     Modifier[] modifiers) {
         this.fieldClass = fieldClass;
         this.fieldName = fieldName;
         this.annotation = annotation;

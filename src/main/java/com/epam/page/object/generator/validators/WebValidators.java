@@ -14,13 +14,32 @@ public class WebValidators {
         new UniquenessAttributeExistenceValidator()
     );
 
-    public void validate(List<WebPage> webPages){
+    public WebValidators() {
+    }
+
+    public WebValidators(List<ValidatorVisitor> newValidators) {
+        if (newValidators != null) {
+            validators.addAll(newValidators);
+        }
+    }
+
+    public void validate(List<WebPage> webPages) {
         for (ValidatorVisitor validator : validators) {
             for (WebPage webPage : webPages) {
                 for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
                     webElementGroup.accept(validator);
                 }
             }
+        }
+    }
+
+    public void addValidator(ValidatorVisitor validator) {
+        validators.add(validator);
+    }
+
+    public void addValidatorsList(List<ValidatorVisitor> newValidators) {
+        if (newValidators != null) {
+            validators.addAll(newValidators);
         }
     }
 }

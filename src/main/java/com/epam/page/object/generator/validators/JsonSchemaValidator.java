@@ -23,7 +23,8 @@ public class JsonSchemaValidator {
             try {
                 rawSearchRule.getSchema().validate(rawSearchRule.getElement());
                 rawSearchRule.setValidationResults(
-                    Lists.newArrayList(new ValidationResultNew(true, rawSearchRule + " is correct!")));
+                    Lists.newArrayList(
+                        new ValidationResultNew(true, rawSearchRule + " is correct!")));
                 logger.info(rawSearchRule + "is valid");
             } catch (ValidationException e) {
                 logger.error(rawSearchRule + " is invalid:");
@@ -33,8 +34,6 @@ public class JsonSchemaValidator {
 
         return rawSearchRuleList;
     }
-
-
 
 
 }

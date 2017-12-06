@@ -5,8 +5,7 @@ public class ValidationResultNew {
     private boolean isValid;
     private String reason;
 
-    public ValidationResultNew(boolean isValid,
-                            String reason) {
+    public ValidationResultNew(boolean isValid, String reason) {
         this.isValid = isValid;
         this.reason = reason;
     }
@@ -15,7 +14,9 @@ public class ValidationResultNew {
         return isValid;
     }
 
-    public boolean isInvalid() {return !isValid;}
+    public boolean isInvalid() {
+        return !isValid;
+    }
 
     public String getReason() {
         return reason;

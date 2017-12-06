@@ -7,15 +7,14 @@ import static org.mockito.Mockito.verify;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
-import com.epam.page.object.generator.model.SearchRule;
-import com.epam.page.object.generator.model.WebPagesBuilder;
+import com.epam.page.object.generator.builders.WebPagesBuilder;
+import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
 import com.epam.page.object.generator.validators.WebValidators;
-import com.epam.page.object.generator.validators.oldValidators.ValidationContext;
 import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
@@ -59,18 +58,16 @@ public class PageObjectsGeneratorTest {
     private WebPagesBuilder builder;
 
 
-    private SearchRule searchRule = new SearchRule("type", "uniqueness", "title", "css", "xpath",
-        null);
+//    private SearchRule searchRule = new SearchRule("type", "uniqueness", "title", "css", "xpath",
+//        null);
+//
+//    private SearchRule invalidSearchRule =
+//        new SearchRule("button", "req", null, null, null, null);
 
-    private SearchRule invalidSearchRule =
-        new SearchRule("button", "req", null, null, null, null);
-
-    private List<SearchRule> searchRules = Lists.newArrayList(searchRule);
+//    private List<SearchRule> searchRules = Lists.newArrayList(searchRule);
 
 
     private List<String> urls = Collections.singletonList("http://google.com");
-
-    private ValidationContext validationContext = new ValidationContext(searchRules, urls);
 
     private PageObjectsGenerator sut;
 

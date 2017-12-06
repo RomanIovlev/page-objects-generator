@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.utils.searchRuleGroups;
 
-
 import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.List;
 
@@ -24,14 +23,5 @@ public class SearchRuleGroup {
 
     public List<SearchRuleType> getSearchRuleTypes() {
         return searchRuleTypes;
-    }
-
-    public void setSearchRuleTypes(List<SearchRuleType> searchRuleTypes) {
-        this.searchRuleTypes = searchRuleTypes;
-    }
-
-    public boolean isSupportedType(String name) {
-        return searchRuleTypes.stream()
-                .anyMatch(searchRuleType -> searchRuleType.getName().equals(name));
     }
 }

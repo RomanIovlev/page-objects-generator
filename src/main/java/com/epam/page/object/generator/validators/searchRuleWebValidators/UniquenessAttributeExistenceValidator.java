@@ -1,15 +1,11 @@
 package com.epam.page.object.generator.validators.searchRuleWebValidators;
 
-import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
 import com.epam.page.object.generator.model.webElements.FormWebElement;
-import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.validators.AbstractValidator;
 import com.epam.page.object.generator.validators.ValidationResultNew;
-import java.util.HashSet;
-import java.util.Set;
 
 public class UniquenessAttributeExistenceValidator extends AbstractValidator {
 

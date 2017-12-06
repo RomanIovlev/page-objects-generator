@@ -7,7 +7,7 @@ import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.errors.NotValidUrlException;
 import com.epam.page.object.generator.errors.ValidationException;
-import com.epam.page.object.generator.model.WebPagesBuilder;
+import com.epam.page.object.generator.builders.WebPagesBuilder;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
@@ -74,7 +74,16 @@ public class MainTest {
     }
 
     @Test
-    public void pageObjectsGenerator_success() throws Exception {
+    public void pageObjectsGenerator_SuccessGenerateCommonSearchRule() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "https://www.google.com",
+            false);
+
+        pog.generatePageObjects("/button.json", outputDir, urls);
+    }
+
+    @Test
+    public void pageObjectsGenerator_SuccessGenerateComplexSearchRule() throws Exception {
         PageObjectsGenerator pog = initPog(
             "https://www.w3schools.com/howto/howto_js_dropdown.asp",
             false);
@@ -82,8 +91,18 @@ public class MainTest {
         pog.generatePageObjects("/dropdown.json", outputDir, urls);
     }
 
+
     @Test
-    public void pageObjectGenerator_FormSuccess() throws Exception {
+    public void pageObjectsGenerator_SuccessGenerateComplexSearchRuleWithInnerElements() throws Exception {
+        PageObjectsGenerator pog = initPog(
+            "http://materializecss.com/dropdown.html",
+            false);
+
+        pog.generatePageObjects("/dropdown-inner-root.json", outputDir, urls);
+    }
+
+    @Test
+    public void pageObjectGenerator_SuccessGenerateFormSearchRule() throws Exception {
         PageObjectsGenerator pog = initPog(
             "https://www.w3schools.com/html/html_forms.asp",
             false);
@@ -137,31 +156,5 @@ public class MainTest {
         pog.generatePageObjects("/dropdown-wrong-selector.json", outputDir, urls);
     }
 
-    @Test(expected = ValidationException.class)
-    public void pageObjectsGenerator_NotUniqueLocatorFoundInUniquenessModeOn() throws Exception {
-        PageObjectsGenerator pog = initPog(
-            "https://www.google.com",
-            false);
-
-        pog.generatePageObjects("/button.json", outputDir, urls);
-    }
-
-    @Test
-    public void pageObjectsGenerator_NotUniqueLocatorFoundInUniquenessModeOff() throws Exception {
-        PageObjectsGenerator pog = initPog(
-            "https://www.google.com",
-            false);
-
-        pog.generatePageObjects("/button.json", outputDir, urls);
-    }
-
-    @Test
-    public void pageObjectsGenerator_GenerateDropdownElementWithInnerElements() throws Exception {
-        PageObjectsGenerator pog = initPog(
-            "http://materializecss.com/dropdown.html",
-            false);
-
-        pog.generatePageObjects("/dropdown-inner-root.json", outputDir, urls);
-    }
 
 }

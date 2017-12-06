@@ -1,17 +1,17 @@
 package com.epam.page.object.generator;
 
-import com.epam.page.object.generator.adapter.IJavaClass;
-import com.epam.page.object.generator.adapter.JavaClassBuildable;
+import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.JavaClassBuildable;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.epam.page.object.generator.adapter.PageClass;
-import com.epam.page.object.generator.adapter.SiteClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.PageClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.SiteClass;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.model.WebPagesBuilder;
+import com.epam.page.object.generator.builders.WebPagesBuilder;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.PropertyLoader;
