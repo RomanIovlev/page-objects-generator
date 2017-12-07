@@ -39,5 +39,8 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
         return new ValidationResult(false, stringBuilder.toString());
     }
 
-
+    @Override
+    public String toString() {
+        return "TitleOfComplexElementValidator";
+    }
 }

@@ -14,7 +14,8 @@
     },
     "section": {
       "description": "Section of the formSearchRule",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "innerSearchRules": {
       "description": "List of inner SearchRules",

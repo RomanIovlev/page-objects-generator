@@ -6,10 +6,9 @@ import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexSearchR
 import com.epam.page.object.generator.builders.searchRuleBuilders.FormInnerSearchRuleBuilder;
 import com.epam.page.object.generator.builders.searchRuleBuilders.FormSearchRuleBuilder;
 import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilder;
-import com.epam.page.object.generator.builders.RawSearchRuleBuilders;
+import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilders;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
-import com.epam.page.object.generator.utils.searchRuleScheme.SearchRuleGroupsScheme;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,14 +21,13 @@ import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class PropertyLoader {
 
     private final static String PROPERTY_FILE = "/groups.json";
 
     static SearchRuleGroups searchRuleGroups;
     static SearchRuleGroupsScheme searchRuleGroupsScheme;
-    static RawSearchRuleBuilders rawSearchRuleBuilders;
+    static SearchRuleBuilders searchRuleBuilders;
 
     private final static Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
 
@@ -37,7 +35,7 @@ public class PropertyLoader {
         logger.info("Start read property file = '" + PROPERTY_FILE + "'\n");
         searchRuleGroups = new SearchRuleGroups(getSearchRuleGroupList());
         searchRuleGroupsScheme = new SearchRuleGroupsScheme(getMapWithScheme());
-        rawSearchRuleBuilders = new RawSearchRuleBuilders(getMapWithBuilders());
+        searchRuleBuilders = new SearchRuleBuilders(getMapWithBuilders());
     }
 
     private static Map<String, SearchRuleBuilder> getMapWithBuilders() {
@@ -108,6 +106,4 @@ public class PropertyLoader {
 
         return searchRuleGroups;
     }
-
-
 }

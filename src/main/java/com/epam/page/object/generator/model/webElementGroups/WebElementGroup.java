@@ -13,7 +13,6 @@ public interface WebElementGroup extends Validatable {
 
     List<WebElement> getWebElements();
 
-    boolean isJavaClass();
-
-    List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder);
+    List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder,
+                            String packageName);
 }

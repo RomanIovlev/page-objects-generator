@@ -15,23 +15,4 @@ public class SearchRuleExtractor {
         }
         return element.select(selector.getValue());
     }
-
-    public static Element extractElement(Element element, SearchRule searchRule) {
-        Selector selector = searchRule.getSelector();
-        Elements elements;
-        if (selector.isXpath()) {
-            elements = Xsoup.compile(selector.getValue()).evaluate(element).getElements();
-        } else if (selector.isCss()) {
-            elements = element.select(selector.getValue());
-        } else {
-            throw new NullPointerException("wrong selector type");
-        }
-
-        if (elements.size() != 1) {
-            throw new RuntimeException("wrong elements number");
-        }
-
-        return elements.first();
-    }
-
 }

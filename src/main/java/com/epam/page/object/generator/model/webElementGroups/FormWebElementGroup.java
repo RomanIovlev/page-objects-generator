@@ -12,7 +12,7 @@ import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormWebElementGroup implements WebElementGroup{
+public class FormWebElementGroup implements WebElementGroup {
 
     private FormSearchRule searchRule;
     private List<WebElement> webElements;
@@ -35,13 +35,9 @@ public class FormWebElementGroup implements WebElementGroup{
     }
 
     @Override
-    public boolean isJavaClass() {
-        return true;
-    }
-
-    @Override
-    public List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
-        return webElementGroupFieldBuilder.visit(this);
+    public List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder,
+                                   String packageName) {
+        return webElementGroupFieldBuilder.visit(this, packageName);
     }
 
     @Override
@@ -61,12 +57,8 @@ public class FormWebElementGroup implements WebElementGroup{
 
     @Override
     public boolean isInvalid() {
-        return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
-    }
-
-    @Override
-    public void addValidationResult(ValidationResult validationResult) {
-        validationResults.add(validationResult);
+        return validationResults.stream()
+            .anyMatch(validationResultNew -> !validationResultNew.isValid());
     }
 
     @Override

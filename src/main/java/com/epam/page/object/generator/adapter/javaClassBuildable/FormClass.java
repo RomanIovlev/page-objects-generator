@@ -35,20 +35,21 @@ public class FormClass implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> getFields() {
+    public List<IJavaField> getFields(String packageName) {
         List<IJavaField> javaFields = new ArrayList<>();
 
         for (WebElement webElement : formWebElementGroup.getWebElements()) {
             FormInnerSearchRule innerSearchRule = ((FormWebElement) webElement).getSearchRule();
 
-            String className = innerSearchRule.getClassAndAnnotation().getElementClass().getName();
+            String fullClassName = innerSearchRule.getClassAndAnnotation().getElementClass()
+                .getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
             Class annotationClass = innerSearchRule.getClassAndAnnotation().getElementAnnotation();
             IJavaAnnotation annotation = buildAnnotation(annotationClass,
                 (FormWebElement) webElement, innerSearchRule);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
-            javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
+            javaFields.add(new JavaField(fullClassName, fieldName, annotation, modifiers));
         }
 
         return javaFields;

@@ -19,46 +19,36 @@ public class WebPagesBuilderTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-
     private WebPagesBuilder sut;
     private List<String> urls;
     private List<WebPage> webPages;
 
     @Before
-
     public void setUp() throws Exception {
-
         MockitoAnnotations.initMocks(this);
 
         sut = new WebPagesBuilder();
         urls = new ArrayList<>();
-
-
     }
 
     @Test
     public void generate_validUrls() throws Exception {
-
         urls.add("http://ya.ru");
         urls.add("http://google.com");
         webPages = sut.generate(urls);
+
         assertTrue(webPages.size() > 0);
-
-
     }
 
     @Test(expected = NotValidUrlException.class)
     public void validate_NotValidUrl() throws Exception {
-
         urls.add("123123");
         sut.generate(urls);
-
     }
 
 
     @Test
     public void validateCoupleOfInvalidUrls() throws Exception {
-
         TestThing testThing = new TestThing();
 
         thrown.expect(NotValidUrlException.class);

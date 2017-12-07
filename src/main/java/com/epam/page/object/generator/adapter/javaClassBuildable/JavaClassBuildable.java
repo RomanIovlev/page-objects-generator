@@ -10,7 +10,7 @@ public interface JavaClassBuildable {
 
     IJavaClass accept(JavaClassBuilder javaClassBuilder);
 
-    List<IJavaField> getFields();
+    List<IJavaField> getFields(String packageName);
 
     IJavaAnnotation getAnnotation();
 }

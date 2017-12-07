@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Document;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class WebPage {
@@ -31,16 +30,8 @@ public class WebPage {
         this.document = document;
     }
 
-    public Document getDocument() {
-        return document;
-    }
-
     public String getTitle() {
         return document.title();
-    }
-
-    public URI getUri() {
-        return uri;
     }
 
     public String getUrlWithoutDomain() {
@@ -57,17 +48,16 @@ public class WebPage {
 
     public void addSearchRules(List<SearchRule> searchRules) {
         for (SearchRule searchRule : searchRules) {
-            Elements elements = extractElements(searchRule);
+            Elements elements = SearchRuleExtractor
+                .extractElementsFromElement(document, searchRule);
             if (elements.size() != 0) {
                 if (searchRule instanceof CommonSearchRule) {
                     webElementGroups.add(new CommonWebElementGroup((CommonSearchRule) searchRule,
                         searchRule.getWebElements(elements)));
-                }
-                else if(searchRule instanceof ComplexSearchRule){
+                } else if (searchRule instanceof ComplexSearchRule) {
                     webElementGroups.add(new ComplexWebElementGroup((ComplexSearchRule) searchRule,
                         searchRule.getWebElements(elements)));
-                }
-                else if(searchRule instanceof FormSearchRule){
+                } else if (searchRule instanceof FormSearchRule) {
                     webElementGroups.add(new FormWebElementGroup((FormSearchRule) searchRule,
                         searchRule.getWebElements(elements)));
                 }
@@ -80,28 +70,19 @@ public class WebPage {
             .anyMatch(webElementGroup -> webElementGroup.getSearchRule() instanceof FormSearchRule);
     }
 
-    public Elements extractElements(SearchRule searchRule) {
-        return SearchRuleExtractor.extractElementsFromElement(document, searchRule);
-    }
-
-    public Element extractElement(SearchRule searchRule) {
-        return SearchRuleExtractor.extractElement(document, searchRule);
-    }
-
-    public boolean hasInvalidWebElementGroup(){
+    public boolean hasInvalidWebElementGroup() {
         return webElementGroups.stream().anyMatch(Validatable::isInvalid);
     }
 
-    public List<JavaClassBuildable> getFormClasses(){
+    public List<JavaClassBuildable> getFormClasses() {
         List<JavaClassBuildable> javaClasses = new ArrayList<>();
 
         for (WebElementGroup webElementGroup : webElementGroups) {
-            if(webElementGroup instanceof FormWebElementGroup){
+            if (webElementGroup instanceof FormWebElementGroup) {
                 javaClasses.add(new FormClass((FormWebElementGroup) webElementGroup));
             }
         }
 
         return javaClasses;
     }
-
 }

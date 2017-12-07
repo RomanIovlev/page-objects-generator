@@ -30,14 +30,14 @@ public class PageClass implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> getFields() {
+    public List<IJavaField> getFields(String packageName) {
         List<IJavaField> fields = new ArrayList<>();
 
         for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
             if (webElementGroup.isInvalid()) {
                 continue;
             }
-            fields.addAll(webElementGroup.accept(webElementGroupFieldBuilder));
+            fields.addAll(webElementGroup.accept(webElementGroupFieldBuilder, packageName));
         }
 
         return fields;

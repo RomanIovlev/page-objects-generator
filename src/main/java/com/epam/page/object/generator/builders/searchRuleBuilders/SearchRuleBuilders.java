@@ -1,14 +1,14 @@
-package com.epam.page.object.generator.builders;
+package com.epam.page.object.generator.builders.searchRuleBuilders;
 
 import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilder;
 import com.epam.page.object.generator.model.RawSearchRule;
 import java.util.Map;
 
-public class RawSearchRuleBuilders {
+public class SearchRuleBuilders {
 
     private Map<String, SearchRuleBuilder> builders;
 
-    public RawSearchRuleBuilders(
+    public SearchRuleBuilders(
         Map<String, SearchRuleBuilder> builders) {
         this.builders = builders;
     }

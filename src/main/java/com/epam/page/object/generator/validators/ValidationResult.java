@@ -21,4 +21,12 @@ public class ValidationResult {
     public String getReason() {
         return reason;
     }
+
+    @Override
+    public String toString() {
+        return "ValidationResult{" +
+            "isValid=" + isValid +
+            ", reason='" + reason + '\'' +
+            '}';
+    }
 }

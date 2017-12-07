@@ -31,7 +31,7 @@ public class JavaClassBuilder {
         String className = "Site";
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebSite.class;
         IJavaAnnotation annotation = siteClass.getAnnotation();
-        List<IJavaField> fields = siteClass.getFields();
+        List<IJavaField> fields = siteClass.getFields(this.packageName);
         Modifier modifier = Modifier.PUBLIC;
 
         return new JavaClass(packageName, className, superClass, annotation, fields, modifier);
@@ -42,7 +42,7 @@ public class JavaClassBuilder {
         String className = firstLetterUp(splitCamelCase(pageClass.getTitle()));
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebPage.class;
         IJavaAnnotation annotation = pageClass.getAnnotation();
-        List<IJavaField> fields = pageClass.getFields();
+        List<IJavaField> fields = pageClass.getFields(this.packageName);
         Modifier modifier = Modifier.PUBLIC;
 
         return new JavaClass(packageName, className, superClass, annotation, fields, modifier);
@@ -57,7 +57,7 @@ public class JavaClassBuilder {
         Class superClass = formSearchRule.getTypeName().equals(
             SearchRuleType.FORM.getName()) ? Form.class : Section.class;
         IJavaAnnotation annotation = formClass.getAnnotation();
-        List<IJavaField> fields = formClass.getFields();
+        List<IJavaField> fields = formClass.getFields(packageName);
         Modifier modifier = Modifier.PUBLIC;
 
         return new JavaClass(packageName, className, superClass, annotation, fields, modifier);

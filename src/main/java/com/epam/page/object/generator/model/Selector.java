@@ -18,19 +18,19 @@ public class Selector {
         return value;
     }
 
-    public boolean isXpath(){
+    public boolean isXpath() {
         return type.equals("xpath");
     }
 
-    public boolean isCss(){
+    public boolean isCss() {
         return type.equals("css");
     }
 
     @Override
     public String toString() {
         return "{" +
-                "type='" + type + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+            "type='" + type + '\'' +
+            ", value='" + value + '\'' +
+            '}';
     }
 }

@@ -2,7 +2,7 @@ package com.epam.page.object.generator.utils;
 
 public class StringUtils {
 
-    public static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
+    private static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
 
     private StringUtils() {
     }

@@ -16,11 +16,11 @@ public class JsonSchemaValidator {
         this.converter = converter;
     }
 
-    public List<RawSearchRule> validate(List<RawSearchRule> rawSearchRuleList) {
-
-        logger.info("Start validation SearchRules");
+    public void validate(List<RawSearchRule> rawSearchRuleList) {
         for (RawSearchRule rawSearchRule : rawSearchRuleList) {
-            if(rawSearchRule.isInvalid()) continue;
+            if (rawSearchRule.isInvalid()) {
+                continue;
+            }
             try {
                 rawSearchRule.getSchema().validate(rawSearchRule.getElement());
                 rawSearchRule.setValidationResults(
@@ -32,8 +32,6 @@ public class JsonSchemaValidator {
                 rawSearchRule.setValidationResults(converter.toValidationResult(e));
             }
         }
-
-        return rawSearchRuleList;
     }
 
 

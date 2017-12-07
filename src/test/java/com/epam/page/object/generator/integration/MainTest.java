@@ -88,12 +88,10 @@ public class MainTest {
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     public void pageObjectsGenerator_wrongSelector() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-wrong-selector.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
-
-
 }

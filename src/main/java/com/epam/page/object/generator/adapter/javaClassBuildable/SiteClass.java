@@ -27,10 +27,6 @@ public class SiteClass implements JavaClassBuildable {
         this.webPages = webPages;
     }
 
-    public List<WebPage> getWebPages() {
-        return webPages;
-    }
-
     @Override
     public IJavaAnnotation getAnnotation() {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
@@ -40,20 +36,21 @@ public class SiteClass implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> getFields() {
+    public List<IJavaField> getFields(String packageName) {
         List<IJavaField> fields = new ArrayList<>();
 
         for (WebPage webPage : webPages) {
-            String className = firstLetterUp(splitCamelCase(webPage.getTitle()));
+            String fullClassName =
+                packageName + ".page." + firstLetterUp(splitCamelCase(webPage.getTitle()));
             String fieldName = splitCamelCase(webPage.getTitle());
             List<AnnotationMember> pageAnnotations = new ArrayList<>();
             pageAnnotations
-                .add(new AnnotationMember("webPage", "$S", webPage.getUrlWithoutDomain()));
+                .add(new AnnotationMember("url", "$S", webPage.getUrlWithoutDomain()));
             pageAnnotations.add(new AnnotationMember("title", "$S", webPage.getTitle()));
             IJavaAnnotation annotation = new JavaAnnotation(JPage.class, pageAnnotations);
             Modifier[] modifiers = new Modifier[]{PUBLIC, STATIC};
 
-            fields.add(new JavaField(className, fieldName, annotation, modifiers));
+            fields.add(new JavaField(fullClassName, fieldName, annotation, modifiers));
         }
 
         return fields;

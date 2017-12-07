@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FormInnerSearchRule implements SearchRule {
 
@@ -23,6 +25,7 @@ public class FormInnerSearchRule implements SearchRule {
     private ClassAndAnnotationPair classAndAnnotation;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
+    private final static Logger logger = LoggerFactory.getLogger(FormInnerSearchRule.class);
 
     public FormInnerSearchRule(String uniqueness, SearchRuleType type, Selector selector,
                                ClassAndAnnotationPair classAndAnnotation) {
@@ -38,10 +41,6 @@ public class FormInnerSearchRule implements SearchRule {
 
     public SearchRuleType getType() {
         return type;
-    }
-
-    public String getTypeName() {
-        return type.getName();
     }
 
     public ClassAndAnnotationPair getClassAndAnnotation() {
@@ -80,7 +79,7 @@ public class FormInnerSearchRule implements SearchRule {
         return webElements;
     }
 
-    public String getRequiredValue(Element element) {
+    private String getRequiredValue(Element element) {
         return uniqueness.equals("text")
             ? element.text()
             : element.attr(uniqueness);
@@ -88,7 +87,9 @@ public class FormInnerSearchRule implements SearchRule {
 
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
-        validationResults.add(validatorVisitor.visit(this));
+        ValidationResult visit = validatorVisitor.visit(this);
+        logger.info(this + " is '" + visit.isValid() + "', reason '" +  visit.getReason() + "'");
+        validationResults.add(visit);
     }
 
     @Override
@@ -105,11 +106,6 @@ public class FormInnerSearchRule implements SearchRule {
     public boolean isInvalid() {
         return validationResults.stream()
             .anyMatch(validationResultNew -> !validationResultNew.isValid());
-    }
-
-    @Override
-    public void addValidationResult(ValidationResult validationResult) {
-        validationResults.add(validationResult);
     }
 
     @Override

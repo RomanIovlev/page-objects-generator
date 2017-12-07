@@ -19,20 +19,18 @@ public enum SearchRuleType {
     TEXTLIST("textlist"),
     CHECKLIST("checklist"),
     ELEMENTS("elements"),
-
     TABLE("table"),
     COMBOBOX("combobox"),
     DROPDOWN("dropdown"),
     DROPLIST("droplist"),
     MENU("menu"),
-
     FORM("form"),
     SECTION("section"),
     ALL("all");
 
     private final String name;
 
-    private SearchRuleType(String name) {
+    SearchRuleType(String name) {
         this.name = name;
     }
 

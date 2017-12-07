@@ -41,12 +41,8 @@ public class ComplexWebElementGroup implements WebElementGroup {
     }
 
     @Override
-    public boolean isJavaClass() {
-        return false;
-    }
-
-    @Override
-    public List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
+    public List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder,
+                                   String packageName) {
         return webElementGroupFieldBuilder.visit(this);
     }
 
@@ -67,12 +63,8 @@ public class ComplexWebElementGroup implements WebElementGroup {
 
     @Override
     public boolean isInvalid() {
-        return validationResults.stream().anyMatch(validationResultNew -> !validationResultNew.isValid());
-    }
-
-    @Override
-    public void addValidationResult(ValidationResult validationResult) {
-        validationResults.add(validationResult);
+        return validationResults.stream()
+            .anyMatch(validationResultNew -> !validationResultNew.isValid());
     }
 
     @Override

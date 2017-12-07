@@ -14,8 +14,7 @@ public class TypeTransformer {
 
     private SupportedTypesContainer typesContainer;
 
-    public TypeTransformer(
-        SupportedTypesContainer typesContainer) {
+    public TypeTransformer(SupportedTypesContainer typesContainer) {
         this.typesContainer = typesContainer;
     }
 
@@ -26,9 +25,14 @@ public class TypeTransformer {
 
         return rawSearchRuleList.stream()
             .filter(RawSearchRule::isValid)
-            .map(rawSearchRule -> PropertyLoader.rawSearchRuleBuilders
-                .getBuilder(rawSearchRule).buildSearchRule(rawSearchRule, typesContainer))
+            .map(rawSearchRule -> {
+                SearchRule searchRule = PropertyLoader.searchRuleBuilders
+                    .getBuilder(rawSearchRule).buildSearchRule(rawSearchRule, typesContainer);
+                logger.info("Success transformation " + rawSearchRule + "!");
+                return searchRule;
+            })
             .collect(Collectors.toList());
+
     }
 
     private void printAllInvalidRawSearchRules(List<RawSearchRule> rawSearchRuleList) {
@@ -38,7 +42,7 @@ public class TypeTransformer {
             .forEach(
                 rawSearchRule -> stringBuilder.append("\n").append(rawSearchRule)
                     .append(" is invalid:\n").append(rawSearchRule.getExceptionMessage()));
-        System.out.println(stringBuilder.toString());
+        logger.error(stringBuilder.toString());
     }
 
 

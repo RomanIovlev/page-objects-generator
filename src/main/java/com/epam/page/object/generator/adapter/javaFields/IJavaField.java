@@ -5,7 +5,7 @@ import javax.lang.model.element.Modifier;
 
 public interface IJavaField {
 
-    String getFieldClassName();
+    String getFullFieldClass();
 
     String getFieldName();
 

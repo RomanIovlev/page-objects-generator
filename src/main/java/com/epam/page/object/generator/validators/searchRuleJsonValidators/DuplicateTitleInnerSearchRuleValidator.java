@@ -21,4 +21,8 @@ public class DuplicateTitleInnerSearchRuleValidator extends AbstractValidator {
         return new ValidationResult(true, this + " passed!");
     }
 
+    @Override
+    public String toString() {
+        return "DuplicateTitleInnerSearchRuleValidator";
+    }
 }

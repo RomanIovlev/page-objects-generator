@@ -18,7 +18,6 @@ public class RawSearchRuleMapper {
     private final static Logger logger = LoggerFactory.getLogger(RawSearchRuleMapper.class);
 
     public List<RawSearchRule> getRawSearchRuleList(String json) {
-        logger.info("Create list of SearchRules...");
         List<RawSearchRule> rawSearchRuleList = new ArrayList<>();
 
         JSONObject tree = new JSONObject(
@@ -29,29 +28,32 @@ public class RawSearchRuleMapper {
             String searchRuleType = object.get("type").toString();
             SearchRuleType type = SearchRuleType
                 .getSearchRuleTypeByString(searchRuleType.toLowerCase());
-            RawSearchRule rawSearchRule = null;
-            if (type == null) {
-                rawSearchRule = new RawSearchRule(object, null, null, null);
-                rawSearchRule.setValidationResults(Collections.singletonList(
-                    new ValidationResult(false,
-                        "Attribute 'type' = '" + searchRuleType + "' is not supported in "
-                            + rawSearchRule)));
-            } else {
-                SearchRuleGroup group = PropertyLoader.searchRuleGroups.getGroupByType(type);
-                Schema schema = PropertyLoader.searchRuleGroupsScheme.getSchema(group.getName());
-                rawSearchRule = new RawSearchRule(object, type, group, schema);
-            }
-
+            RawSearchRule rawSearchRule = getRawSearchRule(object, searchRuleType, type);
             rawSearchRuleList.add(rawSearchRule);
             logger.info("Add SearchRule ='" + rawSearchRule + "'");
         }
-        logger.info("Finish creating list of SearchRules\n");
 
         return rawSearchRuleList;
     }
 
+    private RawSearchRule getRawSearchRule(JSONObject object, String searchRuleType,
+                                           SearchRuleType type) {
+        RawSearchRule rawSearchRule;
+        if (type == null) {
+            rawSearchRule = new RawSearchRule(object, null, null, null);
+            rawSearchRule.setValidationResults(Collections.singletonList(
+                new ValidationResult(false,
+                    "Attribute 'type' = '" + searchRuleType + "' is not supported in "
+                        + rawSearchRule)));
+        } else {
+            SearchRuleGroup group = PropertyLoader.searchRuleGroups.getGroupByType(type);
+            Schema schema = PropertyLoader.searchRuleGroupsScheme.getSchema(group.getName());
+            rawSearchRule = new RawSearchRule(object, type, group, schema);
+        }
+        return rawSearchRule;
+    }
+
     public List<RawSearchRule> getComplexInnerRawSearchRules(RawSearchRule parent) {
-        logger.info("Create list of complexInnerSearchRules...");
         List<RawSearchRule> innerRawSearchRules = new ArrayList<>();
 
         JSONArray innerSearchRules = parent.getElement().getJSONArray("innerSearchRules");
@@ -65,13 +67,11 @@ public class RawSearchRuleMapper {
             innerRawSearchRules.add(rawSearchRule);
             logger.info("Add complexInnerSearchRule ='" + rawSearchRule + "'");
         }
-        logger.info("Finish creating list of complexInnerSearchRules\n");
 
         return innerRawSearchRules;
     }
 
     public List<RawSearchRule> getFormInnerRawSearchRules(RawSearchRule parent) {
-        logger.info("Create list of formInnerSearchRules...");
         List<RawSearchRule> innerRawSearchRules = new ArrayList<>();
 
         JSONArray innerSearchRules = parent.getElement().getJSONArray("innerSearchRules");
@@ -87,7 +87,6 @@ public class RawSearchRuleMapper {
             innerRawSearchRules.add(rawSearchRule);
             logger.info("Add formInnerSearchRule ='" + rawSearchRule + "'");
         }
-        logger.info("Finish creating list of formInnerSearchRule\n");
 
         return innerRawSearchRules;
     }

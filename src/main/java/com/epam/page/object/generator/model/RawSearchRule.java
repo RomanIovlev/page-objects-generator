@@ -36,7 +36,7 @@ public class RawSearchRule {
         return param.toString();
     }
 
-    public Selector getSelector(){
+    public Selector getSelector() {
         JSONObject selector = element.getJSONObject("selector");
         if (selector == null) {
             return null;
@@ -70,7 +70,7 @@ public class RawSearchRule {
         return stringBuilder.toString();
     }
 
-    public String getGroupName(){
+    public String getGroupName() {
         return group.getName();
     }
 

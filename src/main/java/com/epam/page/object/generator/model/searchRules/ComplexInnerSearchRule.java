@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.model.searchRules;
 
-
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
@@ -13,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ComplexInnerSearchRule implements SearchRule {
 
@@ -21,6 +22,7 @@ public class ComplexInnerSearchRule implements SearchRule {
     private Selector selector;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
+    private final static Logger logger = LoggerFactory.getLogger(ComplexInnerSearchRule.class);
 
     public ComplexInnerSearchRule(String uniqueness, String title, Selector selector) {
         this.uniqueness = uniqueness;
@@ -80,7 +82,9 @@ public class ComplexInnerSearchRule implements SearchRule {
 
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
-        validationResults.add(validatorVisitor.visit(this));
+        ValidationResult visit = validatorVisitor.visit(this);
+        logger.info(this + " is '" + visit.isValid() + "', reason '" +  visit.getReason() + "'");
+        validationResults.add(visit);
     }
 
     @Override
@@ -97,11 +101,6 @@ public class ComplexInnerSearchRule implements SearchRule {
     public boolean isInvalid() {
         return validationResults.stream()
             .anyMatch(validationResultNew -> !validationResultNew.isValid());
-    }
-
-    @Override
-    public void addValidationResult(ValidationResult validationResult) {
-        validationResults.add(validationResult);
     }
 
     @Override

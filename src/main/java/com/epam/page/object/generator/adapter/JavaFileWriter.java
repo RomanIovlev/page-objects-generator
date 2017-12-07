@@ -49,7 +49,7 @@ public class JavaFileWriter {
 
     private FieldSpec buildFieldSpec(IJavaField field) {
         return FieldSpec
-            .builder(ClassName.bestGuess(field.getFieldClassName()), field.getFieldName())
+            .builder(ClassName.bestGuess(field.getFullFieldClass()), field.getFieldName())
             .addModifiers(field.getModifiers())
             .addAnnotation(buildAnnotationSpec(field.getAnnotation()))
             .build();

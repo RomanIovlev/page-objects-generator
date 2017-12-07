@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.utils.searchRuleScheme;
+package com.epam.page.object.generator.utils;
 
 import java.util.Map;
 import org.everit.json.schema.Schema;
@@ -12,11 +12,7 @@ public class SearchRuleGroupsScheme {
         this.searchRuleSchemas = searchRuleSchemas;
     }
 
-    public Map<String, Schema> getSearchRuleSchemas() {
-        return searchRuleSchemas;
-    }
-
-    public Schema getSchema(String groupName){
+    public Schema getSchema(String groupName) {
         return searchRuleSchemas.get(groupName);
     }
 }

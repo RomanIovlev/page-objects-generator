@@ -10,8 +10,12 @@ import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
+
+    private final static Logger logger = LoggerFactory.getLogger(ComplexSearchRuleBuilder.class);
 
     private RawSearchRuleMapper rawSearchRuleMapper;
 
@@ -27,8 +31,10 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
         SearchRuleType type = rawSearchRule.getType();
         List<ComplexInnerSearchRule> innerSearchRules = new ArrayList<>();
 
+        logger.info("Create list of complexInnerSearchRules...");
         List<RawSearchRule> innerRawSearchRules = rawSearchRuleMapper
             .getComplexInnerRawSearchRules(rawSearchRule);
+        logger.info("Finish creating list of complexInnerSearchRules\n");
 
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());

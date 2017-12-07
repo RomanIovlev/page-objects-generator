@@ -25,9 +25,9 @@ import com.epam.page.object.generator.validators.WebValidators;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PageObjectsGenerator {
 
@@ -43,6 +43,8 @@ public class PageObjectsGenerator {
     private WebPagesBuilder webPagesBuilder;
 
     private boolean forceGenerateFile = false;
+
+    private final static Logger logger = LoggerFactory.getLogger(PageObjectsGenerator.class);
 
     public PageObjectsGenerator(RawSearchRuleMapper rawSearchRuleMapper,
                                 JsonSchemaValidator jsonSchemaValidator,
@@ -71,33 +73,36 @@ public class PageObjectsGenerator {
                                     List<String> urls)
         throws IOException, URISyntaxException, XpathToCssTransformerException {
 
-        // load property file
         PropertyLoader.loadProperties();
 
-        // get list of RawSearchRules from json file
+        logger.info("Create list of RawSearchRules...");
         List<RawSearchRule> rawSearchRuleList = rawSearchRuleMapper.getRawSearchRuleList(jsonPath);
+        logger.info("Finish creating list of RawSearchRules\n");
 
-        // visit list of RawSearchRules with using json schema
-        rawSearchRuleList = jsonSchemaValidator.validate(rawSearchRuleList);
+        logger.info("Start validation RawSearchRules with using Json Schema...");
+        jsonSchemaValidator.validate(rawSearchRuleList);
+        logger.info("Finish validation!\n");
 
         checker.checkRawSearchRules(rawSearchRuleList);
 
+        logger.info("Start transforming RawSearchRules...");
         List<SearchRule> searchRuleList = typeTransformer.transform(rawSearchRuleList);
+        logger.info("Finish transforming RawSearchRules\n");
 
+        logger.info("Start Json validation...\n");
         jsonValidators.validate(searchRuleList);
+        logger.info("Finish Json validation\n");
 
         List<WebPage> webPages = webPagesBuilder.generate(urls);
         webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
-
         webValidators.validate(webPages);
 
         List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
-
         rawJavaClasses.add(new SiteClass(webPages));
 
         for (WebPage webPage : webPages) {
             rawJavaClasses.add(new PageClass(webPage, webElementGroupFieldBuilder));
-            if(webPage.isContainedFormSearchRule()){
+            if (webPage.isContainedFormSearchRule()) {
                 rawJavaClasses.addAll(webPage.getFormClasses());
             }
         }

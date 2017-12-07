@@ -16,4 +16,8 @@ public class RootExistenceValidator extends AbstractValidator {
         return new ValidationResult(true, this + " passed!");
     }
 
+    @Override
+    public String toString() {
+        return "RootExistenceValidator";
+    }
 }

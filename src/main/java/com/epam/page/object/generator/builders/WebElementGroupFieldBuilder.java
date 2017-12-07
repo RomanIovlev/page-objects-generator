@@ -58,10 +58,11 @@ public class WebElementGroupFieldBuilder {
         return javaFields;
     }
 
-    public List<IJavaField> visit(FormWebElementGroup formWebElementGroup) {
+    public List<IJavaField> visit(FormWebElementGroup formWebElementGroup,
+                                  String packageName) {
         FormSearchRule searchRule = formWebElementGroup.getSearchRule();
 
-        String className = firstLetterUp(searchRule.getSection());
+        String className = packageName + ".form." + firstLetterUp(searchRule.getSection());
         String fieldName = firstLetterDown(splitCamelCase(searchRule.getSection()));
         Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
         IJavaAnnotation annotation = formWebElementGroup.getAnnotation(annotationClass);
