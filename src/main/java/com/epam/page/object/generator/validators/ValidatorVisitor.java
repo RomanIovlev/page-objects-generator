@@ -11,19 +11,19 @@ import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup
 
 public interface ValidatorVisitor {
 
-    ValidationResultNew visit(CommonSearchRule commonSearchRule);
+    ValidationResult visit(CommonSearchRule commonSearchRule);
 
-    ValidationResultNew visit(ComplexSearchRule complexSearchRule);
+    ValidationResult visit(ComplexSearchRule complexSearchRule);
 
-    ValidationResultNew visit(ComplexInnerSearchRule complexInnerSearchRule);
+    ValidationResult visit(ComplexInnerSearchRule complexInnerSearchRule);
 
-    ValidationResultNew visit(FormSearchRule formSearchRule);
+    ValidationResult visit(FormSearchRule formSearchRule);
 
-    ValidationResultNew visit(FormInnerSearchRule formInnerSearchRule);
+    ValidationResult visit(FormInnerSearchRule formInnerSearchRule);
 
-    ValidationResultNew visit(CommonWebElementGroup commonWebElementGroup);
+    ValidationResult visit(CommonWebElementGroup commonWebElementGroup);
 
-    ValidationResultNew visit(ComplexWebElementGroup complexWebElementGroup);
+    ValidationResult visit(ComplexWebElementGroup complexWebElementGroup);
 
-    ValidationResultNew visit(FormWebElementGroup formWebElementGroup);
+    ValidationResult visit(FormWebElementGroup formWebElementGroup);
 }

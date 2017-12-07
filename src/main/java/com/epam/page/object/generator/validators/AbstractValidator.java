@@ -12,42 +12,42 @@ import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup
 public abstract class AbstractValidator implements ValidatorVisitor {
 
     @Override
-    public ValidationResultNew visit(CommonSearchRule commonSearchRule) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(CommonSearchRule commonSearchRule) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(ComplexSearchRule complexSearchRule) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(ComplexSearchRule complexSearchRule) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(ComplexInnerSearchRule complexInnerSearchRule) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(ComplexInnerSearchRule complexInnerSearchRule) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(FormSearchRule formSearchRule) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(FormSearchRule formSearchRule) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(FormInnerSearchRule formInnerSearchRule) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(FormInnerSearchRule formInnerSearchRule) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(CommonWebElementGroup commonWebElementGroup) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(CommonWebElementGroup commonWebElementGroup) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(ComplexWebElementGroup complexWebElementGroup) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(ComplexWebElementGroup complexWebElementGroup) {
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(FormWebElementGroup formWebElementGroup) {
-        return new ValidationResultNew(true, this + " passed!");
+    public ValidationResult visit(FormWebElementGroup formWebElementGroup) {
+        return new ValidationResult(true, this + " passed!");
     }
 }

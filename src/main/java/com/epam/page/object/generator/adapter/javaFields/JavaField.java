@@ -1,5 +1,6 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.adapter.javaFields;
 
+import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
 import javax.lang.model.element.Modifier;
 
 public class JavaField implements IJavaField {

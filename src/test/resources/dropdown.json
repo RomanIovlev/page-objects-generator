@@ -1,7 +1,7 @@
 {
   "elements": [
     {
-      "type": "Dropdown",
+      "type": "dropdown",
       "innerSearchRules": [
         {
           "title": "root",

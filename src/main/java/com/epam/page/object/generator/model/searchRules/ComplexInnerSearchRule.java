@@ -7,7 +7,7 @@ import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.ComplexWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ComplexInnerSearchRule implements SearchRule {
     private String title;
     private Selector selector;
 
-    private List<ValidationResultNew> validationResults = new ArrayList<>();
+    private List<ValidationResult> validationResults = new ArrayList<>();
 
     public ComplexInnerSearchRule(String uniqueness, String title, Selector selector) {
         this.uniqueness = uniqueness;
@@ -84,13 +84,13 @@ public class ComplexInnerSearchRule implements SearchRule {
     }
 
     @Override
-    public List<ValidationResultNew> getValidationResults() {
+    public List<ValidationResult> getValidationResults() {
         return validationResults;
     }
 
     @Override
     public boolean isValid() {
-        return validationResults.stream().allMatch(ValidationResultNew::isValid);
+        return validationResults.stream().allMatch(ValidationResult::isValid);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class ComplexInnerSearchRule implements SearchRule {
     }
 
     @Override
-    public void addValidationResult(ValidationResultNew validationResult) {
+    public void addValidationResult(ValidationResult validationResult) {
         validationResults.add(validationResult);
     }
 

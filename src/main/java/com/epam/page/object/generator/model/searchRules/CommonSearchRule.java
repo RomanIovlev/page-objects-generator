@@ -7,7 +7,7 @@ import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class CommonSearchRule implements SearchRule {
 
     private ClassAndAnnotationPair classAndAnnotation;
 
-    private List<ValidationResultNew> validationResults = new ArrayList<>();
+    private List<ValidationResult> validationResults = new ArrayList<>();
 
     public CommonSearchRule(String uniqueness, SearchRuleType type, Selector selector,
                             ClassAndAnnotationPair classAndAnnotation) {
@@ -88,13 +88,13 @@ public class CommonSearchRule implements SearchRule {
     }
 
     @Override
-    public List<ValidationResultNew> getValidationResults() {
+    public List<ValidationResult> getValidationResults() {
         return validationResults;
     }
 
     @Override
     public boolean isValid() {
-        return validationResults.stream().allMatch(ValidationResultNew::isValid);
+        return validationResults.stream().allMatch(ValidationResult::isValid);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class CommonSearchRule implements SearchRule {
     }
 
     @Override
-    public void addValidationResult(ValidationResultNew validationResult) {
+    public void addValidationResult(ValidationResult validationResult) {
         validationResults.add(validationResult);
     }
 

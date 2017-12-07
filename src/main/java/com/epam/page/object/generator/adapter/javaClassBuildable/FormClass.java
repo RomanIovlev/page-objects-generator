@@ -6,11 +6,11 @@ import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.*;
 
-import com.epam.page.object.generator.adapter.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.IJavaField;
-import com.epam.page.object.generator.adapter.JavaAnnotation;
-import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.javaAnnotations.AnnotationMember;
+import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.javaFields.IJavaField;
+import com.epam.page.object.generator.adapter.javaAnnotations.JavaAnnotation;
+import com.epam.page.object.generator.adapter.javaFields.JavaField;
 import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.model.Selector;

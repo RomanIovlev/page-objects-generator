@@ -1,11 +1,11 @@
 package com.epam.page.object.generator.validators;
 
-public class ValidationResultNew {
+public class ValidationResult {
 
     private boolean isValid;
     private String reason;
 
-    public ValidationResultNew(boolean isValid, String reason) {
+    public ValidationResult(boolean isValid, String reason) {
         this.isValid = isValid;
         this.reason = reason;
     }

@@ -2,17 +2,44 @@
   "typeGroups": [
     {
       "name": "commonSearchRule",
-      "searchRuleTypes": ["button", "text"],
+      "searchRuleTypes": [
+        "button",
+        "text",
+        "checkbox",
+        "image",
+        "datepicker",
+        "fileinput",
+        "input",
+        "label",
+        "link",
+        "textarea",
+        "textfield",
+        "radiobuttons",
+        "selector",
+        "tabs",
+        "textlist",
+        "checklist",
+        "elements"
+      ],
       "schema": "/scheme/commonSearchRule_schema.json"
     },
     {
       "name": "complexSearchRule",
-      "searchRuleTypes": ["dropdown", "menu"],
+      "searchRuleTypes": [
+        "table",
+        "combobox",
+        "dropdown",
+        "droplist",
+        "menu"
+      ],
       "schema": "/scheme/complexSearchRule_schema.json"
     },
     {
       "name": "formSearchRule",
-      "searchRuleTypes": ["form", "section"],
+      "searchRuleTypes": [
+        "form",
+        "section"
+      ],
       "schema": "/scheme/formSearchRule_schema.json"
     }
   ]

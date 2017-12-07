@@ -20,11 +20,12 @@ import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.WebValidators;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -116,7 +117,7 @@ public class PageObjectsGenerator {
                 if (webPage.hasInvalidWebElementGroup()) {
                     for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
                         webElementGroup.getValidationResults().stream()
-                            .filter(ValidationResultNew::isInvalid)
+                            .filter(ValidationResult::isInvalid)
                             .forEach(validationResultNew -> stringBuilder
                                 .append(validationResultNew.getReason()).append("\n"));
                     }

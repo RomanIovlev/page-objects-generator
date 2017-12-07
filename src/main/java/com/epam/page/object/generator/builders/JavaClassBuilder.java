@@ -7,8 +7,8 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.adapter.javaClassBuildable.FormClass;
 import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
-import com.epam.page.object.generator.adapter.IJavaField;
-import com.epam.page.object.generator.adapter.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.javaFields.IJavaField;
+import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
 import com.epam.page.object.generator.adapter.javaClasses.JavaClass;
 import com.epam.page.object.generator.adapter.javaClassBuildable.PageClass;
 import com.epam.page.object.generator.adapter.javaClassBuildable.SiteClass;
@@ -53,10 +53,9 @@ public class JavaClassBuilder {
 
         FormSearchRule formSearchRule = formWebElementGroup.getSearchRule();
         String packageName = this.packageName + ".form";
-        String className = firstLetterUp(splitCamelCase(formSearchRule.getSection()));
+        String className = firstLetterUp(formSearchRule.getSection());
         Class superClass = formSearchRule.getTypeName().equals(
-            SearchRuleType.FORM.getName()) ? Form.class
-            : Section.class;
+            SearchRuleType.FORM.getName()) ? Form.class : Section.class;
         IJavaAnnotation annotation = formClass.getAnnotation();
         List<IJavaField> fields = formClass.getFields();
         Modifier modifier = Modifier.PUBLIC;

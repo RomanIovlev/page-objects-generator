@@ -4,7 +4,7 @@ import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGro
 import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
 import com.epam.page.object.generator.model.webElements.WebElement;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.AbstractValidator;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,35 +12,35 @@ import java.util.Set;
 public class ElementUniquenessValidator extends AbstractValidator {
 
     @Override
-    public ValidationResultNew visit(CommonWebElementGroup webElementGroup) {
+    public ValidationResult visit(CommonWebElementGroup webElementGroup) {
         Set<String> uniquenessValues = new HashSet<>();
         for (WebElement webElement : webElementGroup.getWebElements()) {
             if (!uniquenessValues.add(webElement.getUniquenessValue())) {
-                return new ValidationResultNew(false, "Not unique " + webElementGroup + "!");
+                return new ValidationResult(false, "Not unique " + webElementGroup + "!");
             }
         }
-        return new ValidationResultNew(true, this + " passed!");
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(ComplexWebElementGroup webElementGroup) {
+    public ValidationResult visit(ComplexWebElementGroup webElementGroup) {
         Set<String> uniquenessValues = new HashSet<>();
         for (WebElement webElement : webElementGroup.getWebElements()) {
             if (!uniquenessValues.add(webElement.getUniquenessValue())) {
-                return new ValidationResultNew(false, "Not unique " + webElementGroup + "!");
+                return new ValidationResult(false, "Not unique " + webElementGroup + "!");
             }
         }
-        return new ValidationResultNew(true, this + " passed!");
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(FormWebElementGroup webElementGroup) {
+    public ValidationResult visit(FormWebElementGroup webElementGroup) {
         Set<String> uniquenessValues = new HashSet<>();
         for (WebElement webElement : webElementGroup.getWebElements()) {
             if (!uniquenessValues.add(webElement.getUniquenessValue())) {
-                return new ValidationResultNew(false, "Not unique " + webElementGroup + "!");
+                return new ValidationResult(false, "Not unique " + webElementGroup + "!");
             }
         }
-        return new ValidationResultNew(true, this + " passed!");
+        return new ValidationResult(true, this + " passed!");
     }
 }

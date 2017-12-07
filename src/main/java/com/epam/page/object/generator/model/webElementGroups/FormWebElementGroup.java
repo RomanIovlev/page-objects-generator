@@ -1,13 +1,13 @@
 package com.epam.page.object.generator.model.webElementGroups;
 
-import com.epam.page.object.generator.adapter.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.IJavaField;
-import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.javaAnnotations.AnnotationMember;
+import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.javaFields.IJavaField;
+import com.epam.page.object.generator.adapter.javaAnnotations.JavaAnnotation;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.webElements.WebElement;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class FormWebElementGroup implements WebElementGroup{
     private FormSearchRule searchRule;
     private List<WebElement> webElements;
 
-    private List<ValidationResultNew> validationResults = new ArrayList<>();
+    private List<ValidationResult> validationResults = new ArrayList<>();
 
     public FormWebElementGroup(FormSearchRule searchRule, List<WebElement> webElements) {
         this.searchRule = searchRule;
@@ -50,13 +50,13 @@ public class FormWebElementGroup implements WebElementGroup{
     }
 
     @Override
-    public List<ValidationResultNew> getValidationResults() {
+    public List<ValidationResult> getValidationResults() {
         return validationResults;
     }
 
     @Override
     public boolean isValid() {
-        return validationResults.stream().allMatch(ValidationResultNew::isValid);
+        return validationResults.stream().allMatch(ValidationResult::isValid);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class FormWebElementGroup implements WebElementGroup{
     }
 
     @Override
-    public void addValidationResult(ValidationResultNew validationResult) {
+    public void addValidationResult(ValidationResult validationResult) {
         validationResults.add(validationResult);
     }
 

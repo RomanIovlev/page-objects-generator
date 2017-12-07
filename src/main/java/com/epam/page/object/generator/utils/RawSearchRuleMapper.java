@@ -2,7 +2,9 @@ package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
+import com.epam.page.object.generator.validators.ValidationResult;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.everit.json.schema.Schema;
 import org.json.JSONArray;
@@ -27,9 +29,19 @@ public class RawSearchRuleMapper {
             String searchRuleType = object.get("type").toString();
             SearchRuleType type = SearchRuleType
                 .getSearchRuleTypeByString(searchRuleType.toLowerCase());
-            SearchRuleGroup group = PropertyLoader.searchRuleGroups.getGroupByType(type);
-            Schema schema = PropertyLoader.searchRuleGroupsScheme.getSchema(group.getName());
-            RawSearchRule rawSearchRule = new RawSearchRule(object, type, group, schema);
+            RawSearchRule rawSearchRule = null;
+            if (type == null) {
+                rawSearchRule = new RawSearchRule(object, null, null, null);
+                rawSearchRule.setValidationResults(Collections.singletonList(
+                    new ValidationResult(false,
+                        "Attribute 'type' = '" + searchRuleType + "' is not supported in "
+                            + rawSearchRule)));
+            } else {
+                SearchRuleGroup group = PropertyLoader.searchRuleGroups.getGroupByType(type);
+                Schema schema = PropertyLoader.searchRuleGroupsScheme.getSchema(group.getName());
+                rawSearchRule = new RawSearchRule(object, type, group, schema);
+            }
+
             rawSearchRuleList.add(rawSearchRule);
             logger.info("Add SearchRule ='" + rawSearchRule + "'");
         }

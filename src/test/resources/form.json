@@ -1,7 +1,7 @@
 {
   "elements": [
     {
-      "type": "Form",
+      "type": "form",
       "section": "HtmlForm",
       "selector": {
         "type": "css",
@@ -9,7 +9,7 @@
       },
       "innerSearchRules": [
         {
-          "type": "Textfield",
+          "type": "textfield",
           "uniqueness": "name",
           "selector": {
             "type": "css",
@@ -17,7 +17,7 @@
           }
         },
         {
-          "type": "Button",
+          "type": "button",
           "uniqueness": "value",
           "selector": {
             "type": "css",

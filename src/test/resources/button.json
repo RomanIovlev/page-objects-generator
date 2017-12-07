@@ -1,7 +1,7 @@
 {
   "elements": [
     {
-      "type": "Button",
+      "type": "button",
       "uniqueness": "value",
       "selector": {
         "type": "xpath",

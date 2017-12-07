@@ -5,7 +5,7 @@ import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexInnerSe
 import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexSearchRuleBuilder;
 import com.epam.page.object.generator.builders.searchRuleBuilders.FormInnerSearchRuleBuilder;
 import com.epam.page.object.generator.builders.searchRuleBuilders.FormSearchRuleBuilder;
-import com.epam.page.object.generator.builders.RawSearchRuleBuilder;
+import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilder;
 import com.epam.page.object.generator.builders.RawSearchRuleBuilders;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
@@ -29,7 +29,7 @@ public class PropertyLoader {
 
     static SearchRuleGroups searchRuleGroups;
     static SearchRuleGroupsScheme searchRuleGroupsScheme;
-    public static RawSearchRuleBuilders rawSearchRuleBuilders;
+    static RawSearchRuleBuilders rawSearchRuleBuilders;
 
     private final static Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
 
@@ -40,8 +40,8 @@ public class PropertyLoader {
         rawSearchRuleBuilders = new RawSearchRuleBuilders(getMapWithBuilders());
     }
 
-    private static Map<String, RawSearchRuleBuilder> getMapWithBuilders() {
-        Map<String, RawSearchRuleBuilder> builderMap = new HashMap<>();
+    private static Map<String, SearchRuleBuilder> getMapWithBuilders() {
+        Map<String, SearchRuleBuilder> builderMap = new HashMap<>();
 
         logger.info("Create map with builders");
         builderMap.put("commonSearchRule", new CommonSearchRuleBuilder());

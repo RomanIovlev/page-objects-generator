@@ -11,9 +11,9 @@ public class ValidationExceptionConverter {
     private final static Logger logger = LoggerFactory
         .getLogger(ValidationExceptionConverter.class);
 
-    public List<ValidationResultNew> toValidationResult(ValidationException e) {
+    public List<ValidationResult> toValidationResult(ValidationException e) {
 
-        List<ValidationResultNew> validationResults = new ArrayList<>();
+        List<ValidationResult> validationResults = new ArrayList<>();
         if (e.getCausingExceptions().isEmpty()) {
             validationResults.add(getValidationResult(e));
             logger.error(e.getMessage());
@@ -26,8 +26,8 @@ public class ValidationExceptionConverter {
         return validationResults;
     }
 
-    private ValidationResultNew getValidationResult(ValidationException e) {
-        return new ValidationResultNew(false, e.getMessage());
+    private ValidationResult getValidationResult(ValidationException e) {
+        return new ValidationResult(false, e.getMessage());
     }
 
 }

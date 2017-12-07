@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.builders.searchRuleBuilders;
 
-import com.epam.page.object.generator.builders.RawSearchRuleBuilder;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.RawSearchRule;
@@ -13,7 +12,7 @@ import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormSearchRuleBuilder extends RawSearchRuleBuilder {
+public class FormSearchRuleBuilder implements SearchRuleBuilder {
 
     private RawSearchRuleMapper rawSearchRuleMapper;
 

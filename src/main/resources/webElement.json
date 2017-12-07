@@ -1,0 +1,44 @@
+{
+  "elements": [
+    {
+      "type": "text",
+      "uniqueness": "text",
+      "selector": {
+        "type": "xpath",
+        "value": "//a[@class='w3-btn']"
+      }
+    },
+    {
+      "type": "button",
+      "uniqueness": "value",
+      "selector": {
+        "type": "xpath",
+        "value": "//input[@type='submit']"
+      }
+    },
+    {
+      "type": "label",
+      "uniqueness": "text",
+      "selector": {
+        "type": "xpath",
+        "value": "//p"
+      }
+    },
+    {
+      "type": "checkbox",
+      "uniqueness": "value",
+      "selector": {
+        "type": "xpath",
+        "value": "//input[@type='checkbox']"
+      }
+    },
+    {
+      "type": "image",
+      "uniqueness": "src",
+      "selector": {
+        "type": "xpath",
+        "value": "//img"
+      }
+    }
+  ]
+}

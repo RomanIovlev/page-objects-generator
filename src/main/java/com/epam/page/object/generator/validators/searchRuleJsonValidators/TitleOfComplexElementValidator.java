@@ -4,14 +4,14 @@ import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.validators.AbstractValidator;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class TitleOfComplexElementValidator extends AbstractValidator {
 
     @Override
-    public ValidationResultNew visit(ComplexSearchRule complexSearchRule) {
+    public ValidationResult visit(ComplexSearchRule complexSearchRule) {
         SupportedTypesContainer supportedTypesContainer = new SupportedTypesContainer();
 
         Class elementAnnotation = supportedTypesContainer.getSupportedTypesMap()
@@ -33,10 +33,10 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
         }
 
         if (stringBuilder.length() == 0) {
-            return new ValidationResultNew(true, this + " passed!");
+            return new ValidationResult(true, this + " passed!");
         }
 
-        return new ValidationResultNew(false, stringBuilder.toString());
+        return new ValidationResult(false, stringBuilder.toString());
     }
 
 

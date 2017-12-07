@@ -1,8 +1,9 @@
 package com.epam.page.object.generator.adapter;
 
-import com.epam.page.object.generator.adapter.IJavaAnnotation.AnnotationMember;
+import com.epam.page.object.generator.adapter.javaAnnotations.AnnotationMember;
+import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
 import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
-import com.epam.page.object.generator.errors.XpathToCssTransformerException;
+import com.epam.page.object.generator.adapter.javaFields.IJavaField;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -15,22 +16,19 @@ import java.util.List;
 
 public class JavaFileWriter {
 
-    public void writeFiles(String outputDir, List<IJavaClass> javaClasses)
-        throws IOException, XpathToCssTransformerException {
+    public void writeFiles(String outputDir, List<IJavaClass> javaClasses) throws IOException {
         for (IJavaClass javaClass : javaClasses) {
             writeClass(outputDir, javaClass);
         }
     }
 
-    private void writeClass(String outputDir, IJavaClass javaClass)
-        throws IOException, XpathToCssTransformerException {
+    private void writeClass(String outputDir, IJavaClass javaClass) throws IOException {
         JavaFile.builder(javaClass.getPackageName(), buildTypeSpec(javaClass))
             .build()
             .writeTo(Paths.get(outputDir));
     }
 
-    private TypeSpec buildTypeSpec(IJavaClass javaClass)
-        throws IOException, XpathToCssTransformerException {
+    private TypeSpec buildTypeSpec(IJavaClass javaClass) {
         List<FieldSpec> fieldSpecList = new ArrayList<>();
 
         for (IJavaField field : javaClass.getFieldsList()) {
@@ -49,8 +47,7 @@ public class JavaFileWriter {
         return builder.build();
     }
 
-    private FieldSpec buildFieldSpec(IJavaField field)
-        throws IOException, XpathToCssTransformerException {
+    private FieldSpec buildFieldSpec(IJavaField field) {
         return FieldSpec
             .builder(ClassName.bestGuess(field.getFieldClassName()), field.getFieldName())
             .addModifiers(field.getModifiers())
@@ -58,22 +55,22 @@ public class JavaFileWriter {
             .build();
     }
 
-    private AnnotationSpec buildAnnotationSpec(IJavaAnnotation annotation)
-        throws IOException, XpathToCssTransformerException {
+    private AnnotationSpec buildAnnotationSpec(IJavaAnnotation annotation) {
         AnnotationSpec annotationSpec =
             AnnotationSpec
                 .builder(annotation.getAnnotationClass())
                 .build();
 
         for (AnnotationMember annotationMember : annotation.getAnnotationMembers()) {
-            if (annotationMember.format.equals("$S")) {
+            if (annotationMember.getFormat().equals("$S")) {
                 annotationSpec = annotationSpec.toBuilder()
-                    .addMember(annotationMember.name, annotationMember.format, annotationMember.arg)
+                    .addMember(annotationMember.getName(), annotationMember.getFormat(),
+                        annotationMember.getArg())
                     .build();
-            } else if (annotationMember.format.equals("$L")) {
+            } else if (annotationMember.getFormat().equals("$L")) {
                 annotationSpec = annotationSpec.toBuilder()
-                    .addMember(annotationMember.name, annotationMember.format,
-                        buildAnnotationSpec(annotationMember.annotation))
+                    .addMember(annotationMember.getName(), annotationMember.getFormat(),
+                        buildAnnotationSpec(annotationMember.getAnnotation()))
                     .build();
             }
         }

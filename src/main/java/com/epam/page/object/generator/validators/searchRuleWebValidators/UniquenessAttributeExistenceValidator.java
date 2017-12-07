@@ -5,12 +5,12 @@ import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGr
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
 import com.epam.page.object.generator.model.webElements.FormWebElement;
 import com.epam.page.object.generator.validators.AbstractValidator;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 
 public class UniquenessAttributeExistenceValidator extends AbstractValidator {
 
     @Override
-    public ValidationResultNew visit(CommonWebElementGroup webElementGroup) {
+    public ValidationResult visit(CommonWebElementGroup webElementGroup) {
         if (webElementGroup.getWebElements().stream()
             .anyMatch(webElement -> webElement.getUniquenessValue().equals(""))) {
             StringBuilder builder = new StringBuilder();
@@ -21,13 +21,13 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
                     .append(webElementGroup.getSearchRule().getUniqueness())
                     .append("' does not exist in ").append(webElement)
                     .append("!\n"));
-            return new ValidationResultNew(false, builder.toString());
+            return new ValidationResult(false, builder.toString());
         }
-        return new ValidationResultNew(true, this + " passed!");
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(ComplexWebElementGroup webElementGroup) {
+    public ValidationResult visit(ComplexWebElementGroup webElementGroup) {
         if (webElementGroup.getWebElements().stream()
             .anyMatch(webElement -> webElement.getUniquenessValue().equals(""))) {
             StringBuilder builder = new StringBuilder();
@@ -38,13 +38,13 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
                     .append(webElementGroup.getSearchRule().getUniqueness())
                     .append("' does not exist in ").append(webElement)
                     .append("!\n"));
-            return new ValidationResultNew(false, builder.toString());
+            return new ValidationResult(false, builder.toString());
         }
-        return new ValidationResultNew(true, this + " passed!");
+        return new ValidationResult(true, this + " passed!");
     }
 
     @Override
-    public ValidationResultNew visit(FormWebElementGroup webElementGroup) {
+    public ValidationResult visit(FormWebElementGroup webElementGroup) {
         if (webElementGroup.getWebElements().stream()
             .anyMatch(webElement -> webElement.getUniquenessValue().equals(""))) {
             StringBuilder builder = new StringBuilder();
@@ -55,9 +55,9 @@ public class UniquenessAttributeExistenceValidator extends AbstractValidator {
                     .append(((FormWebElement) webElement).getSearchRule().getUniqueness())
                     .append("' does not exist in ").append(webElement)
                     .append("!\n"));
-            return new ValidationResultNew(false, builder.toString());
+            return new ValidationResult(false, builder.toString());
         }
-        return new ValidationResultNew(true, this + " passed!");
+        return new ValidationResult(true, this + " passed!");
     }
 
 }

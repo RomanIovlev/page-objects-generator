@@ -20,11 +20,12 @@ public class JsonSchemaValidator {
 
         logger.info("Start validation SearchRules");
         for (RawSearchRule rawSearchRule : rawSearchRuleList) {
+            if(rawSearchRule.isInvalid()) continue;
             try {
                 rawSearchRule.getSchema().validate(rawSearchRule.getElement());
                 rawSearchRule.setValidationResults(
                     Lists.newArrayList(
-                        new ValidationResultNew(true, rawSearchRule + " is correct!")));
+                        new ValidationResult(true, rawSearchRule + " is correct!")));
                 logger.info(rawSearchRule + "is valid");
             } catch (ValidationException e) {
                 logger.error(rawSearchRule + " is invalid:");

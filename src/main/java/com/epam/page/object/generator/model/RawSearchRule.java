@@ -2,9 +2,8 @@ package com.epam.page.object.generator.model;
 
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
-import com.epam.page.object.generator.validators.ValidationResultNew;
+import com.epam.page.object.generator.validators.ValidationResult;
 import java.util.List;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.everit.json.schema.Schema;
 import org.json.JSONObject;
 
@@ -15,9 +14,7 @@ public class RawSearchRule {
     private SearchRuleGroup group;
     private Schema schema;
 
-    private List<ValidationResultNew> validationResults;
-
-    private static ObjectMapper mapper = new ObjectMapper();
+    private List<ValidationResult> validationResults;
 
     public RawSearchRule(JSONObject element, SearchRuleType type, SearchRuleGroup group,
                          Schema schema) {
@@ -47,7 +44,7 @@ public class RawSearchRule {
         return new Selector(selector.getString("type"), selector.getString("value"));
     }
 
-    public void setValidationResults(List<ValidationResultNew> validationResults) {
+    public void setValidationResults(List<ValidationResult> validationResults) {
         this.validationResults = validationResults;
     }
 
@@ -62,7 +59,7 @@ public class RawSearchRule {
 
     public boolean isValid() {
         return validationResults != null && validationResults.stream()
-            .allMatch(ValidationResultNew::isValid);
+            .allMatch(ValidationResult::isValid);
     }
 
     public String getExceptionMessage() {

@@ -1,12 +1,13 @@
 package com.epam.page.object.generator.builders;
 
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
-import com.epam.page.object.generator.adapter.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.IJavaField;
-import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.javaFields.IJavaField;
+import com.epam.page.object.generator.adapter.javaFields.JavaField;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
@@ -60,7 +61,7 @@ public class WebElementGroupFieldBuilder {
     public List<IJavaField> visit(FormWebElementGroup formWebElementGroup) {
         FormSearchRule searchRule = formWebElementGroup.getSearchRule();
 
-        String className = searchRule.getClassAndAnnotation().getElementClass().getName();
+        String className = firstLetterUp(searchRule.getSection());
         String fieldName = firstLetterDown(splitCamelCase(searchRule.getSection()));
         Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
         IJavaAnnotation annotation = formWebElementGroup.getAnnotation(annotationClass);

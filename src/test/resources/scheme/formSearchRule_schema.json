@@ -8,8 +8,8 @@
       "description": "Type of the SearchRule",
       "type": "string",
       "enum": [
-        "Form",
-        "Section"
+        "form",
+        "section"
       ]
     },
     "section": {

@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.adapter;
+package com.epam.page.object.generator.adapter.javaAnnotations;
 
 import java.util.List;
 

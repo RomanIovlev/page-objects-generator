@@ -8,11 +8,11 @@
       "description": "Type of the SearchRule",
       "type": "string",
       "enum": [
-        "Table",
-        "Combobox",
-        "Dropdown",
-        "Droplist",
-        "Menu"
+        "table",
+        "combobox",
+        "dropdown",
+        "droplist",
+        "menu"
       ]
     },
     "innerSearchRules": {
