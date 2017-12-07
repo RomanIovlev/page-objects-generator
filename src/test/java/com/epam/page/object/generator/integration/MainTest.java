@@ -94,4 +94,42 @@ public class MainTest {
         pog.generatePageObjects("/dropdown-wrong-selector.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_notExistenceRootTitle() throws Exception {
+        pog.setForceGenerateFile(false);
+        pog.generatePageObjects("/dropdown-without-root.json", outputDir,
+            Collections.singletonList("http://materializecss.com/dropdown.html"));
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_duplicateInnerRoot() throws Exception {
+        pog.setForceGenerateFile(false);
+        pog.generatePageObjects("/dropdown-duplicate-root.json", outputDir,
+            Collections.singletonList("http://materializecss.com/dropdown.html"));
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_notExistenceTitleIntoInnerSearchRule() throws Exception {
+        pog.setForceGenerateFile(false);
+        pog.generatePageObjects("/dropdown-wrong-title.json", outputDir,
+            Collections.singletonList("http://materializecss.com/dropdown.html"));
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_notUniquenessAttributeIntoRoot() throws Exception {
+        pog.setForceGenerateFile(false);
+        pog.generatePageObjects("/dropdown-root-without-uniqueness.json", outputDir,
+            Collections.singletonList("http://materializecss.com/dropdown.html"));
+
+    }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_DuplicateUniquenessAttributeIntoRule() throws Exception {
+        pog.setForceGenerateFile(false);
+        pog.generatePageObjects("/dropdown-duplicate-uniqueness.json", outputDir,
+            Collections.singletonList("http://materializecss.com/dropdown.html"));
+    }
 }

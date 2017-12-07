@@ -46,7 +46,7 @@ public class ComplexSearchRule implements SearchRule {
     public ComplexInnerSearchRule getRoot() {
         return complexInnerSearchRules.stream()
             .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
-            .findFirst().orElseThrow(NullPointerException::new);
+            .findFirst().orElse(null);
     }
 
     private String getRequiredValue(Element element) {

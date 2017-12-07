@@ -1,11 +1,14 @@
 {
   "elements": [
     {
-      "type": "Dropdown",
+      "type": "dropdown",
       "innerSearchRules": [
         {
           "title": "list",
-          "css": "ul.dropdown-content"
+          "selector": {
+            "type": "css",
+            "value": "ul.dropdown-content"
+          }
         }
       ]
     }

@@ -93,6 +93,8 @@ public class PageObjectsGenerator {
         jsonValidators.validate(searchRuleList);
         logger.info("Finish Json validation\n");
 
+        checker.checkSearchRules(searchRuleList);
+
         List<WebPage> webPages = webPagesBuilder.generate(urls);
         webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
         webValidators.validate(webPages);

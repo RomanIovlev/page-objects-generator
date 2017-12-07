@@ -1,20 +1,29 @@
 {
   "elements": [
     {
-      "type": "Dropdown",
+      "type": "dropdown",
       "innerSearchRules": [
         {
           "title": "root",
           "uniqueness": "text",
-          "xpath": "//a[@class='dropdown-button']"
+          "selector": {
+            "type": "xpath",
+            "value": "//a[@class='dropdown-button']"
+          }
         },
         {
           "title": "root",
-          "xpath": "//a[@class='dropdown-button']"
+          "selector": {
+            "type": "xpath",
+            "value": "//a[@class='dropdown-button']"
+          }
         },
         {
           "title": "list",
-          "css": "ul.dropdown-content"
+          "selector": {
+            "type": "css",
+            "value": "ul.dropdown-content"
+          }
         }
       ]
     }
