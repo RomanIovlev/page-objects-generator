@@ -30,18 +30,15 @@ public class RootExistenceValidatorTest {
         SearchRuleType.DROPDOWN, Lists.newArrayList(listRule),
         new ClassAndAnnotationPair(Dropdown.class, JDropdown.class));
 
-    private ValidationResult expectedSuccessValidationResult = new ValidationResult(true, "");
-    private ValidationResult expectedFailedValidationResult = new ValidationResult(false, "");
-
     @Test
     public void visit_SuccessTest(){
         ValidationResult actualValidationResult = sut.visit(validSearchRule);
-        assertEquals(expectedSuccessValidationResult.isValid(), actualValidationResult.isValid());
+        assertTrue(actualValidationResult.isValid());
     }
 
     @Test
     public void visit_FailedSearchRuleWithoutRootTitle(){
         ValidationResult actualValidationResult = sut.visit(invalidSearchRuleWithoutRootTitle);
-        assertEquals(expectedFailedValidationResult.isValid(), actualValidationResult.isValid());
+        assertFalse(actualValidationResult.isValid());
     }
 }
