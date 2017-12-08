@@ -23,42 +23,20 @@ import org.slf4j.LoggerFactory;
 
 public class PropertyLoader {
 
-    private final static String PROPERTY_FILE = "/groups.json";
-
-    static SearchRuleGroups searchRuleGroups;
-    static SearchRuleGroupsScheme searchRuleGroupsScheme;
-    static SearchRuleBuilders searchRuleBuilders;
+    private String propertyFile;
 
     private final static Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
 
-    public static void loadProperties() {
-        logger.info("Start read property file = '" + PROPERTY_FILE + "'\n");
-        searchRuleGroups = new SearchRuleGroups(getSearchRuleGroupList());
-        searchRuleGroupsScheme = new SearchRuleGroupsScheme(getMapWithScheme());
-        searchRuleBuilders = new SearchRuleBuilders(getMapWithBuilders());
+    public PropertyLoader(String propertyFile) {
+        this.propertyFile = propertyFile;
     }
 
-    private static Map<String, SearchRuleBuilder> getMapWithBuilders() {
-        Map<String, SearchRuleBuilder> builderMap = new HashMap<>();
-
-        logger.info("Create map with builders");
-        builderMap.put("commonSearchRule", new CommonSearchRuleBuilder());
-        builderMap
-            .put("complexSearchRule", new ComplexSearchRuleBuilder(new RawSearchRuleMapper(),
-                new ComplexInnerSearchRuleBuilder()));
-        builderMap.put("complexInnerSearchRule", new ComplexInnerSearchRuleBuilder());
-        builderMap.put("formSearchRule", new FormSearchRuleBuilder(new RawSearchRuleMapper()));
-        builderMap.put("formInnerSearchRule", new FormInnerSearchRuleBuilder());
-
-        return builderMap;
-    }
-
-    private static Map<String, Schema> getMapWithScheme() {
+    public SearchRuleGroupsScheme getMapWithScheme() {
         Map<String, Schema> schemeMap = new HashMap<>();
 
         logger.info("Start reading list of schemes...");
         JSONObject jsonObject = new JSONObject(
-            new JSONTokener(PropertyLoader.class.getResourceAsStream(PROPERTY_FILE)));
+            new JSONTokener(PropertyLoader.class.getResourceAsStream(propertyFile)));
 
         JSONArray typeGroups = jsonObject.getJSONArray("typeGroups");
         for (int i = 0; i < typeGroups.length(); i++) {
@@ -78,15 +56,15 @@ public class PropertyLoader {
         }
         logger.info("Finish reading list of schemes\n");
 
-        return schemeMap;
+        return new SearchRuleGroupsScheme(schemeMap);
     }
 
-    private static List<SearchRuleGroup> getSearchRuleGroupList() {
+    public SearchRuleGroups getSearchRuleGroupList() {
         List<SearchRuleGroup> searchRuleGroups = new ArrayList<>();
 
         logger.info("Start reading list of group types...");
         JSONObject jsonObject = new JSONObject(
-            new JSONTokener(PropertyLoader.class.getResourceAsStream(PROPERTY_FILE)));
+            new JSONTokener(PropertyLoader.class.getResourceAsStream(propertyFile)));
 
         JSONArray typeGroups = jsonObject.getJSONArray("typeGroups");
         for (int i = 0; i < typeGroups.length(); i++) {
@@ -105,6 +83,6 @@ public class PropertyLoader {
         }
         logger.info("Finish reading list of group types\n");
 
-        return searchRuleGroups;
+        return new SearchRuleGroups(searchRuleGroups);
     }
 }

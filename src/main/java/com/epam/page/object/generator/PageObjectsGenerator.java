@@ -3,18 +3,16 @@ package com.epam.page.object.generator;
 import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
 import com.epam.page.object.generator.adapter.javaClassBuildable.JavaClassBuildable;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.epam.page.object.generator.adapter.javaClassBuildable.PageClass;
-import com.epam.page.object.generator.adapter.javaClassBuildable.SiteClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.PageClassBuildable;
+import com.epam.page.object.generator.adapter.javaClassBuildable.SiteClassBuildable;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
-import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.builders.WebPagesBuilder;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
-import com.epam.page.object.generator.utils.PropertyLoader;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
@@ -23,7 +21,6 @@ import com.epam.page.object.generator.validators.JsonValidators;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.WebValidators;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -68,12 +65,8 @@ public class PageObjectsGenerator {
         this.webPagesBuilder = webPagesBuilder;
     }
 
-    public void generatePageObjects(String jsonPath,
-                                    String outputDir,
-                                    List<String> urls)
-        throws IOException, URISyntaxException, XpathToCssTransformerException {
-
-        PropertyLoader.loadProperties();
+    public void generatePageObjects(String jsonPath, String outputDir, List<String> urls)
+        throws IOException {
 
         logger.info("Create list of RawSearchRules...");
         List<RawSearchRule> rawSearchRuleList = rawSearchRuleMapper.getRawSearchRuleList(jsonPath);
@@ -100,10 +93,11 @@ public class PageObjectsGenerator {
         webValidators.validate(webPages);
 
         List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
-        rawJavaClasses.add(new SiteClass(webPages));
+
+        rawJavaClasses.add(new SiteClassBuildable(webPages));
 
         for (WebPage webPage : webPages) {
-            rawJavaClasses.add(new PageClass(webPage, webElementGroupFieldBuilder));
+            rawJavaClasses.add(new PageClassBuildable(webPage, webElementGroupFieldBuilder));
             if (webPage.isContainedFormSearchRule()) {
                 rawJavaClasses.addAll(webPage.getFormClasses());
             }

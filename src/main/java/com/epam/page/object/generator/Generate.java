@@ -20,7 +20,8 @@ public class Generate {
             "https://www.w3schools.com/css/default.asp",
             "https://www.w3schools.com/html/html_form_input_types.asp");
 
-        PageObjectsGenerator pog = PageObjectGeneratorFactory.getPageObjectGenerator("w3c.tests");
+        PageObjectsGenerator pog = PageObjectGeneratorFactory.getPageObjectGenerator("w3c.tests",
+            "/groups.json");
         pog.setForceGenerateFile(true);
         pog.generatePageObjects("/webElement.json", "src/main/java/", urls);
     }

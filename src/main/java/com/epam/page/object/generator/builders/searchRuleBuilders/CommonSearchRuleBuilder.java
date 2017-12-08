@@ -7,12 +7,14 @@ import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 
 public class CommonSearchRuleBuilder implements SearchRuleBuilder {
 
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
-                                      SupportedTypesContainer typesContainer) {
+                                      SupportedTypesContainer typesContainer,
+                                      XpathToCssTransformer transformer) {
 
         String uniqueness = rawSearchRule.getValue("uniqueness");
         SearchRuleType type = rawSearchRule.getType();
@@ -20,6 +22,6 @@ public class CommonSearchRuleBuilder implements SearchRuleBuilder {
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());
 
-        return new CommonSearchRule(uniqueness, type, selector, classAndAnnotation);
+        return new CommonSearchRule(uniqueness, type, selector, classAndAnnotation, transformer);
     }
 }

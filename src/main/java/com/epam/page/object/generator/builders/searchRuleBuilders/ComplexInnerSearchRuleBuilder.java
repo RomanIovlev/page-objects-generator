@@ -5,12 +5,14 @@ import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 
 public class ComplexInnerSearchRuleBuilder implements SearchRuleBuilder {
 
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
-                                      SupportedTypesContainer typesContainer) {
+                                      SupportedTypesContainer typesContainer,
+                                      XpathToCssTransformer transformer) {
 
         String title = rawSearchRule.getValue("title");
 
@@ -21,6 +23,6 @@ public class ComplexInnerSearchRuleBuilder implements SearchRuleBuilder {
 
         Selector selector = rawSearchRule.getSelector();
 
-        return new ComplexInnerSearchRule(uniqueness, title, selector);
+        return new ComplexInnerSearchRule(uniqueness, title, selector, transformer);
     }
 }

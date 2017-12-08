@@ -2,6 +2,7 @@ package com.epam.page.object.generator.errors;
 
 public class NotValidUrlException extends RuntimeException {
 
+    //TODO setInvalidUrls(LIst urls)
     public NotValidUrlException() {
     }
 

@@ -15,7 +15,8 @@ public class ValidationChecker {
 
     public void checkRawSearchRules(List<RawSearchRule> rawSearchRules) {
         if (rawSearchRules.stream().anyMatch(RawSearchRule::isInvalid)) {
-            StringBuilder stringBuilder = new StringBuilder("\nJson file has invalid search rules:\n");
+            StringBuilder stringBuilder = new StringBuilder(
+                "\nJson file has invalid search rules:\n");
 
             rawSearchRules.stream()
                 .filter(RawSearchRule::isInvalid)
@@ -37,8 +38,9 @@ public class ValidationChecker {
                 .forEach(
                     validatable ->
                         validatable.getValidationResults().stream().filter(
-                            ValidationResult::isInvalid).forEach(validationResult -> stringBuilder.append(validationResult.getReason()))
-                    );
+                            ValidationResult::isInvalid).forEach(
+                            validationResult -> stringBuilder.append(validationResult.getReason()))
+                );
 
             logger.error(stringBuilder.toString());
             throw new ValidationException(stringBuilder.toString());

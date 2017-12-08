@@ -12,6 +12,7 @@ import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,10 +25,11 @@ public class CommonSearchRuleBuilderTest {
 
     private CommonSearchRuleBuilder sut = new CommonSearchRuleBuilder();
     private SupportedTypesContainer container = new SupportedTypesContainer();
+    private XpathToCssTransformer transformer = new XpathToCssTransformer();
 
     private CommonSearchRule expectedSearchRule = new CommonSearchRule("text",
         SearchRuleType.BUTTON, new Selector("css", ".myClass"),
-        new ClassAndAnnotationPair(Button.class, FindBy.class));
+        new ClassAndAnnotationPair(Button.class, FindBy.class), transformer);
 
     @Test
     public void buildCommonSearchRule_SuccessTest() {
@@ -37,7 +39,7 @@ public class CommonSearchRuleBuilderTest {
         when(rawSearchRule.getType()).thenReturn(expectedSearchRule.getType());
         when(rawSearchRule.getSelector()).thenReturn(expectedSearchRule.getSelector());
 
-        SearchRule searchRule = sut.buildSearchRule(rawSearchRule, container);
+        SearchRule searchRule = sut.buildSearchRule(rawSearchRule, container, transformer);
         CommonSearchRule actualSearchRule = (CommonSearchRule) searchRule;
 
         assertEquals(expectedSearchRule.getUniqueness(), actualSearchRule.getUniqueness());

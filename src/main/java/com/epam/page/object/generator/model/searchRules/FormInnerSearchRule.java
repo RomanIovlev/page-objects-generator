@@ -3,11 +3,12 @@ package com.epam.page.object.generator.model.searchRules;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.FormWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
@@ -23,16 +24,19 @@ public class FormInnerSearchRule implements SearchRule {
     private SearchRuleType type;
     private Selector selector;
     private ClassAndAnnotationPair classAndAnnotation;
+    private XpathToCssTransformer transformer;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
     private final static Logger logger = LoggerFactory.getLogger(FormInnerSearchRule.class);
 
     public FormInnerSearchRule(String uniqueness, SearchRuleType type, Selector selector,
-                               ClassAndAnnotationPair classAndAnnotation) {
+                               ClassAndAnnotationPair classAndAnnotation,
+                               XpathToCssTransformer transformer) {
         this.uniqueness = uniqueness;
         this.type = type;
         this.selector = selector;
         this.classAndAnnotation = classAndAnnotation;
+        this.transformer = transformer;
     }
 
     public String getUniqueness() {
@@ -55,7 +59,7 @@ public class FormInnerSearchRule implements SearchRule {
         if (!uniqueness.equalsIgnoreCase("text")) {
             if (selector.isXpath()) {
                 try {
-                    return XpathToCssTransformation.getCssSelector(selector);
+                    return transformer.getCssSelector(selector);
                 } catch (XpathToCssTransformerException e) {
                     e.printStackTrace();
                 }
@@ -77,6 +81,10 @@ public class FormInnerSearchRule implements SearchRule {
             }
         }
         return webElements;
+    }
+
+    @Override
+    public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
     }
 
     private String getRequiredValue(Element element) {

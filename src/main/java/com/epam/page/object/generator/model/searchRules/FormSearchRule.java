@@ -2,6 +2,8 @@ package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.validators.ValidationResult;
@@ -59,6 +61,11 @@ public class FormSearchRule implements SearchRule {
         return webElements;
     }
 
+    @Override
+    public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
+        webElementGroups.add(new FormWebElementGroup(this, getWebElements(elements)));
+    }
+
     public List<FormInnerSearchRule> getInnerSearchRules() {
         return innerSearchRules;
     }
@@ -70,7 +77,7 @@ public class FormSearchRule implements SearchRule {
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
         ValidationResult visit = validatorVisitor.visit(this);
-        logger.info(this + " is '" + visit.isValid() + "', reason '" +  visit.getReason() + "'");
+        logger.info(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
         validationResults.add(visit);
     }
 

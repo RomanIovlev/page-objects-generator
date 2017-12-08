@@ -19,16 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 
-public class SiteClass implements JavaClassBuildable {
+public class SiteClassBuildable implements JavaClassBuildable {
 
     private List<WebPage> webPages;
 
-    public SiteClass(List<WebPage> webPages) {
+    public SiteClassBuildable(List<WebPage> webPages) {
         this.webPages = webPages;
     }
 
     @Override
-    public IJavaAnnotation getAnnotation() {
+    public IJavaAnnotation buildAnnotation() {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
         annotationMembers.add(new AnnotationMember("value", "$S", webPages.get(0).getDomainName()));
 
@@ -36,7 +36,7 @@ public class SiteClass implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> getFields(String packageName) {
+    public List<IJavaField> buildFields(String packageName) {
         List<IJavaField> fields = new ArrayList<>();
 
         for (WebPage webPage : webPages) {

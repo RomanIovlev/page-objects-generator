@@ -3,11 +3,12 @@ package com.epam.page.object.generator.model.searchRules;
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.validators.JsonValidators;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
@@ -22,18 +23,20 @@ public class CommonSearchRule implements SearchRule {
     private String uniqueness;
     private SearchRuleType type;
     private Selector selector;
-
     private ClassAndAnnotationPair classAndAnnotation;
+    private XpathToCssTransformer transformer;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
     private final static Logger logger = LoggerFactory.getLogger(CommonSearchRule.class);
 
     public CommonSearchRule(String uniqueness, SearchRuleType type, Selector selector,
-                            ClassAndAnnotationPair classAndAnnotation) {
+                            ClassAndAnnotationPair classAndAnnotation,
+                            XpathToCssTransformer transformer) {
         this.uniqueness = uniqueness;
         this.type = type;
         this.selector = selector;
         this.classAndAnnotation = classAndAnnotation;
+        this.transformer = transformer;
     }
 
     public String getUniqueness() {
@@ -58,7 +61,7 @@ public class CommonSearchRule implements SearchRule {
         if (!uniqueness.equalsIgnoreCase("text")) {
             if (selector.isXpath()) {
                 try {
-                    return XpathToCssTransformation.getCssSelector(selector);
+                    return transformer.getCssSelector(selector);
                 } catch (XpathToCssTransformerException e) {
                     e.printStackTrace();
                 }
@@ -83,9 +86,14 @@ public class CommonSearchRule implements SearchRule {
     }
 
     @Override
+    public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
+        webElementGroups.add(new CommonWebElementGroup(this, getWebElements(elements)));
+    }
+
+    @Override
     public void accept(ValidatorVisitor validatorVisitor) {
         ValidationResult visit = validatorVisitor.visit(this);
-        logger.info(this + " is '" + visit.isValid() + "', reason '" +  visit.getReason() + "'");
+        logger.info(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
         validationResults.add(visit);
     }
 

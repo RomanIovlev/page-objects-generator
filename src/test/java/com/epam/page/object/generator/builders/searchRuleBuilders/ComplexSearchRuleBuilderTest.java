@@ -15,6 +15,7 @@ import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -39,14 +40,15 @@ public class ComplexSearchRuleBuilderTest {
     private ComplexSearchRuleBuilder sut;
 
     private SupportedTypesContainer container = new SupportedTypesContainer();
+    private XpathToCssTransformer transformer = new XpathToCssTransformer();
 
     private List<RawSearchRule> rawSearchRuleList = Lists
         .newArrayList(innerSearchRule1, innerSearchRule2);
 
     private ComplexInnerSearchRule complexInnerSearchRule1 = new ComplexInnerSearchRule("text",
-        "root", new Selector("css", ".myClass"));
+        "root", new Selector("css", ".myClass"), transformer);
     private ComplexInnerSearchRule complexInnerSearchRule2 = new ComplexInnerSearchRule(null,
-        "list", new Selector("xpath", "//div"));
+        "list", new Selector("xpath", "//div"), transformer);
 
     private List<ComplexInnerSearchRule> innerSearchRules = Lists
         .newArrayList(complexInnerSearchRule1, complexInnerSearchRule2);
@@ -61,10 +63,11 @@ public class ComplexSearchRuleBuilderTest {
         when(rawSearchRule.getType()).thenReturn(expectedSearchRule.getType());
         when(mapper.getComplexInnerRawSearchRules(any(RawSearchRule.class)))
             .thenReturn(rawSearchRuleList);
-        when(builder.buildSearchRule(any(RawSearchRule.class), any(SupportedTypesContainer.class)))
+        when(builder.buildSearchRule(any(RawSearchRule.class), any(SupportedTypesContainer.class),
+            transformer))
             .thenReturn(complexInnerSearchRule1).thenReturn(complexInnerSearchRule2);
 
-        SearchRule searchRule = sut.buildSearchRule(rawSearchRule, container);
+        SearchRule searchRule = sut.buildSearchRule(rawSearchRule, container, transformer);
         ComplexSearchRule actualSearchRule = (ComplexSearchRule) searchRule;
 
         assertEquals(expectedSearchRule.getType(), actualSearchRule.getType());

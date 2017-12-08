@@ -27,7 +27,7 @@ public class MainTest {
     @Before
     public void setUp() throws IOException {
         FileUtils.deleteDirectory(new File(outputDir + packageName));
-        pog = PageObjectGeneratorFactory.getPageObjectGenerator(packageName);
+        pog = PageObjectGeneratorFactory.getPageObjectGenerator(packageName, "/groups.json");
     }
 
     @Test
@@ -60,7 +60,7 @@ public class MainTest {
             Collections.singletonList("https://www.w3schools.com/html/html_forms.asp"));
     }
 
-    @Test//(expected = ValidationException.class)
+    @Test(expected = ValidationException.class)
     public void pageObjectGenerator_NotSectionAttribute() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/form-wrong-section.json", outputDir,

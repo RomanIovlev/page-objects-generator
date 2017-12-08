@@ -2,6 +2,7 @@ package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
+import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
 import com.epam.page.object.generator.validators.ValidationResult;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,15 @@ import org.slf4j.LoggerFactory;
 public class RawSearchRuleMapper {
 
     private final static Logger logger = LoggerFactory.getLogger(RawSearchRuleMapper.class);
+
+    private SearchRuleGroupsScheme searchRuleGroupsScheme;
+    private SearchRuleGroups searchRuleGroups;
+
+    public RawSearchRuleMapper(SearchRuleGroupsScheme searchRuleGroupsScheme,
+                               SearchRuleGroups searchRuleGroups) {
+        this.searchRuleGroupsScheme = searchRuleGroupsScheme;
+        this.searchRuleGroups = searchRuleGroups;
+    }
 
     public List<RawSearchRule> getRawSearchRuleList(String json) {
         List<RawSearchRule> rawSearchRuleList = new ArrayList<>();
@@ -46,8 +56,8 @@ public class RawSearchRuleMapper {
                     "Attribute 'type' = '" + searchRuleType + "' is not supported in "
                         + rawSearchRule)));
         } else {
-            SearchRuleGroup group = PropertyLoader.searchRuleGroups.getGroupByType(type);
-            Schema schema = PropertyLoader.searchRuleGroupsScheme.getSchema(group.getName());
+            SearchRuleGroup group = searchRuleGroups.getGroupByType(type);
+            Schema schema = searchRuleGroupsScheme.getSchema(group.getName());
             rawSearchRule = new RawSearchRule(object, type, group, schema);
         }
         return rawSearchRule;
@@ -61,8 +71,7 @@ public class RawSearchRuleMapper {
             JSONObject object = innerSearchRules.getJSONObject(i);
             SearchRuleType type = null;
             SearchRuleGroup group = null;
-            Schema schema = PropertyLoader.searchRuleGroupsScheme
-                .getSchema("complexInnerSearchRule");
+            Schema schema = searchRuleGroupsScheme.getSchema("complexInnerSearchRule");
             RawSearchRule rawSearchRule = new RawSearchRule(object, type, group, schema);
             innerRawSearchRules.add(rawSearchRule);
             logger.info("Add complexInnerSearchRule ='" + rawSearchRule + "'");
@@ -81,8 +90,7 @@ public class RawSearchRuleMapper {
             SearchRuleType type = SearchRuleType
                 .getSearchRuleTypeByString(searchRuleType.toLowerCase());
             SearchRuleGroup group = null;
-            Schema schema = PropertyLoader.searchRuleGroupsScheme
-                .getSchema("formInnerSearchRule");
+            Schema schema = searchRuleGroupsScheme.getSchema("formInnerSearchRule");
             RawSearchRule rawSearchRule = new RawSearchRule(object, type, group, schema);
             innerRawSearchRules.add(rawSearchRule);
             logger.info("Add formInnerSearchRule ='" + rawSearchRule + "'");

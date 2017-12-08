@@ -2,10 +2,11 @@ package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.ComplexWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
@@ -20,14 +21,17 @@ public class ComplexInnerSearchRule implements SearchRule {
     private String uniqueness;
     private String title;
     private Selector selector;
+    private XpathToCssTransformer transformer;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
     private final static Logger logger = LoggerFactory.getLogger(ComplexInnerSearchRule.class);
 
-    public ComplexInnerSearchRule(String uniqueness, String title, Selector selector) {
+    public ComplexInnerSearchRule(String uniqueness, String title, Selector selector,
+                                  XpathToCssTransformer transformer) {
         this.uniqueness = uniqueness;
         this.title = title;
         this.selector = selector;
+        this.transformer = transformer;
     }
 
     public String getUniqueness() {
@@ -46,7 +50,7 @@ public class ComplexInnerSearchRule implements SearchRule {
         if (!uniqueness.equalsIgnoreCase("text")) {
             if (selector.isXpath()) {
                 try {
-                    return XpathToCssTransformation.getCssSelector(selector);
+                    return transformer.getCssSelector(selector);
                 } catch (XpathToCssTransformerException e) {
                     e.printStackTrace();
                 }
@@ -78,6 +82,10 @@ public class ComplexInnerSearchRule implements SearchRule {
         }
 
         return webElements;
+    }
+
+    @Override
+    public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
     }
 
     @Override

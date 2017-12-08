@@ -8,6 +8,7 @@ import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -28,7 +29,8 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
 
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
-                                      SupportedTypesContainer typesContainer) {
+                                      SupportedTypesContainer typesContainer,
+                                      XpathToCssTransformer transformer) {
 
         SearchRuleType type = rawSearchRule.getType();
         List<ComplexInnerSearchRule> innerSearchRules = new ArrayList<>();
@@ -43,7 +45,7 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
 
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
             innerSearchRules.add((ComplexInnerSearchRule) builder
-                .buildSearchRule(innerRawSearchRule, typesContainer));
+                .buildSearchRule(innerRawSearchRule, typesContainer, transformer));
         }
 
         return new ComplexSearchRule(type, innerSearchRules, classAndAnnotation);

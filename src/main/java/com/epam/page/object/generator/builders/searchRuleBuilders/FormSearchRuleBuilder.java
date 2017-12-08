@@ -9,6 +9,7 @@ import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -27,7 +28,8 @@ public class FormSearchRuleBuilder implements SearchRuleBuilder {
 
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
-                                      SupportedTypesContainer typesContainer) {
+                                      SupportedTypesContainer typesContainer,
+                                      XpathToCssTransformer transformer) {
 
         SearchRuleType type = rawSearchRule.getType();
         String section = rawSearchRule.getValue("section");
@@ -46,7 +48,8 @@ public class FormSearchRuleBuilder implements SearchRuleBuilder {
         FormInnerSearchRuleBuilder builder = new FormInnerSearchRuleBuilder();
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
             innerSearchRules.add(
-                (FormInnerSearchRule) builder.buildSearchRule(innerRawSearchRule, typesContainer));
+                (FormInnerSearchRule) builder.buildSearchRule(innerRawSearchRule, typesContainer,
+                    transformer));
         }
 
         return new FormSearchRule(section, type, selector, innerSearchRules, classAndAnnotation);

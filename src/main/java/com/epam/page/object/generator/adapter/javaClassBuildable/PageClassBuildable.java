@@ -10,12 +10,12 @@ import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageClass implements JavaClassBuildable {
+public class PageClassBuildable implements JavaClassBuildable {
 
     private WebPage webPage;
     private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
 
-    public PageClass(WebPage webPage, WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
+    public PageClassBuildable(WebPage webPage, WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
         this.webPage = webPage;
         this.webElementGroupFieldBuilder = webElementGroupFieldBuilder;
     }
@@ -30,7 +30,7 @@ public class PageClass implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> getFields(String packageName) {
+    public List<IJavaField> buildFields(String packageName) {
         List<IJavaField> fields = new ArrayList<>();
 
         for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
@@ -44,7 +44,7 @@ public class PageClass implements JavaClassBuildable {
     }
 
     @Override
-    public IJavaAnnotation getAnnotation() {
+    public IJavaAnnotation buildAnnotation() {
         return null;
     }
 }

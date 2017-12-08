@@ -2,6 +2,8 @@ package com.epam.page.object.generator.model.searchRules;
 
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
+import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.ComplexWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
@@ -67,7 +69,7 @@ public class ComplexSearchRule implements SearchRule {
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
         ValidationResult visit = validatorVisitor.visit(this);
-        logger.info(this + " is '" + visit.isValid() + "', reason '" +  visit.getReason() + "'");
+        logger.info(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
         validationResults.add(visit);
     }
 
@@ -107,5 +109,10 @@ public class ComplexSearchRule implements SearchRule {
             webElements.add(new ComplexWebElement(element, getRequiredValue(element), getRoot()));
         }
         return webElements;
+    }
+
+    @Override
+    public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
+        webElementGroups.add(new ComplexWebElementGroup(this, getWebElements(elements)));
     }
 }

@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 
-public class FormClass implements JavaClassBuildable {
+public class FormClassBuildable implements JavaClassBuildable {
 
     private FormWebElementGroup formWebElementGroup;
 
-    public FormClass(FormWebElementGroup formWebElementGroup) {
+    public FormClassBuildable(FormWebElementGroup formWebElementGroup) {
         this.formWebElementGroup = formWebElementGroup;
     }
 
@@ -35,7 +35,7 @@ public class FormClass implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> getFields(String packageName) {
+    public List<IJavaField> buildFields(String packageName) {
         List<IJavaField> javaFields = new ArrayList<>();
 
         for (WebElement webElement : formWebElementGroup.getWebElements()) {
@@ -80,7 +80,7 @@ public class FormClass implements JavaClassBuildable {
     }
 
     @Override
-    public IJavaAnnotation getAnnotation() {
+    public IJavaAnnotation buildAnnotation() {
         return null;
     }
 

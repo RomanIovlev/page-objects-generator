@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.model;
 
-import com.epam.page.object.generator.adapter.javaClassBuildable.FormClass;
+import com.epam.page.object.generator.adapter.javaClassBuildable.FormClassBuildable;
 import com.epam.page.object.generator.adapter.javaClassBuildable.JavaClassBuildable;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
@@ -51,16 +51,7 @@ public class WebPage {
             Elements elements = SearchRuleExtractor
                 .extractElementsFromElement(document, searchRule);
             if (elements.size() != 0) {
-                if (searchRule instanceof CommonSearchRule) {
-                    webElementGroups.add(new CommonWebElementGroup((CommonSearchRule) searchRule,
-                        searchRule.getWebElements(elements)));
-                } else if (searchRule instanceof ComplexSearchRule) {
-                    webElementGroups.add(new ComplexWebElementGroup((ComplexSearchRule) searchRule,
-                        searchRule.getWebElements(elements)));
-                } else if (searchRule instanceof FormSearchRule) {
-                    webElementGroups.add(new FormWebElementGroup((FormSearchRule) searchRule,
-                        searchRule.getWebElements(elements)));
-                }
+                searchRule.fillWebElementGroup(webElementGroups, elements);
             }
         }
     }
@@ -79,7 +70,7 @@ public class WebPage {
 
         for (WebElementGroup webElementGroup : webElementGroups) {
             if (webElementGroup instanceof FormWebElementGroup) {
-                javaClasses.add(new FormClass((FormWebElementGroup) webElementGroup));
+                javaClasses.add(new FormClassBuildable((FormWebElementGroup) webElementGroup));
             }
         }
 

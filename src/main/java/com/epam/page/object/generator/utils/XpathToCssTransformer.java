@@ -9,9 +9,9 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-public class XpathToCssTransformation {
+public class XpathToCssTransformer {
 
-    public static Selector getCssSelector(Selector selector) throws XpathToCssTransformerException {
+    public Selector getCssSelector(Selector selector) throws XpathToCssTransformerException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
         try {
