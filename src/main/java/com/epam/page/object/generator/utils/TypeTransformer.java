@@ -19,10 +19,6 @@ public class TypeTransformer {
     }
 
     public List<SearchRule> transform(List<RawSearchRule> rawSearchRuleList) {
-        if (rawSearchRuleList.stream().anyMatch(RawSearchRule::isInvalid)) {
-            printAllInvalidRawSearchRules(rawSearchRuleList);
-        }
-
         return rawSearchRuleList.stream()
             .filter(RawSearchRule::isValid)
             .map(rawSearchRule -> {
@@ -34,16 +30,4 @@ public class TypeTransformer {
             .collect(Collectors.toList());
 
     }
-
-    private void printAllInvalidRawSearchRules(List<RawSearchRule> rawSearchRuleList) {
-        StringBuilder stringBuilder = new StringBuilder("Json file has invalid search rules:\n");
-        rawSearchRuleList.stream()
-            .filter(RawSearchRule::isInvalid)
-            .forEach(
-                rawSearchRule -> stringBuilder.append("\n").append(rawSearchRule)
-                    .append(" is invalid:\n").append(rawSearchRule.getExceptionMessage()));
-        logger.error(stringBuilder.toString());
-    }
-
-
 }

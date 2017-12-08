@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.builders.searchRuleBuilders;
 
-import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilder;
 import com.epam.page.object.generator.model.RawSearchRule;
 import java.util.Map;
 

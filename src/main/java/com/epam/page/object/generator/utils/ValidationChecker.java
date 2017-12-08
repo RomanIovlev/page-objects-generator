@@ -15,12 +15,13 @@ public class ValidationChecker {
 
     public void checkRawSearchRules(List<RawSearchRule> rawSearchRules) {
         if (rawSearchRules.stream().anyMatch(RawSearchRule::isInvalid)) {
-            StringBuilder stringBuilder = new StringBuilder("\n");
+            StringBuilder stringBuilder = new StringBuilder("\nJson file has invalid search rules:\n");
 
             rawSearchRules.stream()
                 .filter(RawSearchRule::isInvalid)
                 .forEach(
-                    rawSearchRule -> stringBuilder.append(rawSearchRule.getExceptionMessage()));
+                    rawSearchRule -> stringBuilder.append("\n").append(rawSearchRule)
+                        .append(" is invalid:\n").append(rawSearchRule.getExceptionMessage()));
 
             logger.error(stringBuilder.toString());
             throw new ValidationException(stringBuilder.toString());
