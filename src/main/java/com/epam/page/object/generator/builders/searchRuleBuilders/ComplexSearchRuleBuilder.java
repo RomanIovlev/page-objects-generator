@@ -18,10 +18,12 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
     private final static Logger logger = LoggerFactory.getLogger(ComplexSearchRuleBuilder.class);
 
     private RawSearchRuleMapper rawSearchRuleMapper;
+    private ComplexInnerSearchRuleBuilder builder;
 
-    public ComplexSearchRuleBuilder(
-        RawSearchRuleMapper rawSearchRuleMapper) {
+    public ComplexSearchRuleBuilder(RawSearchRuleMapper rawSearchRuleMapper,
+                                    ComplexInnerSearchRuleBuilder builder) {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
+        this.builder = builder;
     }
 
     @Override
@@ -39,11 +41,9 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());
 
-        ComplexInnerSearchRuleBuilder builder = new ComplexInnerSearchRuleBuilder();
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
-            innerSearchRules.add(
-                (ComplexInnerSearchRule) builder
-                    .buildSearchRule(innerRawSearchRule, typesContainer));
+            innerSearchRules.add((ComplexInnerSearchRule) builder
+                .buildSearchRule(innerRawSearchRule, typesContainer));
         }
 
         return new ComplexSearchRule(type, innerSearchRules, classAndAnnotation);

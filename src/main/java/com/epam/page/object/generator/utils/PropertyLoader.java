@@ -44,7 +44,8 @@ public class PropertyLoader {
         logger.info("Create map with builders");
         builderMap.put("commonSearchRule", new CommonSearchRuleBuilder());
         builderMap
-            .put("complexSearchRule", new ComplexSearchRuleBuilder(new RawSearchRuleMapper()));
+            .put("complexSearchRule", new ComplexSearchRuleBuilder(new RawSearchRuleMapper(),
+                new ComplexInnerSearchRuleBuilder()));
         builderMap.put("complexInnerSearchRule", new ComplexInnerSearchRuleBuilder());
         builderMap.put("formSearchRule", new FormSearchRuleBuilder(new RawSearchRuleMapper()));
         builderMap.put("formInnerSearchRule", new FormInnerSearchRuleBuilder());

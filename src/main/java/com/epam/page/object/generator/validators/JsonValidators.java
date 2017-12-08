@@ -1,6 +1,5 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.model.searchRules.Validatable;
 import com.epam.page.object.generator.validators.searchRuleJsonValidators.DuplicateTitleInnerSearchRuleValidator;
