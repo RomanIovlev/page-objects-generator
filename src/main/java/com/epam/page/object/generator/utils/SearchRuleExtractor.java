@@ -8,7 +8,7 @@ import us.codecraft.xsoup.Xsoup;
 
 public class SearchRuleExtractor {
 
-    public static Elements extractElementsFromElement(Element element, SearchRule searchRule) {
+    public Elements extractElementsFromElement(Element element, SearchRule searchRule) {
         Selector selector = searchRule.getSelector();
         if (selector.isXpath()) {
             return Xsoup.compile(selector.getValue()).evaluate(element).getElements();

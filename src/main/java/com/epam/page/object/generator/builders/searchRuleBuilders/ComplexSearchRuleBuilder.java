@@ -7,7 +7,9 @@ import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,24 +32,33 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
                                       SupportedTypesContainer typesContainer,
-                                      XpathToCssTransformer transformer) {
-
+                                      XpathToCssTransformer transformer,
+                                      SelectorUtils selectorUtils,
+                                      SearchRuleExtractor searchRuleExtractor) {
+        logger.debug("Start transforming of " + rawSearchRule);
         SearchRuleType type = rawSearchRule.getType();
+        logger.debug("'type' = " + type);
         List<ComplexInnerSearchRule> innerSearchRules = new ArrayList<>();
 
         logger.info("Create list of complexInnerSearchRules...");
         List<RawSearchRule> innerRawSearchRules = rawSearchRuleMapper
             .getComplexInnerRawSearchRules(rawSearchRule);
-        logger.info("Finish creating list of complexInnerSearchRules\n");
+        logger.info("Finish creating list of complexInnerSearchRules");
 
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());
+        logger.debug("'class' = " + classAndAnnotation.getElementClass().getName());
+        logger.debug("'annotation' = " + classAndAnnotation.getElementAnnotation().getName());
 
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
             innerSearchRules.add((ComplexInnerSearchRule) builder
-                .buildSearchRule(innerRawSearchRule, typesContainer, transformer));
+                .buildSearchRule(innerRawSearchRule, typesContainer, transformer, selectorUtils,
+                    searchRuleExtractor));
         }
 
-        return new ComplexSearchRule(type, innerSearchRules, classAndAnnotation);
+        ComplexSearchRule complexSearchRule = new ComplexSearchRule(type, innerSearchRules,
+            classAndAnnotation, selectorUtils);
+        logger.debug("Create a new " + complexSearchRule + "\n");
+        return complexSearchRule;
     }
 }

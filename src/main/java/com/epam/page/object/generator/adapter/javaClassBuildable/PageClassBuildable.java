@@ -7,6 +7,7 @@ import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,8 @@ public class PageClassBuildable implements JavaClassBuildable {
     private WebPage webPage;
     private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
 
-    public PageClassBuildable(WebPage webPage, WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
+    public PageClassBuildable(WebPage webPage,
+                              WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
         this.webPage = webPage;
         this.webElementGroupFieldBuilder = webElementGroupFieldBuilder;
     }

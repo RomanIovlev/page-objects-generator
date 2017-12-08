@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.epam.page.object.generator.builders.WebPagesBuilder;
 import com.epam.page.object.generator.errors.NotValidUrlException;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -23,6 +24,8 @@ public class WebPagesBuilderTest {
     private List<String> urls;
     private List<WebPage> webPages;
 
+    private SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -35,7 +38,7 @@ public class WebPagesBuilderTest {
     public void generate_validUrls() throws Exception {
         urls.add("http://ya.ru");
         urls.add("http://google.com");
-        webPages = sut.generate(urls);
+        webPages = sut.generate(urls, searchRuleExtractor);
 
         assertTrue(webPages.size() > 0);
     }
@@ -43,7 +46,7 @@ public class WebPagesBuilderTest {
     @Test(expected = NotValidUrlException.class)
     public void validate_NotValidUrl() throws Exception {
         urls.add("123123");
-        sut.generate(urls);
+        sut.generate(urls, searchRuleExtractor);
     }
 
 
@@ -73,7 +76,7 @@ public class WebPagesBuilderTest {
             urls.add(invalidUrl);
             urls.add(invalidUr2);
 
-            sut.generate(urls);
+            sut.generate(urls, searchRuleExtractor);
 
         }
     }

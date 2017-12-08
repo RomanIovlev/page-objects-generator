@@ -1,8 +1,5 @@
 package com.epam.page.object.generator.model.webElementGroups;
 
-import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
-import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
-
 import com.epam.page.object.generator.adapter.javaAnnotations.AnnotationMember;
 import com.epam.page.object.generator.adapter.javaAnnotations.IJavaAnnotation;
 import com.epam.page.object.generator.adapter.javaFields.IJavaField;
@@ -11,6 +8,7 @@ import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
 import com.epam.page.object.generator.model.webElements.WebElement;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
@@ -20,12 +18,15 @@ public class CommonWebElementGroup implements WebElementGroup {
 
     private CommonSearchRule searchRule;
     private List<WebElement> webElements;
+    private SelectorUtils selectorUtils;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
 
-    public CommonWebElementGroup(CommonSearchRule searchRule, List<WebElement> webElements) {
+    public CommonWebElementGroup(CommonSearchRule searchRule, List<WebElement> webElements,
+                                 SelectorUtils selectorUtils) {
         this.searchRule = searchRule;
         this.webElements = webElements;
+        this.selectorUtils = selectorUtils;
     }
 
     @Override
@@ -86,9 +87,9 @@ public class CommonWebElementGroup implements WebElementGroup {
     private String getAnnotationValue(Selector selector, String uniquenessValue,
                                       String uniqueness) {
         if (selector.isXpath()) {
-            return resultXpathSelector(selector, uniquenessValue, uniqueness);
+            return selectorUtils.resultXpathSelector(selector, uniquenessValue, uniqueness);
         } else if (selector.isCss()) {
-            return resultCssSelector(selector, uniquenessValue, uniqueness);
+            return selectorUtils.resultCssSelector(selector, uniquenessValue, uniqueness);
         }
         return null;
     }

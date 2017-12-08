@@ -9,7 +9,9 @@ import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuil
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.utils.PropertyLoader;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleGroupsScheme;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
@@ -43,10 +45,12 @@ public class PageObjectGeneratorFactory {
         JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName);
         WebElementGroupFieldBuilder webElementGroupFieldBuilder = new WebElementGroupFieldBuilder();
         WebPagesBuilder builder = new WebPagesBuilder();
+        SelectorUtils selectorUtils = new SelectorUtils();
+        SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
         return new PageObjectsGenerator(parser, validator, transformer, checker,
             jsonValidators, webValidators, javaClassBuilder, webElementGroupFieldBuilder,
-            javaPoetAdapter, builder);
+            javaPoetAdapter, builder, selectorUtils, searchRuleExtractor);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.epam.page.object.generator.adapter.javaClassBuildable;
 
-import static com.epam.page.object.generator.utils.SelectorUtils.resultCssSelector;
-import static com.epam.page.object.generator.utils.SelectorUtils.resultXpathSelector;
 import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
 import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.*;
@@ -18,6 +16,7 @@ import com.epam.page.object.generator.model.searchRules.FormInnerSearchRule;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
 import com.epam.page.object.generator.model.webElements.FormWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
@@ -25,9 +24,12 @@ import javax.lang.model.element.Modifier;
 public class FormClassBuildable implements JavaClassBuildable {
 
     private FormWebElementGroup formWebElementGroup;
+    private SelectorUtils selectorUtils;
 
-    public FormClassBuildable(FormWebElementGroup formWebElementGroup) {
+    public FormClassBuildable(FormWebElementGroup formWebElementGroup,
+                              SelectorUtils selectorUtils) {
         this.formWebElementGroup = formWebElementGroup;
+        this.selectorUtils = selectorUtils;
     }
 
     public FormWebElementGroup getFormWebElementGroup() {
@@ -72,9 +74,9 @@ public class FormClassBuildable implements JavaClassBuildable {
     private String getAnnotationValue(Selector selector, String uniquenessValue,
                                       String uniqueness) {
         if (selector.isXpath()) {
-            return resultXpathSelector(selector, uniquenessValue, uniqueness);
+            return selectorUtils.resultXpathSelector(selector, uniquenessValue, uniqueness);
         } else if (selector.isCss()) {
-            return resultCssSelector(selector, uniquenessValue, uniqueness);
+            return selectorUtils.resultCssSelector(selector, uniquenessValue, uniqueness);
         }
         return null;
     }

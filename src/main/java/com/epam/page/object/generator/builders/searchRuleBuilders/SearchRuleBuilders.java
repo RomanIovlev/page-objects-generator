@@ -3,6 +3,8 @@ package com.epam.page.object.generator.builders.searchRuleBuilders;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import java.util.Map;
 
@@ -15,8 +17,11 @@ public class SearchRuleBuilders {
     }
 
     public SearchRule buildSearchRule(RawSearchRule raw, SupportedTypesContainer typesContainer,
-                                      XpathToCssTransformer transformer) {
-        return getBuilder(raw).buildSearchRule(raw, typesContainer, transformer);
+                                      XpathToCssTransformer transformer,
+                                      SelectorUtils selectorUtils,
+                                      SearchRuleExtractor searchRuleExtractor) {
+        return getBuilder(raw).buildSearchRule(raw, typesContainer, transformer, selectorUtils,
+            searchRuleExtractor);
     }
 
     public Map<String, SearchRuleBuilder> getBuilders() {

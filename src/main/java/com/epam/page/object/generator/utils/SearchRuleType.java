@@ -25,9 +25,7 @@ public enum SearchRuleType {
     DROPLIST("droplist"),
     MENU("menu"),
     FORM("form"),
-    SECTION("section"),
-
-    NOT_SUPPORTED("not_supported");
+    SECTION("section");
 
     private final String name;
 

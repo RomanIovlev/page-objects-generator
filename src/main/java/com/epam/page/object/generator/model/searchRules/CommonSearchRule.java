@@ -8,6 +8,7 @@ import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.CommonWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
@@ -25,18 +26,21 @@ public class CommonSearchRule implements SearchRule {
     private Selector selector;
     private ClassAndAnnotationPair classAndAnnotation;
     private XpathToCssTransformer transformer;
+    private SelectorUtils selectorUtils;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
     private final static Logger logger = LoggerFactory.getLogger(CommonSearchRule.class);
 
     public CommonSearchRule(String uniqueness, SearchRuleType type, Selector selector,
                             ClassAndAnnotationPair classAndAnnotation,
-                            XpathToCssTransformer transformer) {
+                            XpathToCssTransformer transformer,
+                            SelectorUtils selectorUtils) {
         this.uniqueness = uniqueness;
         this.type = type;
         this.selector = selector;
         this.classAndAnnotation = classAndAnnotation;
         this.transformer = transformer;
+        this.selectorUtils = selectorUtils;
     }
 
     public String getUniqueness() {
@@ -87,7 +91,8 @@ public class CommonSearchRule implements SearchRule {
 
     @Override
     public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
-        webElementGroups.add(new CommonWebElementGroup(this, getWebElements(elements)));
+        webElementGroups.add(new CommonWebElementGroup(this, getWebElements(elements),
+            selectorUtils));
     }
 
     @Override

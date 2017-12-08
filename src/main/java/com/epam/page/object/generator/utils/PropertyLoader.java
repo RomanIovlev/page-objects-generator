@@ -1,12 +1,5 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.builders.searchRuleBuilders.CommonSearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexInnerSearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchRuleBuilders.ComplexSearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchRuleBuilders.FormInnerSearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchRuleBuilders.FormSearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilders;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
 import java.util.ArrayList;

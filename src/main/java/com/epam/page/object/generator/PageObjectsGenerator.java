@@ -14,6 +14,8 @@ import com.epam.page.object.generator.builders.WebPagesBuilder;
 import com.epam.page.object.generator.model.searchRules.SearchRule;
 import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
+import com.epam.page.object.generator.utils.SearchRuleExtractor;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
@@ -39,6 +41,9 @@ public class PageObjectsGenerator {
     private JavaFileWriter javaFileWriter;
     private WebPagesBuilder webPagesBuilder;
 
+    private SelectorUtils selectorUtils;
+    private SearchRuleExtractor searchRuleExtractor;
+
     private boolean forceGenerateFile = false;
 
     private final static Logger logger = LoggerFactory.getLogger(PageObjectsGenerator.class);
@@ -52,7 +57,9 @@ public class PageObjectsGenerator {
                                 JavaClassBuilder javaClassBuilder,
                                 WebElementGroupFieldBuilder webElementGroupFieldBuilder,
                                 JavaFileWriter javaFileWriter,
-                                WebPagesBuilder webPagesBuilder) {
+                                WebPagesBuilder webPagesBuilder,
+                                SelectorUtils selectorUtils,
+                                SearchRuleExtractor searchRuleExtractor) {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
         this.jsonSchemaValidator = jsonSchemaValidator;
         this.typeTransformer = typeTransformer;
@@ -63,6 +70,8 @@ public class PageObjectsGenerator {
         this.webElementGroupFieldBuilder = webElementGroupFieldBuilder;
         this.javaFileWriter = javaFileWriter;
         this.webPagesBuilder = webPagesBuilder;
+        this.selectorUtils = selectorUtils;
+        this.searchRuleExtractor = searchRuleExtractor;
     }
 
     public void generatePageObjects(String jsonPath, String outputDir, List<String> urls)
@@ -78,9 +87,10 @@ public class PageObjectsGenerator {
 
         checker.checkRawSearchRules(rawSearchRuleList);
 
-        logger.info("Start transforming RawSearchRules...");
-        List<SearchRule> searchRuleList = typeTransformer.transform(rawSearchRuleList);
-        logger.info("Finish transforming RawSearchRules\n");
+        logger.info("Start transforming of RawSearchRules...\n");
+        List<SearchRule> searchRuleList = typeTransformer
+            .transform(rawSearchRuleList, selectorUtils, searchRuleExtractor);
+        logger.info("Finish transforming of RawSearchRules\n");
 
         logger.info("Start Json validation...\n");
         jsonValidators.validate(searchRuleList);
@@ -88,18 +98,17 @@ public class PageObjectsGenerator {
 
         checker.checkSearchRules(searchRuleList);
 
-        List<WebPage> webPages = webPagesBuilder.generate(urls);
+        List<WebPage> webPages = webPagesBuilder.generate(urls, searchRuleExtractor);
         webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
         webValidators.validate(webPages);
 
         List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
-
         rawJavaClasses.add(new SiteClassBuildable(webPages));
 
         for (WebPage webPage : webPages) {
             rawJavaClasses.add(new PageClassBuildable(webPage, webElementGroupFieldBuilder));
             if (webPage.isContainedFormSearchRule()) {
-                rawJavaClasses.addAll(webPage.getFormClasses());
+                rawJavaClasses.addAll(webPage.getFormClasses(selectorUtils));
             }
         }
 

@@ -12,7 +12,7 @@ public class SelectorUtils {
      * @param uniquenessAttribute name of the 'uniqueness' attribute
      * @return css selector
      */
-    public static String resultCssSelector(Selector selector, String requiredValue,
+    public String resultCssSelector(Selector selector, String requiredValue,
                                            String uniquenessAttribute) {
         if (requiredValue == null) {
             return selector.getValue();
@@ -30,7 +30,7 @@ public class SelectorUtils {
      * @param uniquenessAttribute name of the 'uniqueness' attribute
      * @return xpath selector
      */
-    public static String resultXpathSelector(Selector selector, String requiredValue,
+    public String resultXpathSelector(Selector selector, String requiredValue,
                                              String uniquenessAttribute) {
         String xpathWithoutCloseBracket = selector.getValue().replace("]", "");
 

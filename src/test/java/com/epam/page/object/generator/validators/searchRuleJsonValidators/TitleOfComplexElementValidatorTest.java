@@ -8,6 +8,8 @@ import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.searchRules.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.SelectorUtils;
+import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.epam.page.object.generator.validators.ValidationResult;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -16,29 +18,31 @@ import org.junit.Test;
 public class TitleOfComplexElementValidatorTest {
 
     private TitleOfComplexElementValidator sut;
+    private XpathToCssTransformer xpathToCssTransformer = new XpathToCssTransformer();
+    private SelectorUtils selectorUtils = new SelectorUtils();
 
     private ComplexInnerSearchRule expandRule = new ComplexInnerSearchRule(null,
-        "expand", null);
+        "expand", null, xpathToCssTransformer);
     private ComplexInnerSearchRule listRule = new ComplexInnerSearchRule(null,
-        "list", null);
+        "list", null, xpathToCssTransformer);
     private ComplexInnerSearchRule wrongTitleRule = new ComplexInnerSearchRule(null,
-        "wrongTitle", null);
+        "wrongTitle", null, xpathToCssTransformer);
 
     private ComplexSearchRule validSearchRule = new ComplexSearchRule(SearchRuleType.DROPDOWN,
         Lists.newArrayList(expandRule, listRule),
-        new ClassAndAnnotationPair(Dropdown.class, JDropdown.class));
+        new ClassAndAnnotationPair(Dropdown.class, JDropdown.class), selectorUtils);
 
     private ComplexSearchRule validSearchRuleWithEmptyInnerRules =
         new ComplexSearchRule(SearchRuleType.DROPDOWN, Lists.newArrayList(),
-        new ClassAndAnnotationPair(Dropdown.class, JDropdown.class));
+        new ClassAndAnnotationPair(Dropdown.class, JDropdown.class), selectorUtils);
     
     private ComplexSearchRule SearchRuleWithWrongTitleInnerSearchRule = new ComplexSearchRule(
         SearchRuleType.DROPDOWN, Lists.newArrayList(wrongTitleRule),
-        new ClassAndAnnotationPair(Dropdown.class, JDropdown.class));
+        new ClassAndAnnotationPair(Dropdown.class, JDropdown.class), selectorUtils);
 
     private ComplexSearchRule SearchRuleWithBothWrongAndValidTitleInnerSearchRules =
         new ComplexSearchRule(SearchRuleType.DROPDOWN, Lists.newArrayList(listRule, wrongTitleRule),
-            new ClassAndAnnotationPair(Dropdown.class, JDropdown.class));
+            new ClassAndAnnotationPair(Dropdown.class, JDropdown.class), selectorUtils);
 
     @Before
     public void setUp() {

@@ -25,12 +25,15 @@ public class TypeTransformer {
         this.transformer = transformer;
     }
 
-    public List<SearchRule> transform(List<RawSearchRule> rawSearchRuleList) {
+    public List<SearchRule> transform(List<RawSearchRule> rawSearchRuleList,
+                                      SelectorUtils selectorUtils,
+                                      SearchRuleExtractor searchRuleExtractor) {
         return rawSearchRuleList.stream()
             .filter(RawSearchRule::isValid)
             .map(rawSearchRule -> {
                 SearchRule searchRule = searchRuleBuilders
-                    .buildSearchRule(rawSearchRule, typesContainer, transformer);
+                    .buildSearchRule(rawSearchRule, typesContainer, transformer, selectorUtils,
+                        searchRuleExtractor);
                 logger.info("Success transformation " + rawSearchRule + "!");
                 return searchRule;
             })

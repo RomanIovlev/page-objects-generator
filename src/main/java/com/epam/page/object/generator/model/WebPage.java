@@ -2,15 +2,12 @@ package com.epam.page.object.generator.model;
 
 import com.epam.page.object.generator.adapter.javaClassBuildable.FormClassBuildable;
 import com.epam.page.object.generator.adapter.javaClassBuildable.JavaClassBuildable;
-import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.model.searchRules.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchRules.FormSearchRule;
 import com.epam.page.object.generator.model.searchRules.Validatable;
-import com.epam.page.object.generator.model.webElementGroups.CommonWebElementGroup;
-import com.epam.page.object.generator.model.webElementGroups.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.FormWebElementGroup;
 import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +20,11 @@ public class WebPage {
     private final URI uri;
     private Document document;
     private List<WebElementGroup> webElementGroups;
+    private SearchRuleExtractor searchRuleExtractor;
 
-    public WebPage(URI uri, Document document) {
+    public WebPage(URI uri, Document document,
+                   SearchRuleExtractor searchRuleExtractor) {
+        this.searchRuleExtractor = searchRuleExtractor;
         this.webElementGroups = new ArrayList<>();
         this.uri = uri;
         this.document = document;
@@ -48,7 +48,7 @@ public class WebPage {
 
     public void addSearchRules(List<SearchRule> searchRules) {
         for (SearchRule searchRule : searchRules) {
-            Elements elements = SearchRuleExtractor
+            Elements elements = searchRuleExtractor
                 .extractElementsFromElement(document, searchRule);
             if (elements.size() != 0) {
                 searchRule.fillWebElementGroup(webElementGroups, elements);
@@ -65,12 +65,13 @@ public class WebPage {
         return webElementGroups.stream().anyMatch(Validatable::isInvalid);
     }
 
-    public List<JavaClassBuildable> getFormClasses() {
+    public List<JavaClassBuildable> getFormClasses(SelectorUtils selectorUtils) {
         List<JavaClassBuildable> javaClasses = new ArrayList<>();
 
         for (WebElementGroup webElementGroup : webElementGroups) {
             if (webElementGroup instanceof FormWebElementGroup) {
-                javaClasses.add(new FormClassBuildable((FormWebElementGroup) webElementGroup));
+                javaClasses.add(new FormClassBuildable((FormWebElementGroup) webElementGroup,
+                    selectorUtils));
             }
         }
 

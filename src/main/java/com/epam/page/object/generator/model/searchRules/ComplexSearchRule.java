@@ -7,6 +7,7 @@ import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.model.webElements.ComplexWebElement;
 import com.epam.page.object.generator.model.webElements.WebElement;
 import com.epam.page.object.generator.utils.SearchRuleType;
+import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.validators.ValidationResult;
 import com.epam.page.object.generator.validators.ValidatorVisitor;
 import java.util.ArrayList;
@@ -21,16 +22,19 @@ public class ComplexSearchRule implements SearchRule {
     private SearchRuleType type;
     private List<ComplexInnerSearchRule> complexInnerSearchRules;
     private ClassAndAnnotationPair classAndAnnotation;
+    private SelectorUtils selectorUtils;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
     private final static Logger logger = LoggerFactory.getLogger(ComplexSearchRule.class);
 
     public ComplexSearchRule(SearchRuleType type,
                              List<ComplexInnerSearchRule> complexInnerSearchRules,
-                             ClassAndAnnotationPair classAndAnnotation) {
+                             ClassAndAnnotationPair classAndAnnotation,
+                             SelectorUtils selectorUtils) {
         this.type = type;
         this.complexInnerSearchRules = complexInnerSearchRules;
         this.classAndAnnotation = classAndAnnotation;
+        this.selectorUtils = selectorUtils;
     }
 
     public SearchRuleType getType() {
@@ -113,6 +117,7 @@ public class ComplexSearchRule implements SearchRule {
 
     @Override
     public void fillWebElementGroup(List<WebElementGroup> webElementGroups, Elements elements) {
-        webElementGroups.add(new ComplexWebElementGroup(this, getWebElements(elements)));
+        webElementGroups.add(new ComplexWebElementGroup(this, getWebElements(elements),
+            selectorUtils));
     }
 }

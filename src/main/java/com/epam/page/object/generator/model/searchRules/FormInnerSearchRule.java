@@ -25,18 +25,21 @@ public class FormInnerSearchRule implements SearchRule {
     private Selector selector;
     private ClassAndAnnotationPair classAndAnnotation;
     private XpathToCssTransformer transformer;
+    private SearchRuleExtractor searchRuleExtractor;
 
     private List<ValidationResult> validationResults = new ArrayList<>();
     private final static Logger logger = LoggerFactory.getLogger(FormInnerSearchRule.class);
 
     public FormInnerSearchRule(String uniqueness, SearchRuleType type, Selector selector,
                                ClassAndAnnotationPair classAndAnnotation,
-                               XpathToCssTransformer transformer) {
+                               XpathToCssTransformer transformer,
+                               SearchRuleExtractor searchRuleExtractor) {
         this.uniqueness = uniqueness;
         this.type = type;
         this.selector = selector;
         this.classAndAnnotation = classAndAnnotation;
         this.transformer = transformer;
+        this.searchRuleExtractor = searchRuleExtractor;
     }
 
     public String getUniqueness() {
@@ -73,7 +76,7 @@ public class FormInnerSearchRule implements SearchRule {
     public List<WebElement> getWebElements(Elements elements) {
         List<WebElement> webElements = new ArrayList<>();
         for (Element element : elements) {
-            Elements extractElements = SearchRuleExtractor
+            Elements extractElements = searchRuleExtractor
                 .extractElementsFromElement(element, this);
             for (Element extractElement : extractElements) {
                 webElements.add(
@@ -96,7 +99,7 @@ public class FormInnerSearchRule implements SearchRule {
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
         ValidationResult visit = validatorVisitor.visit(this);
-        logger.info(this + " is '" + visit.isValid() + "', reason '" +  visit.getReason() + "'");
+        logger.info(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
         validationResults.add(visit);
     }
 
