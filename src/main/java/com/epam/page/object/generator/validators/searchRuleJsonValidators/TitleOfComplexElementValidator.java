@@ -12,11 +12,8 @@ public class TitleOfComplexElementValidator extends AbstractValidator {
 
     @Override
     public ValidationResult visit(ComplexSearchRule complexSearchRule) {
-        SupportedTypesContainer supportedTypesContainer = new SupportedTypesContainer();
 
-        Class elementAnnotation = supportedTypesContainer.getSupportedTypesMap()
-            .get(complexSearchRule.getTypeName())
-            .getElementAnnotation();
+        Class elementAnnotation = complexSearchRule.getClassAndAnnotation().getElementAnnotation();
 
         StringBuilder stringBuilder = new StringBuilder();
 
