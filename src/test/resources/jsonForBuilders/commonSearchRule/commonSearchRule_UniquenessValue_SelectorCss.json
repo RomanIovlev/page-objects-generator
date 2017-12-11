@@ -1,0 +1,12 @@
+{
+  "elements": [
+    {
+      "type": "button",
+      "uniqueness": "value",
+      "selector": {
+        "type": "css",
+        "value": "input[type=submit]"
+      }
+    }
+  ]
+}

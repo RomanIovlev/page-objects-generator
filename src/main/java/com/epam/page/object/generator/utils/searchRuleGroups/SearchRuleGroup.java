@@ -17,10 +17,6 @@ public class SearchRuleGroup {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<SearchRuleType> getSearchRuleTypes() {
         return searchRuleTypes;
     }

@@ -48,6 +48,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     public void visit_SuccessWithCommonWebElementGroup_OneUniquenessValue() {
         when(commonWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
+
         ValidationResult result = validator.visit(commonWebElementGroup);
         assertTrue(result.isValid());
     }
@@ -67,6 +68,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     public void visit_SuccessWithComplexWebElementGroup_OneUniquenessValue() {
         when(complexWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
+
         ValidationResult result = validator.visit(complexWebElementGroup);
         assertTrue(result.isValid());
     }
@@ -86,16 +88,17 @@ public class UniquenessAttributeExistenceValidatorTest {
     public void visit_SuccessWithFormWebElementGroup_OneUniquenessValue() {
         when(complexWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
+
         ValidationResult result = validator.visit(complexWebElementGroup);
         assertTrue(result.isValid());
     }
 
     @Test
     public void visit_FailedWithFormWebElementGroup_WrongValue() {
-       when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(formWebElement));
-       when(formWebElement.getUniquenessValue()).thenReturn("");
-       when(formWebElement.getSearchRule()).thenReturn(formInnerSearchRule);
-       when(formWebElement.getUniquenessValue()).thenReturn("");
+        when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(formWebElement));
+        when(formWebElement.getUniquenessValue()).thenReturn("");
+        when(formWebElement.getSearchRule()).thenReturn(formInnerSearchRule);
+        when(formWebElement.getUniquenessValue()).thenReturn("");
 
         ValidationResult result = validator.visit(formWebElementGroup);
         assertFalse(result.isValid());

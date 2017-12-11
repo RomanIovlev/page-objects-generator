@@ -45,7 +45,7 @@ public class PropertyLoader {
                     PropertyLoader.class.getResourceAsStream(schemaPath)));
             Schema schema = SchemaLoader.load(jsonSchema);
             schemeMap.put(groupName, schema);
-            logger.info("Add scheme = '" + schemaPath + "' for '" + groupName + "' group");
+            logger.info("Add schema = '" + schemaPath + "' for '" + groupName + "' group");
         }
         logger.info("Finish reading list of schemes\n");
 

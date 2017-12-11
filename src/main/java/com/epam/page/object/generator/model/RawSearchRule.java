@@ -3,6 +3,7 @@ package com.epam.page.object.generator.model;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
 import com.epam.page.object.generator.validators.ValidationResult;
+import java.util.ArrayList;
 import java.util.List;
 import org.everit.json.schema.Schema;
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ public class RawSearchRule {
     private SearchRuleGroup group;
     private Schema schema;
 
-    private List<ValidationResult> validationResults;
+    private List<ValidationResult> validationResults = new ArrayList<>();
 
     public RawSearchRule(JSONObject element, SearchRuleType type, SearchRuleGroup group,
                          Schema schema) {
@@ -53,13 +54,11 @@ public class RawSearchRule {
     }
 
     public boolean isInvalid() {
-        return validationResults != null && validationResults.stream()
-            .anyMatch(validationResult -> !validationResult.isValid());
+        return validationResults.stream().anyMatch(ValidationResult::isInvalid);
     }
 
     public boolean isValid() {
-        return validationResults != null && validationResults.stream()
-            .allMatch(ValidationResult::isValid);
+        return validationResults.stream().allMatch(ValidationResult::isValid);
     }
 
     public String getExceptionMessage() {
@@ -71,7 +70,10 @@ public class RawSearchRule {
     }
 
     public String getGroupName() {
-        return group.getName();
+        if (isValid()) {
+            return group.getName();
+        }
+        return null;
     }
 
     public SearchRuleType getType() {

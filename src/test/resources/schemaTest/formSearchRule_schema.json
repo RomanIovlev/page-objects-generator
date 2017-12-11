@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "FormSearchRule",
+  "description": "validate formSearchRule",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "Type of the SearchRule",
+      "type": "string",
+      "enum": [
+        "form",
+        "section"
+      ]
+    },
+    "section": {
+      "description": "Section of the formSearchRule",
+      "type": "string",
+      "minLength": 1
+    },
+    "innerSearchRules": {
+      "description": "List of inner SearchRules",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "uniqueness": {
+            "description": "Uniqueness element",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of inner formSearchRule",
+            "type": "string"
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "description": "Type of the selector",
+                "type": "string",
+                "enum": [
+                  "xpath",
+                  "css"
+                ]
+              },
+              "value": {
+                "description": "Value of the selector",
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "uniqueness",
+          "type",
+          "selector"
+        ]
+      }
+    },
+    "selector": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Type of the selector",
+          "type": "string",
+          "enum": [
+            "xpath",
+            "css"
+          ]
+        },
+        "value": {
+          "description": "Value of the selector",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "section",
+    "innerSearchRules",
+    "selector"
+  ]
+}
