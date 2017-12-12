@@ -15,7 +15,7 @@ import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
+import com.epam.page.object.generator.utils.SearchRuleGroups;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
 import com.epam.page.object.generator.validators.ValidationExceptionConverter;

@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "type": "dropdown",
+      "innerSearchRules": [
+        {
+          "title": "root",
+          "uniqueness": "text",
+          "selector":{
+            "type": "xpath",
+            "value": "//button[@class='dropbtn']"
+          }
+        }
+      ]
+    }
+  ]
+}

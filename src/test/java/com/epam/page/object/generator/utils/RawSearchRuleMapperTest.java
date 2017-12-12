@@ -4,10 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
-import com.epam.page.object.generator.model.RawSearchRule;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.epam.page.object.generator.models.RawSearchRule;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.everit.json.schema.Schema;

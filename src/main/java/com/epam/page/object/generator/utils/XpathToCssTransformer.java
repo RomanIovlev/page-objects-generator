@@ -1,7 +1,7 @@
 package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.errors.XpathToCssTransformerException;
-import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.models.Selector;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import javax.script.Invocable;
@@ -10,6 +10,9 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class XpathToCssTransformer {
+
+    public XpathToCssTransformer() {
+    }
 
     public Selector getCssSelector(Selector selector) throws XpathToCssTransformerException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");

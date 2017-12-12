@@ -3,7 +3,7 @@ package com.epam.page.object.generator.containers;
 import static org.junit.Assert.*;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
+import com.epam.page.object.generator.models.ClassAndAnnotationPair;
 import java.util.Map;
 import org.junit.Test;
 import org.openqa.selenium.support.FindBy;

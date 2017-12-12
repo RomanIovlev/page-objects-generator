@@ -2,7 +2,7 @@ package com.epam.page.object.generator.utils;
 
 import static org.junit.Assert.*;
 
-import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.models.Selector;
 import org.junit.Test;
 
 public class SelectorUtilsTest {

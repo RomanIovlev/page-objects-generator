@@ -1,7 +1,7 @@
 package com.epam.page.object.generator.builders;
 
 import com.epam.page.object.generator.errors.NotValidUrlException;
-import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.models.WebPage;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import java.io.IOException;
 import java.net.URI;

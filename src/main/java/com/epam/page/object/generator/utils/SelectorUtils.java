@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.models.Selector;
 
 public class SelectorUtils {
 

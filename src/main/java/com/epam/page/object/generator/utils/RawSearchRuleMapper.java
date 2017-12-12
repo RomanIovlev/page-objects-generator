@@ -1,8 +1,6 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.model.RawSearchRule;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
+import com.epam.page.object.generator.models.RawSearchRule;
 import com.epam.page.object.generator.validators.ValidationResult;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -29,11 +29,10 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.object
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JMenu;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JTable;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
+import com.epam.page.object.generator.models.ClassAndAnnotationPair;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import org.openqa.selenium.support.FindBy;
 
 public class SupportedTypesContainer {
@@ -111,9 +110,4 @@ public class SupportedTypesContainer {
     public void addSupportedType(String name, ClassAndAnnotationPair pair) {
         supportedTypesMap.put(name.toLowerCase(), pair);
     }
-
-    public Set<String> getSupportedTypes() {
-        return supportedTypesMap.keySet();
-    }
-
 }

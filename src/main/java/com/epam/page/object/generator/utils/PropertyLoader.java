@@ -1,7 +1,5 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

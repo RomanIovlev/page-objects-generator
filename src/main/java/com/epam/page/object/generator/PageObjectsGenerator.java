@@ -1,18 +1,18 @@
 package com.epam.page.object.generator;
 
-import com.epam.page.object.generator.adapter.javaClasses.IJavaClass;
-import com.epam.page.object.generator.adapter.javaClassBuildable.JavaClassBuildable;
+import com.epam.page.object.generator.adapter.classes.IJavaClass;
+import com.epam.page.object.generator.adapter.classbuildable.JavaClassBuildable;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.epam.page.object.generator.adapter.javaClassBuildable.PageClassBuildable;
-import com.epam.page.object.generator.adapter.javaClassBuildable.SiteClassBuildable;
+import com.epam.page.object.generator.adapter.classbuildable.PageClassBuildable;
+import com.epam.page.object.generator.adapter.classbuildable.SiteClassBuildable;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.errors.ValidationException;
-import com.epam.page.object.generator.model.RawSearchRule;
-import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.models.RawSearchRule;
+import com.epam.page.object.generator.models.WebPage;
 import com.epam.page.object.generator.builders.WebPagesBuilder;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
-import com.epam.page.object.generator.model.webElementGroups.WebElementGroup;
+import com.epam.page.object.generator.models.searchRules.SearchRule;
+import com.epam.page.object.generator.models.webElementGroups.WebElementGroup;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SelectorUtils;
@@ -102,21 +102,9 @@ public class PageObjectsGenerator {
         webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
         webValidators.validate(webPages);
 
-        List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
-        rawJavaClasses.add(new SiteClassBuildable(webPages));
+        List<JavaClassBuildable> rawJavaClasses = getJavaClassBuildables(webPages);
 
-        for (WebPage webPage : webPages) {
-            rawJavaClasses.add(new PageClassBuildable(webPage, webElementGroupFieldBuilder));
-            if (webPage.isContainedFormSearchRule()) {
-                rawJavaClasses.addAll(webPage.getFormClasses(selectorUtils));
-            }
-        }
-
-        List<IJavaClass> javaClasses = new ArrayList<>();
-
-        for (JavaClassBuildable javaClass : rawJavaClasses) {
-            javaClasses.add(javaClass.accept(javaClassBuilder));
-        }
+        List<IJavaClass> javaClasses = getJavaClasses(rawJavaClasses);
 
         if (webPages.stream().anyMatch(WebPage::hasInvalidWebElementGroup)) {
             if (forceGenerateFile) {
@@ -138,6 +126,28 @@ public class PageObjectsGenerator {
         }
 
         javaFileWriter.writeFiles(outputDir, javaClasses);
+    }
+
+    private List<IJavaClass> getJavaClasses(List<JavaClassBuildable> rawJavaClasses) {
+        List<IJavaClass> javaClasses = new ArrayList<>();
+
+        for (JavaClassBuildable javaClass : rawJavaClasses) {
+            javaClasses.add(javaClass.accept(javaClassBuilder));
+        }
+        return javaClasses;
+    }
+
+    private List<JavaClassBuildable> getJavaClassBuildables(List<WebPage> webPages) {
+        List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
+        rawJavaClasses.add(new SiteClassBuildable(webPages));
+
+        for (WebPage webPage : webPages) {
+            rawJavaClasses.add(new PageClassBuildable(webPage, webElementGroupFieldBuilder));
+            if (webPage.isContainedFormSearchRule()) {
+                rawJavaClasses.addAll(webPage.getFormClasses(selectorUtils));
+            }
+        }
+        return rawJavaClasses;
     }
 
     public void setForceGenerateFile(boolean forceGenerateFile) {

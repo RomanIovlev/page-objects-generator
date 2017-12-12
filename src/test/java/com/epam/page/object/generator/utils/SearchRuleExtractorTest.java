@@ -7,10 +7,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.jdi.uitests.web.selenium.elements.common.Button;
-import com.epam.page.object.generator.model.ClassAndAnnotationPair;
-import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.model.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.model.searchRules.SearchRule;
+import com.epam.page.object.generator.models.ClassAndAnnotationPair;
+import com.epam.page.object.generator.models.Selector;
+import com.epam.page.object.generator.models.searchRules.CommonSearchRule;
+import com.epam.page.object.generator.models.searchRules.SearchRule;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,7 +20,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.openqa.selenium.support.FindBy;
-import us.codecraft.xsoup.Xsoup;
 
 public class SearchRuleExtractorTest {
 

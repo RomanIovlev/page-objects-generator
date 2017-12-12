@@ -2,7 +2,7 @@ package com.epam.page.object.generator.builders.searchRuleBuilders;
 
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleGroupsScheme;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
+import com.epam.page.object.generator.utils.SearchRuleGroups;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;

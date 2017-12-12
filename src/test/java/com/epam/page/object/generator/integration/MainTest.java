@@ -44,7 +44,6 @@ public class MainTest {
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
 
-
     @Test
     public void pageObjectsGenerator_SuccessGenerateComplexSearchRuleWithInnerElements()
         throws Exception {

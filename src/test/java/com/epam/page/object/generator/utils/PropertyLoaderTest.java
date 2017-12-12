@@ -2,8 +2,6 @@ package com.epam.page.object.generator.utils;
 
 import static org.junit.Assert.*;
 
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroup;
-import com.epam.page.object.generator.utils.searchRuleGroups.SearchRuleGroups;
 import org.assertj.core.util.Lists;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
