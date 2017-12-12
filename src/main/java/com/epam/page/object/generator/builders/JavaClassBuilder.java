@@ -27,39 +27,39 @@ public class JavaClassBuilder {
     }
 
     public IJavaClass visit(SiteClassBuildable siteClassBuildable) {
-        String packageName = this.packageName + ".site";
+        String classPackageName = packageName + ".site";
         String className = "Site";
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebSite.class;
         IJavaAnnotation annotation = siteClassBuildable.buildAnnotation();
         List<IJavaField> fields = siteClassBuildable.buildFields(this.packageName);
         Modifier modifier = Modifier.PUBLIC;
 
-        return new JavaClass(packageName, className, superClass, annotation, fields, modifier);
+        return new JavaClass(classPackageName, className, superClass, annotation, fields, modifier);
     }
 
     public IJavaClass visit(PageClassBuildable pageClassBuildable) {
-        String packageName = this.packageName + ".page";
+        String classPackageName = packageName + ".page";
         String className = firstLetterUp(splitCamelCase(pageClassBuildable.getTitle()));
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebPage.class;
         IJavaAnnotation annotation = pageClassBuildable.buildAnnotation();
         List<IJavaField> fields = pageClassBuildable.buildFields(this.packageName);
         Modifier modifier = Modifier.PUBLIC;
 
-        return new JavaClass(packageName, className, superClass, annotation, fields, modifier);
+        return new JavaClass(classPackageName, className, superClass, annotation, fields, modifier);
     }
 
     public IJavaClass visit(FormClassBuildable formClassBuildable) {
         FormWebElementGroup formWebElementGroup = formClassBuildable.getFormWebElementGroup();
 
         FormSearchRule formSearchRule = formWebElementGroup.getSearchRule();
-        String packageName = this.packageName + ".form";
+        String classPackageName = packageName + ".form";
         String className = firstLetterUp(formSearchRule.getSection());
         Class superClass = formSearchRule.getTypeName().equals(
             SearchRuleType.FORM.getName()) ? Form.class : Section.class;
         IJavaAnnotation annotation = formClassBuildable.buildAnnotation();
-        List<IJavaField> fields = formClassBuildable.buildFields(packageName);
+        List<IJavaField> fields = formClassBuildable.buildFields(classPackageName);
         Modifier modifier = Modifier.PUBLIC;
 
-        return new JavaClass(packageName, className, superClass, annotation, fields, modifier);
+        return new JavaClass(classPackageName, className, superClass, annotation, fields, modifier);
     }
 }

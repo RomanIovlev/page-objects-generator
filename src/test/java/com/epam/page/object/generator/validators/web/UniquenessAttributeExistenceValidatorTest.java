@@ -86,10 +86,10 @@ public class UniquenessAttributeExistenceValidatorTest {
 
     @Test
     public void visit_SuccessWithFormWebElementGroup_OneUniquenessValue() {
-        when(complexWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
+        when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
 
-        ValidationResult result = validator.visit(complexWebElementGroup);
+        ValidationResult result = validator.visit(formWebElementGroup);
         assertTrue(result.isValid());
     }
 

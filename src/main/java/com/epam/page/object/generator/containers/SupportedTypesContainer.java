@@ -83,7 +83,6 @@ public class SupportedTypesContainer {
                 new ClassAndAnnotationPair(CheckList.class, FindBy.class));
         supportedTypesMap.put(SearchRuleType.ELEMENTS.getName(),
             new ClassAndAnnotationPair(Elements.class, FindBy.class));
-
         supportedTypesMap.put(SearchRuleType.TABLE.getName(),
             new ClassAndAnnotationPair(Table.class, JTable.class));
         supportedTypesMap

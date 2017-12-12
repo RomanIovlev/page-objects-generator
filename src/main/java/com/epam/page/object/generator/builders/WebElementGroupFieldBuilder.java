@@ -63,7 +63,7 @@ public class WebElementGroupFieldBuilder {
         FormSearchRule searchRule = formWebElementGroup.getSearchRule();
 
         String className = packageName + ".form." + firstLetterUp(searchRule.getSection());
-        String fieldName = firstLetterDown(splitCamelCase(searchRule.getSection()));
+        String fieldName = firstLetterDown(searchRule.getSection());
         Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
         IJavaAnnotation annotation = formWebElementGroup.getAnnotation(annotationClass);
         Modifier[] modifiers = new Modifier[]{PUBLIC};
