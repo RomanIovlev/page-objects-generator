@@ -2,8 +2,8 @@ package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.errors.ValidationException;
 import com.epam.page.object.generator.models.RawSearchRule;
-import com.epam.page.object.generator.models.searchRules.SearchRule;
-import com.epam.page.object.generator.models.searchRules.Validatable;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
+import com.epam.page.object.generator.models.searchrule.Validatable;
 import com.epam.page.object.generator.validators.ValidationResult;
 import java.util.List;
 import org.slf4j.Logger;

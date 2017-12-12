@@ -1,10 +1,10 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.models.searchRules.SearchRule;
-import com.epam.page.object.generator.models.searchRules.Validatable;
-import com.epam.page.object.generator.validators.jsonValidators.DuplicateTitleInnerSearchRuleValidator;
-import com.epam.page.object.generator.validators.jsonValidators.RootExistenceValidator;
-import com.epam.page.object.generator.validators.jsonValidators.TitleOfComplexElementValidator;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
+import com.epam.page.object.generator.models.searchrule.Validatable;
+import com.epam.page.object.generator.validators.json.DuplicateTitleInnerSearchRuleValidator;
+import com.epam.page.object.generator.validators.json.RootExistenceValidator;
+import com.epam.page.object.generator.validators.json.TitleOfComplexElementValidator;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.assertj.core.util.Lists;

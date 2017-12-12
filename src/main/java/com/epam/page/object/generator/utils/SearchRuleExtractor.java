@@ -1,7 +1,7 @@
 package com.epam.page.object.generator.utils;
 
 import com.epam.page.object.generator.models.Selector;
-import com.epam.page.object.generator.models.searchRules.SearchRule;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import us.codecraft.xsoup.Xsoup;

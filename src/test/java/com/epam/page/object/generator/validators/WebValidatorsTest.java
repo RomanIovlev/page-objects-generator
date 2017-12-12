@@ -3,9 +3,9 @@ package com.epam.page.object.generator.validators;
 import static org.junit.Assert.*;
 
 import com.epam.page.object.generator.models.WebPage;
-import com.epam.page.object.generator.models.searchRules.Validatable;
+import com.epam.page.object.generator.models.searchrule.Validatable;
 import com.epam.page.object.generator.testDataBuilders.WebPageTestDataBuilder;
-import com.epam.page.object.generator.validators.webValidators.ElementUniquenessValidator;
+import com.epam.page.object.generator.validators.web.ElementUniquenessValidator;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.junit.Test;

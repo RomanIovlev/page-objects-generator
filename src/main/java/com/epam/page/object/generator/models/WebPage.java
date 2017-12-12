@@ -2,17 +2,17 @@ package com.epam.page.object.generator.models;
 
 import com.epam.page.object.generator.adapter.classbuildable.FormClassBuildable;
 import com.epam.page.object.generator.adapter.classbuildable.JavaClassBuildable;
-import com.epam.page.object.generator.models.searchRules.FormSearchRule;
-import com.epam.page.object.generator.models.searchRules.Validatable;
-import com.epam.page.object.generator.models.webElementGroups.FormWebElementGroup;
-import com.epam.page.object.generator.models.webElementGroups.WebElementGroup;
+import com.epam.page.object.generator.models.searchrule.FormSearchRule;
+import com.epam.page.object.generator.models.searchrule.Validatable;
+import com.epam.page.object.generator.models.webgroup.FormWebElementGroup;
+import com.epam.page.object.generator.models.webgroup.WebElementGroup;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SelectorUtils;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.nodes.Document;
-import com.epam.page.object.generator.models.searchRules.SearchRule;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
 import org.jsoup.select.Elements;
 
 public class WebPage {

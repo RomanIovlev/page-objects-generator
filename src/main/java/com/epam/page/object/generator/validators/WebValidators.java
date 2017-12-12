@@ -1,9 +1,9 @@
 package com.epam.page.object.generator.validators;
 
 import com.epam.page.object.generator.models.WebPage;
-import com.epam.page.object.generator.models.webElementGroups.WebElementGroup;
-import com.epam.page.object.generator.validators.webValidators.ElementUniquenessValidator;
-import com.epam.page.object.generator.validators.webValidators.UniquenessAttributeExistenceValidator;
+import com.epam.page.object.generator.models.webgroup.WebElementGroup;
+import com.epam.page.object.generator.validators.web.ElementUniquenessValidator;
+import com.epam.page.object.generator.validators.web.UniquenessAttributeExistenceValidator;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.assertj.core.util.Lists;

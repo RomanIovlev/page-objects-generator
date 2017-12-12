@@ -7,10 +7,10 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.object
 import com.epam.page.object.generator.models.ClassAndAnnotationPair;
 import com.epam.page.object.generator.models.Selector;
 import com.epam.page.object.generator.models.WebPage;
-import com.epam.page.object.generator.models.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.models.searchRules.ComplexInnerSearchRule;
-import com.epam.page.object.generator.models.searchRules.ComplexSearchRule;
-import com.epam.page.object.generator.models.searchRules.SearchRule;
+import com.epam.page.object.generator.models.searchrule.CommonSearchRule;
+import com.epam.page.object.generator.models.searchrule.ComplexInnerSearchRule;
+import com.epam.page.object.generator.models.searchrule.ComplexSearchRule;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
 import com.epam.page.object.generator.utils.SearchRuleType;
 import com.epam.page.object.generator.utils.SelectorUtils;

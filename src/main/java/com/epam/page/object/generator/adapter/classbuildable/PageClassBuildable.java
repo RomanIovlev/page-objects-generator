@@ -6,7 +6,7 @@ import com.epam.page.object.generator.adapter.classes.IJavaClass;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.models.WebPage;
-import com.epam.page.object.generator.models.webElementGroups.WebElementGroup;
+import com.epam.page.object.generator.models.webgroup.WebElementGroup;
 import java.util.ArrayList;
 import java.util.List;
 

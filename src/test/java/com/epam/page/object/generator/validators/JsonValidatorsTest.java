@@ -2,12 +2,12 @@ package com.epam.page.object.generator.validators;
 
 import static org.junit.Assert.*;
 
-import com.epam.page.object.generator.models.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.models.searchRules.ComplexSearchRule;
-import com.epam.page.object.generator.models.searchRules.SearchRule;
+import com.epam.page.object.generator.models.searchrule.CommonSearchRule;
+import com.epam.page.object.generator.models.searchrule.ComplexSearchRule;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
 import com.epam.page.object.generator.testDataBuilders.searchRuleDataTestBuilders.CommonSearchRuleTestDataBuilder;
 import com.epam.page.object.generator.testDataBuilders.searchRuleDataTestBuilders.ComplexSearchRuleDataTestBuilder;
-import com.epam.page.object.generator.validators.jsonValidators.DuplicateTitleInnerSearchRuleValidator;
+import com.epam.page.object.generator.validators.json.DuplicateTitleInnerSearchRuleValidator;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.junit.Test;

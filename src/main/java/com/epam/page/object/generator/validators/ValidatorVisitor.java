@@ -1,13 +1,13 @@
 package com.epam.page.object.generator.validators;
 
-import com.epam.page.object.generator.models.webElementGroups.CommonWebElementGroup;
-import com.epam.page.object.generator.models.searchRules.CommonSearchRule;
-import com.epam.page.object.generator.models.searchRules.ComplexInnerSearchRule;
-import com.epam.page.object.generator.models.searchRules.ComplexSearchRule;
-import com.epam.page.object.generator.models.searchRules.FormInnerSearchRule;
-import com.epam.page.object.generator.models.searchRules.FormSearchRule;
-import com.epam.page.object.generator.models.webElementGroups.ComplexWebElementGroup;
-import com.epam.page.object.generator.models.webElementGroups.FormWebElementGroup;
+import com.epam.page.object.generator.models.webgroup.CommonWebElementGroup;
+import com.epam.page.object.generator.models.searchrule.CommonSearchRule;
+import com.epam.page.object.generator.models.searchrule.ComplexInnerSearchRule;
+import com.epam.page.object.generator.models.searchrule.ComplexSearchRule;
+import com.epam.page.object.generator.models.searchrule.FormInnerSearchRule;
+import com.epam.page.object.generator.models.searchrule.FormSearchRule;
+import com.epam.page.object.generator.models.webgroup.ComplexWebElementGroup;
+import com.epam.page.object.generator.models.webgroup.FormWebElementGroup;
 
 public interface ValidatorVisitor {
 

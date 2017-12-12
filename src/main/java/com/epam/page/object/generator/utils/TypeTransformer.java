@@ -1,9 +1,9 @@
 package com.epam.page.object.generator.utils;
 
-import com.epam.page.object.generator.builders.searchRuleBuilders.SearchRuleBuilders;
+import com.epam.page.object.generator.builders.searchrule.SearchRuleBuilders;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.models.RawSearchRule;
-import com.epam.page.object.generator.models.searchRules.SearchRule;
+import com.epam.page.object.generator.models.searchrule.SearchRule;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
