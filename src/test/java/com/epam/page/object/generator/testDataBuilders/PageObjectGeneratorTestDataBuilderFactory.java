@@ -1,5 +1,6 @@
-package com.epam.page.object.generator;
+package com.epam.page.object.generator.testDataBuilders;
 
+import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.builders.JavaClassBuilder;
 import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
@@ -10,20 +11,20 @@ import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.utils.PropertyLoader;
 import com.epam.page.object.generator.utils.RawSearchRuleMapper;
 import com.epam.page.object.generator.utils.SearchRuleExtractor;
+import com.epam.page.object.generator.utils.SearchRuleGroups;
 import com.epam.page.object.generator.utils.SearchRuleGroupsScheme;
 import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.TypeTransformer;
 import com.epam.page.object.generator.utils.ValidationChecker;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
-import com.epam.page.object.generator.utils.SearchRuleGroups;
 import com.epam.page.object.generator.validators.JsonSchemaValidator;
 import com.epam.page.object.generator.validators.JsonValidators;
 import com.epam.page.object.generator.validators.ValidationExceptionConverter;
 import com.epam.page.object.generator.validators.WebValidators;
 
-public class PageObjectGeneratorFactory {
+public class PageObjectGeneratorTestDataBuilderFactory {
 
-    public static PageObjectsGenerator getPageObjectGenerator(String packageName,
+    public static PageObjectGeneratorTestDataBuilder getPageObjectGenerator(String packageName,
                                                               String propertyFile) {
         PropertyLoader propertyLoader = new PropertyLoader(propertyFile);
         SearchRuleGroupsScheme searchRuleGroupsScheme = propertyLoader.getMapWithScheme();
@@ -44,11 +45,11 @@ public class PageObjectGeneratorFactory {
         WebValidators webValidators = new WebValidators();
         JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName);
         WebElementGroupFieldBuilder webElementGroupFieldBuilder = new WebElementGroupFieldBuilder();
-        WebPagesBuilder builder = new WebPagesBuilder();
+        WebPageTestDataBuilder builder = new WebPageTestDataBuilder();
         SelectorUtils selectorUtils = new SelectorUtils();
         SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
-        return new PageObjectsGenerator(rawSearchRuleMapper, validator, transformer, checker,
+        return new PageObjectGeneratorTestDataBuilder(rawSearchRuleMapper, validator, transformer, checker,
             jsonValidators, webValidators, javaClassBuilder, webElementGroupFieldBuilder,
             javaPoetAdapter, builder, selectorUtils, searchRuleExtractor);
     }

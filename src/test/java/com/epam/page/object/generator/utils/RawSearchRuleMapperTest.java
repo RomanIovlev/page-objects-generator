@@ -100,7 +100,6 @@ public class RawSearchRuleMapperTest {
 
     @Test
     public void getRawSearchRuleList_OneInvalidRawSearchRule() {
-        SearchRuleType type = SearchRuleType.BUTTON;
         RawSearchRule expectedRawSearchRule = new RawSearchRule(object, null, null, null);
         List<RawSearchRule> expectedList = Lists.newArrayList(expectedRawSearchRule);
 

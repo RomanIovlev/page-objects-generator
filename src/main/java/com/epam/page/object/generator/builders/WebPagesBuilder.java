@@ -31,7 +31,7 @@ public class WebPagesBuilder {
             }
         }
         if (!invalidUrls.isEmpty()) {
-            throw new NotValidUrlException(invalidUrls.stream().collect(Collectors.joining("")));
+            throw new NotValidUrlException(invalidUrls);
         }
 
         return webPages;

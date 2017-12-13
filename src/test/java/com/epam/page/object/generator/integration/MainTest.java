@@ -38,6 +38,14 @@ public class MainTest {
     }
 
     @Test
+    public void pageObjectGenerator_SuccessGenerateCommonSearchRuleWithUniqueness()
+        throws Exception {
+        pog.setForceGenerateFile(false);
+        pog.generatePageObjects("/epam-buttons.json", outputDir,
+            Collections.singletonList("https://www.epam.com"));
+    }
+
+    @Test
     public void pageObjectsGenerator_SuccessGenerateComplexSearchRule() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown.json", outputDir,

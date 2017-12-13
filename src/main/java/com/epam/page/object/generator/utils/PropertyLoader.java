@@ -38,12 +38,17 @@ public class PropertyLoader {
 
             String schemaPath = group.getString("schema");
 
-            JSONObject jsonSchema = new JSONObject(
-                new JSONTokener(
-                    PropertyLoader.class.getResourceAsStream(schemaPath)));
-            Schema schema = SchemaLoader.load(jsonSchema);
-            schemeMap.put(groupName, schema);
-            logger.info("Add schema = '" + schemaPath + "' for '" + groupName + "' group");
+            try {
+                JSONObject jsonSchema = new JSONObject(
+                    new JSONTokener(
+                        PropertyLoader.class.getResourceAsStream(schemaPath)));
+                Schema schema = SchemaLoader.load(jsonSchema);
+                schemeMap.put(groupName, schema);
+                logger.info("Add schema = '" + schemaPath + "' for '" + groupName + "' group");
+            } catch (NullPointerException ex){
+                logger.error("Schema = '" + schemaPath + "' doesn't exist!");
+                throw new NullPointerException("\nSchema = '" + schemaPath + "' doesn't exist!");
+            }
         }
         logger.info("Finish reading list of schemes\n");
 

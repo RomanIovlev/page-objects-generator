@@ -13,8 +13,7 @@ import java.util.List;
 public class Generate {
 
     // EXAMPLE
-    public static void main(String[] args)
-        throws IOException, URISyntaxException, XpathToCssTransformerException {
+    public static void main(String[] args) throws IOException {
         List<String> urls = asList(
             "https://www.w3schools.com/html/html_forms.asp",
             "https://www.w3schools.com/css/default.asp",

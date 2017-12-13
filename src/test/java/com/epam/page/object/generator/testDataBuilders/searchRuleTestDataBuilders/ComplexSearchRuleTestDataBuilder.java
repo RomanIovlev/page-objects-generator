@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.testDataBuilders.searchRuleDataTestBuilders;
+package com.epam.page.object.generator.testDataBuilders.searchRuleTestDataBuilders;
 
 import com.epam.page.object.generator.builders.searchrule.ComplexInnerSearchRuleBuilder;
 import com.epam.page.object.generator.builders.searchrule.ComplexSearchRuleBuilder;
@@ -15,7 +15,7 @@ import com.epam.page.object.generator.utils.SelectorUtils;
 import com.epam.page.object.generator.utils.XpathToCssTransformer;
 import com.epam.page.object.generator.utils.SearchRuleGroups;
 
-public class ComplexSearchRuleDataTestBuilder {
+public class ComplexSearchRuleTestDataBuilder {
 
     private static PropertyLoader propertyLoader = new PropertyLoader("/groups.json");
     private static SearchRuleGroupsScheme searchRuleGroupsScheme = propertyLoader

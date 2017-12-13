@@ -12,22 +12,16 @@ public class SearchRuleBuildersFactory {
 
     private final static Logger logger = LoggerFactory.getLogger(SearchRuleBuildersFactory.class);
 
-    private SearchRuleGroupsScheme searchRuleGroupsScheme;
-    private SearchRuleGroups searchRuleGroups;
+    private RawSearchRuleMapper rawSearchRuleMapper;
 
-    public SearchRuleBuildersFactory(SearchRuleGroupsScheme searchRuleGroupsScheme,
-                                     SearchRuleGroups searchRuleGroups) {
-        this.searchRuleGroupsScheme = searchRuleGroupsScheme;
-        this.searchRuleGroups = searchRuleGroups;
+    public SearchRuleBuildersFactory(RawSearchRuleMapper rawSearchRuleMapper) {
+        this.rawSearchRuleMapper = rawSearchRuleMapper;
     }
 
     public SearchRuleBuilders getMapWithBuilders() {
         Map<String, SearchRuleBuilder> builderMap = new HashMap<>();
 
         logger.info("Create map with builders");
-        RawSearchRuleMapper rawSearchRuleMapper = new RawSearchRuleMapper(searchRuleGroupsScheme,
-            searchRuleGroups);
-
         builderMap.put("commonSearchRule", new CommonSearchRuleBuilder());
         builderMap.put("complexSearchRule", new ComplexSearchRuleBuilder(rawSearchRuleMapper,
             new ComplexInnerSearchRuleBuilder()));

@@ -1,8 +1,10 @@
 package com.epam.page.object.generator.errors;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class NotValidUrlException extends RuntimeException {
 
-    //TODO setInvalidUrls(LIst urls)
     public NotValidUrlException() {
     }
 
@@ -16,5 +18,9 @@ public class NotValidUrlException extends RuntimeException {
 
     public NotValidUrlException(Throwable throwable) {
         super(throwable);
+    }
+
+    public NotValidUrlException(List<String> invalidUrls) {
+        super(invalidUrls.stream().collect(Collectors.joining("")));
     }
 }

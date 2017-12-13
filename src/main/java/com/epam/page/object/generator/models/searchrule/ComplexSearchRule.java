@@ -41,10 +41,6 @@ public class ComplexSearchRule implements SearchRule {
         return type;
     }
 
-    public String getTypeName() {
-        return type.getName();
-    }
-
     public List<ComplexInnerSearchRule> getInnerSearchRules() {
         return complexInnerSearchRules;
     }

@@ -28,10 +28,6 @@ public class SearchRuleBuilders {
         return builders;
     }
 
-    public void setBuilders(Map<String, SearchRuleBuilder> builders) {
-        this.builders = builders;
-    }
-
     private SearchRuleBuilder getBuilder(RawSearchRule rawSearchRule) {
         return builders.get(rawSearchRule.getGroupName());
     }

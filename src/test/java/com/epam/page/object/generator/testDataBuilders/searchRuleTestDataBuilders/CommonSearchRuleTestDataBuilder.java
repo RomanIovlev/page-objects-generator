@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.testDataBuilders.searchRuleDataTestBuilders;
+package com.epam.page.object.generator.testDataBuilders.searchRuleTestDataBuilders;
 
 import com.epam.page.object.generator.builders.searchrule.CommonSearchRuleBuilder;
 import com.epam.page.object.generator.containers.SupportedTypesContainer;
