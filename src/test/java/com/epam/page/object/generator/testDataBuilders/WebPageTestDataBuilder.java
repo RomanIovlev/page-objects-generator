@@ -4,17 +4,17 @@ import com.epam.jdi.uitests.web.selenium.elements.common.Button;
 import com.epam.jdi.uitests.web.selenium.elements.common.Label;
 import com.epam.jdi.uitests.web.selenium.elements.complex.Dropdown;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
-import com.epam.page.object.generator.models.ClassAndAnnotationPair;
-import com.epam.page.object.generator.models.Selector;
-import com.epam.page.object.generator.models.WebPage;
-import com.epam.page.object.generator.models.searchrule.CommonSearchRule;
-import com.epam.page.object.generator.models.searchrule.ComplexInnerSearchRule;
-import com.epam.page.object.generator.models.searchrule.ComplexSearchRule;
-import com.epam.page.object.generator.models.searchrule.SearchRule;
-import com.epam.page.object.generator.utils.SearchRuleExtractor;
-import com.epam.page.object.generator.utils.SearchRuleType;
-import com.epam.page.object.generator.utils.SelectorUtils;
-import com.epam.page.object.generator.utils.XpathToCssTransformer;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
+import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.model.searchrule.CommonSearchRule;
+import com.epam.page.object.generator.model.searchrule.ComplexInnerSearchRule;
+import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
+import com.epam.page.object.generator.model.searchrule.SearchRule;
+import com.epam.page.object.generator.util.SearchRuleExtractor;
+import com.epam.page.object.generator.util.SearchRuleType;
+import com.epam.page.object.generator.util.SelectorUtils;
+import com.epam.page.object.generator.util.XpathToCssTransformer;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import java.io.File;
@@ -44,7 +44,12 @@ public class WebPageTestDataBuilder {
         }
         Document doc = Jsoup.parse(html);
 
-        WebPage webPage = new WebPage(null, doc, extractor);
+        WebPage webPage = null;
+        try {
+            webPage = new WebPage(new URI("https://epam.github.io/JDI/metals-colors.html"), doc, extractor);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         XpathToCssTransformer transformer = new XpathToCssTransformer();
         SelectorUtils selectorUtils = new SelectorUtils();

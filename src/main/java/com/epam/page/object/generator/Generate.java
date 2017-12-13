@@ -2,9 +2,7 @@ package com.epam.page.object.generator;
 
 import static java.util.Arrays.asList;
 
-import com.epam.page.object.generator.errors.XpathToCssTransformerException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 /**

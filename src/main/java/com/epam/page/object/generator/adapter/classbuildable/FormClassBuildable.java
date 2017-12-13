@@ -1,22 +1,22 @@
 package com.epam.page.object.generator.adapter.classbuildable;
 
-import static com.epam.page.object.generator.utils.StringUtils.firstLetterDown;
-import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.util.StringUtils.firstLetterDown;
+import static com.epam.page.object.generator.util.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.*;
 
-import com.epam.page.object.generator.adapter.annotations.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotations.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.fileds.IJavaField;
-import com.epam.page.object.generator.adapter.annotations.JavaAnnotation;
-import com.epam.page.object.generator.adapter.fileds.JavaField;
-import com.epam.page.object.generator.adapter.classes.IJavaClass;
-import com.epam.page.object.generator.builders.JavaClassBuilder;
-import com.epam.page.object.generator.models.Selector;
-import com.epam.page.object.generator.models.searchrule.FormInnerSearchRule;
-import com.epam.page.object.generator.models.webgroup.FormWebElementGroup;
-import com.epam.page.object.generator.models.webelement.FormWebElement;
-import com.epam.page.object.generator.models.webelement.WebElement;
-import com.epam.page.object.generator.utils.SelectorUtils;
+import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
+import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.filed.IJavaField;
+import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
+import com.epam.page.object.generator.adapter.filed.JavaField;
+import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.builder.JavaClassBuilder;
+import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.searchrule.FormInnerSearchRule;
+import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
+import com.epam.page.object.generator.model.webelement.FormWebElement;
+import com.epam.page.object.generator.model.webelement.WebElement;
+import com.epam.page.object.generator.util.SelectorUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;

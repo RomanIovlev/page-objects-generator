@@ -1,9 +1,9 @@
 package com.epam.page.object.generator.adapter.classbuildable;
 
-import com.epam.page.object.generator.adapter.annotations.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.fileds.IJavaField;
-import com.epam.page.object.generator.adapter.classes.IJavaClass;
-import com.epam.page.object.generator.builders.JavaClassBuilder;
+import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.filed.IJavaField;
+import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.builder.JavaClassBuilder;
 import java.util.List;
 
 public interface JavaClassBuildable {

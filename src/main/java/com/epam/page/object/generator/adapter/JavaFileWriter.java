@@ -1,9 +1,9 @@
 package com.epam.page.object.generator.adapter;
 
-import com.epam.page.object.generator.adapter.annotations.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotations.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.classes.IJavaClass;
-import com.epam.page.object.generator.adapter.fileds.IJavaField;
+import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
+import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.adapter.filed.IJavaField;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;

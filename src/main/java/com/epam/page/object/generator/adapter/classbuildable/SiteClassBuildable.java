@@ -1,20 +1,20 @@
 package com.epam.page.object.generator.adapter.classbuildable;
 
-import static com.epam.page.object.generator.utils.StringUtils.firstLetterUp;
-import static com.epam.page.object.generator.utils.StringUtils.splitCamelCase;
+import static com.epam.page.object.generator.util.StringUtils.firstLetterUp;
+import static com.epam.page.object.generator.util.StringUtils.splitCamelCase;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.adapter.annotations.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotations.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.fileds.IJavaField;
-import com.epam.page.object.generator.adapter.annotations.JavaAnnotation;
-import com.epam.page.object.generator.adapter.fileds.JavaField;
-import com.epam.page.object.generator.adapter.classes.IJavaClass;
-import com.epam.page.object.generator.builders.JavaClassBuilder;
-import com.epam.page.object.generator.models.WebPage;
+import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
+import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.filed.IJavaField;
+import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
+import com.epam.page.object.generator.adapter.filed.JavaField;
+import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.builder.JavaClassBuilder;
+import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;

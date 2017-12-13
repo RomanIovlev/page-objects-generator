@@ -1,25 +1,25 @@
 package com.epam.page.object.generator;
 
 import com.epam.page.object.generator.adapter.JavaFileWriter;
-import com.epam.page.object.generator.builders.JavaClassBuilder;
-import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
-import com.epam.page.object.generator.builders.WebPagesBuilder;
-import com.epam.page.object.generator.builders.searchrule.SearchRuleBuilders;
-import com.epam.page.object.generator.builders.searchrule.SearchRuleBuildersFactory;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.utils.PropertyLoader;
-import com.epam.page.object.generator.utils.RawSearchRuleMapper;
-import com.epam.page.object.generator.utils.SearchRuleExtractor;
-import com.epam.page.object.generator.utils.SearchRuleGroupsScheme;
-import com.epam.page.object.generator.utils.SelectorUtils;
-import com.epam.page.object.generator.utils.TypeTransformer;
-import com.epam.page.object.generator.utils.ValidationChecker;
-import com.epam.page.object.generator.utils.XpathToCssTransformer;
-import com.epam.page.object.generator.utils.SearchRuleGroups;
-import com.epam.page.object.generator.validators.JsonSchemaValidator;
-import com.epam.page.object.generator.validators.JsonValidators;
-import com.epam.page.object.generator.validators.ValidationExceptionConverter;
-import com.epam.page.object.generator.validators.WebValidators;
+import com.epam.page.object.generator.builder.JavaClassBuilder;
+import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
+import com.epam.page.object.generator.builder.WebPagesBuilder;
+import com.epam.page.object.generator.builder.searchrule.SearchRuleBuilders;
+import com.epam.page.object.generator.builder.searchrule.SearchRuleBuildersFactory;
+import com.epam.page.object.generator.container.SupportedTypesContainer;
+import com.epam.page.object.generator.util.PropertyLoader;
+import com.epam.page.object.generator.util.RawSearchRuleMapper;
+import com.epam.page.object.generator.util.SearchRuleExtractor;
+import com.epam.page.object.generator.util.SearchRuleGroupsScheme;
+import com.epam.page.object.generator.util.SelectorUtils;
+import com.epam.page.object.generator.util.TypeTransformer;
+import com.epam.page.object.generator.util.ValidationChecker;
+import com.epam.page.object.generator.util.XpathToCssTransformer;
+import com.epam.page.object.generator.util.SearchRuleGroups;
+import com.epam.page.object.generator.validator.JsonSchemaValidator;
+import com.epam.page.object.generator.validator.JsonValidators;
+import com.epam.page.object.generator.validator.ValidationExceptionConverter;
+import com.epam.page.object.generator.validator.WebValidators;
 
 public class PageObjectGeneratorFactory {
 

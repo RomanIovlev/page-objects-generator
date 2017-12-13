@@ -2,8 +2,8 @@ package com.epam.page.object.generator.integration;
 
 import com.epam.page.object.generator.PageObjectGeneratorFactory;
 import com.epam.page.object.generator.PageObjectsGenerator;
-import com.epam.page.object.generator.errors.NotValidUrlException;
-import com.epam.page.object.generator.errors.ValidationException;
+import com.epam.page.object.generator.error.NotValidUrlException;
+import com.epam.page.object.generator.error.ValidationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;

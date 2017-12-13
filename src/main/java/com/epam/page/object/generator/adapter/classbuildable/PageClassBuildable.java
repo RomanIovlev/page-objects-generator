@@ -1,12 +1,12 @@
 package com.epam.page.object.generator.adapter.classbuildable;
 
-import com.epam.page.object.generator.adapter.annotations.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.fileds.IJavaField;
-import com.epam.page.object.generator.adapter.classes.IJavaClass;
-import com.epam.page.object.generator.builders.JavaClassBuilder;
-import com.epam.page.object.generator.builders.WebElementGroupFieldBuilder;
-import com.epam.page.object.generator.models.WebPage;
-import com.epam.page.object.generator.models.webgroup.WebElementGroup;
+import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
+import com.epam.page.object.generator.adapter.filed.IJavaField;
+import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.builder.JavaClassBuilder;
+import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
+import com.epam.page.object.generator.model.WebPage;
+import com.epam.page.object.generator.model.webgroup.WebElementGroup;
 import java.util.ArrayList;
 import java.util.List;
 

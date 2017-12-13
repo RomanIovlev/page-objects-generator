@@ -1,14 +1,14 @@
 package com.epam.page.object.generator.testDataBuilders.searchRuleTestDataBuilders;
 
-import com.epam.page.object.generator.builders.searchrule.CommonSearchRuleBuilder;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.models.RawSearchRule;
-import com.epam.page.object.generator.models.searchrule.CommonSearchRule;
-import com.epam.page.object.generator.models.searchrule.SearchRule;
+import com.epam.page.object.generator.builder.searchrule.CommonSearchRuleBuilder;
+import com.epam.page.object.generator.container.SupportedTypesContainer;
+import com.epam.page.object.generator.model.RawSearchRule;
+import com.epam.page.object.generator.model.searchrule.CommonSearchRule;
+import com.epam.page.object.generator.model.searchrule.SearchRule;
 import com.epam.page.object.generator.testDataBuilders.RawSearchRuleTestDataBuilder;
-import com.epam.page.object.generator.utils.SearchRuleExtractor;
-import com.epam.page.object.generator.utils.SelectorUtils;
-import com.epam.page.object.generator.utils.XpathToCssTransformer;
+import com.epam.page.object.generator.util.SearchRuleExtractor;
+import com.epam.page.object.generator.util.SelectorUtils;
+import com.epam.page.object.generator.util.XpathToCssTransformer;
 
 public class CommonSearchRuleTestDataBuilder {
 

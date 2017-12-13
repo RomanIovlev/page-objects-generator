@@ -1,19 +1,19 @@
 package com.epam.page.object.generator.testDataBuilders.searchRuleTestDataBuilders;
 
-import com.epam.page.object.generator.builders.searchrule.ComplexInnerSearchRuleBuilder;
-import com.epam.page.object.generator.builders.searchrule.ComplexSearchRuleBuilder;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
-import com.epam.page.object.generator.models.RawSearchRule;
-import com.epam.page.object.generator.models.searchrule.ComplexSearchRule;
-import com.epam.page.object.generator.models.searchrule.SearchRule;
+import com.epam.page.object.generator.builder.searchrule.ComplexInnerSearchRuleBuilder;
+import com.epam.page.object.generator.builder.searchrule.ComplexSearchRuleBuilder;
+import com.epam.page.object.generator.container.SupportedTypesContainer;
+import com.epam.page.object.generator.model.RawSearchRule;
+import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
+import com.epam.page.object.generator.model.searchrule.SearchRule;
 import com.epam.page.object.generator.testDataBuilders.RawSearchRuleTestDataBuilder;
-import com.epam.page.object.generator.utils.PropertyLoader;
-import com.epam.page.object.generator.utils.RawSearchRuleMapper;
-import com.epam.page.object.generator.utils.SearchRuleExtractor;
-import com.epam.page.object.generator.utils.SearchRuleGroupsScheme;
-import com.epam.page.object.generator.utils.SelectorUtils;
-import com.epam.page.object.generator.utils.XpathToCssTransformer;
-import com.epam.page.object.generator.utils.SearchRuleGroups;
+import com.epam.page.object.generator.util.PropertyLoader;
+import com.epam.page.object.generator.util.RawSearchRuleMapper;
+import com.epam.page.object.generator.util.SearchRuleExtractor;
+import com.epam.page.object.generator.util.SearchRuleGroupsScheme;
+import com.epam.page.object.generator.util.SelectorUtils;
+import com.epam.page.object.generator.util.XpathToCssTransformer;
+import com.epam.page.object.generator.util.SearchRuleGroups;
 
 public class ComplexSearchRuleTestDataBuilder {
 
