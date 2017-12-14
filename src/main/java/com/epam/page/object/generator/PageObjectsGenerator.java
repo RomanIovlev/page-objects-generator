@@ -12,7 +12,7 @@ import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.builder.WebPagesBuilder;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
-import com.epam.page.object.generator.model.webgroup.WebElementGroup;
+import com.epam.page.object.generator.model.searchrule.Validatable;
 import com.epam.page.object.generator.util.RawSearchRuleMapper;
 import com.epam.page.object.generator.util.SearchRuleExtractor;
 import com.epam.page.object.generator.util.SelectorUtils;
@@ -24,7 +24,9 @@ import com.epam.page.object.generator.validator.ValidationResult;
 import com.epam.page.object.generator.validator.WebValidators;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,7 +100,10 @@ public class PageObjectsGenerator {
 
         checker.checkSearchRules(searchRuleList);
 
+        logger.info("Start creating web pages...");
         List<WebPage> webPages = webPagesBuilder.generate(urls, searchRuleExtractor);
+        logger.info("Finish creating web pages");
+
         webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
         webValidators.validate(webPages);
 
@@ -110,19 +115,17 @@ public class PageObjectsGenerator {
             if (forceGenerateFile) {
                 javaFileWriter.writeFiles(outputDir, javaClasses);
             }
-            StringBuilder stringBuilder = new StringBuilder("\n");
-            for (WebPage webPage : webPages) {
-                if (webPage.hasInvalidWebElementGroup()) {
-                    for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
-                        webElementGroup.getValidationResults().stream()
-                            .filter(ValidationResult::isInvalid)
-                            .forEach(validationResultNew -> stringBuilder
-                                .append(validationResultNew.getReason()).append("\n"));
-                    }
-                }
-            }
 
-            throw new ValidationException(stringBuilder.toString());
+            String validationResultString = webPages.stream()
+                .filter(WebPage::hasInvalidWebElementGroup)
+                .map(WebPage::getWebElementGroups)
+                .flatMap(Collection::stream)
+                .map(Validatable::getValidationResults)
+                .flatMap(Collection::stream)
+                .filter(ValidationResult::isInvalid)
+                .map(ValidationResult::getReason)
+                .collect(Collectors.joining("\n"));
+            throw new ValidationException(validationResultString);
         }
 
         javaFileWriter.writeFiles(outputDir, javaClasses);

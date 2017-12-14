@@ -59,14 +59,15 @@ public class FormInnerSearchRule implements SearchRule {
     }
 
     public Selector getTransformedSelector() {
+        logger.info("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {
             try {
                 return transformer.getCssSelector(selector);
             } catch (XpathToCssTransformerException e) {
-                e.printStackTrace();
+                logger.error("Failed transforming selector = '" + selector);
             }
         }
-
+        logger.info("Success transforming!");
         return selector;
     }
 

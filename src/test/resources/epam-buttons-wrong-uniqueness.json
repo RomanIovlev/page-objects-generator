@@ -1,0 +1,12 @@
+{
+  "elements": [
+    {
+      "type": "button",
+      "uniqueness": "fasdfsd",
+      "selector": {
+        "type": "css",
+        "value": ".tabs-item"
+      }
+    }
+  ]
+}

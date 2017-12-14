@@ -139,4 +139,11 @@ public class MainTest {
         pog.generatePageObjects("/dropdown-duplicate-uniqueness.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
     }
+
+    @Test(expected = ValidationException.class)
+    public void pageObjectGenerator_NotExistUniquenessAttribute() throws Exception {
+        pog.setForceGenerateFile(true);
+        pog.generatePageObjects("/epam-buttons-wrong-uniqueness.json", outputDir,
+            Collections.singletonList("https://www.epam.com"));
+    }
 }

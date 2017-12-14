@@ -11,8 +11,12 @@ import java.util.List;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebPagesBuilder {
+
+    private final static Logger logger = LoggerFactory.getLogger(WebPagesBuilder.class);
 
     public List<WebPage> generate(List<String> urls,
                                   SearchRuleExtractor searchRuleExtractor) {
@@ -25,8 +29,11 @@ public class WebPagesBuilder {
                 Connection connect = Jsoup.connect(url);
                 Document document = connect.get();
                 webPages.add(new WebPage(uri, document, searchRuleExtractor));
+                logger.info("Create web page for url = '" + url + "'");
             } catch (IOException | URISyntaxException | IllegalArgumentException e) {
-                invalidUrls.add("Not valid url: " + url);
+                String message = "Not valid url: " + url;
+                logger.error(message);
+                invalidUrls.add(message);
             }
         }
         if (!invalidUrls.isEmpty()) {
