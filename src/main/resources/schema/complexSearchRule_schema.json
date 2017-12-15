@@ -31,7 +31,10 @@
                 "description": "Name of field name into complex annotations",
                 "type": "string",
                 "enum": [
-                  "root"
+                  "root",
+                  "jroot",
+                  "jRoot",
+                  "level1"
                 ]
               },
               "selector": {
@@ -73,7 +76,42 @@
                 "description": "Name of field name into complex annotations",
                 "type": "string",
                 "enum": [
-                  "list"
+                  "list",
+                  "jlist",
+                  "value",
+                  "jvalue",
+                  "expand",
+                  "jexpand",
+                  "level2",
+                  "level3",
+                  "level4",
+                  "level5",
+                  "input",
+                  "jInput",
+                  "searchButton",
+                  "jSearchButton",
+                  "jSuggestions",
+                  "header",
+                  "rowsHeader",
+                  "headers",
+                  "rowNames",
+                  "cell",
+                  "row",
+                  "column",
+                  "footer",
+                  "jHeaders",
+                  "jRowNames",
+                  "jCell",
+                  "jRow",
+                  "jColumn",
+                  "jFooter",
+                  "height",
+                  "width",
+                  "size",
+                  "rowStartIndex",
+                  "colStartIndex",
+                  "headerType",
+                  "useCache"
                 ]
               },
               "selector": {

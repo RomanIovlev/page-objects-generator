@@ -1,22 +1,20 @@
-package com.epam.page.object.generator.adapter.javaclass;
+package com.epam.page.object.generator.adapter;
 
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 
-public class JavaClass implements IJavaClass {
+public class JavaClass {
 
     private String packageName;
     private String className;
     private Class superClass;
-    private IJavaAnnotation annotation;
-    private List<IJavaField> fields;
+    private JavaAnnotation annotation;
+    private List<JavaField> fields;
     private Modifier modifier;
 
     public JavaClass(String packageName, String className, Class superClass,
-                     IJavaAnnotation annotation,
-                     List<IJavaField> fields, Modifier modifier) {
+                     JavaAnnotation annotation,
+                     List<JavaField> fields, Modifier modifier) {
         this.packageName = packageName;
         this.className = className;
         this.superClass = superClass;
@@ -25,32 +23,26 @@ public class JavaClass implements IJavaClass {
         this.modifier = modifier;
     }
 
-    @Override
     public String getPackageName() {
         return packageName;
     }
 
-    @Override
     public String getClassName() {
         return className;
     }
 
-    @Override
     public Class getSuperClass() {
         return superClass;
     }
 
-    @Override
-    public IJavaAnnotation getAnnotation() {
+    public JavaAnnotation getAnnotation() {
         return annotation;
     }
 
-    @Override
-    public List<IJavaField> getFieldsList() {
+    public List<JavaField> getFieldsList() {
         return fields;
     }
 
-    @Override
     public Modifier getModifier() {
         return modifier;
     }

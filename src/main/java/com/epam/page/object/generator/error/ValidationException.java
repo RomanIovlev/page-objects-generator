@@ -6,7 +6,7 @@ public class ValidationException extends RuntimeException {
     }
 
     public ValidationException(String msg) {
-        super(msg);
+        super("\n" + msg);
     }
 
     public ValidationException(String msg, Throwable cause) {

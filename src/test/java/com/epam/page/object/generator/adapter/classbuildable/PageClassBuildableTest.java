@@ -4,11 +4,9 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.junit.Assert.assertEquals;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
-import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.filed.JavaField;
+import com.epam.page.object.generator.adapter.AnnotationMember;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.testDataBuilders.WebPageTestDataBuilder;
@@ -43,7 +41,7 @@ public class PageClassBuildableTest {
             new AnnotationMember("list", "$L", new JavaAnnotation(FindBy.class, Lists.newArrayList(
                 new AnnotationMember("xpath", "$S",
                     "//ul[@class='dropdown-menu inner selectpicker']"))))));
-    private List<IJavaField> expectedFields = Lists.newArrayList(
+    private List<JavaField> expectedFields = Lists.newArrayList(
         new JavaField("com.epam.jdi.uitests.web.selenium.elements.common.Button", "calculate",
             expectedButtonAnnotation, new Modifier[]{PUBLIC}),
         new JavaField("com.epam.jdi.uitests.web.selenium.elements.common.Label", "water",
@@ -54,17 +52,17 @@ public class PageClassBuildableTest {
     @Test
     public void buildFields() {
 
-        List<IJavaField> actualFields = pageClassBuildable.buildFields(packageName);
+        List<JavaField> actualFields = pageClassBuildable.buildFields(packageName);
 
         for (int i = 0; i < actualFields.size(); i++) {
-            IJavaField actualField = actualFields.get(0);
-            IJavaField expectedField = expectedFields.get(0);
+            JavaField actualField = actualFields.get(0);
+            JavaField expectedField = expectedFields.get(0);
             assertEquals(expectedField.getFieldName(), actualField.getFieldName());
             assertEquals(expectedField.getFullFieldClass(), actualField.getFullFieldClass());
             assertEquals(expectedField.getModifiers(), actualField.getModifiers());
 
-            IJavaAnnotation actualAnnotation = actualField.getAnnotation();
-            IJavaAnnotation expectedAnnotation = expectedField.getAnnotation();
+            JavaAnnotation actualAnnotation = actualField.getAnnotation();
+            JavaAnnotation expectedAnnotation = expectedField.getAnnotation();
             assertEquals(expectedAnnotation.getAnnotationClass(),
                 actualAnnotation.getAnnotationClass());
             for (int j = 0; j < actualAnnotation.getAnnotationMembers().size(); j++) {
@@ -86,7 +84,7 @@ public class PageClassBuildableTest {
 
     @Test
     public void buildAnnotation(){
-        IJavaAnnotation actualAnnotation = pageClassBuildable.buildAnnotation();
+        JavaAnnotation actualAnnotation = pageClassBuildable.buildAnnotation();
         assertEquals(expectedAnnotation, actualAnnotation);
     }
 }

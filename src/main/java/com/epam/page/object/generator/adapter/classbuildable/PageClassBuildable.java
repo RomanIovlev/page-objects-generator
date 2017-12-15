@@ -1,8 +1,8 @@
 package com.epam.page.object.generator.adapter.classbuildable;
 
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.adapter.JavaClass;
+import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.builder.JavaClassBuilder;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.WebPage;
@@ -26,13 +26,13 @@ public class PageClassBuildable implements JavaClassBuildable {
     }
 
     @Override
-    public IJavaClass accept(JavaClassBuilder javaClassBuilder) {
+    public JavaClass accept(JavaClassBuilder javaClassBuilder) {
         return javaClassBuilder.visit(this);
     }
 
     @Override
-    public List<IJavaField> buildFields(String packageName) {
-        List<IJavaField> fields = new ArrayList<>();
+    public List<JavaField> buildFields(String packageName) {
+        List<JavaField> fields = new ArrayList<>();
 
         for (WebElementGroup webElementGroup : webPage.getWebElementGroups()) {
             if (webElementGroup.isInvalid()) {
@@ -45,7 +45,7 @@ public class PageClassBuildable implements JavaClassBuildable {
     }
 
     @Override
-    public IJavaAnnotation buildAnnotation() {
+    public JavaAnnotation buildAnnotation() {
         return null;
     }
 }

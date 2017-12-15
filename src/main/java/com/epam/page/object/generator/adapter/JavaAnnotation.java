@@ -1,8 +1,8 @@
-package com.epam.page.object.generator.adapter.annotation;
+package com.epam.page.object.generator.adapter;
 
 import java.util.List;
 
-public class JavaAnnotation implements IJavaAnnotation {
+public class JavaAnnotation {
 
     private Class annotationClass;
     private List<AnnotationMember> annotationMembers;
@@ -12,12 +12,10 @@ public class JavaAnnotation implements IJavaAnnotation {
         this.annotationMembers = annotationMembers;
     }
 
-    @Override
     public Class getAnnotationClass() {
         return annotationClass;
     }
 
-    @Override
     public List<AnnotationMember> getAnnotationMembers() {
         return annotationMembers;
     }

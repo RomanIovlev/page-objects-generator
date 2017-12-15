@@ -2,14 +2,14 @@ package com.epam.page.object.generator.validator.json;
 
 import com.epam.page.object.generator.model.searchrule.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
-import com.epam.page.object.generator.validator.AbstractValidator;
 import com.epam.page.object.generator.validator.ValidationResult;
+import com.epam.page.object.generator.validator.ValidatorVisitor;
 import java.util.HashSet;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DuplicateTitleInnerSearchRuleValidator extends AbstractValidator {
+public class DuplicateTitleInnerSearchRuleValidator implements ValidatorVisitor{
 
     private final static Logger logger = LoggerFactory.getLogger(DuplicateTitleInnerSearchRuleValidator.class);
 

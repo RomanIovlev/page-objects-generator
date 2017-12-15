@@ -1,11 +1,17 @@
 package com.epam.page.object.generator.util;
 
+import com.epam.page.object.generator.adapter.JavaClass;
+import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.error.ValidationException;
 import com.epam.page.object.generator.model.RawSearchRule;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
 import com.epam.page.object.generator.model.searchrule.Validatable;
 import com.epam.page.object.generator.validator.ValidationResult;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,19 +37,39 @@ public class ValidationChecker {
 
     public void checkSearchRules(List<SearchRule> searchRuleList) {
         if (searchRuleList.stream().anyMatch(Validatable::isInvalid)) {
-            StringBuilder stringBuilder = new StringBuilder("\n");
-
-            searchRuleList.stream()
+            String validationResultString = searchRuleList.stream()
                 .filter(Validatable::isInvalid)
-                .forEach(
-                    validatable ->
-                        validatable.getValidationResults().stream().filter(
-                            ValidationResult::isInvalid).forEach(
-                            validationResult -> stringBuilder.append(validationResult.getReason()))
-                );
+                .map(Validatable::getValidationResults)
+                .flatMap(Collection::stream)
+                .filter(ValidationResult::isInvalid)
+                .map(ValidationResult::getReason)
+                .collect(Collectors.joining("\n"));
 
-            logger.error(stringBuilder.toString());
-            throw new ValidationException(stringBuilder.toString());
+            logger.error(validationResultString);
+            throw new ValidationException(validationResultString);
+        }
+    }
+
+    public void checkWebPages(List<WebPage> webPages, List<JavaClass> javaClasses, String outputDir,
+                              JavaFileWriter javaFileWriter, boolean forceGenerateFile)
+        throws IOException {
+        if (webPages.stream().anyMatch(WebPage::hasInvalidWebElementGroup)) {
+            if (forceGenerateFile) {
+                javaFileWriter.writeFiles(outputDir, javaClasses);
+            }
+
+            String validationResultString = webPages.stream()
+                .filter(WebPage::hasInvalidWebElementGroup)
+                .map(WebPage::getWebElementGroups)
+                .flatMap(Collection::stream)
+                .map(Validatable::getValidationResults)
+                .flatMap(Collection::stream)
+                .filter(ValidationResult::isInvalid)
+                .map(ValidationResult::getReason)
+                .collect(Collectors.joining("\n"));
+
+            logger.error(validationResultString);
+            throw new ValidationException(validationResultString);
         }
     }
 }

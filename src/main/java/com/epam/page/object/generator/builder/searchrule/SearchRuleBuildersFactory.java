@@ -16,7 +16,7 @@ public class SearchRuleBuildersFactory {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
     }
 
-    public SearchRuleBuilders getMapWithBuilders() {
+    public Map<String, SearchRuleBuilder> getMapWithBuilders() {
         Map<String, SearchRuleBuilder> builderMap = new HashMap<>();
 
         logger.info("Create map with builders");
@@ -27,7 +27,7 @@ public class SearchRuleBuildersFactory {
         builderMap.put("formSearchRule", new FormSearchRuleBuilder(rawSearchRuleMapper));
         builderMap.put("formInnerSearchRule", new FormInnerSearchRuleBuilder());
 
-        return new SearchRuleBuilders(builderMap);
+        return builderMap;
     }
 
 }

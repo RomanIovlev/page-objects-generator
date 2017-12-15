@@ -1,10 +1,10 @@
 package com.epam.page.object.generator;
 
-import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
 import com.epam.page.object.generator.adapter.classbuildable.JavaClassBuildable;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.adapter.classbuildable.PageClassBuildable;
 import com.epam.page.object.generator.adapter.classbuildable.SiteClassBuildable;
+import com.epam.page.object.generator.adapter.JavaClass;
 import com.epam.page.object.generator.builder.JavaClassBuilder;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.error.ValidationException;
@@ -109,30 +109,15 @@ public class PageObjectsGenerator {
 
         List<JavaClassBuildable> rawJavaClasses = getJavaClassBuildables(webPages);
 
-        List<IJavaClass> javaClasses = getJavaClasses(rawJavaClasses);
+        List<JavaClass> javaClasses = getJavaClasses(rawJavaClasses);
 
-        if (webPages.stream().anyMatch(WebPage::hasInvalidWebElementGroup)) {
-            if (forceGenerateFile) {
-                javaFileWriter.writeFiles(outputDir, javaClasses);
-            }
-
-            String validationResultString = webPages.stream()
-                .filter(WebPage::hasInvalidWebElementGroup)
-                .map(WebPage::getWebElementGroups)
-                .flatMap(Collection::stream)
-                .map(Validatable::getValidationResults)
-                .flatMap(Collection::stream)
-                .filter(ValidationResult::isInvalid)
-                .map(ValidationResult::getReason)
-                .collect(Collectors.joining("\n"));
-            throw new ValidationException(validationResultString);
-        }
+        checker.checkWebPages(webPages, javaClasses, outputDir, javaFileWriter, forceGenerateFile);
 
         javaFileWriter.writeFiles(outputDir, javaClasses);
     }
 
-    private List<IJavaClass> getJavaClasses(List<JavaClassBuildable> rawJavaClasses) {
-        List<IJavaClass> javaClasses = new ArrayList<>();
+    private List<JavaClass> getJavaClasses(List<JavaClassBuildable> rawJavaClasses) {
+        List<JavaClass> javaClasses = new ArrayList<>();
 
         for (JavaClassBuildable javaClass : rawJavaClasses) {
             javaClasses.add(javaClass.accept(javaClassBuilder));

@@ -21,8 +21,9 @@ public class ComplexInnerSearchRuleBuilderTest {
 
     private XpathToCssTransformer transformer = new XpathToCssTransformer();
     private ComplexInnerSearchRuleBuilder builder = new ComplexInnerSearchRuleBuilder();
-    private ComplexInnerSearchRule expectedComplexInnerSearchRule = new ComplexInnerSearchRule("text",
-            "root", new Selector("css", ".myClass"), transformer);
+    private ComplexInnerSearchRule expectedComplexInnerSearchRule = new ComplexInnerSearchRule(
+        "text",
+        "root", new Selector("css", ".myClass"), transformer);
 
 
     @Test
@@ -34,10 +35,13 @@ public class ComplexInnerSearchRuleBuilderTest {
         SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
         when(rawSearchRule.getValue("title")).thenReturn(expectedComplexInnerSearchRule.getTitle());
-        when(rawSearchRule.getValue("uniqueness")).thenReturn(expectedComplexInnerSearchRule.getUniqueness());
+        when(rawSearchRule.getValue("uniqueness"))
+            .thenReturn(expectedComplexInnerSearchRule.getUniqueness());
         when(rawSearchRule.getSelector()).thenReturn(expectedComplexInnerSearchRule.getSelector());
 
-        ComplexInnerSearchRule searchRule = (ComplexInnerSearchRule) builder.buildSearchRule(rawSearchRule, supportedTypesContainer, transformer, selectorUtils, searchRuleExtractor);
+        ComplexInnerSearchRule searchRule = (ComplexInnerSearchRule) builder
+            .buildSearchRule(rawSearchRule, supportedTypesContainer, transformer, selectorUtils,
+                searchRuleExtractor);
         assertEquals(expectedComplexInnerSearchRule.getTitle(), searchRule.getTitle());
         assertEquals(expectedComplexInnerSearchRule.getUniqueness(), searchRule.getUniqueness());
         assertEquals(expectedComplexInnerSearchRule.getSelector(), searchRule.getSelector());

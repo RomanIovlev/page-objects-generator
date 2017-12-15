@@ -1,10 +1,11 @@
 package com.epam.page.object.generator.util;
 
-import com.epam.page.object.generator.builder.searchrule.SearchRuleBuilders;
+import com.epam.page.object.generator.builder.searchrule.SearchRuleBuilder;
 import com.epam.page.object.generator.container.SupportedTypesContainer;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +15,16 @@ public class TypeTransformer {
     private final static Logger logger = LoggerFactory.getLogger(TypeTransformer.class);
 
     private SupportedTypesContainer typesContainer;
-    private SearchRuleBuilders searchRuleBuilders;
     private XpathToCssTransformer transformer;
 
+    private Map<String, SearchRuleBuilder> builders;
+
     public TypeTransformer(SupportedTypesContainer typesContainer,
-                           SearchRuleBuilders searchRuleBuilders,
-                           XpathToCssTransformer transformer) {
+                           XpathToCssTransformer transformer,
+                           Map<String, SearchRuleBuilder> builders) {
         this.typesContainer = typesContainer;
-        this.searchRuleBuilders = searchRuleBuilders;
         this.transformer = transformer;
+        this.builders = builders;
     }
 
     public List<SearchRule> transform(List<RawSearchRule> rawSearchRuleList,
@@ -31,12 +33,20 @@ public class TypeTransformer {
         return rawSearchRuleList.stream()
             .filter(RawSearchRule::isValid)
             .map(rawSearchRule -> {
-                SearchRule searchRule = searchRuleBuilders
+                SearchRule searchRule = getBuilder(rawSearchRule)
                     .buildSearchRule(rawSearchRule, typesContainer, transformer, selectorUtils,
                         searchRuleExtractor);
                 logger.info("Success transformation " + rawSearchRule + "!");
                 return searchRule;
             })
             .collect(Collectors.toList());
+    }
+
+    public Map<String, SearchRuleBuilder> getBuilders() {
+        return builders;
+    }
+
+    private SearchRuleBuilder getBuilder(RawSearchRule rawSearchRule) {
+        return builders.get(rawSearchRule.getGroupName());
     }
 }

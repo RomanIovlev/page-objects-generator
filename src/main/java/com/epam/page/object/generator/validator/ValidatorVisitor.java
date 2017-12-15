@@ -11,19 +11,35 @@ import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 
 public interface ValidatorVisitor {
 
-    ValidationResult visit(CommonSearchRule commonSearchRule);
+    default ValidationResult visit(CommonSearchRule commonSearchRule){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(ComplexSearchRule complexSearchRule);
+    default ValidationResult visit(ComplexSearchRule complexSearchRule){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(ComplexInnerSearchRule complexInnerSearchRule);
+    default ValidationResult visit(ComplexInnerSearchRule complexInnerSearchRule){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(FormSearchRule formSearchRule);
+    default ValidationResult visit(FormSearchRule formSearchRule){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(FormInnerSearchRule formInnerSearchRule);
+    default ValidationResult visit(FormInnerSearchRule formInnerSearchRule){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(CommonWebElementGroup commonWebElementGroup);
+    default ValidationResult visit(CommonWebElementGroup commonWebElementGroup){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(ComplexWebElementGroup complexWebElementGroup);
+    default ValidationResult visit(ComplexWebElementGroup complexWebElementGroup){
+        return new ValidationResult(true, this + " passed!");
+    }
 
-    ValidationResult visit(FormWebElementGroup formWebElementGroup);
+    default ValidationResult visit(FormWebElementGroup formWebElementGroup){
+        return new ValidationResult(true, this + " passed!");
+    }
 }

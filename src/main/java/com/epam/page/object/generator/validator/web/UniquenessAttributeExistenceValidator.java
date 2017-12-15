@@ -4,10 +4,10 @@ import com.epam.page.object.generator.model.webgroup.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 import com.epam.page.object.generator.model.webelement.FormWebElement;
-import com.epam.page.object.generator.validator.AbstractValidator;
 import com.epam.page.object.generator.validator.ValidationResult;
+import com.epam.page.object.generator.validator.ValidatorVisitor;
 
-public class UniquenessAttributeExistenceValidator extends AbstractValidator {
+public class UniquenessAttributeExistenceValidator implements ValidatorVisitor {
 
     @Override
     public ValidationResult visit(CommonWebElementGroup webElementGroup) {

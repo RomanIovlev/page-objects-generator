@@ -1,6 +1,6 @@
 package com.epam.page.object.generator.builder;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,14 +9,13 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebPage;
 import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
+import com.epam.page.object.generator.adapter.AnnotationMember;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.classbuildable.FormClassBuildable;
 import com.epam.page.object.generator.adapter.classbuildable.PageClassBuildable;
 import com.epam.page.object.generator.adapter.classbuildable.SiteClassBuildable;
-import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.filed.JavaField;
+import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.JavaClass;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchrule.FormSearchRule;
@@ -40,7 +39,7 @@ public class JavaClassBuilderTest {
     private AnnotationMember annotationMember;
     @Mock
     private JavaField javaField;
-    private List<IJavaField> javaFields = Lists.newArrayList(javaField);
+    private List<JavaField> javaFields = Lists.newArrayList(javaField);
 
     @Mock
     private SiteClassBuildable siteClassBuildable;
@@ -70,7 +69,7 @@ public class JavaClassBuilderTest {
         when(siteClassBuildable.buildAnnotation()).thenReturn(siteAnnotation);
         when(siteClassBuildable.buildFields(PACKAGE)).thenReturn(javaFields);
 
-        IJavaClass javaClass = javaClassBuilder.visit(siteClassBuildable);
+        JavaClass javaClass = javaClassBuilder.visit(siteClassBuildable);
 
         assertEquals(PACKAGE + ".site", javaClass.getPackageName());
         assertEquals("Site", javaClass.getClassName());
@@ -89,7 +88,7 @@ public class JavaClassBuilderTest {
         when(pageClassBuildable.buildAnnotation()).thenReturn(null);
         when(pageClassBuildable.buildFields(PACKAGE)).thenReturn(javaFields);
 
-        IJavaClass javaClass = javaClassBuilder.visit(pageClassBuildable);
+        JavaClass javaClass = javaClassBuilder.visit(pageClassBuildable);
 
         assertEquals(PACKAGE + ".page", javaClass.getPackageName());
         assertEquals("TitleExample", javaClass.getClassName());
@@ -109,7 +108,7 @@ public class JavaClassBuilderTest {
         when(formClassBuildable.buildAnnotation()).thenReturn(null);
         when(formClassBuildable.buildFields(PACKAGE)).thenReturn(javaFields);
 
-        IJavaClass javaClass = javaClassBuilder.visit(formClassBuildable);
+        JavaClass javaClass = javaClassBuilder.visit(formClassBuildable);
 
         assertEquals(PACKAGE + ".form", javaClass.getPackageName());
         assertEquals("MyForm", javaClass.getClassName());

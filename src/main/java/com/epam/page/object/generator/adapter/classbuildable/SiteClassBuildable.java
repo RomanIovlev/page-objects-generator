@@ -7,12 +7,10 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.JavaField;
-import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
+import com.epam.page.object.generator.adapter.AnnotationMember;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.JavaField;
+import com.epam.page.object.generator.adapter.JavaClass;
 import com.epam.page.object.generator.builder.JavaClassBuilder;
 import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class SiteClassBuildable implements JavaClassBuildable {
     }
 
     @Override
-    public IJavaAnnotation buildAnnotation() {
+    public JavaAnnotation buildAnnotation() {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
         annotationMembers.add(new AnnotationMember("value", "$S", webPages.get(0).getDomainName()));
 
@@ -36,8 +34,8 @@ public class SiteClassBuildable implements JavaClassBuildable {
     }
 
     @Override
-    public List<IJavaField> buildFields(String packageName) {
-        List<IJavaField> fields = new ArrayList<>();
+    public List<JavaField> buildFields(String packageName) {
+        List<JavaField> fields = new ArrayList<>();
 
         for (WebPage webPage : webPages) {
             String fullClassName =
@@ -47,7 +45,7 @@ public class SiteClassBuildable implements JavaClassBuildable {
             pageAnnotations
                 .add(new AnnotationMember("url", "$S", webPage.getUrlWithoutDomain()));
             pageAnnotations.add(new AnnotationMember("title", "$S", webPage.getTitle()));
-            IJavaAnnotation annotation = new JavaAnnotation(JPage.class, pageAnnotations);
+            JavaAnnotation annotation = new JavaAnnotation(JPage.class, pageAnnotations);
             Modifier[] modifiers = new Modifier[]{PUBLIC, STATIC};
 
             fields.add(new JavaField(fullClassName, fieldName, annotation, modifiers));
@@ -57,7 +55,7 @@ public class SiteClassBuildable implements JavaClassBuildable {
     }
 
     @Override
-    public IJavaClass accept(JavaClassBuilder javaClassBuilder) {
+    public JavaClass accept(JavaClassBuilder javaClassBuilder) {
         return javaClassBuilder.visit(this);
     }
 }

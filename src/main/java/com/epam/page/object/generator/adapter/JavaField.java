@@ -1,16 +1,15 @@
-package com.epam.page.object.generator.adapter.filed;
+package com.epam.page.object.generator.adapter;
 
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
 import javax.lang.model.element.Modifier;
 
-public class JavaField implements IJavaField {
+public class JavaField {
 
     private String fullClassField;
     private String fieldName;
-    private IJavaAnnotation annotation;
+    private JavaAnnotation annotation;
     private Modifier[] modifiers;
 
-    public JavaField(String fullClassField, String fieldName, IJavaAnnotation annotation,
+    public JavaField(String fullClassField, String fieldName, JavaAnnotation annotation,
                      Modifier[] modifiers) {
         this.fullClassField = fullClassField;
         this.fieldName = fieldName;
@@ -18,22 +17,18 @@ public class JavaField implements IJavaField {
         this.modifiers = modifiers;
     }
 
-    @Override
     public String getFullFieldClass() {
         return fullClassField;
     }
 
-    @Override
-    public IJavaAnnotation getAnnotation() {
+    public JavaAnnotation getAnnotation() {
         return annotation;
     }
 
-    @Override
     public String getFieldName() {
         return fieldName;
     }
 
-    @Override
     public Modifier[] getModifiers() {
         return modifiers;
     }

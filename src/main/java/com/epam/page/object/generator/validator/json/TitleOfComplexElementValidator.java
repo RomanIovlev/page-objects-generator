@@ -2,12 +2,12 @@ package com.epam.page.object.generator.validator.json;
 
 import com.epam.page.object.generator.model.searchrule.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
-import com.epam.page.object.generator.validator.AbstractValidator;
 import com.epam.page.object.generator.validator.ValidationResult;
+import com.epam.page.object.generator.validator.ValidatorVisitor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public class TitleOfComplexElementValidator extends AbstractValidator {
+public class TitleOfComplexElementValidator implements ValidatorVisitor {
 
     @Override
     public ValidationResult visit(ComplexSearchRule complexSearchRule) {

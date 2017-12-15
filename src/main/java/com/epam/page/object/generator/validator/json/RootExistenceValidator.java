@@ -1,12 +1,12 @@
 package com.epam.page.object.generator.validator.json;
 
 import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
-import com.epam.page.object.generator.validator.AbstractValidator;
 import com.epam.page.object.generator.validator.ValidationResult;
+import com.epam.page.object.generator.validator.ValidatorVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RootExistenceValidator extends AbstractValidator {
+public class RootExistenceValidator implements ValidatorVisitor {
 
     private final static Logger logger = LoggerFactory.getLogger(RootExistenceValidator.class);
 

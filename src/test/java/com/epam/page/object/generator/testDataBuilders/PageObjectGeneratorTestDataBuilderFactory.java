@@ -3,7 +3,6 @@ package com.epam.page.object.generator.testDataBuilders;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.builder.JavaClassBuilder;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
-import com.epam.page.object.generator.builder.searchrule.SearchRuleBuilders;
 import com.epam.page.object.generator.builder.searchrule.SearchRuleBuildersFactory;
 import com.epam.page.object.generator.container.SupportedTypesContainer;
 import com.epam.page.object.generator.util.PropertyLoader;
@@ -29,14 +28,13 @@ public class PageObjectGeneratorTestDataBuilderFactory {
         SearchRuleGroups searchRuleGroupList = propertyLoader.getSearchRuleGroupList();
         RawSearchRuleMapper rawSearchRuleMapper = new RawSearchRuleMapper(searchRuleGroupsScheme,
             searchRuleGroupList);
-        SearchRuleBuildersFactory searchRuleBuildersFactory = new SearchRuleBuildersFactory(
-            rawSearchRuleMapper);
         JsonSchemaValidator validator = new JsonSchemaValidator(new ValidationExceptionConverter());
 
-        SearchRuleBuilders searchRuleBuilders = searchRuleBuildersFactory.getMapWithBuilders();
+        SearchRuleBuildersFactory searchRuleBuildersFactory = new SearchRuleBuildersFactory(
+            rawSearchRuleMapper);
         XpathToCssTransformer xpathToCssTransformer = new XpathToCssTransformer();
         TypeTransformer transformer = new TypeTransformer(new SupportedTypesContainer(),
-            searchRuleBuilders, xpathToCssTransformer);
+            xpathToCssTransformer,  searchRuleBuildersFactory.getMapWithBuilders());
         ValidationChecker checker = new ValidationChecker();
         JavaFileWriter javaPoetAdapter = new JavaFileWriter();
         JsonValidators jsonValidators = new JsonValidators();

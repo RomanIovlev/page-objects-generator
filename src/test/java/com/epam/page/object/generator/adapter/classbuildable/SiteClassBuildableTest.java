@@ -6,11 +6,9 @@ import static org.junit.Assert.*;
 
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JPage;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.JSite;
-import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.filed.JavaField;
+import com.epam.page.object.generator.adapter.AnnotationMember;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.testDataBuilders.WebPageTestDataBuilder;
 import java.util.List;
@@ -33,20 +31,20 @@ public class SiteClassBuildableTest {
             new AnnotationMember("title", "$S", "Metal and Colors")));
     private JavaField expectedField = new JavaField("test.page.MetalAndColors",
         "metalAndColors", expectedFieldAnnotation, new Modifier[]{PUBLIC, STATIC});
-    private List<IJavaField> expectedFields = Lists.newArrayList(expectedField);
+    private List<JavaField> expectedFields = Lists.newArrayList(expectedField);
 
     @Test
     public void buildFields() {
-        List<IJavaField> actualFields = siteClassBuildable.buildFields(packageName);
+        List<JavaField> actualFields = siteClassBuildable.buildFields(packageName);
 
         assertEquals(expectedFields.size(), actualFields.size());
 
-        IJavaField actualSiteField = actualFields.get(0);
+        JavaField actualSiteField = actualFields.get(0);
         assertEquals(expectedField.getFieldName(), actualSiteField.getFieldName());
         assertEquals(expectedField.getFullFieldClass(), actualSiteField.getFullFieldClass());
         assertEquals(expectedField.getModifiers(), actualSiteField.getModifiers());
 
-        IJavaAnnotation actualFieldAnnotation = actualSiteField.getAnnotation();
+        JavaAnnotation actualFieldAnnotation = actualSiteField.getAnnotation();
         assertEquals(expectedFieldAnnotation.getAnnotationClass(),
             actualFieldAnnotation.getAnnotationClass());
         assertEquals(expectedFieldAnnotation.getAnnotationMembers().size(),
@@ -70,7 +68,7 @@ public class SiteClassBuildableTest {
 
     @Test
     public void buildAnnotation() {
-        IJavaAnnotation actualAnnotation = siteClassBuildable.buildAnnotation();
+        JavaAnnotation actualAnnotation = siteClassBuildable.buildAnnotation();
 
         assertEquals(expectedAnnotation.getAnnotationClass(),
             actualAnnotation.getAnnotationClass());

@@ -5,13 +5,12 @@ import static com.epam.page.object.generator.util.StringUtils.splitCamelCase;
 
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.classbuildable.FormClassBuildable;
-import com.epam.page.object.generator.adapter.javaclass.IJavaClass;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.javaclass.JavaClass;
+import com.epam.page.object.generator.adapter.JavaClass;
 import com.epam.page.object.generator.adapter.classbuildable.PageClassBuildable;
 import com.epam.page.object.generator.adapter.classbuildable.SiteClassBuildable;
+import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.model.searchrule.FormSearchRule;
 import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 import com.epam.page.object.generator.util.SearchRuleType;
@@ -26,29 +25,29 @@ public class JavaClassBuilder {
         this.packageName = packageName;
     }
 
-    public IJavaClass visit(SiteClassBuildable siteClassBuildable) {
+    public JavaClass visit(SiteClassBuildable siteClassBuildable) {
         String classPackageName = packageName + ".site";
         String className = "Site";
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebSite.class;
-        IJavaAnnotation annotation = siteClassBuildable.buildAnnotation();
-        List<IJavaField> fields = siteClassBuildable.buildFields(this.packageName);
+        JavaAnnotation annotation = siteClassBuildable.buildAnnotation();
+        List<JavaField> fields = siteClassBuildable.buildFields(this.packageName);
         Modifier modifier = Modifier.PUBLIC;
 
         return new JavaClass(classPackageName, className, superClass, annotation, fields, modifier);
     }
 
-    public IJavaClass visit(PageClassBuildable pageClassBuildable) {
+    public JavaClass visit(PageClassBuildable pageClassBuildable) {
         String classPackageName = packageName + ".page";
         String className = firstLetterUp(splitCamelCase(pageClassBuildable.getTitle()));
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebPage.class;
-        IJavaAnnotation annotation = pageClassBuildable.buildAnnotation();
-        List<IJavaField> fields = pageClassBuildable.buildFields(this.packageName);
+        JavaAnnotation annotation = pageClassBuildable.buildAnnotation();
+        List<JavaField> fields = pageClassBuildable.buildFields(this.packageName);
         Modifier modifier = Modifier.PUBLIC;
 
         return new JavaClass(classPackageName, className, superClass, annotation, fields, modifier);
     }
 
-    public IJavaClass visit(FormClassBuildable formClassBuildable) {
+    public JavaClass visit(FormClassBuildable formClassBuildable) {
         FormWebElementGroup formWebElementGroup = formClassBuildable.getFormWebElementGroup();
 
         FormSearchRule formSearchRule = formWebElementGroup.getSearchRule();
@@ -56,8 +55,8 @@ public class JavaClassBuilder {
         String className = firstLetterUp(formSearchRule.getSection());
         Class superClass = formSearchRule.getTypeName().equals(
             SearchRuleType.FORM.getName()) ? Form.class : Section.class;
-        IJavaAnnotation annotation = formClassBuildable.buildAnnotation();
-        List<IJavaField> fields = formClassBuildable.buildFields(classPackageName);
+        JavaAnnotation annotation = formClassBuildable.buildAnnotation();
+        List<JavaField> fields = formClassBuildable.buildFields(classPackageName);
         Modifier modifier = Modifier.PUBLIC;
 
         return new JavaClass(classPackageName, className, superClass, annotation, fields, modifier);

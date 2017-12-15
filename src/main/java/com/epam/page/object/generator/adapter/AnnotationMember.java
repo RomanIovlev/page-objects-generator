@@ -1,11 +1,11 @@
-package com.epam.page.object.generator.adapter.annotation;
+package com.epam.page.object.generator.adapter;
 
 public class AnnotationMember {
 
     private String name;
     private String format;
     private String arg;
-    private IJavaAnnotation annotation;
+    private JavaAnnotation annotation;
 
     public AnnotationMember(String name, String format, String arg) {
         this.name = name;
@@ -13,7 +13,7 @@ public class AnnotationMember {
         this.arg = arg;
     }
 
-    public AnnotationMember(String name, String format, IJavaAnnotation annotation) {
+    public AnnotationMember(String name, String format, JavaAnnotation annotation) {
         this.name = name;
         this.format = format;
         this.annotation = annotation;
@@ -31,7 +31,7 @@ public class AnnotationMember {
         return arg;
     }
 
-    public IJavaAnnotation getAnnotation() {
+    public JavaAnnotation getAnnotation() {
         return annotation;
     }
 }

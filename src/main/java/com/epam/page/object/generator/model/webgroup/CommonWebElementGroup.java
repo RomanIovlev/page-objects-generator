@@ -1,9 +1,8 @@
 package com.epam.page.object.generator.model.webgroup;
 
-import com.epam.page.object.generator.adapter.annotation.AnnotationMember;
-import com.epam.page.object.generator.adapter.annotation.IJavaAnnotation;
-import com.epam.page.object.generator.adapter.filed.IJavaField;
-import com.epam.page.object.generator.adapter.annotation.JavaAnnotation;
+import com.epam.page.object.generator.adapter.AnnotationMember;
+import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchrule.CommonSearchRule;
@@ -40,8 +39,8 @@ public class CommonWebElementGroup implements WebElementGroup {
     }
 
     @Override
-    public List<IJavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder,
-                                   String packageName) {
+    public List<JavaField> accept(WebElementGroupFieldBuilder webElementGroupFieldBuilder,
+                                  String packageName) {
         return webElementGroupFieldBuilder.visit(this);
     }
 
@@ -71,7 +70,7 @@ public class CommonWebElementGroup implements WebElementGroup {
         return searchRule.toString();
     }
 
-    public IJavaAnnotation getAnnotation(Class annotationClass, WebElement webElement) {
+    public JavaAnnotation getAnnotation(Class annotationClass, WebElement webElement) {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
 
         String uniquenessValue = webElement.getUniquenessValue();
