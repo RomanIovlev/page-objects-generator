@@ -3,8 +3,10 @@ package com.epam.page.object.generator;
 import com.epam.page.object.generator.adapter.JavaFileWriter;
 import com.epam.page.object.generator.builder.JavaClassBuilder;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
-import com.epam.page.object.generator.builder.WebPagesBuilder;
+import com.epam.page.object.generator.builder.webpage.LocalWebPageBuilder;
+import com.epam.page.object.generator.builder.webpage.UrlWebPageBuilder;
 import com.epam.page.object.generator.builder.searchrule.SearchRuleBuildersFactory;
+import com.epam.page.object.generator.builder.webpage.WebPageBuilder;
 import com.epam.page.object.generator.container.SupportedTypesContainer;
 import com.epam.page.object.generator.util.PropertyLoader;
 import com.epam.page.object.generator.util.RawSearchRuleMapper;
@@ -23,7 +25,8 @@ import com.epam.page.object.generator.validator.WebValidators;
 public class PageObjectGeneratorFactory {
 
     public static PageObjectsGenerator getPageObjectGenerator(String packageName,
-                                                              String propertyFile) {
+                                                              String propertyFile,
+                                                              boolean onlineVersion) {
         PropertyLoader propertyLoader = new PropertyLoader(propertyFile);
         SearchRuleGroupsScheme searchRuleGroupsScheme = propertyLoader.getMapWithScheme();
         SearchRuleGroups searchRuleGroupList = propertyLoader.getSearchRuleGroupList();
@@ -42,9 +45,15 @@ public class PageObjectGeneratorFactory {
         WebValidators webValidators = new WebValidators();
         JavaClassBuilder javaClassBuilder = new JavaClassBuilder(packageName);
         WebElementGroupFieldBuilder webElementGroupFieldBuilder = new WebElementGroupFieldBuilder();
-        WebPagesBuilder builder = new WebPagesBuilder();
         SelectorUtils selectorUtils = new SelectorUtils();
         SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
+
+        WebPageBuilder builder;
+        if (onlineVersion) {
+            builder = new UrlWebPageBuilder();
+        } else {
+            builder = new LocalWebPageBuilder();
+        }
 
         return new PageObjectsGenerator(rawSearchRuleMapper, validator, transformer, checker,
             jsonValidators, webValidators, javaClassBuilder, webElementGroupFieldBuilder,

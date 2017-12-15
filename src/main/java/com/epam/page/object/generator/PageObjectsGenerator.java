@@ -7,12 +7,11 @@ import com.epam.page.object.generator.adapter.classbuildable.SiteClassBuildable;
 import com.epam.page.object.generator.adapter.JavaClass;
 import com.epam.page.object.generator.builder.JavaClassBuilder;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
-import com.epam.page.object.generator.error.ValidationException;
+import com.epam.page.object.generator.builder.webpage.WebPageBuilder;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.builder.WebPagesBuilder;
+import com.epam.page.object.generator.builder.webpage.UrlWebPageBuilder;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
-import com.epam.page.object.generator.model.searchrule.Validatable;
 import com.epam.page.object.generator.util.RawSearchRuleMapper;
 import com.epam.page.object.generator.util.SearchRuleExtractor;
 import com.epam.page.object.generator.util.SelectorUtils;
@@ -20,13 +19,10 @@ import com.epam.page.object.generator.util.TypeTransformer;
 import com.epam.page.object.generator.util.ValidationChecker;
 import com.epam.page.object.generator.validator.JsonSchemaValidator;
 import com.epam.page.object.generator.validator.JsonValidators;
-import com.epam.page.object.generator.validator.ValidationResult;
 import com.epam.page.object.generator.validator.WebValidators;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +37,7 @@ public class PageObjectsGenerator {
     private JavaClassBuilder javaClassBuilder;
     private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
     private JavaFileWriter javaFileWriter;
-    private WebPagesBuilder webPagesBuilder;
+    private WebPageBuilder webPageBuilder;
 
     private SelectorUtils selectorUtils;
     private SearchRuleExtractor searchRuleExtractor;
@@ -59,7 +55,7 @@ public class PageObjectsGenerator {
                                 JavaClassBuilder javaClassBuilder,
                                 WebElementGroupFieldBuilder webElementGroupFieldBuilder,
                                 JavaFileWriter javaFileWriter,
-                                WebPagesBuilder webPagesBuilder,
+                                WebPageBuilder webPageBuilder,
                                 SelectorUtils selectorUtils,
                                 SearchRuleExtractor searchRuleExtractor) {
         this.rawSearchRuleMapper = rawSearchRuleMapper;
@@ -71,7 +67,7 @@ public class PageObjectsGenerator {
         this.javaClassBuilder = javaClassBuilder;
         this.webElementGroupFieldBuilder = webElementGroupFieldBuilder;
         this.javaFileWriter = javaFileWriter;
-        this.webPagesBuilder = webPagesBuilder;
+        this.webPageBuilder = webPageBuilder;
         this.selectorUtils = selectorUtils;
         this.searchRuleExtractor = searchRuleExtractor;
     }
@@ -101,7 +97,7 @@ public class PageObjectsGenerator {
         checker.checkSearchRules(searchRuleList);
 
         logger.info("Start creating web pages...");
-        List<WebPage> webPages = webPagesBuilder.generate(urls, searchRuleExtractor);
+        List<WebPage> webPages = webPageBuilder.generate(urls, searchRuleExtractor);
         logger.info("Finish creating web pages");
 
         webPages.forEach(wp -> wp.addSearchRules(searchRuleList));

@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertTrue;
 
+import com.epam.page.object.generator.builder.webpage.UrlWebPageBuilder;
 import com.epam.page.object.generator.error.NotValidUrlException;
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.util.SearchRuleExtractor;
@@ -15,14 +16,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.MockitoAnnotations;
 
-public class WebPagesBuilderTest {
+public class UrlWebPageBuilderTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private WebPagesBuilder sut;
+    private UrlWebPageBuilder sut;
     private List<String> urls;
-    private List<WebPage> webPages;
 
     private SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
@@ -30,7 +30,7 @@ public class WebPagesBuilderTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        sut = new WebPagesBuilder();
+        sut = new UrlWebPageBuilder();
         urls = new ArrayList<>();
     }
 
@@ -38,7 +38,7 @@ public class WebPagesBuilderTest {
     public void generate_validUrls() throws Exception {
         urls.add("http://ya.ru");
         urls.add("http://google.com");
-        webPages = sut.generate(urls, searchRuleExtractor);
+        List<WebPage> webPages = sut.generate(urls, searchRuleExtractor);
 
         assertTrue(webPages.size() > 0);
     }

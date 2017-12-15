@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.builder;
+package com.epam.page.object.generator.builder.webpage;
 
 import com.epam.page.object.generator.error.NotValidUrlException;
 import com.epam.page.object.generator.model.WebPage;
@@ -14,16 +14,17 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WebPagesBuilder {
+public class UrlWebPageBuilder implements WebPageBuilder{
 
-    private final static Logger logger = LoggerFactory.getLogger(WebPagesBuilder.class);
+    private final static Logger logger = LoggerFactory.getLogger(UrlWebPageBuilder.class);
 
-    public List<WebPage> generate(List<String> urls,
+    @Override
+    public List<WebPage> generate(List<String> paths,
                                   SearchRuleExtractor searchRuleExtractor) {
         List<String> invalidUrls = new ArrayList<>();
         List<WebPage> webPages = new ArrayList<>();
 
-        for (String url : urls) {
+        for (String url : paths) {
             try {
                 URI uri = new URI(url);
                 Connection connect = Jsoup.connect(url);

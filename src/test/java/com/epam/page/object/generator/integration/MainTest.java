@@ -27,7 +27,7 @@ public class MainTest {
     @Before
     public void setUp() throws IOException {
         FileUtils.deleteDirectory(new File(outputDir + packageName));
-        pog = PageObjectGeneratorFactory.getPageObjectGenerator(packageName, "/groups.json");
+        pog = PageObjectGeneratorFactory.getPageObjectGenerator(packageName, "/groups.json", true);
     }
 
     @Test

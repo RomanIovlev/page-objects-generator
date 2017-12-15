@@ -1,7 +1,7 @@
 package com.epam.page.object.generator.integration;
 
-import com.epam.page.object.generator.testDataBuilders.PageObjectGeneratorTestDataBuilder;
-import com.epam.page.object.generator.testDataBuilders.PageObjectGeneratorTestDataBuilderFactory;
+import com.epam.page.object.generator.PageObjectGeneratorFactory;
+import com.epam.page.object.generator.PageObjectsGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -14,13 +14,13 @@ public class OfflineTest {
     private String outputDir = "src/test/resources/";
     private String packageName = "test";
 
-    private PageObjectGeneratorTestDataBuilder pog;
+    private PageObjectsGenerator pog;
 
     @Before
     public void setUp() throws IOException {
         FileUtils.deleteDirectory(new File(outputDir + packageName));
-        pog = PageObjectGeneratorTestDataBuilderFactory
-            .getPageObjectGenerator(packageName, "/groups.json");
+        pog = PageObjectGeneratorFactory
+            .getPageObjectGenerator(packageName, "/groups.json", false);
     }
 
     @Test
