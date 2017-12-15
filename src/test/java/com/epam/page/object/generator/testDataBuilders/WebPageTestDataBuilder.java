@@ -4,6 +4,7 @@ import com.epam.jdi.uitests.web.selenium.elements.common.Button;
 import com.epam.jdi.uitests.web.selenium.elements.common.Label;
 import com.epam.jdi.uitests.web.selenium.elements.complex.Dropdown;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
+import com.epam.page.object.generator.error.NotValidPathsException;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.WebPage;
@@ -22,85 +23,61 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebPageTestDataBuilder {
 
     private static SearchRuleExtractor extractor = new SearchRuleExtractor();
+    private final static Logger logger = LoggerFactory.getLogger(WebPageTestDataBuilder.class);
 
     public static WebPage getJdiWebPage() {
-        String html = null;
+        String jdiPathFile = "/jsonForBuilders/webPage/jdi/test.html";
         try {
-            html = Files
-                .toString(new File(WebPageTestDataBuilder.class
-                        .getResource("/jsonForBuilders/webPage/jdi/test.html").getFile()),
+            String html = Files
+                .toString(new File(WebPageTestDataBuilder.class.getResource(jdiPathFile).getFile()),
                     Charsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Document doc = Jsoup.parse(html);
+            Document doc = Jsoup.parse(html);
+            WebPage webPage = new WebPage(new URI("https://epam.github.io/JDI/metals-colors.html"),
+                doc, extractor);
+            XpathToCssTransformer transformer = new XpathToCssTransformer();
+            SelectorUtils selectorUtils = new SelectorUtils();
+            List<SearchRule> searchRules = Lists.newArrayList(
+                new CommonSearchRule("text", SearchRuleType.BUTTON,
+                    new Selector("css", "button[type=submit][id=calculate-button]"),
+                    new ClassAndAnnotationPair(Button.class, FindBy.class), transformer,
+                    selectorUtils),
+                new CommonSearchRule("text", SearchRuleType.LABEL,
+                    new Selector("xpath", "//label[@for='g1']"),
+                    new ClassAndAnnotationPair(Label.class, FindBy.class), transformer,
+                    selectorUtils),
+                new ComplexSearchRule(SearchRuleType.DROPDOWN, Lists.newArrayList(
+                    new ComplexInnerSearchRule("title", "root",
+                        new Selector("css", "button[data-id=colors-dropdown]"), transformer),
+                    new ComplexInnerSearchRule(null, "list",
+                        new Selector("xpath", "//ul[@class='dropdown-menu inner selectpicker']"),
+                        transformer)), new ClassAndAnnotationPair(Dropdown.class, JDropdown.class),
+                    selectorUtils));
 
-        WebPage webPage = null;
-        try {
-            webPage = new WebPage(new URI("https://epam.github.io/JDI/metals-colors.html"), doc, extractor);
+            webPage.addSearchRules(searchRules);
+
+            return webPage;
         } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        XpathToCssTransformer transformer = new XpathToCssTransformer();
-        SelectorUtils selectorUtils = new SelectorUtils();
-        List<SearchRule> searchRules = Lists.newArrayList(
-            new CommonSearchRule("text", SearchRuleType.BUTTON,
-                new Selector("css", "button[type=submit][id=calculate-button]"),
-                new ClassAndAnnotationPair(Button.class, FindBy.class), transformer,
-                selectorUtils),
-            new CommonSearchRule("text", SearchRuleType.LABEL,
-                new Selector("xpath", "//label[@for='g1']"),
-                new ClassAndAnnotationPair(Label.class, FindBy.class), transformer, selectorUtils),
-            new ComplexSearchRule(SearchRuleType.DROPDOWN, Lists.newArrayList(
-                new ComplexInnerSearchRule("title", "root",
-                    new Selector("css", "button[data-id=colors-dropdown]"), transformer),
-                new ComplexInnerSearchRule(null, "list",
-                    new Selector("xpath", "//ul[@class='dropdown-menu inner selectpicker']"),
-                    transformer)), new ClassAndAnnotationPair(Dropdown.class, JDropdown.class),
-                selectorUtils));
-
-        webPage.addSearchRules(searchRules);
-
-        return webPage;
-    }
-
-    public List<WebPage> generate(List<String> paths, SearchRuleExtractor searchRuleExtractor) {
-        List<WebPage> webPages = new ArrayList<>();
-        for (String path : paths) {
-            webPages.add(getWebPage(path, searchRuleExtractor));
-        }
-        return webPages;
-    }
-
-    private static WebPage getWebPage(String filePath, SearchRuleExtractor extractor) {
-        String html = null;
-        try {
-            html = Files
-                .toString(new File(WebPageTestDataBuilder.class.getResource(filePath).getFile()),
-                    Charsets.UTF_8);
+            String message = "Not correct URI for the '" + jdiPathFile + "' file" + Arrays
+                .toString(e.getStackTrace());
+            logger.error(message);
+            throw new NotValidPathsException(message);
         } catch (IOException e) {
-            e.printStackTrace();
+            String message =
+                "File '" + jdiPathFile + "' doesn't exist!" + Arrays.toString(e.getStackTrace());
+            logger.error(message);
+            throw new NotValidPathsException(message);
         }
-        Document doc = Jsoup.parse(html);
-
-        URI uri = null;
-
-        try {
-            uri = new URI("www.test.com");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        return new WebPage(uri, doc, extractor);
     }
 }

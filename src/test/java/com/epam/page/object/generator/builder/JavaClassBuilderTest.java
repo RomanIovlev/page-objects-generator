@@ -39,12 +39,11 @@ public class JavaClassBuilderTest {
     private AnnotationMember annotationMember;
     @Mock
     private JavaField javaField;
-    private List<JavaField> javaFields = Lists.newArrayList(javaField);
+    private List<JavaField> javaFields;
 
     @Mock
     private SiteClassBuildable siteClassBuildable;
-    private JavaAnnotation siteAnnotation = new JavaAnnotation(JSite.class,
-        Lists.newArrayList(annotationMember));
+    private JavaAnnotation siteAnnotation;
 
     @Mock
     private PageClassBuildable pageClassBuildable;
@@ -62,6 +61,8 @@ public class JavaClassBuilderTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        javaFields = Lists.newArrayList(javaField);
+        siteAnnotation = new JavaAnnotation(JSite.class, Lists.newArrayList(annotationMember));
     }
 
     @Test
@@ -78,7 +79,6 @@ public class JavaClassBuilderTest {
         assertEquals(javaFields, javaClass.getFieldsList());
         assertEquals(Modifier.PUBLIC, javaClass.getModifier());
 
-        verify(siteClassBuildable).buildAnnotation();
         verify(siteClassBuildable).buildFields(eq(PACKAGE));
     }
 
@@ -97,7 +97,6 @@ public class JavaClassBuilderTest {
         assertEquals(javaFields, javaClass.getFieldsList());
         assertEquals(Modifier.PUBLIC, javaClass.getModifier());
 
-        verify(pageClassBuildable).buildAnnotation();
         verify(pageClassBuildable).buildFields(eq(PACKAGE));
     }
 
@@ -117,7 +116,6 @@ public class JavaClassBuilderTest {
         assertEquals(Collections.emptyList(), javaClass.getFieldsList());
         assertEquals(Modifier.PUBLIC, javaClass.getModifier());
 
-        verify(formClassBuildable).buildAnnotation();
         verify(formClassBuildable).buildFields(eq(PACKAGE + ".form"));
     }
 }

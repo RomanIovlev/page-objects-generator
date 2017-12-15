@@ -25,8 +25,6 @@ public class PageClassBuildableTest {
     private PageClassBuildable pageClassBuildable = new PageClassBuildable(webPage,
         webElementGroupFieldBuilder);
 
-    private JavaAnnotation expectedAnnotation = null;
-
     private JavaAnnotation expectedButtonAnnotation = new JavaAnnotation(FindBy.class,
         Lists.newArrayList(new AnnotationMember("css", "$S",
             "button[type=submit][id=calculate-button][text='Calculate']")));
@@ -85,6 +83,6 @@ public class PageClassBuildableTest {
     @Test
     public void buildAnnotation(){
         JavaAnnotation actualAnnotation = pageClassBuildable.buildAnnotation();
-        assertEquals(expectedAnnotation, actualAnnotation);
+        assertEquals(null, actualAnnotation);
     }
 }

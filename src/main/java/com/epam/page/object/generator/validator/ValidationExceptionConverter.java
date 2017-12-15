@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.validator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.everit.json.schema.ValidationException;
 import org.slf4j.Logger;
@@ -20,7 +21,8 @@ public class ValidationExceptionConverter {
         } else {
             for (ValidationException validationException : e.getCausingExceptions()) {
                 validationResults.add(getValidationResult(validationException));
-                logger.error(validationException.getMessage());
+                logger.error(validationException.getMessage() + Arrays
+                    .toString(validationException.getStackTrace()));
             }
         }
         return validationResults;

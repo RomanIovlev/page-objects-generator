@@ -20,6 +20,7 @@ import com.epam.page.object.generator.util.SelectorUtils;
 import com.epam.page.object.generator.util.XpathToCssTransformer;
 import java.util.List;
 import org.assertj.core.util.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -46,8 +47,7 @@ public class ComplexSearchRuleBuilderTest {
     private SelectorUtils selectorUtils = new SelectorUtils();
     private SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
-    private List<RawSearchRule> rawSearchRuleList = Lists
-        .newArrayList(innerSearchRule1, innerSearchRule2);
+    private List<RawSearchRule> rawSearchRuleList;
 
     private ComplexInnerSearchRule complexInnerSearchRule1 = new ComplexInnerSearchRule("text",
         "root", new Selector("css", ".myClass"), transformer);
@@ -61,9 +61,14 @@ public class ComplexSearchRuleBuilderTest {
         innerSearchRules, new ClassAndAnnotationPair(Dropdown.class, JDropdown.class),
         selectorUtils);
 
+    @Before
+    public void setUp(){
+        MockitoAnnotations.initMocks(this);
+        rawSearchRuleList = Lists.newArrayList(innerSearchRule1, innerSearchRule2);
+    }
+
     @Test
     public void buildComplexSearchRule_SuccessTest() {
-        MockitoAnnotations.initMocks(this);
 
         when(rawSearchRule.getType()).thenReturn(expectedSearchRule.getType());
         when(mapper.getComplexInnerRawSearchRules(any(RawSearchRule.class)))
