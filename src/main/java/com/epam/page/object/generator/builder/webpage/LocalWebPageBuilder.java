@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -34,16 +35,19 @@ public class LocalWebPageBuilder implements WebPageBuilder {
                 webPages.add(new WebPage(uri, doc, searchRuleExtractor));
             } catch (IOException e) {
                 String message = "File = '" + path + "' doesn't exist!";
-                logger.error(message);
+                logger.error(message, e);
                 invalidPaths.add(message);
             } catch (URISyntaxException e) {
                 String message = "Not correct URI for the '" + path + "' file";
-                logger.error(message);
+                logger.error(message, e);
                 invalidPaths.add(message);
             }
         }
         if (!invalidPaths.isEmpty()) {
-            throw new NotValidPathsException(invalidPaths);
+            String message = invalidPaths.stream().collect(Collectors.joining("\n"));
+            NotValidPathsException e = new NotValidPathsException(message);
+            logger.error(message, e);
+            throw e;
         }
 
         return webPages;

@@ -95,22 +95,19 @@ public class WebPageTestDataBuilder {
             Document doc = Jsoup.parse(html);
             WebPage webPage = new WebPage(new URI(uri),
                 doc, extractor);
-            XpathToCssTransformer transformer = new XpathToCssTransformer();
-            SelectorUtils selectorUtils = new SelectorUtils();
             webPage.addSearchRules(searchRules);
 
             return webPage;
         } catch (URISyntaxException e) {
             String message = "Not correct URI for the '" + pathFile + "' file" + Arrays
                 .toString(e.getStackTrace());
-            logger.error(message);
+            logger.error(message, e);
             throw new NotValidPathsException(message);
         } catch (IOException e) {
             String message =
                 "File '" + pathFile + "' doesn't exist!" + Arrays.toString(e.getStackTrace());
-            logger.error(message);
+            logger.error(message, e);
             throw new NotValidPathsException(message);
         }
     }
-
 }

@@ -8,13 +8,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UrlWebPageBuilder implements WebPageBuilder{
+public class UrlWebPageBuilder implements WebPageBuilder {
 
     private final static Logger logger = LoggerFactory.getLogger(UrlWebPageBuilder.class);
 
@@ -33,12 +34,15 @@ public class UrlWebPageBuilder implements WebPageBuilder{
                 logger.debug("Create web page for url = '" + url + "'");
             } catch (IOException | URISyntaxException | IllegalArgumentException e) {
                 String message = "Not valid url: " + url;
-                logger.error(message);
+                logger.error(message, e);
                 invalidUrls.add(message);
             }
         }
         if (!invalidUrls.isEmpty()) {
-            throw new NotValidUrlException(invalidUrls);
+            String message = invalidUrls.stream().collect(Collectors.joining("\n"));
+            NotValidUrlException e = new NotValidUrlException(message);
+            logger.error(message, e);
+            throw e;
         }
 
         return webPages;

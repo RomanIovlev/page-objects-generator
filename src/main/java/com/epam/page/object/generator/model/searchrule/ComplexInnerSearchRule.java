@@ -52,7 +52,7 @@ public class ComplexInnerSearchRule implements SearchRule {
             try {
                 return transformer.getCssSelector(selector);
             } catch (XpathToCssTransformerException e) {
-                logger.error("Failed transforming selector = '" + selector);
+                logger.error("Failed transforming selector = '" + selector, e);
             }
         }
         logger.debug("Don't need to transform selector");

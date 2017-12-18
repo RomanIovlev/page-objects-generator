@@ -45,8 +45,8 @@ public class PropertyLoader {
                 Schema schema = SchemaLoader.load(jsonSchema);
                 schemeMap.put(groupName, schema);
                 logger.debug("Add schema = '" + schemaPath + "' for '" + groupName + "' group");
-            } catch (NullPointerException ex){
-                logger.error("Schema = '" + schemaPath + "' doesn't exist!", ex);
+            } catch (NullPointerException e){
+                logger.error("Schema = '" + schemaPath + "' doesn't exist!", e);
                 throw new NullPointerException("\nSchema = '" + schemaPath + "' doesn't exist!");
             }
         }
