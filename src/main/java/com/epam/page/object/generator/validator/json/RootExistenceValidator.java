@@ -14,8 +14,8 @@ public class RootExistenceValidator implements ValidatorVisitor {
     public ValidationResult visit(ComplexSearchRule complexSearchRule) {
         logger.debug("Start validate " + complexSearchRule);
         if (complexSearchRule.getRoot() == null) {
-            logger.debug("'root' title is absent in " + complexSearchRule);
-            logger.debug("Invalid " +complexSearchRule + "\n");
+            logger.warn("'root' title is absent in " + complexSearchRule);
+            logger.warn("Invalid " +complexSearchRule + "\n");
             return new ValidationResult(false,
                 "Search rule = " + complexSearchRule + " hasn't got 'root' inner element");
         }

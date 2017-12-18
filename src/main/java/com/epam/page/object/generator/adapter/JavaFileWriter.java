@@ -9,12 +9,18 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JavaFileWriter {
 
+    private final static Logger logger = LoggerFactory.getLogger(JavaFileWriter.class);
+
     public void writeFiles(String outputDir, List<JavaClass> javaClasses) throws IOException {
         for (JavaClass javaClass : javaClasses) {
+            logger.debug("Start generating " + javaClass + "\n");
             writeClass(outputDir, javaClass);
+            logger.debug("Generate " + javaClass + "\n");
         }
     }
 
@@ -28,7 +34,9 @@ public class JavaFileWriter {
         List<FieldSpec> fieldSpecList = new ArrayList<>();
 
         for (JavaField field : javaClass.getFieldsList()) {
+            logger.debug("Start building " + field);
             fieldSpecList.add(buildFieldSpec(field));
+            logger.debug("Finish building field\n");
         }
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(javaClass.getClassName())
@@ -52,6 +60,7 @@ public class JavaFileWriter {
     }
 
     private AnnotationSpec buildAnnotationSpec(JavaAnnotation annotation) {
+        logger.debug("Start building " + annotation);
         AnnotationSpec annotationSpec =
             AnnotationSpec
                 .builder(annotation.getAnnotationClass())
@@ -69,7 +78,9 @@ public class JavaFileWriter {
                         buildAnnotationSpec(annotationMember.getAnnotation()))
                     .build();
             }
+            logger.debug("Build " + annotationMember);
         }
+        logger.debug("Finish building annotation");
 
         return annotationSpec;
     }

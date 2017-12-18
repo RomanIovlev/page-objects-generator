@@ -34,4 +34,14 @@ public class AnnotationMember {
     public JavaAnnotation getAnnotation() {
         return annotation;
     }
+
+    @Override
+    public String toString() {
+        return "AnnotationMember{" +
+            "name='" + name + '\'' +
+            ", format='" + format + '\'' +
+            ", arg='" + arg + '\'' +
+            ", annotation=" + annotation +
+            '}';
+    }
 }

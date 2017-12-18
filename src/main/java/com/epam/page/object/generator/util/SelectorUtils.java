@@ -13,7 +13,7 @@ public class SelectorUtils {
      * @return css selector
      */
     public String resultCssSelector(Selector selector, String requiredValue,
-                                           String uniquenessAttribute) {
+                                    String uniquenessAttribute) {
         if (requiredValue == null) {
             return selector.getValue();
         }
@@ -31,7 +31,7 @@ public class SelectorUtils {
      * @return xpath selector
      */
     public String resultXpathSelector(Selector selector, String requiredValue,
-                                             String uniquenessAttribute) {
+                                      String uniquenessAttribute) {
         String xpathWithoutCloseBracket = selector.getValue().replace("]", "");
 
         if (requiredValue == null) {

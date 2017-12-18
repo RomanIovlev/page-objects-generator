@@ -38,7 +38,7 @@ public class RawSearchRuleMapper {
                 .getSearchRuleTypeByString(searchRuleType.toLowerCase());
             RawSearchRule rawSearchRule = getRawSearchRule(object, searchRuleType, type);
             rawSearchRuleList.add(rawSearchRule);
-            logger.info("Add SearchRule ='" + rawSearchRule + "'");
+            logger.debug("Add SearchRule ='" + rawSearchRule + "'");
         }
 
         return rawSearchRuleList;
@@ -72,7 +72,7 @@ public class RawSearchRuleMapper {
             Schema schema = searchRuleGroupsScheme.getSchema("complexInnerSearchRule");
             RawSearchRule rawSearchRule = new RawSearchRule(object, type, group, schema);
             innerRawSearchRules.add(rawSearchRule);
-            logger.info("Add complexInnerSearchRule ='" + rawSearchRule + "'");
+            logger.debug("Add complexInnerSearchRule ='" + rawSearchRule + "'");
         }
 
         return innerRawSearchRules;
@@ -91,7 +91,7 @@ public class RawSearchRuleMapper {
             Schema schema = searchRuleGroupsScheme.getSchema("formInnerSearchRule");
             RawSearchRule rawSearchRule = new RawSearchRule(object, type, group, schema);
             innerRawSearchRules.add(rawSearchRule);
-            logger.info("Add formInnerSearchRule ='" + rawSearchRule + "'");
+            logger.debug("Add formInnerSearchRule ='" + rawSearchRule + "'");
         }
 
         return innerRawSearchRules;

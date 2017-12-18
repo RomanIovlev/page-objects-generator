@@ -34,7 +34,7 @@ public class PropertyLoader {
 
             JSONObject group = typeGroups.getJSONObject(i);
             String groupName = group.getString("name");
-            logger.info("Read '" + groupName + "' group...");
+            logger.debug("Read '" + groupName + "' group...");
 
             String schemaPath = group.getString("schema");
 
@@ -44,9 +44,9 @@ public class PropertyLoader {
                         PropertyLoader.class.getResourceAsStream(schemaPath)));
                 Schema schema = SchemaLoader.load(jsonSchema);
                 schemeMap.put(groupName, schema);
-                logger.info("Add schema = '" + schemaPath + "' for '" + groupName + "' group");
+                logger.debug("Add schema = '" + schemaPath + "' for '" + groupName + "' group");
             } catch (NullPointerException ex){
-                logger.error("Schema = '" + schemaPath + "' doesn't exist!");
+                logger.error("Schema = '" + schemaPath + "' doesn't exist!", ex);
                 throw new NullPointerException("\nSchema = '" + schemaPath + "' doesn't exist!");
             }
         }
@@ -67,15 +67,15 @@ public class PropertyLoader {
             JSONObject group = typeGroups.getJSONObject(i);
 
             String groupName = group.getString("name");
-            logger.info("Read '" + groupName + "' group...");
+            logger.debug("Read '" + groupName + "' group...");
             List<SearchRuleType> searchRuleTypes = new ArrayList<>();
             JSONArray types = group.getJSONArray("searchRuleTypes");
             for (int j = 0; j < types.length(); j++) {
                 searchRuleTypes.add(SearchRuleType.getSearchRuleTypeByString(types.getString(j)));
-                logger.info("Add type = '" + types.getString(j) + "' in '" + groupName + "' group");
+                logger.debug("Add type = '" + types.getString(j) + "' in '" + groupName + "' group");
             }
             searchRuleGroups.add(new SearchRuleGroup(groupName, searchRuleTypes));
-            logger.info("Finish read group types - '" + groupName + "'\n");
+            logger.debug("Finish read group types - '" + groupName + "'\n");
         }
         logger.info("Finish reading list of group types\n");
 

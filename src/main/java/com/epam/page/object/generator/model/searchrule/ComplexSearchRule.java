@@ -69,7 +69,7 @@ public class ComplexSearchRule implements SearchRule {
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
         ValidationResult visit = validatorVisitor.visit(this);
-        logger.info(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
+        logger.debug(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
         validationResults.add(visit);
     }
 

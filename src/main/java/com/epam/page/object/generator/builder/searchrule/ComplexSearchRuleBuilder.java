@@ -37,24 +37,21 @@ public class ComplexSearchRuleBuilder implements SearchRuleBuilder {
                                       SearchRuleExtractor searchRuleExtractor) {
         logger.debug("Start transforming of " + rawSearchRule);
         SearchRuleType type = rawSearchRule.getType();
-        logger.debug("'type' = " + type);
-        List<ComplexInnerSearchRule> innerSearchRules = new ArrayList<>();
-
-        logger.info("Create list of complexInnerSearchRules...");
-        List<RawSearchRule> innerRawSearchRules = rawSearchRuleMapper
-            .getComplexInnerRawSearchRules(rawSearchRule);
-        logger.info("Finish creating list of complexInnerSearchRules");
-
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());
-        logger.debug("'class' = " + classAndAnnotation.getElementClass().getName());
-        logger.debug("'annotation' = " + classAndAnnotation.getElementAnnotation().getName());
+
+        List<ComplexInnerSearchRule> innerSearchRules = new ArrayList<>();
+
+        logger.debug("Create list of complexInnerSearchRules...");
+        List<RawSearchRule> innerRawSearchRules = rawSearchRuleMapper
+            .getComplexInnerRawSearchRules(rawSearchRule);
 
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
             innerSearchRules.add((ComplexInnerSearchRule) builder
                 .buildSearchRule(innerRawSearchRule, typesContainer, transformer, selectorUtils,
                     searchRuleExtractor));
         }
+        logger.debug("Finish creating list of complexInnerSearchRules");
 
         ComplexSearchRule complexSearchRule = new ComplexSearchRule(type, innerSearchRules,
             classAndAnnotation, selectorUtils);

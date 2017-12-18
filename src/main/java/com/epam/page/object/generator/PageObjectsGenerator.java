@@ -75,32 +75,13 @@ public class PageObjectsGenerator {
     public void generatePageObjects(String jsonPath, String outputDir, List<String> urls)
         throws IOException {
 
-        logger.info("Create list of RawSearchRules...");
-        List<RawSearchRule> rawSearchRuleList = rawSearchRuleMapper.getRawSearchRuleList(jsonPath);
-        logger.info("Finish creating list of RawSearchRules\n");
+        List<RawSearchRule> rawSearchRuleList = getRawSearchRules(jsonPath);
+        jsonSchemaValidation(rawSearchRuleList);
 
-        logger.info("Start validation RawSearchRules with using Json Schema...");
-        jsonSchemaValidator.validate(rawSearchRuleList);
-        logger.info("Finish validation!\n");
+        List<SearchRule> searchRuleList = getSearchRules(rawSearchRuleList);
+        jsonValidation(searchRuleList);
 
-        checker.checkRawSearchRules(rawSearchRuleList);
-
-        logger.info("Start transforming of RawSearchRules...\n");
-        List<SearchRule> searchRuleList = typeTransformer
-            .transform(rawSearchRuleList, selectorUtils, searchRuleExtractor);
-        logger.info("Finish transforming of RawSearchRules\n");
-
-        logger.info("Start Json validation...\n");
-        jsonValidators.validate(searchRuleList);
-        logger.info("Finish Json validation\n");
-
-        checker.checkSearchRules(searchRuleList);
-
-        logger.info("Start creating web pages...");
-        List<WebPage> webPages = webPageBuilder.generate(urls, searchRuleExtractor);
-        logger.info("Finish creating web pages");
-
-        webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
+        List<WebPage> webPages = createWebPages(urls, searchRuleList);
         webValidators.validate(webPages);
 
         List<JavaClassBuildable> rawJavaClasses = getJavaClassBuildables(webPages);
@@ -109,28 +90,78 @@ public class PageObjectsGenerator {
 
         checker.checkWebPages(webPages, javaClasses, outputDir, javaFileWriter, forceGenerateFile);
 
+        logger.info("Start generating JavaClasses...");
         javaFileWriter.writeFiles(outputDir, javaClasses);
+        logger.info("Finish generating JavaClasses");
+    }
+
+    private List<RawSearchRule> getRawSearchRules(String jsonPath) {
+        logger.info("Start creating list of RawSearchRules...");
+        List<RawSearchRule> rawSearchRuleList = rawSearchRuleMapper.getRawSearchRuleList(jsonPath);
+        logger.info("Finish creating list of RawSearchRules\n");
+        return rawSearchRuleList;
+    }
+
+    private void jsonValidation(List<SearchRule> searchRuleList) {
+        logger.info("Start Json validation...\n");
+        jsonValidators.validate(searchRuleList);
+        logger.info("Finish Json validation\n");
+
+        checker.checkSearchRules(searchRuleList);
+    }
+
+    private List<SearchRule> getSearchRules(List<RawSearchRule> rawSearchRuleList) {
+        logger.info("Start transforming RawSearchRules in SearchRules...");
+        List<SearchRule> searchRuleList = typeTransformer
+            .transform(rawSearchRuleList, selectorUtils, searchRuleExtractor);
+        logger.info("Finish transforming RawSearchRules in SearchRules\n");
+        return searchRuleList;
+    }
+
+    private void jsonSchemaValidation(List<RawSearchRule> rawSearchRuleList) {
+        logger.info("Start validation RawSearchRules with using Json Schema...");
+        jsonSchemaValidator.validate(rawSearchRuleList);
+        logger.info("Finish validation\n");
+
+        checker.checkRawSearchRules(rawSearchRuleList);
+    }
+
+    private List<WebPage> createWebPages(List<String> urls, List<SearchRule> searchRuleList) {
+        logger.info("Start creating web pages...");
+        List<WebPage> webPages = webPageBuilder.generate(urls, searchRuleExtractor);
+        logger.info("Finish creating web pages\n");
+
+        webPages.forEach(wp -> wp.addSearchRules(searchRuleList));
+        return webPages;
     }
 
     private List<JavaClass> getJavaClasses(List<JavaClassBuildable> rawJavaClasses) {
         List<JavaClass> javaClasses = new ArrayList<>();
-
+        logger.info("Start creating JavaClasses...");
         for (JavaClassBuildable javaClass : rawJavaClasses) {
             javaClasses.add(javaClass.accept(javaClassBuilder));
         }
+        logger.info("Finish creating JavaClasses\n");
         return javaClasses;
     }
 
     private List<JavaClassBuildable> getJavaClassBuildables(List<WebPage> webPages) {
         List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
+        logger.info("Start creating JavaClassBuildables...");
+        logger.debug("Start creating SiteClassBuildable...");
         rawJavaClasses.add(new SiteClassBuildable(webPages));
+        logger.debug("Finish creating SiteClassBuildable\n");
 
         for (WebPage webPage : webPages) {
+            logger.debug("Start PageClassBuildable for '" + webPage.getTitle() + "' page");
             rawJavaClasses.add(new PageClassBuildable(webPage, webElementGroupFieldBuilder));
+            logger.debug("Finish creating PageClassBuildable\n");
             if (webPage.isContainedFormSearchRule()) {
                 rawJavaClasses.addAll(webPage.getFormClasses(selectorUtils));
             }
+
         }
+        logger.info("Finish creating JavaClassBuildables\n");
         return rawJavaClasses;
     }
 

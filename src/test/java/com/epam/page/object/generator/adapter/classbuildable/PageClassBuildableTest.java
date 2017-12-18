@@ -9,7 +9,7 @@ import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.WebPage;
-import com.epam.page.object.generator.testDataBuilders.WebPageTestDataBuilder;
+import com.epam.page.object.generator.databuilder.WebPageTestDataBuilder;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.assertj.core.util.Lists;

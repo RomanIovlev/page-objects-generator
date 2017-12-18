@@ -25,20 +25,15 @@ public class CommonSearchRuleBuilder implements SearchRuleBuilder {
                                       SearchRuleExtractor searchRuleExtractor) {
         logger.debug("Start transforming of " + rawSearchRule);
         String uniqueness = rawSearchRule.getValue("uniqueness");
-        logger.debug("'uniqueness' = " + uniqueness);
         SearchRuleType type = rawSearchRule.getType();
-        logger.debug("'type' = " + type);
         Selector selector = rawSearchRule.getSelector();
-        logger.debug("'selector' = " + selector);
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());
-        logger.debug("'class' = " + classAndAnnotation.getElementClass().getName());
-        logger.debug("'annotation' = " + classAndAnnotation.getElementAnnotation().getName());
 
         CommonSearchRule commonSearchRule = new CommonSearchRule(uniqueness, type, selector,
             classAndAnnotation, transformer,
             selectorUtils);
-        logger.debug("Create a new " + commonSearchRule + "\n");
+        logger.debug("Create a new " + commonSearchRule);
 
         return commonSearchRule;
     }

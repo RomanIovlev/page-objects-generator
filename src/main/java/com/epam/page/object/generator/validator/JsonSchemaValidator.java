@@ -26,7 +26,7 @@ public class JsonSchemaValidator {
                 rawSearchRule.setValidationResults(
                     Lists.newArrayList(
                         new ValidationResult(true, rawSearchRule + " is correct!")));
-                logger.info(rawSearchRule + "is valid");
+                logger.debug(rawSearchRule + " is valid");
             } catch (ValidationException e) {
                 logger.error(rawSearchRule + " is invalid:");
                 rawSearchRule.setValidationResults(converter.toValidationResult(e));

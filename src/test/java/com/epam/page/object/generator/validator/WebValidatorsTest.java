@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.searchrule.Validatable;
-import com.epam.page.object.generator.testDataBuilders.WebPageTestDataBuilder;
+import com.epam.page.object.generator.databuilder.WebPageTestDataBuilder;
 import com.epam.page.object.generator.validator.web.ElementUniquenessValidator;
 import java.util.List;
 import org.assertj.core.util.Lists;

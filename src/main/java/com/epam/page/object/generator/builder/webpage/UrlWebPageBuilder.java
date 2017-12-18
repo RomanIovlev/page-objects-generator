@@ -30,7 +30,7 @@ public class UrlWebPageBuilder implements WebPageBuilder{
                 Connection connect = Jsoup.connect(url);
                 Document document = connect.get();
                 webPages.add(new WebPage(uri, document, searchRuleExtractor));
-                logger.info("Create web page for url = '" + url + "'");
+                logger.debug("Create web page for url = '" + url + "'");
             } catch (IOException | URISyntaxException | IllegalArgumentException e) {
                 String message = "Not valid url: " + url;
                 logger.error(message);

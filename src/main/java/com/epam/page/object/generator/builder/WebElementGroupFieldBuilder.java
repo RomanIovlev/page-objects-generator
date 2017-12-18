@@ -18,13 +18,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.lang.model.element.Modifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebElementGroupFieldBuilder {
+
+    private final static Logger logger = LoggerFactory.getLogger(WebElementGroupFieldBuilder.class);
 
     public List<JavaField> visit(CommonWebElementGroup commonWebElementGroup) {
         List<JavaField> javaFields = new ArrayList<>();
         CommonSearchRule searchRule = commonWebElementGroup.getSearchRule();
 
+        logger.debug("Add fields found by " + searchRule);
         for (WebElement webElement : commonWebElementGroup.getWebElements()) {
             String className = searchRule.getClassAndAnnotation().getElementClass().getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
@@ -33,8 +38,11 @@ public class WebElementGroupFieldBuilder {
                 .getAnnotation(annotationClass, webElement);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
-            javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
+            JavaField javaField = new JavaField(className, fieldName, annotation, modifiers);
+            javaFields.add(javaField);
+            logger.debug("Add field = " + javaField);
         }
+        logger.debug("Finish " + searchRule + "\n");
 
         return javaFields;
     }
@@ -43,6 +51,7 @@ public class WebElementGroupFieldBuilder {
         List<JavaField> javaFields = new ArrayList<>();
         ComplexSearchRule searchRule = complexWebElementGroup.getSearchRule();
 
+        logger.debug("Add fields found by " + searchRule);
         for (WebElement webElement : complexWebElementGroup.getWebElements()) {
             String className = searchRule.getClassAndAnnotation().getElementClass().getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
@@ -51,8 +60,11 @@ public class WebElementGroupFieldBuilder {
                 .getAnnotation(annotationClass, webElement);
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
-            javaFields.add(new JavaField(className, fieldName, annotation, modifiers));
+            JavaField javaField = new JavaField(className, fieldName, annotation, modifiers);
+            javaFields.add(javaField);
+            logger.debug("Add field = " + javaField);
         }
+        logger.debug("Finish " + searchRule + "\n");
 
         return javaFields;
     }
@@ -61,13 +73,17 @@ public class WebElementGroupFieldBuilder {
                                   String packageName) {
         FormSearchRule searchRule = formWebElementGroup.getSearchRule();
 
+        logger.debug("Add field found by " + searchRule);
         String className = packageName + ".form." + firstLetterUp(searchRule.getSection());
         String fieldName = firstLetterDown(searchRule.getSection());
         Class annotationClass = searchRule.getClassAndAnnotation().getElementAnnotation();
         JavaAnnotation annotation = formWebElementGroup.getAnnotation(annotationClass);
         Modifier[] modifiers = new Modifier[]{PUBLIC};
 
+        JavaField javaField = new JavaField(className, fieldName, annotation, modifiers);
+        logger.debug("Add field = " + javaField);
+        logger.debug("Finish " + searchRule + "\n");
         return Collections
-            .singletonList(new JavaField(className, fieldName, annotation, modifiers));
+            .singletonList(javaField);
     }
 }

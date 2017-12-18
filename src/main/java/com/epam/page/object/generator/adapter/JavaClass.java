@@ -46,4 +46,13 @@ public class JavaClass {
     public Modifier getModifier() {
         return modifier;
     }
+
+    @Override
+    public String toString() {
+        return "JavaClass{" +
+            "packageName='" + packageName + '\'' +
+            ", className='" + className + '\'' +
+            ", superClass=" + superClass +
+            '}';
+    }
 }

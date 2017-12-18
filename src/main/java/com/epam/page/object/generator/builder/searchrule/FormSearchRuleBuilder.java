@@ -35,19 +35,18 @@ public class FormSearchRuleBuilder implements SearchRuleBuilder {
                                       SelectorUtils selectorUtils,
                                       SearchRuleExtractor searchRuleExtractor) {
 
+        logger.debug("Start transforming of " + rawSearchRule);
         SearchRuleType type = rawSearchRule.getType();
         String section = rawSearchRule.getValue("section");
         Selector selector = rawSearchRule.getSelector();
+        ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
+            .get(type.getName());
 
         List<FormInnerSearchRule> innerSearchRules = new ArrayList<>();
 
-        logger.info("Create list of formInnerSearchRules...");
+        logger.debug("Create list of formInnerSearchRules...");
         List<RawSearchRule> innerRawSearchRules = rawSearchRuleMapper
             .getFormInnerRawSearchRules(rawSearchRule);
-        logger.info("Finish creating list of formInnerSearchRule\n");
-
-        ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
-            .get(type.getName());
 
         FormInnerSearchRuleBuilder builder = new FormInnerSearchRuleBuilder();
         for (RawSearchRule innerRawSearchRule : innerRawSearchRules) {
@@ -55,7 +54,11 @@ public class FormSearchRuleBuilder implements SearchRuleBuilder {
                 (FormInnerSearchRule) builder.buildSearchRule(innerRawSearchRule, typesContainer,
                     transformer, selectorUtils, searchRuleExtractor));
         }
+        logger.debug("Finish creating list of formInnerSearchRule");
 
-        return new FormSearchRule(section, type, selector, innerSearchRules, classAndAnnotation);
+        FormSearchRule formSearchRule = new FormSearchRule(section, type, selector,
+            innerSearchRules, classAndAnnotation);
+        logger.debug("Create a new " + formSearchRule + "\n");
+        return formSearchRule;
     }
 }

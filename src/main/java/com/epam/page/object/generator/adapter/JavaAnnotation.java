@@ -19,4 +19,12 @@ public class JavaAnnotation {
     public List<AnnotationMember> getAnnotationMembers() {
         return annotationMembers;
     }
+
+    @Override
+    public String toString() {
+        return "JavaAnnotation{" +
+            "annotationClass=" + annotationClass +
+            ", annotationMembers=" + annotationMembers +
+            '}';
+    }
 }

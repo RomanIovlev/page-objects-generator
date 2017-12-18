@@ -1,5 +1,6 @@
 package com.epam.page.object.generator.adapter;
 
+import java.util.Arrays;
 import javax.lang.model.element.Modifier;
 
 public class JavaField {
@@ -31,5 +32,15 @@ public class JavaField {
 
     public Modifier[] getModifiers() {
         return modifiers;
+    }
+
+    @Override
+    public String toString() {
+        return "JavaField{" +
+            "fullClassField='" + fullClassField + '\'' +
+            ", fieldName='" + fieldName + '\'' +
+            ", annotation=" + annotation +
+            ", modifiers=" + Arrays.toString(modifiers) +
+            '}';
     }
 }

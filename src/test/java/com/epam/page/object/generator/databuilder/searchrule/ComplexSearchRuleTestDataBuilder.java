@@ -1,4 +1,4 @@
-package com.epam.page.object.generator.testDataBuilders.searchRuleTestDataBuilders;
+package com.epam.page.object.generator.databuilder.searchrule;
 
 import com.epam.page.object.generator.builder.searchrule.ComplexInnerSearchRuleBuilder;
 import com.epam.page.object.generator.builder.searchrule.ComplexSearchRuleBuilder;
@@ -6,7 +6,7 @@ import com.epam.page.object.generator.container.SupportedTypesContainer;
 import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
-import com.epam.page.object.generator.testDataBuilders.RawSearchRuleTestDataBuilder;
+import com.epam.page.object.generator.databuilder.RawSearchRuleTestDataBuilder;
 import com.epam.page.object.generator.util.PropertyLoader;
 import com.epam.page.object.generator.util.RawSearchRuleMapper;
 import com.epam.page.object.generator.util.SearchRuleExtractor;

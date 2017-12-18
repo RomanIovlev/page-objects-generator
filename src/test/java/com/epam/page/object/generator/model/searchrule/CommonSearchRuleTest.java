@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.epam.jdi.uitests.web.selenium.elements.common.Button;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.Selector;
-import com.epam.page.object.generator.testDataBuilders.searchRuleTestDataBuilders.CommonSearchRuleTestDataBuilder;
+import com.epam.page.object.generator.databuilder.searchrule.CommonSearchRuleTestDataBuilder;
 import com.epam.page.object.generator.util.SearchRuleType;
 import com.epam.page.object.generator.util.SelectorUtils;
 import com.epam.page.object.generator.util.XpathToCssTransformer;

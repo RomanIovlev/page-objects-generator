@@ -16,10 +16,14 @@ import com.epam.page.object.generator.model.WebPage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SiteClassBuildable implements JavaClassBuildable {
 
     private List<WebPage> webPages;
+
+    private final static Logger logger = LoggerFactory.getLogger(SiteClassBuildable.class);
 
     public SiteClassBuildable(List<WebPage> webPages) {
         this.webPages = webPages;
@@ -28,8 +32,9 @@ public class SiteClassBuildable implements JavaClassBuildable {
     @Override
     public JavaAnnotation buildAnnotation() {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
-        annotationMembers.add(new AnnotationMember("value", "$S", webPages.get(0).getDomainName()));
-
+        AnnotationMember annotationMember = new AnnotationMember("value", "$S", webPages.get(0).getDomainName());
+        annotationMembers.add(annotationMember);
+        logger.debug("Add " + annotationMember);
         return new JavaAnnotation(JSite.class, annotationMembers);
     }
 
@@ -48,14 +53,20 @@ public class SiteClassBuildable implements JavaClassBuildable {
             JavaAnnotation annotation = new JavaAnnotation(JPage.class, pageAnnotations);
             Modifier[] modifiers = new Modifier[]{PUBLIC, STATIC};
 
-            fields.add(new JavaField(fullClassName, fieldName, annotation, modifiers));
+            JavaField javaField = new JavaField(fullClassName, fieldName, annotation, modifiers);
+            logger.debug("Add field = " + javaField);
+            fields.add(javaField);
         }
-
         return fields;
     }
 
     @Override
     public JavaClass accept(JavaClassBuilder javaClassBuilder) {
         return javaClassBuilder.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "SiteClassBuildable";
     }
 }

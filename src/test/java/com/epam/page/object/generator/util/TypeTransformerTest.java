@@ -13,7 +13,7 @@ import com.epam.page.object.generator.model.RawSearchRule;
 import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchrule.CommonSearchRule;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
-import com.epam.page.object.generator.testDataBuilders.RawSearchRuleTestDataBuilder;
+import com.epam.page.object.generator.databuilder.RawSearchRuleTestDataBuilder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

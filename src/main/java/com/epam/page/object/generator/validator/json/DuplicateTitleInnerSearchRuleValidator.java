@@ -19,8 +19,8 @@ public class DuplicateTitleInnerSearchRuleValidator implements ValidatorVisitor{
         Set<String> titles = new HashSet<>();
         for (ComplexInnerSearchRule searchRule : complexSearchRule.getInnerSearchRules()) {
             if (!titles.add(searchRule.getTitle())) {
-                logger.debug("Title = '" + searchRule.getTitle() + "' is duplicated!");
-                logger.debug("Invalid " +complexSearchRule + "\n");
+                logger.warn("Title = '" + searchRule.getTitle() + "' is duplicated!");
+                logger.warn("Invalid " +complexSearchRule + "\n");
                 return new ValidationResult(false,
                     "Title = '" + searchRule.getTitle() + "' are duplicated");
             }

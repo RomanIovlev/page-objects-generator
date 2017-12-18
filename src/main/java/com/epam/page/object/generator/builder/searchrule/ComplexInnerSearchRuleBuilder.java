@@ -21,18 +21,15 @@ public class ComplexInnerSearchRuleBuilder implements SearchRuleBuilder {
                                       XpathToCssTransformer transformer,
                                       SelectorUtils selectorUtils,
                                       SearchRuleExtractor searchRuleExtractor) {
-        logger.debug("\nStart transforming of " + rawSearchRule);
+        logger.debug("Start transforming of " + rawSearchRule);
         String title = rawSearchRule.getValue("title");
-        logger.debug("'title' = " + title);
 
         String uniqueness = null;
         if (title.equals("root")) {
             uniqueness = rawSearchRule.getValue("uniqueness");
-            logger.debug("'uniqueness' = " + uniqueness);
         }
 
         Selector selector = rawSearchRule.getSelector();
-        logger.debug("'selector' = " + selector);
 
         ComplexInnerSearchRule complexInnerSearchRule = new ComplexInnerSearchRule(uniqueness,
             title, selector, transformer);

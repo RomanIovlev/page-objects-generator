@@ -17,12 +17,11 @@ public class ValidationExceptionConverter {
         List<ValidationResult> validationResults = new ArrayList<>();
         if (e.getCausingExceptions().isEmpty()) {
             validationResults.add(getValidationResult(e));
-            logger.error(e.getMessage());
+            logger.error(e.getMessage(), e);
         } else {
             for (ValidationException validationException : e.getCausingExceptions()) {
                 validationResults.add(getValidationResult(validationException));
-                logger.error(validationException.getMessage() + Arrays
-                    .toString(validationException.getStackTrace()));
+                logger.error(validationException.getMessage(), e);
             }
         }
         return validationResults;

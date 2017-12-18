@@ -36,7 +36,7 @@ public class TypeTransformer {
                 SearchRule searchRule = getBuilder(rawSearchRule)
                     .buildSearchRule(rawSearchRule, typesContainer, transformer, selectorUtils,
                         searchRuleExtractor);
-                logger.info("Success transformation " + rawSearchRule + "!");
+                logger.debug("Success transformation " + rawSearchRule + "!\n");
                 return searchRule;
             })
             .collect(Collectors.toList());

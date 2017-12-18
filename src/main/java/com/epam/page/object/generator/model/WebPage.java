@@ -14,6 +14,8 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebPage {
 
@@ -21,6 +23,8 @@ public class WebPage {
     private Document document;
     private List<WebElementGroup> webElementGroups;
     private SearchRuleExtractor searchRuleExtractor;
+
+    private final static Logger logger = LoggerFactory.getLogger(WebPage.class);
 
     public WebPage(URI uri, Document document,
                    SearchRuleExtractor searchRuleExtractor) {
@@ -70,8 +74,11 @@ public class WebPage {
 
         for (WebElementGroup webElementGroup : webElementGroups) {
             if (webElementGroup instanceof FormWebElementGroup) {
-                javaClasses.add(new FormClassBuildable((FormWebElementGroup) webElementGroup,
+                FormWebElementGroup elementGroup = (FormWebElementGroup) webElementGroup;
+                logger.debug("Start creating FormClassBuildable for '" + elementGroup.getSearchRule().getSection() + "' form");
+                javaClasses.add(new FormClassBuildable(elementGroup,
                     selectorUtils));
+                logger.debug("Finish creating FormClassBuildable");
             }
         }
 

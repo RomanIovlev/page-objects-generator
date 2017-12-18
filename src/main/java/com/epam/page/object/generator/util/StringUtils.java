@@ -1,5 +1,7 @@
 package com.epam.page.object.generator.util;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 public class StringUtils {
 
     private static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
@@ -38,13 +40,13 @@ public class StringUtils {
 
     public static String firstLetterUp(String text) {
         return text.length() > 0
-            ? org.apache.commons.lang3.StringUtils.capitalize(text)
+            ? capitalize(text)
             : text;
     }
 
     public static String firstLetterDown(String text) {
         return text.length() > 0
-            ? org.apache.commons.lang3.StringUtils.uncapitalize(text)
+            ? uncapitalize(text)
             : text;
     }
 

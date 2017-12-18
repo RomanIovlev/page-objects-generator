@@ -10,8 +10,12 @@ import com.epam.page.object.generator.util.SearchRuleExtractor;
 import com.epam.page.object.generator.util.SearchRuleType;
 import com.epam.page.object.generator.util.SelectorUtils;
 import com.epam.page.object.generator.util.XpathToCssTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FormInnerSearchRuleBuilder implements SearchRuleBuilder {
+
+    private final static Logger logger = LoggerFactory.getLogger(FormInnerSearchRuleBuilder.class);
 
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
@@ -20,13 +24,16 @@ public class FormInnerSearchRuleBuilder implements SearchRuleBuilder {
                                       SelectorUtils selectorUtils,
                                       SearchRuleExtractor searchRuleExtractor) {
 
+        logger.debug("Start transforming of " + rawSearchRule);
         SearchRuleType type = rawSearchRule.getType();
         String uniqueness = rawSearchRule.getValue("uniqueness");
         Selector selector = rawSearchRule.getSelector();
         ClassAndAnnotationPair classAndAnnotation = typesContainer.getSupportedTypesMap()
             .get(type.getName());
 
-        return new FormInnerSearchRule(uniqueness, type, selector, classAndAnnotation, transformer,
-            searchRuleExtractor);
+        FormInnerSearchRule formInnerSearchRule = new FormInnerSearchRule(uniqueness, type,
+            selector, classAndAnnotation, transformer, searchRuleExtractor);
+        logger.debug("Create a new " + formInnerSearchRule);
+        return formInnerSearchRule;
     }
 }

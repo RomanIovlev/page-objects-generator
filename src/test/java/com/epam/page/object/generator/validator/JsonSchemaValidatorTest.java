@@ -3,7 +3,7 @@ package com.epam.page.object.generator.validator;
 import static org.junit.Assert.*;
 
 import com.epam.page.object.generator.model.RawSearchRule;
-import com.epam.page.object.generator.testDataBuilders.RawSearchRuleTestDataBuilder;
+import com.epam.page.object.generator.databuilder.RawSearchRuleTestDataBuilder;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.junit.Test;

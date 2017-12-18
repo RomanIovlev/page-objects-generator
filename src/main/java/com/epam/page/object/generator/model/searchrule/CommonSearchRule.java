@@ -62,7 +62,7 @@ public class CommonSearchRule implements SearchRule {
     }
 
     public Selector getTransformedSelector() {
-        logger.info("Transforming selector " + selector);
+        logger.debug("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {
             try {
                 return transformer.getCssSelector(selector);
@@ -70,7 +70,7 @@ public class CommonSearchRule implements SearchRule {
                 logger.error("Failed transforming selector = '" + selector);
             }
         }
-        logger.info("Success transforming!");
+        logger.debug("Don't need to transform selector");
         return selector;
     }
 
@@ -97,7 +97,7 @@ public class CommonSearchRule implements SearchRule {
     @Override
     public void accept(ValidatorVisitor validatorVisitor) {
         ValidationResult visit = validatorVisitor.visit(this);
-        logger.info(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
+        logger.debug(this + " is '" + visit.isValid() + "', reason '" + visit.getReason() + "'");
         validationResults.add(visit);
     }
 

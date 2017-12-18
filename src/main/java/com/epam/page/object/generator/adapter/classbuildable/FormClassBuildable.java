@@ -18,11 +18,15 @@ import com.epam.page.object.generator.util.SelectorUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FormClassBuildable implements JavaClassBuildable {
 
     private FormWebElementGroup formWebElementGroup;
     private SelectorUtils selectorUtils;
+
+    private final static Logger logger = LoggerFactory.getLogger(FormClassBuildable.class);
 
     public FormClassBuildable(FormWebElementGroup formWebElementGroup,
                               SelectorUtils selectorUtils) {
@@ -40,23 +44,29 @@ public class FormClassBuildable implements JavaClassBuildable {
 
         for (WebElement webElement : formWebElementGroup.getWebElements()) {
             FormInnerSearchRule innerSearchRule = ((FormWebElement) webElement).getSearchRule();
+            logger.debug("Add field found by SearchRule" + innerSearchRule);
 
             String fullClassName = innerSearchRule.getClassAndAnnotation().getElementClass()
                 .getName();
             String fieldName = firstLetterDown(splitCamelCase(webElement.getUniquenessValue()));
             Class annotationClass = innerSearchRule.getClassAndAnnotation().getElementAnnotation();
+            logger.debug("Start creating annotation...");
             JavaAnnotation annotation = buildAnnotation(annotationClass,
                 (FormWebElement) webElement, innerSearchRule);
+            logger.debug("Finish creating annotation");
             Modifier[] modifiers = new Modifier[]{PUBLIC};
 
-            javaFields.add(new JavaField(fullClassName, fieldName, annotation, modifiers));
+            JavaField javaField = new JavaField(fullClassName, fieldName, annotation, modifiers);
+            javaFields.add(javaField);
+            logger.debug("Add field = " + javaField);
+            logger.debug("Finish SearchRule" + innerSearchRule + "\n");
         }
 
         return javaFields;
     }
 
     private JavaAnnotation buildAnnotation(Class annotationClass, FormWebElement webElement,
-                                            FormInnerSearchRule searchRule) {
+                                           FormInnerSearchRule searchRule) {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
 
         String uniquenessValue = webElement.getUniquenessValue();
@@ -65,7 +75,6 @@ public class FormClassBuildable implements JavaClassBuildable {
             searchRule.getUniqueness());
 
         annotationMembers.add(new AnnotationMember(selector.getType(), "$S", annotationValue));
-
         return new JavaAnnotation(annotationClass, annotationMembers);
     }
 
@@ -87,5 +96,10 @@ public class FormClassBuildable implements JavaClassBuildable {
     @Override
     public JavaClass accept(JavaClassBuilder javaClassBuilder) {
         return javaClassBuilder.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "FormClassBuildable with " + formWebElementGroup.getSearchRule();
     }
 }

@@ -9,11 +9,15 @@ import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.webgroup.WebElementGroup;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PageClassBuildable implements JavaClassBuildable {
 
     private WebPage webPage;
     private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
+
+    private final static Logger logger = LoggerFactory.getLogger(PageClassBuildable.class);
 
     public PageClassBuildable(WebPage webPage,
                               WebElementGroupFieldBuilder webElementGroupFieldBuilder) {
@@ -47,5 +51,10 @@ public class PageClassBuildable implements JavaClassBuildable {
     @Override
     public JavaAnnotation buildAnnotation() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "PageClassBuildable with title " + webPage.getTitle();
     }
 }

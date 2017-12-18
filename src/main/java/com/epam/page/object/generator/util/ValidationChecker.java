@@ -55,7 +55,9 @@ public class ValidationChecker {
         throws IOException {
         if (webPages.stream().anyMatch(WebPage::hasInvalidWebElementGroup)) {
             if (forceGenerateFile) {
+                logger.info("Start generating JavaClasses...");
                 javaFileWriter.writeFiles(outputDir, javaClasses);
+                logger.info("Finish generating JavaClasses");
             }
 
             String validationResultString = webPages.stream()
