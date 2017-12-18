@@ -22,6 +22,10 @@ import org.slf4j.LoggerFactory;
 public class JavaClassBuilder {
 
     private String packageName;
+    private static final String SITE_EXTENSION = ".site";
+    private static final String PAGE_EXTENSION = ".page";
+    private static final String FORM_EXTENSION = ".form";
+
     private final static Logger logger = LoggerFactory.getLogger(JavaClassBuilder.class);
 
     public JavaClassBuilder(String packageName) {
@@ -30,7 +34,7 @@ public class JavaClassBuilder {
 
     public JavaClass visit(SiteClassBuildable siteClassBuildable) {
         logger.debug("Start creating javaClass from " + siteClassBuildable);
-        String classPackageName = packageName + ".site";
+        String classPackageName = packageName + SITE_EXTENSION;
         String className = "Site";
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebSite.class;
         logger.debug("Start creating annotation...");
@@ -47,7 +51,7 @@ public class JavaClassBuilder {
 
     public JavaClass visit(PageClassBuildable pageClassBuildable) {
         logger.debug("Start creating javaClass from " + pageClassBuildable);
-        String classPackageName = packageName + ".page";
+        String classPackageName = packageName + PAGE_EXTENSION;
         String className = firstLetterUp(splitCamelCase(pageClassBuildable.getTitle()));
         Class superClass = com.epam.jdi.uitests.web.selenium.elements.composite.WebPage.class;
         JavaAnnotation annotation = pageClassBuildable.buildAnnotation();
@@ -65,7 +69,7 @@ public class JavaClassBuilder {
         FormWebElementGroup formWebElementGroup = formClassBuildable.getFormWebElementGroup();
 
         FormSearchRule formSearchRule = formWebElementGroup.getSearchRule();
-        String classPackageName = packageName + ".form";
+        String classPackageName = packageName + FORM_EXTENSION;
         String className = firstLetterUp(formSearchRule.getSection());
         Class superClass = formSearchRule.getTypeName().equals(
             SearchRuleType.FORM.getName()) ? Form.class : Section.class;

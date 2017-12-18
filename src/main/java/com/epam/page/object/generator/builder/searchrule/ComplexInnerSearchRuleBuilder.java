@@ -25,7 +25,7 @@ public class ComplexInnerSearchRuleBuilder implements SearchRuleBuilder {
         String title = rawSearchRule.getValue("title");
 
         String uniqueness = null;
-        if (title.equals("root")) {
+        if ("root".equals(title)) {
             uniqueness = rawSearchRule.getValue("uniqueness");
         }
 
