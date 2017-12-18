@@ -39,7 +39,6 @@ public class FormSearchRuleBuilderTest {
     @Mock
     private JSONObject object;
 
-
     private FormSearchRule expectedSearchRule  = new FormSearchRule("text", SearchRuleType.FORM,
             new Selector("css", ".myClass"), Lists.newArrayList(
             new FormInnerSearchRule("text", SearchRuleType.INPUT,
@@ -70,7 +69,6 @@ public class FormSearchRuleBuilderTest {
 
         assertTrue(searchRule.isValid());
         assertFalse(searchRule.isInvalid());
-
 
         assertEquals(expectedSearchRule.getType(), searchRule.getType());
         assertEquals(expectedSearchRule.getSelector(), searchRule.getSelector());

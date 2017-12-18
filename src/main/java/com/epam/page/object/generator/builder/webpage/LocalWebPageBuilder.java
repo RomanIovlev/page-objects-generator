@@ -33,7 +33,7 @@ public class LocalWebPageBuilder implements WebPageBuilder {
                 Document doc = Jsoup.parse(html);
                 URI uri = new URI("www.test.com");
                 webPages.add(new WebPage(uri, doc, searchRuleExtractor));
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 String message = "File = '" + path + "' doesn't exist!";
                 logger.error(message, e);
                 invalidPaths.add(message);
