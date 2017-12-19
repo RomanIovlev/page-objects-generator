@@ -15,12 +15,17 @@ import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 import com.epam.page.object.generator.model.webelement.FormWebElement;
 import com.epam.page.object.generator.model.webelement.WebElement;
 import com.epam.page.object.generator.util.SelectorUtils;
+import com.squareup.javapoet.AnnotationSpec;
 import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.element.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link FormClassBuildable} allows to generate .java source file from {@link
+ * FormWebElementGroup}.
+ */
 public class FormClassBuildable implements JavaClassBuildable {
 
     private FormWebElementGroup formWebElementGroup;
@@ -65,6 +70,15 @@ public class FormClassBuildable implements JavaClassBuildable {
         return javaFields;
     }
 
+    /**
+     * Create {@link JavaAnnotation} for the specific SearchRule.
+     *
+     * @param annotationClass class which used for the annotation.
+     * @param webElement element which was found on the website.
+     * @param searchRule SearchRule for which we are generating annotation.
+     * @return {@link JavaAnnotation} which contains all information about future {@link
+     * AnnotationSpec}
+     */
     private JavaAnnotation buildAnnotation(Class annotationClass, FormWebElement webElement,
                                            FormInnerSearchRule searchRule) {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
@@ -78,6 +92,15 @@ public class FormClassBuildable implements JavaClassBuildable {
         return new JavaAnnotation(annotationClass, annotationMembers);
     }
 
+    /**
+     * Get annotation value for the SearchRule by concatenation selector value, uniqueness name and
+     * uniqueness value.
+     *
+     * @param selector {@link Selector} from SearchRule which contains information about how to find
+     * element on the website
+     * @param uniquenessValue value which was found from the website by the 'uniqueness' attribute
+     * @param uniqueness name of the 'uniqueness' attribute
+     */
     private String getAnnotationValue(Selector selector, String uniquenessValue,
                                       String uniqueness) {
         if (selector.isXpath()) {

@@ -12,6 +12,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link PageClassBuildable} allows to generate .java source file from {@link WebPage}.
+ */
 public class PageClassBuildable implements JavaClassBuildable {
 
     private WebPage webPage;
