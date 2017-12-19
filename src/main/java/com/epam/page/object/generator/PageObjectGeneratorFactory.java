@@ -22,8 +22,18 @@ import com.epam.page.object.generator.validator.JsonValidators;
 import com.epam.page.object.generator.validator.ValidationExceptionConverter;
 import com.epam.page.object.generator.validator.WebValidators;
 
+/**
+ * Creates new PageObjectsGenerator
+ */
 public class PageObjectGeneratorFactory {
 
+    /**
+     * Method constructs PageObjectsGenerator
+     * @param packageName
+     * @param propertyFile
+     * @param onlineVersion
+     * @return PageObjectsGenerator
+     */
     public static PageObjectsGenerator getPageObjectGenerator(String packageName,
                                                               String propertyFile,
                                                               boolean onlineVersion) {

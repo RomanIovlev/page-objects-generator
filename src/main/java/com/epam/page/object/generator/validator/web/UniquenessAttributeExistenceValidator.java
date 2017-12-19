@@ -7,8 +7,16 @@ import com.epam.page.object.generator.model.webelement.FormWebElement;
 import com.epam.page.object.generator.validator.ValidationResult;
 import com.epam.page.object.generator.validator.ValidatorVisitor;
 
+/**
+ * Validate existence of Common, Complex, Form groups
+ */
 public class UniquenessAttributeExistenceValidator implements ValidatorVisitor {
 
+    /**
+     * Check CommonWebElementGroup on existence
+     * @param webElementGroup
+     * @return ValidationResult
+     */
     @Override
     public ValidationResult visit(CommonWebElementGroup webElementGroup) {
         if (webElementGroup.getWebElements().stream()
@@ -26,6 +34,11 @@ public class UniquenessAttributeExistenceValidator implements ValidatorVisitor {
         return new ValidationResult(true, this + " passed!");
     }
 
+    /**
+     * Check ComplexWebElementGroup on existence
+     * @param webElementGroup
+     * @return ValidationResult
+     */
     @Override
     public ValidationResult visit(ComplexWebElementGroup webElementGroup) {
         if (webElementGroup.getWebElements().stream()
@@ -43,6 +56,11 @@ public class UniquenessAttributeExistenceValidator implements ValidatorVisitor {
         return new ValidationResult(true, this + " passed!");
     }
 
+    /**
+     * Check FormWebElementGroup on existence
+     * @param webElementGroup
+     * @return ValidationResult
+     */
     @Override
     public ValidationResult visit(FormWebElementGroup webElementGroup) {
         if (webElementGroup.getWebElements().stream()

@@ -16,11 +16,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * Class for building correct web pages from local file
+ */
 public class LocalWebPageBuilder implements WebPageBuilder {
 
     private final static Logger logger = LoggerFactory.getLogger(LocalWebPageBuilder.class);
 
+    /**
+     * Method creates web pages by using url
+     * @param paths
+     * @param searchRuleExtractor
+     * @return webPages
+     */
     @Override
     public List<WebPage> generate(List<String> paths, SearchRuleExtractor searchRuleExtractor) {
         List<WebPage> webPages = new ArrayList<>();
