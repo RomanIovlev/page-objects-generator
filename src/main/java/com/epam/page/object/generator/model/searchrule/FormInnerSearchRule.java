@@ -18,6 +18,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link FormInnerSearchRule} describes {@link SearchRule} placed inside {@link FormSearchRule}
+ * in .json file.
+ */
 public class FormInnerSearchRule implements SearchRule {
 
     private String uniqueness;
@@ -42,22 +46,43 @@ public class FormInnerSearchRule implements SearchRule {
         this.searchRuleExtractor = searchRuleExtractor;
     }
 
+    /**
+     * Returns uniqueness attribute defined in .json file of this {@link FormInnerSearchRule}.
+     * @return uniqueness attribute of {@link FormInnerSearchRule}
+     */
     public String getUniqueness() {
         return uniqueness;
     }
 
+    /**
+     * Returns enum value of {@link FormInnerSearchRule} type.
+     * @return {@link SearchRuleType}
+     */
     public SearchRuleType getType() {
         return type;
     }
 
+    /**
+     * Returns {@link ClassAndAnnotationPair} of {@link FormInnerSearchRule} defined in
+     * {@link com.epam.page.object.generator.container.SupportedTypesContainer}
+     * @return pair of JDI type class and annotation class
+     */
     public ClassAndAnnotationPair getClassAndAnnotation() {
         return classAndAnnotation;
     }
 
+    @Override
     public Selector getSelector() {
         return selector;
     }
 
+    /**
+     * If uniqueness attribute not equals text and selector of xpath type,
+     * then we could transform it to css.
+     *
+     * Otherwise return selector without transformation.
+     * @return transformed {@link Selector}
+     */
     public Selector getTransformedSelector() {
         logger.debug("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {

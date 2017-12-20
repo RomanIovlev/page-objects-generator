@@ -17,6 +17,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link ComplexSearchRule} describes {@link SearchRule} with one of the type defined in
+ * groups.json file in complexSearchRule group.
+ */
 public class ComplexSearchRule implements SearchRule {
 
     private SearchRuleType type;
@@ -37,14 +41,28 @@ public class ComplexSearchRule implements SearchRule {
         this.selectorUtils = selectorUtils;
     }
 
+    /**
+     * Returns enum value of {@link ComplexSearchRule} type.
+     * @return {@link SearchRuleType}
+     */
     public SearchRuleType getType() {
         return type;
     }
 
+    /**
+     * Returns list of {@link ComplexInnerSearchRule} belongs
+     * to this {@link ComplexSearchRule} and defined in .json file.
+     * @return list of {@link ComplexInnerSearchRule}
+     */
     public List<ComplexInnerSearchRule> getInnerSearchRules() {
         return complexInnerSearchRules;
     }
 
+    /**
+     * Returns {@link ComplexInnerSearchRule} of innerSearchRules with "root" title attribute.
+     *
+     * @return {@link ComplexInnerSearchRule}
+     */
     public ComplexInnerSearchRule getRoot() {
         return complexInnerSearchRules.stream()
             .filter(innerSearchRule -> innerSearchRule.getTitle().equals("root"))
@@ -58,10 +76,19 @@ public class ComplexSearchRule implements SearchRule {
             : element.attr(uniqueness);
     }
 
+    /**
+     * Returns {@link ClassAndAnnotationPair} of {@link ComplexSearchRule} defined in
+     * {@link com.epam.page.object.generator.container.SupportedTypesContainer}
+     * @return pair of JDI type class and annotation class
+     */
     public ClassAndAnnotationPair getClassAndAnnotation() {
         return classAndAnnotation;
     }
 
+    /**
+     * Returns uniqueness attribute from {@link ComplexInnerSearchRule} with "root" title.
+     * @return uniqueness attribute
+     */
     public String getUniqueness() {
         return getRoot().getUniqueness();
     }

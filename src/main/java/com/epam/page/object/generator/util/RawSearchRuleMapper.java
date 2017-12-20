@@ -12,6 +12,9 @@ import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Util methods for {@link RawSearchRule}.
+ */
 public class RawSearchRuleMapper {
 
     private final static Logger logger = LoggerFactory.getLogger(RawSearchRuleMapper.class);
@@ -25,6 +28,11 @@ public class RawSearchRuleMapper {
         this.searchRuleGroups = searchRuleGroups;
     }
 
+    /**
+     * Returns list of {@link RawSearchRule} gotten from .json file.
+     * @param json path to .json file with description of Search rules.
+     * @return list of {@link RawSearchRule}
+     */
     public List<RawSearchRule> getRawSearchRuleList(String json) {
         List<RawSearchRule> rawSearchRuleList = new ArrayList<>();
 
@@ -61,6 +69,11 @@ public class RawSearchRuleMapper {
         return rawSearchRule;
     }
 
+    /**
+     * Returns inner RawSearchRules of given RawSearchRule with complexInnerSearchRule parameters.
+     * @param parent {@link RawSearchRule}
+     * @return list of {@link RawSearchRule}
+     */
     public List<RawSearchRule> getComplexInnerRawSearchRules(RawSearchRule parent) {
         List<RawSearchRule> innerRawSearchRules = new ArrayList<>();
 
@@ -78,6 +91,11 @@ public class RawSearchRuleMapper {
         return innerRawSearchRules;
     }
 
+    /**
+     * Returns inner RawSearchRules of given RawSearchRule with formInnerSearchRule parameters.
+     * @param parent {@link RawSearchRule}
+     * @return list of {@link RawSearchRule}
+     */
     public List<RawSearchRule> getFormInnerRawSearchRules(RawSearchRule parent) {
         List<RawSearchRule> innerRawSearchRules = new ArrayList<>();
 

@@ -19,6 +19,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link CommonSearchRule} describes {@link SearchRule} with one of the type defined in
+ * groups.json file in commonSearchRule group.
+ */
 public class CommonSearchRule implements SearchRule {
 
     private String uniqueness;
@@ -43,10 +47,18 @@ public class CommonSearchRule implements SearchRule {
         this.selectorUtils = selectorUtils;
     }
 
+    /**
+     * Returns uniqueness attribute defined in .json file of this {@link CommonSearchRule}.
+     * @return uniqueness attribute of {@link CommonSearchRule}
+     */
     public String getUniqueness() {
         return uniqueness;
     }
 
+    /**
+     * Returns enum value of {@link CommonSearchRule} type.
+     * @return {@link SearchRuleType}
+     */
     public SearchRuleType getType() {
         return type;
     }
@@ -57,10 +69,22 @@ public class CommonSearchRule implements SearchRule {
             : element.attr(uniqueness);
     }
 
+    /**
+     * Returns {@link ClassAndAnnotationPair} of {@link CommonSearchRule} defined in
+     * {@link com.epam.page.object.generator.container.SupportedTypesContainer}
+     * @return pair of JDI type class and annotation class
+     */
     public ClassAndAnnotationPair getClassAndAnnotation() {
         return classAndAnnotation;
     }
 
+    /**
+     * If uniqueness attribute not equals text and selector of xpath type,
+     * then we could transform it to css.
+     *
+     * Otherwise return selector without transformation.
+     * @return transformed {@link Selector}
+     */
     public Selector getTransformedSelector() {
         logger.debug("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {

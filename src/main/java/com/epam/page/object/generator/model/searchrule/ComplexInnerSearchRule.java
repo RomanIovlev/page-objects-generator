@@ -16,6 +16,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link ComplexInnerSearchRule} describes {@link SearchRule} placed inside {@link ComplexSearchRule}
+ * in .json file.
+ */
 public class ComplexInnerSearchRule implements SearchRule {
 
     private String uniqueness;
@@ -34,18 +38,38 @@ public class ComplexInnerSearchRule implements SearchRule {
         this.transformer = transformer;
     }
 
+    /**
+     * Returns uniqueness attribute defined in .json file of this {@link ComplexInnerSearchRule}.
+     * @return uniqueness attribute of {@link ComplexInnerSearchRule}
+     */
     public String getUniqueness() {
         return uniqueness;
     }
 
+    /**
+     * Returns title attribute defined in .json file of this {@link ComplexInnerSearchRule}.
+     * @return title attribute of {@link ComplexInnerSearchRule}
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Returns true if title equals "root".
+     * Otherwise returns false;
+     * @return boolean
+     */
     public boolean isRoot() {
         return title.equals("root");
     }
 
+    /**
+     * If uniqueness attribute not equals text and selector of xpath type,
+     * then we could transform it to css.
+     *
+     * Otherwise return selector without transformation.
+     * @return transformed {@link Selector}
+     */
     public Selector getTransformedSelector() {
         logger.debug("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {
