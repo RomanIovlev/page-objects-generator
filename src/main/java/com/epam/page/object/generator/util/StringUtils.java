@@ -5,6 +5,9 @@ import static org.apache.commons.lang3.StringUtils.uncapitalize;
 
 public class StringUtils {
 
+    /**
+     * Constant that indicates maximum amount of words in sentence.
+     */
     private static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
 
     private StringUtils() {
@@ -12,7 +15,6 @@ public class StringUtils {
 
     /**
      * Convert original sentence into variable in camelcase, also clean from any random symbols.
-     * Length of the sentence should be no more than 3 words.
      * @param camel
      * @return camelcase variable
      */

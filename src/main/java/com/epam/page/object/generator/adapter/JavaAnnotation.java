@@ -2,20 +2,33 @@ package com.epam.page.object.generator.adapter;
 
 import java.util.List;
 
+/**
+ * JavaAnnotation is a struct class that contains all necessary attributes for describing annotations which {@link JavaClass} or {@link JavaField} has.
+ */
 public class JavaAnnotation {
 
     private Class annotationClass;
     private List<AnnotationMember> annotationMembers;
 
+    /**
+     * @param annotationClass   annotation type
+     * @param annotationMembers List of all {@link AnnotationMember}
+     */
     public JavaAnnotation(Class annotationClass, List<AnnotationMember> annotationMembers) {
         this.annotationClass = annotationClass;
         this.annotationMembers = annotationMembers;
     }
 
+    /**
+     * @return Annotation type
+     */
     public Class getAnnotationClass() {
         return annotationClass;
     }
 
+    /**
+     * @return List of {@link AnnotationMember}
+     */
     public List<AnnotationMember> getAnnotationMembers() {
         return annotationMembers;
     }
@@ -23,8 +36,8 @@ public class JavaAnnotation {
     @Override
     public String toString() {
         return "JavaAnnotation{" +
-            "annotationClass=" + annotationClass +
-            ", annotationMembers=" + annotationMembers +
-            '}';
+                "annotationClass=" + annotationClass +
+                ", annotationMembers=" + annotationMembers +
+                '}';
     }
 }

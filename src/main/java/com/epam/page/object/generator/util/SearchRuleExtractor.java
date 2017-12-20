@@ -11,6 +11,13 @@ public class SearchRuleExtractor {
     public SearchRuleExtractor() {
     }
 
+    /**
+     *
+     * @param element {@link Element}
+     * @param searchRule {@link SearchRule}
+     * @return {@link Elements} from element according to searchRule
+     *
+     */
     public Elements extractElementsFromElement(Element element, SearchRule searchRule) {
         Selector selector = searchRule.getSelector();
         if (selector.isXpath()) {
