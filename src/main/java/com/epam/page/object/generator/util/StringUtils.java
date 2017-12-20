@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.util;
 
-import static org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.uncapitalize;
 
 public class StringUtils {
 
@@ -9,6 +10,12 @@ public class StringUtils {
     private StringUtils() {
     }
 
+    /**
+     * Convert original sentence into variable in camelcase, also clean from any random symbols.
+     * Length of the sentence should be no more than 3 words.
+     * @param camel
+     * @return camelcase variable
+     */
     public static String splitCamelCase(String camel) {
         String trim = camel.replaceAll("[^\\p{L}0-9 ]", "").trim();
 
@@ -38,12 +45,22 @@ public class StringUtils {
         return result.toString();
     }
 
+    /**
+     * Switch first word of first letter to uppercase.
+     * @param text
+     * @return sentence where first word of first letter is in uppercase.
+     */
     public static String firstLetterUp(String text) {
         return text.length() > 0
             ? capitalize(text)
             : text;
     }
 
+    /**
+     * Switch first word of first letter to lowercase.
+     * @param text
+     * @return sentence where first word of first letter is in lowercase.
+     */
     public static String firstLetterDown(String text) {
         return text.length() > 0
             ? uncapitalize(text)
