@@ -1,0 +1,12 @@
+{
+  "elements": [
+    {
+      "type": "but7ton",
+      "uniqueness": "value",
+      "selector": {
+        "type": "xpath",
+        "value": "//input[@type='submit']"
+      }
+    }
+  ]
+}

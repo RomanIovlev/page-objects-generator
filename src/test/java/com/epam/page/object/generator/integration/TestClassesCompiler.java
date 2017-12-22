@@ -3,16 +3,26 @@ package com.epam.page.object.generator.integration;
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.integration.data.CompilationResult;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 class TestClassesCompiler {
-    private PageObjectsGenerator pog;
 
-    TestClassesCompiler(PageObjectsGenerator pog) {
+    private PageObjectsGenerator pog;
+    private String jsonPath;
+    private String packageName;
+    private List<String> urls;
+
+    public TestClassesCompiler(PageObjectsGenerator pog, String jsonPath, String outputDir,
+                               ArrayList<String> urls) {
         this.pog = pog;
+        this.jsonPath = jsonPath;
+        this.packageName = outputDir;
+        this.urls = urls;
     }
 
     CompilationResult compileClasses(String expectedPath,
@@ -28,7 +38,7 @@ class TestClassesCompiler {
             new File(expectedPath),
             new File(manualPath)
         };
-        pog.generatePageObjects();
+        pog.generatePageObjects(jsonPath, packageName, urls);
 
         JavaCompiler.CompilationTask compilationTask = compiler.getTask(
             null,

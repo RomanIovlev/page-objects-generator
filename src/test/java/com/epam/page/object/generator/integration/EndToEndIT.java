@@ -3,14 +3,12 @@ package com.epam.page.object.generator.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
+import com.epam.page.object.generator.PageObjectGeneratorFactory;
 import com.epam.page.object.generator.PageObjectsGenerator;
-import com.epam.page.object.generator.adapter.JavaPoetAdapter;
-import com.epam.page.object.generator.containers.SupportedTypesContainer;
 import com.epam.page.object.generator.integration.data.CompilationResult;
 import com.epam.page.object.generator.integration.data.TestClassesData;
-import com.epam.page.object.generator.parser.JsonRuleMapper;
-import com.epam.page.object.generator.utils.XpathToCssTransformation;
-import com.epam.page.object.generator.validators.ValidatorsStarter;
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +28,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FilenameUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -39,24 +36,21 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests if .java files that generates POG corresponds to the .java files that we expect.
  *
- * Usually POG generates set of classes that corresponds to specified web-site. POG object
- * has parameter that specify main directory where all generated classes will be stored.
+ * Usually POG generates set of classes that corresponds to specified web-site. POG object has
+ * parameter that specify main directory where all generated classes will be stored.
  *
  * For example: POG object's parameter (main directory) value = /test and testing site = google.com,
- * so POG will generate following directories with .java files:
- * /test/site with Site.java
- * /test/page with Google.java
+ * so POG will generate following directories with .java files: /test/site with Site.java /test/page
+ * with Google.java
  *
- * Main goal of EndToEndIT is to compare generated set of classes
- * (from example above: Site.java, Google.java)
- * to set of manual classes that can be found in src/test/resources/manual/TEST_CASE_DIR
- * (it will be src/test/resources/manual/google/ for example above), where
- * set of classes for specified site = test case
+ * Main goal of EndToEndIT is to compare generated set of classes (from example above: Site.java,
+ * Google.java) to set of manual classes that can be found in src/test/resources/manual/TEST_CASE_DIR
+ * (it will be src/test/resources/manual/google/ for example above), where set of classes for
+ * specified site = test case
  *
- * EndToEndIT methods (like testFields() or testAnnotations()) is used for testing
- * one class of test case. Test class are just comparing to manual class and this procedure
- * continues for all classes of test case.
- * As it was said above, test case contains set of classes for specified site. So
+ * EndToEndIT methods (like testFields() or testAnnotations()) is used for testing one class of test
+ * case. Test class are just comparing to manual class and this procedure continues for all classes
+ * of test case. As it was said above, test case contains set of classes for specified site. So
  * Junit @Parameters annotation is used in MainIntegrationClass, where each parameter represents
  * each test case.
  */
@@ -68,38 +62,19 @@ public class EndToEndIT {
     private static final String MANUAL_DIR = FilenameUtils
         .separatorsToSystem("manual/");
     private static final String PACKAGE_TEST_NAME = "test";
+    private static final String PACKAGE_MANUAL_NAME = "manual";
+    private static final String PROPERTY_FILE = "/groups.json";
     private List<TestClassesData> caseClassesList;
-
-    @SuppressWarnings("Duplicates")
-    private PageObjectsGenerator initPog(String jsonPath, String url,
-                                         boolean checkLocatorUniqueness,
-                                         boolean forceGenerateFiles) throws IOException {
-        List<String> urls = new ArrayList<>();
-        urls.add(url);
-        SupportedTypesContainer bc = new SupportedTypesContainer();
-        JsonRuleMapper parser = new JsonRuleMapper(new File(jsonPath), new ObjectMapper());
-        XpathToCssTransformation xpathToCssTransformation = new XpathToCssTransformation();
-        JavaPoetAdapter javaPoetAdapter = new JavaPoetAdapter(bc, xpathToCssTransformation);
-
-        ValidatorsStarter validatorsStarter = new ValidatorsStarter(bc);
-        validatorsStarter.setCheckLocatorsUniqueness(checkLocatorUniqueness);
-
-        PageObjectsGenerator pog = new PageObjectsGenerator(parser, validatorsStarter,
-            javaPoetAdapter, RESOURCE_DIR, urls, PACKAGE_TEST_NAME);
-        pog.setForceGenerateFile(forceGenerateFiles);
-        return pog;
-    }
 
     public EndToEndIT(List<TestClassesData> list) {
         this.caseClassesList = list;
     }
 
     /**
-     * Forms List<Object[]> which contains parameters for testing. Every list's element
-     * (it's Object array) contains one parameter - list of TestClassesData objects. This list
-     * represents each test case. For this purpose data() method scans
-     * through scr/test/resources/manual to find all test cases dirs and then form list
-     * of TestClassesData objects for every test case
+     * Forms List<Object[]> which contains parameters for testing. Every list's element (it's Object
+     * array) contains one parameter - list of TestClassesData objects. This list represents each
+     * test case. For this purpose data() method scans through scr/test/resources/manual to find all
+     * test cases dirs and then form list of TestClassesData objects for every test case
      *
      * @return list of parameters set for every test case
      */
@@ -131,8 +106,9 @@ public class EndToEndIT {
                 try (InputStream inputStream = Files.newInputStream(testCasePropertyPath.get())) {
                     caseProperties.load(inputStream);
                 }
-            } else
+            } else {
                 fail("unable to get .property file. please, check for all cases");
+            }
 
             for (Path insideDir : insideCaseDirs) {
                 List<Path> javaFilesList = Files
@@ -163,9 +139,9 @@ public class EndToEndIT {
     }
 
     /**
-     * Run tests for every TestClassesData object (in other words for every
-     * class that was generated by POG (every class of the test case)).
-     * Number of iterations depends on number of classes to test in this particular test case.
+     * Run tests for every TestClassesData object (in other words for every class that was generated
+     * by POG (every class of the test case)). Number of iterations depends on number of classes to
+     * test in this particular test case.
      */
     @Test
     public void runForPackage() throws Exception {
@@ -185,13 +161,15 @@ public class EndToEndIT {
         TestClassesData currentTestClassesData)
         throws Exception {
 
-        PageObjectsGenerator pog = initPog(
-            currentTestClassesData.getJsonPath(),
-            currentTestClassesData.getTestURL(),
-            currentTestClassesData.isCheckLocatorUniqueness(),
-            currentTestClassesData.isForceGenerateFiles());
+        PageObjectsGenerator pog = PageObjectGeneratorFactory
+            .getPageObjectGenerator(PACKAGE_TEST_NAME, PROPERTY_FILE, true);
 
-        TestClassesCompiler compiler = new TestClassesCompiler(pog);
+        pog.setForceGenerateFile(currentTestClassesData.isForceGenerateFiles());
+
+        TestClassesCompiler compiler = new TestClassesCompiler(pog,
+            currentTestClassesData.getJsonPath(), RESOURCE_DIR,
+            Lists.newArrayList(currentTestClassesData.getTestURL()));
+
         CompilationResult compilationResult = compiler.compileClasses(
             currentTestClassesData.getTestClassFilePath(),
             currentTestClassesData.getManualClassFilePath(),
@@ -219,10 +197,8 @@ public class EndToEndIT {
     }
 
     /**
-     * Compare names of test and manual classes. For example:
-     * test.page.Site           - test class
-     * manual.google.page.Site  - manual class
-     * will pass assertEquals
+     * Compare names of test and manual classes. For example: test.page.Site           - test class
+     * manual.google.page.Site  - manual class will pass assertEquals
      */
     private void testNameOfClass(TestClassesData testClassesData) throws Exception {
         assertEquals("Different class names", testClassesData.getManualClass().getSimpleName(),
@@ -251,9 +227,9 @@ public class EndToEndIT {
     }
 
     /**
-     * Compares fields of testing class and manual class. Implementation considers order of
-     * fields in classes. If fields order of manual and test classes aren't the same, but fields
-     * are the same (same name, type, annotations) test will be passed
+     * Compares fields of testing class and manual class. Implementation considers order of fields
+     * in classes. If fields order of manual and test classes aren't the same, but fields are the
+     * same (same name, type, annotations) test will be passed
      */
     private void testFields(TestClassesData testClassesData) {
         List<Field> testFields = Arrays
@@ -297,8 +273,25 @@ public class EndToEndIT {
 
                 String[] newTestName = testCurrentField.toString().split(" ");
                 String[] newManualName = manualCurrentField.toString().split(" ");
-                String testImportForField = newTestName[1];
-                String manualImportForField = newManualName[1];
+                String testImportForField;
+                String manualImportForField;
+                if (testClassesData.getTestClass().getSuperclass().getSimpleName()
+                    .equals("WebSite")) {
+                    testImportForField = newTestName[2];
+                    manualImportForField = newManualName[2];
+                } else {
+                    testImportForField = newTestName[1];
+                    manualImportForField = newManualName[1];
+                }
+
+                if (manualImportForField.startsWith(PACKAGE_MANUAL_NAME)) {
+                    String[] manualImportPackages = manualImportForField.split("\\.");
+                    manualImportForField = manualImportPackages[manualImportPackages.length - 2] +
+                        "." + manualImportPackages[manualImportPackages.length - 1];
+                }
+
+                testImportForField = testImportForField.replace(PACKAGE_TEST_NAME + ".", "");
+
                 assertEquals("Different import for field",
                     manualImportForField,
                     testImportForField);
@@ -311,8 +304,8 @@ public class EndToEndIT {
 
     /**
      * Gets case dirs names. For example: in src/test/manual dir, test case path will be:
-     * src/test/manual/TEST_CASE_DIR. Every case dir name is used for searching
-     * manual classes in this dir
+     * src/test/manual/TEST_CASE_DIR. Every case dir name is used for searching manual classes in
+     * this dir
      *
      * @return list of test cases dirs name
      */
@@ -323,9 +316,9 @@ public class EndToEndIT {
     }
 
     /**
-     * Sorts list of TestClassesData objects. It's necessary, because all classes of test case
-     * can have dependencies of classes which represents pages. So all classes from page subdir
-     * have to be tested first.
+     * Sorts list of TestClassesData objects. It's necessary, because all classes of test case can
+     * have dependencies of classes which represents pages. So all classes from page subdir have to
+     * be tested first.
      *
      * @param classesList list of test case classes to sort
      * @return sorted list
@@ -340,9 +333,9 @@ public class EndToEndIT {
     }
 
     /**
-     * Method is used for getting full class name with .java file path. It could be better
-     * to get class full name with Class#getCanonicalName(), but by the time full class name
-     * is needed, Class object doesn't exist.
+     * Method is used for getting full class name with .java file path. It could be better to get
+     * class full name with Class#getCanonicalName(), but by the time full class name is needed,
+     * Class object doesn't exist.
      *
      * @param classFilePath path to .java file
      * @return full class name
@@ -355,12 +348,10 @@ public class EndToEndIT {
     }
 
     /**
-     * Transform manual class .java file path to generated class .java file path. This two
-     * paths are very similar. For example:
-     * manual :src/test/resources/manual/google/page/Google.java, where google dir stands for case
-     * directory
-     * generated: src/test/resources/test/page/Google.java
-     * So to get generated path, method delete case directory from manual path.
+     * Transform manual class .java file path to generated class .java file path. This two paths are
+     * very similar. For example: manual :src/test/resources/manual/google/page/Google.java, where
+     * google dir stands for case directory generated: src/test/resources/test/page/Google.java So
+     * to get generated path, method delete case directory from manual path.
      *
      * @param manualFilePath path to manual .java file
      * @return path to generated class .java file

@@ -1,0 +1,12 @@
+{
+  "elements": [
+    {
+      "type": "button",
+      "uniqueness": "text",
+      "selector": {
+        "type": "css",
+        "value": ".tabs-item"
+      }
+    }
+  ]
+}

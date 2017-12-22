@@ -2,19 +2,19 @@ package com.epam.page.object.generator.model;
 
 public class ClassAndAnnotationPair {
 
-    private Class elementClass;
-    private Class elementAnnotation;
+    private Class<?> elementClass;
+    private Class<?> elementAnnotation;
 
-    public ClassAndAnnotationPair(Class elementClass, Class elementAnnotation) {
+    public ClassAndAnnotationPair(Class<?> elementClass, Class<?> elementAnnotation) {
         this.elementClass = elementClass;
         this.elementAnnotation = elementAnnotation;
     }
 
-    public Class getElementClass() {
+    public Class<?> getElementClass() {
         return elementClass;
     }
 
-    public Class getElementAnnotation() {
+    public Class<?> getElementAnnotation() {
         return elementAnnotation;
     }
 

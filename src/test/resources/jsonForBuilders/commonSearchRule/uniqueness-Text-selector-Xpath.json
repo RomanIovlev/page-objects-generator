@@ -1,0 +1,12 @@
+{
+  "elements": [
+    {
+      "type": "button",
+      "uniqueness": "text",
+      "selector": {
+        "type": "xpath",
+        "value": "//input[@type='submit']"
+      }
+    }
+  ]
+}

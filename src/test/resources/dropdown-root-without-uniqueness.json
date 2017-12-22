@@ -1,16 +1,22 @@
 {
   "elements": [
     {
-      "type": "Dropdown",
+      "type": "dropdown",
       "innerSearchRules": [
         {
           "title": "root",
-          "xpath": "//a[@class='dropdown-button']"
+          "selector": {
+            "type": "xpath",
+            "value": "//a[@class='dropdown-button']"
+          }
         },
         {
           "title": "list",
           "uniqueness": "text",
-          "css": "ul.dropdown-content"
+          "selector": {
+            "type": "css",
+            "value": "ul.dropdown-content"
+          }
         }
       ]
     }

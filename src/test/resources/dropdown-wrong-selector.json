@@ -1,12 +1,15 @@
 {
   "elements": [
     {
-      "type": "Dropdown",
+      "type": "dropdown",
       "innerSearchRules": [
         {
           "title": "root",
           "uniqueness": "text",
-          "xpath": "//button[@class='dropbtn8']"
+          "selector": {
+            "type": "xpath",
+            "value": "//button[@class='dropbtn8']"
+          }
         }
       ]
     }

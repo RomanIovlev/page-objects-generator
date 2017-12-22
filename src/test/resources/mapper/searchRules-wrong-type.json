@@ -1,0 +1,59 @@
+{
+  "elements": [
+    {
+      "type": "button",
+      "uniqueness": "value",
+      "selector": {
+        "type": "xpath",
+        "value": "//input[@type='submit']"
+      }
+    },
+    {
+      "type": "dropdown",
+      "innerSearchRules": [
+        {
+          "title": "root",
+          "uniqueness": "text",
+          "selector":{
+            "type": "xpath",
+            "value": "//button[@class='dropbtn']"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "uniqueness": "text",
+      "selector": {
+        "type": "css",
+        "value": "input[type=submit]"
+      }
+    },
+    {
+      "type": "for3m",
+      "section": "HtmlForm",
+      "selector": {
+        "type": "css",
+        "value": ".w3-example form"
+      },
+      "innerSearchRules": [
+        {
+          "type": "textfield",
+          "uniqueness": "name",
+          "selector": {
+            "type": "css",
+            "value": "input[type=text]"
+          }
+        },
+        {
+          "type": "button",
+          "uniqueness": "value",
+          "selector": {
+            "type": "css",
+            "value": "input[type=submit]"
+          }
+        }
+      ]
+    }
+  ]
+}

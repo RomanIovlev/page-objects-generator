@@ -18,3 +18,4 @@ test-output/
 *.bat
 *.txt
 *.user
+/src/test/resources/test/

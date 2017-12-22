@@ -1,0 +1,24 @@
+{
+  "elements": [
+    {
+      "type": "dropdown",
+      "innerSearchRules": [
+        {
+          "title": "root",
+          "uniqueness": "title",
+          "selector": {
+            "type": "css",
+            "value": "button[data-id=colors-dropdown]"
+          }
+        },
+        {
+          "title": "list",
+          "selector": {
+            "type": "xpath",
+            "value": "//ul[@class='dropdown-menu inner selectpicker']"
+          }
+        }
+      ]
+    }
+  ]
+}
