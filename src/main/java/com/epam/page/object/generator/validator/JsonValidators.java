@@ -11,6 +11,10 @@ import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class use to validate all searchRules by all validators, which will validate JSON BUSINESS
+ * LOGIC.
+ */
 public class JsonValidators {
 
     private final static Logger logger = LoggerFactory.getLogger(JsonValidators.class);
@@ -30,6 +34,9 @@ public class JsonValidators {
         }
     }
 
+    /**
+     * /** This method will validate List of {@link SearchRule} by all {@link JsonValidators}
+     */
     public void validate(List<SearchRule> searchRules) {
 
         for (ValidatorVisitor validator : validators) {
@@ -51,7 +58,7 @@ public class JsonValidators {
         }
     }
 
-    public List<ValidatorVisitor> getValidators(){
+    public List<ValidatorVisitor> getValidators() {
         return ImmutableList.copyOf(validators);
     }
 }

@@ -7,6 +7,10 @@ import org.everit.json.schema.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Validator for Json scheme. Check that searchRule have required field, which contains required inner fields and they have't
+ * null values. Don't validate any business logic.
+ */
 public class JsonSchemaValidator {
 
     private final static Logger logger = LoggerFactory.getLogger(JsonSchemaValidator.class);

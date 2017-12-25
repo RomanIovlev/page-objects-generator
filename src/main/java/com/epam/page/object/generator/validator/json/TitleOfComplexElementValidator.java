@@ -1,5 +1,7 @@
 package com.epam.page.object.generator.validator.json;
 
+import com.epam.page.object.generator.container.SupportedTypesContainer;
+import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.model.searchrule.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
 import com.epam.page.object.generator.validator.ValidationResult;
@@ -9,6 +11,11 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class check that the title value of complex searchRule is supported. It finds appropriate
+ * class in {@link SupportedTypesContainer} and check that {@link ClassAndAnnotationPair} contain
+ * our value from searchRule title.
+ */
 public class TitleOfComplexElementValidator implements ValidatorVisitor {
 
     private final static Logger logger = LoggerFactory
