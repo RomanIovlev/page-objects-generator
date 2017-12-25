@@ -21,7 +21,7 @@
         "checklist",
         "elements"
       ],
-      "schema": "/schema/commonSearchRule_schema.json"
+      "schema": "/schema/searchrule/common/common-main-schema.json"
     },
     {
       "name": "complexSearchRule",
@@ -32,7 +32,7 @@
         "droplist",
         "menu"
       ],
-      "schema": "/schema/complexSearchRule_schema.json"
+      "schema": "/schema/searchrule/complex/complex-main-schema.json"
     },
     {
       "name": "formSearchRule",
@@ -40,7 +40,7 @@
         "form",
         "section"
       ],
-      "schema": "/schema/formSearchRule_schema.json"
+      "schema": "/schema/searchrule/form/form-main-schema.json"
     }
   ]
 }

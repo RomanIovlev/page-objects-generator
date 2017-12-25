@@ -1,0 +1,10 @@
+{
+  "description": "Name of field name into complex annotations",
+  "type": "string",
+  "enum": [
+    "root",
+    "jroot",
+    "jRoot",
+    "level1"
+  ]
+}

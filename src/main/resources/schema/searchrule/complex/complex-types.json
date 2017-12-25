@@ -1,0 +1,11 @@
+{
+  "description": "Type of the SearchRule",
+  "type": "string",
+  "enum": [
+    "table",
+    "combobox",
+    "dropdown",
+    "droplist",
+    "menu"
+  ]
+}

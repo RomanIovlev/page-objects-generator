@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "FormSearchRule",
+  "description": "validate formSearchRule",
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "file:./src/main/resources/schema/searchrule/form/form-types.json"
+    },
+    "section": {
+      "description": "Section of the formSearchRule",
+      "type": "string",
+      "minLength": 1
+    },
+    "innerSearchRules": {
+      "description": "List of inner SearchRules",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "uniqueness": {
+            "description": "Uniqueness element",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "file:./src/main/resources/schema/searchrule/common/common-types.json"
+          },
+          "selector": {
+            "$ref": "file:./src/main/resources/schema/subschema/selector.json"
+          }
+        },
+        "required": [
+          "uniqueness",
+          "type",
+          "selector"
+        ]
+      }
+    },
+    "selector": {
+      "$ref": "file:./src/main/resources/schema/subschema/selector.json"
+    }
+  },
+  "required": [
+    "type",
+    "section",
+    "innerSearchRules",
+    "selector"
+  ]
+}

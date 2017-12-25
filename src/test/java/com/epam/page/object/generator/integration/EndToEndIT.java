@@ -3,13 +3,11 @@ package com.epam.page.object.generator.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
 import com.epam.page.object.generator.PageObjectGeneratorFactory;
 import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.integration.data.CompilationResult;
 import com.epam.page.object.generator.integration.data.TestClassesData;
 import com.google.common.collect.Lists;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
