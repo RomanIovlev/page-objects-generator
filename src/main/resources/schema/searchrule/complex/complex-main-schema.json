@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ComplexSearchRule",
+  "description": "validate complexSearchRule",
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "file:./src/main/resources/schema/searchrule/complex/complex-types.json"
+    },
+    "innerSearchRules": {
+      "description": "List of inner SearchRules",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "uniqueness": {
+                "description": "Uniqueness element",
+                "type": "string"
+              },
+              "title": {
+                "$ref": "file:./src/main/resources/schema/searchrule/complex/inner-root-titles.json"
+              },
+              "selector": {
+                "$ref": "file:./src/main/resources/schema/subschema/selector.json"
+              }
+            },
+            "required": [
+              "title",
+              "uniqueness",
+              "selector"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "uniqueness": {
+                "description": "Uniqueness element",
+                "type": "null"
+              },
+              "title": {
+                "$ref": "file:./src/main/resources/schema/searchrule/complex/inner-other-titles.json"
+              },
+              "selector": {
+                "$ref": "file:./src/main/resources/schema/subschema/selector.json"
+              }
+            },
+            "required": [
+              "title",
+              "selector"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "type",
+    "innerSearchRules"
+  ]
+}
