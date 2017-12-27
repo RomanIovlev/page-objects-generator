@@ -10,7 +10,9 @@ import com.epam.page.object.generator.model.webgroup.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 
 /**
- *  Realization of visitor pattern. Here we call method visit for all types of searchRules
+ *  Realization of visitor pattern. Here we call method visit for all types of searchRules to validate them.
+ *
+ *  If you add new validatable object, you have to add here method visit for it.
  */
 public interface ValidatorVisitor {
 
