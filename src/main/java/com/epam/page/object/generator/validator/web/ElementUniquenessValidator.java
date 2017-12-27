@@ -4,11 +4,15 @@ import com.epam.page.object.generator.model.webgroup.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 import com.epam.page.object.generator.model.webelement.WebElement;
+import com.epam.page.object.generator.model.webgroup.WebElementGroup;
 import com.epam.page.object.generator.validator.ValidationResult;
 import com.epam.page.object.generator.validator.ValidatorVisitor;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Validate that {@link WebElementGroup} is unique on the website.
+ */
 public class ElementUniquenessValidator implements ValidatorVisitor {
 
     @Override

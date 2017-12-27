@@ -19,6 +19,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link CommonSearchRule} describes {@link SearchRule} with one of the type defined in property
+ * file in 'commonSearchRule' group.
+ */
 public class CommonSearchRule implements SearchRule {
 
     private String uniqueness;
@@ -61,6 +65,14 @@ public class CommonSearchRule implements SearchRule {
         return classAndAnnotation;
     }
 
+    /**
+     * If 'uniqueness' attribute not equals "text" and selector of xpath type, then we could
+     * transform it to css.
+     *
+     * Otherwise return selector without transformation.
+     *
+     * @return transformed {@link Selector}
+     */
     public Selector getTransformedSelector() {
         logger.debug("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {

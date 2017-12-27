@@ -1,11 +1,15 @@
 package com.epam.page.object.generator.util;
 
+import com.epam.page.object.generator.adapter.AnnotationMember;
 import com.epam.page.object.generator.model.Selector;
 
+/**
+ * This class used for generating string which is the argument of the {@link AnnotationMember}.
+ */
 public class SelectorUtils {
 
     /**
-     * Generate string contains css selector for SearchRule.
+     * Generate string by concatenation css selector value, uniqueness name and uniqueness value.
      *
      * @param selector {@link Selector} css selector
      * @param requiredValue value received from webPage by 'uniqueness' attribute
@@ -23,7 +27,7 @@ public class SelectorUtils {
     }
 
     /**
-     * Generate string contains xpath selector for SearchRule.
+     * Generate string by concatenation xpath selector value, uniqueness name and uniqueness value.
      *
      * @param selector {@link Selector} xpath selector
      * @param requiredValue value received from webPage by 'uniqueness' attribute

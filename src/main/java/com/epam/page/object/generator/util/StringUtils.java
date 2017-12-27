@@ -1,14 +1,28 @@
 package com.epam.page.object.generator.util;
 
+
+/**
+ * This is an util class that responsible for transformation of original sentence to camelcase
+ * variable.
+ */
 public class StringUtils {
 
+    /**
+     * Constant that indicates maximum amount of words in sentence.
+     */
     private static final int MAX_NUMBER_OF_WORDS_IN_NAME = 3;
 
     private StringUtils() {
     }
 
-    public static String splitCamelCase(String camel) {
-        String trim = camel.replaceAll("[^\\p{L}0-9 ]", "").trim();
+    /**
+     * Convert original sentence into variable in camelcase, also clean from any random symbols.
+     *
+     * @param inputString represents original sentence which will be converted to camelcase.
+     * @return string converted to camelcase.
+     */
+    public static String splitCamelCase(String inputString) {
+        String trim = inputString.replaceAll("[^\\p{L}0-9 ]", "").trim();
 
         if (trim.length() < 1) {
             return trim;

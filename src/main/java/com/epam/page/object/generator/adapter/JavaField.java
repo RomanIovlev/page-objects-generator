@@ -1,8 +1,11 @@
 package com.epam.page.object.generator.adapter;
 
-import java.util.Arrays;
 import javax.lang.model.element.Modifier;
+import java.util.Arrays;
 
+/**
+ * JavaField is struct class that contains necessary attributes for field of {@link JavaClass}
+ */
 public class JavaField {
 
     private String fullClassField;

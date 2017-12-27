@@ -2,6 +2,7 @@ package com.epam.page.object.generator.validator.json;
 
 import com.epam.page.object.generator.model.searchrule.ComplexInnerSearchRule;
 import com.epam.page.object.generator.model.searchrule.ComplexSearchRule;
+import com.epam.page.object.generator.model.searchrule.SearchRule;
 import com.epam.page.object.generator.validator.ValidationResult;
 import com.epam.page.object.generator.validator.ValidatorVisitor;
 import java.util.HashSet;
@@ -9,9 +10,15 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DuplicateTitleInnerSearchRuleValidator implements ValidatorVisitor{
+/**
+ * Validator only for {@link ComplexSearchRule}. It's checking that there is no duplicated titles
+ * within {@link ComplexInnerSearchRule}. For all others types of {@link SearchRule} it will always
+ * return passed {@link ValidationResult}.
+ */
+public class DuplicateTitleInnerSearchRuleValidator implements ValidatorVisitor {
 
-    private final static Logger logger = LoggerFactory.getLogger(DuplicateTitleInnerSearchRuleValidator.class);
+    private final static Logger logger = LoggerFactory
+        .getLogger(DuplicateTitleInnerSearchRuleValidator.class);
 
     @Override
     public ValidationResult visit(ComplexSearchRule complexSearchRule) {
@@ -20,7 +27,7 @@ public class DuplicateTitleInnerSearchRuleValidator implements ValidatorVisitor{
         for (ComplexInnerSearchRule searchRule : complexSearchRule.getInnerSearchRules()) {
             if (!titles.add(searchRule.getTitle())) {
                 logger.warn("Title = '" + searchRule.getTitle() + "' is duplicated!");
-                logger.warn("Invalid " +complexSearchRule + "\n");
+                logger.warn("Invalid " + complexSearchRule + "\n");
                 return new ValidationResult(false,
                     "Title = '" + searchRule.getTitle() + "' are duplicated");
             }

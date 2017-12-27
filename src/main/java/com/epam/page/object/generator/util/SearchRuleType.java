@@ -1,5 +1,12 @@
 package com.epam.page.object.generator.util;
 
+import com.epam.page.object.generator.model.searchrule.SearchRule;
+
+/**
+ * In this enumeration you can find all possible types of {@link SearchRule} (each enumeration
+ * element exists as a class in JDI) that can be used in JSON objects and by which corresponding
+ * elements can be found on the HTML page
+ */
 public enum SearchRuleType {
 
     BUTTON("button"),

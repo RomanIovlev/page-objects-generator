@@ -29,12 +29,20 @@ import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.object
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JMenu;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JTable;
+import com.epam.page.object.generator.PageObjectsGenerator;
 import com.epam.page.object.generator.model.ClassAndAnnotationPair;
 import com.epam.page.object.generator.util.SearchRuleType;
 import java.util.HashMap;
 import java.util.Map;
 import org.openqa.selenium.support.FindBy;
 
+/**
+ * {@link SupportedTypesContainer} stores information about all supported types of web elements.
+ *
+ * The class makes relationship between current type of element used and {@link
+ * ClassAndAnnotationPair} which contains information about class and annotation from JDI-framework
+ * that used for generating this element.
+ */
 public class SupportedTypesContainer {
 
     private Map<String, ClassAndAnnotationPair> supportedTypesMap = new HashMap<>();
@@ -102,10 +110,21 @@ public class SupportedTypesContainer {
             new ClassAndAnnotationPair(Form.class, FindBy.class));
     }
 
+    /**
+     * Get current Map of supported types of elements of {@link PageObjectsGenerator}
+     *
+     * @return map of all supported types
+     */
     public Map<String, ClassAndAnnotationPair> getSupportedTypesMap() {
         return supportedTypesMap;
     }
 
+    /**
+     * Add new type of supported element
+     *
+     * @param name element name
+     * @param pair {@link ClassAndAnnotationPair} of element
+     */
     public void addSupportedType(String name, ClassAndAnnotationPair pair) {
         supportedTypesMap.put(name.toLowerCase(), pair);
     }

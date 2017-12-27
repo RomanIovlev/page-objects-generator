@@ -1,5 +1,8 @@
 package com.epam.page.object.generator.adapter;
 
+/**
+ * AnnotationMember is a struct class that describes internal state of {@link JavaAnnotation}
+ */
 public class AnnotationMember {
 
     private String name;

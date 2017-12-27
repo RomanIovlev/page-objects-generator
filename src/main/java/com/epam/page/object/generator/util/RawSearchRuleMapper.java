@@ -1,6 +1,7 @@
 package com.epam.page.object.generator.util;
 
 import com.epam.page.object.generator.model.RawSearchRule;
+import com.epam.page.object.generator.model.searchrule.SearchRule;
 import com.epam.page.object.generator.validator.ValidationResult;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,10 @@ import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Util methods for returning list of {@link RawSearchRule} from json or parent {@link
+ * RawSearchRule}.
+ */
 public class RawSearchRuleMapper {
 
     private final static Logger logger = LoggerFactory.getLogger(RawSearchRuleMapper.class);
@@ -27,6 +32,12 @@ public class RawSearchRuleMapper {
         this.searchRuleGroups = searchRuleGroups;
     }
 
+    /**
+     * Returns list of {@link RawSearchRule} gotten from .json file.
+     *
+     * @param json path to .json file with description list of {@link SearchRule}.
+     * @return list of {@link RawSearchRule}
+     */
     public List<RawSearchRule> getRawSearchRuleList(String json) {
         List<RawSearchRule> rawSearchRuleList = new ArrayList<>();
 
@@ -67,6 +78,13 @@ public class RawSearchRuleMapper {
         return rawSearchRule;
     }
 
+    /**
+     * Returns inner {@link RawSearchRule} of given {@link RawSearchRule} with
+     * complexInnerSearchRule parameters.
+     *
+     * @param parent {@link RawSearchRule}
+     * @return list of {@link RawSearchRule}
+     */
     public List<RawSearchRule> getComplexInnerRawSearchRules(RawSearchRule parent) {
         List<RawSearchRule> innerRawSearchRules = new ArrayList<>();
 
@@ -84,6 +102,13 @@ public class RawSearchRuleMapper {
         return innerRawSearchRules;
     }
 
+    /**
+     * Returns inner {@link RawSearchRule} of given {@link RawSearchRule} with formInnerSearchRule
+     * parameters.
+     *
+     * @param parent {@link RawSearchRule}
+     * @return list of {@link RawSearchRule}
+     */
     public List<RawSearchRule> getFormInnerRawSearchRules(RawSearchRule parent) {
         List<RawSearchRule> innerRawSearchRules = new ArrayList<>();
 

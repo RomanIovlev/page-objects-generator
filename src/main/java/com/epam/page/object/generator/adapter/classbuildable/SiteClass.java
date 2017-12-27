@@ -19,6 +19,10 @@ import javax.lang.model.element.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * SiteClass allows to generate .java source file from list of {@link WebPage} which together
+ * constitute website.
+ */
 public class SiteClass implements JavaClassBuildable {
 
     private List<WebPage> webPages;
@@ -32,7 +36,8 @@ public class SiteClass implements JavaClassBuildable {
     @Override
     public JavaAnnotation buildAnnotation() {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
-        AnnotationMember annotationMember = new AnnotationMember("value", "$S", webPages.get(0).getDomainName());
+        AnnotationMember annotationMember = new AnnotationMember("value", "$S",
+            webPages.get(0).getDomainName());
         annotationMembers.add(annotationMember);
         logger.debug("Add " + annotationMember);
         return new JavaAnnotation(JSite.class, annotationMembers);

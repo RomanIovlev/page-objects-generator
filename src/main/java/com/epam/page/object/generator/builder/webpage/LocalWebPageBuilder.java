@@ -14,13 +14,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class for building {@link WebPage} by using local .html file.
+ */
 public class LocalWebPageBuilder implements WebPageBuilder {
 
     private final static Logger logger = LoggerFactory.getLogger(LocalWebPageBuilder.class);
 
+    /**
+     * Main method which generates list of {@link WebPage}.
+     *
+     * @param paths list of string which contains paths of local .html files.
+     * @param searchRuleExtractor {@link SearchRuleExtractor} allows {@link WebPage} extract {@link
+     * Element} from website.
+     * @return list of {@link WebPage}
+     */
     @Override
     public List<WebPage> generate(List<String> paths, SearchRuleExtractor searchRuleExtractor) {
         List<WebPage> webPages = new ArrayList<>();

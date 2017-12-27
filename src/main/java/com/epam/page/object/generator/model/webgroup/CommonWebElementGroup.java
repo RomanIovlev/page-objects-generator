@@ -2,10 +2,13 @@ package com.epam.page.object.generator.model.webgroup;
 
 import com.epam.page.object.generator.adapter.AnnotationMember;
 import com.epam.page.object.generator.adapter.JavaAnnotation;
+import com.epam.page.object.generator.adapter.JavaClass;
 import com.epam.page.object.generator.adapter.JavaField;
 import com.epam.page.object.generator.builder.WebElementGroupFieldBuilder;
 import com.epam.page.object.generator.model.Selector;
+import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.searchrule.CommonSearchRule;
+import com.epam.page.object.generator.model.webelement.CommonWebElement;
 import com.epam.page.object.generator.model.webelement.WebElement;
 import com.epam.page.object.generator.util.SelectorUtils;
 import com.epam.page.object.generator.validator.ValidationResult;
@@ -15,6 +18,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Represents {@link CommonSearchRule} and list of {@link CommonWebElement} which was found by
+ * this rule from certain {@link WebPage}.
+ */
 public class CommonWebElementGroup implements WebElementGroup {
 
     private CommonSearchRule searchRule;
@@ -74,6 +81,14 @@ public class CommonWebElementGroup implements WebElementGroup {
         return searchRule.toString();
     }
 
+    /**
+     * Returns {@link JavaAnnotation} that represents {@link CommonWebElement} in generated class.
+     *
+     * @param annotationClass annotation class which used for generation annotation.
+     * @param webElement {@link WebElement} that has to be represented in generated {@link
+     * JavaClass}.
+     * @return {@link JavaAnnotation} that represents {@link CommonWebElement} in generated class.
+     */
     public JavaAnnotation getAnnotation(Class<?> annotationClass, WebElement webElement) {
         List<AnnotationMember> annotationMembers = new ArrayList<>();
 
@@ -87,6 +102,15 @@ public class CommonWebElementGroup implements WebElementGroup {
         return new JavaAnnotation(annotationClass, annotationMembers);
     }
 
+    /**
+     * Returns string representation of annotation for class that will be generated.
+     *
+     * @param selector {@link Selector} from specified {@link CommonSearchRule}
+     * @param uniquenessValue value of the 'uniqueness' attribute
+     * @param uniqueness name of the 'uniqueness' attribute
+     * @return string representation of annotation for class that will be generated
+     * @throws IllegalArgumentException if selector type is unknown
+     */
     private String getAnnotationValue(Selector selector, String uniquenessValue,
                                       String uniqueness) {
         if (selector.isXpath()) {

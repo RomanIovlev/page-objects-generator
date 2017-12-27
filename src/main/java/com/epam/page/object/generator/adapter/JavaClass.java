@@ -1,8 +1,11 @@
 package com.epam.page.object.generator.adapter;
 
-import java.util.List;
 import javax.lang.model.element.Modifier;
+import java.util.List;
 
+/**
+ * JavaClass is a struct class that contains necessary attributes for generation of .java files.
+ */
 public class JavaClass {
 
     private String packageName;

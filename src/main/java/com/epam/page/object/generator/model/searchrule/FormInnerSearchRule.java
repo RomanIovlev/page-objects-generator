@@ -18,6 +18,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * {@link FormInnerSearchRule} describes {@link SearchRule} placed inside {@link FormSearchRule} in
+ * .json file.
+ */
 public class FormInnerSearchRule implements SearchRule {
 
     private String uniqueness;
@@ -54,10 +58,19 @@ public class FormInnerSearchRule implements SearchRule {
         return classAndAnnotation;
     }
 
+    @Override
     public Selector getSelector() {
         return selector;
     }
 
+    /**
+     * If uniqueness attribute not equals text and selector of xpath type, then we could transform
+     * it to css.
+     *
+     * Otherwise return selector without transformation.
+     *
+     * @return transformed {@link Selector}
+     */
     public Selector getTransformedSelector() {
         logger.debug("Transforming selector " + selector);
         if (!uniqueness.equalsIgnoreCase("text") && selector.isXpath()) {

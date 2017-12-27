@@ -9,15 +9,14 @@ import com.epam.page.object.generator.model.WebPage;
 import com.epam.page.object.generator.model.webgroup.WebElementGroup;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * PageClass allows to generate .java source file from {@link WebPage}.
+ */
 public class PageClass implements JavaClassBuildable {
 
     private WebPage webPage;
     private WebElementGroupFieldBuilder webElementGroupFieldBuilder;
-
-    private final static Logger logger = LoggerFactory.getLogger(PageClass.class);
 
     public PageClass(WebPage webPage,
                      WebElementGroupFieldBuilder webElementGroupFieldBuilder) {

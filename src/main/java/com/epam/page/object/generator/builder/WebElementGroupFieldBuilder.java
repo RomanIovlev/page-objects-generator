@@ -14,6 +14,7 @@ import com.epam.page.object.generator.model.webgroup.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 import com.epam.page.object.generator.model.webelement.WebElement;
+import com.epam.page.object.generator.model.webgroup.WebElementGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,15 @@ import javax.lang.model.element.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * WebElementGroupFieldBuilder knows how to build list of {@link JavaField} from the {@link
+ * WebElementGroup}.<br/>
+ *
+ * This class based on Visitor pattern. If you want to add a new group of elements, you need to
+ * create a new class which will implement {@link WebElementGroup} interface and than create new
+ * build(NewWebElementGroup newWebElementGroup) method in WebElementGroupFieldBuilder which will
+ * take your NewWebElementGroup as a parameter.
+ */
 public class WebElementGroupFieldBuilder {
 
     private final static Logger logger = LoggerFactory.getLogger(WebElementGroupFieldBuilder.class);

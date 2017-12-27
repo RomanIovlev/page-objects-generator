@@ -13,10 +13,22 @@ import com.epam.page.object.generator.util.XpathToCssTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class is needed for creating {@link CommonSearchRule} from {@link RawSearchRule}
+ */
 public class CommonSearchRuleBuilder implements SearchRuleBuilder {
 
     private final static Logger logger = LoggerFactory.getLogger(CommonSearchRuleBuilder.class);
 
+    /**
+     * This method builds {@link CommonSearchRule} getting the necessary information about {@link
+     * RawSearchRule} such as {@link RawSearchRule#type}, {@link Selector}, uniqueness parameter.
+     * Then based on {@link RawSearchRule#type} get {@link ClassAndAnnotationPair}. At last sent
+     * this parameters plus {@link XpathToCssTransformer} and {@link SelectorUtils} in constructor
+     * and get new {@link CommonSearchRule}
+     *
+     * @return {@link CommonSearchRule}
+     */
     @Override
     public SearchRule buildSearchRule(RawSearchRule rawSearchRule,
                                       SupportedTypesContainer typesContainer,

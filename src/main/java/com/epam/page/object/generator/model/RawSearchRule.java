@@ -8,6 +8,9 @@ import java.util.List;
 import org.everit.json.schema.Schema;
 import org.json.JSONObject;
 
+/**
+ * Search rule strictly from JSON, before validating and separation to different types
+ */
 public class RawSearchRule {
 
     private JSONObject element;
@@ -29,6 +32,12 @@ public class RawSearchRule {
         return schema;
     }
 
+    /**
+     * Retrieves value of given parameter from JSON object.
+     *
+     * @param parameter the name of parameter that we want to extract from JSON file.
+     * @return value of parameter if it's present, else returns null.
+     */
     public String getValue(String parameter) {
         Object param = element.get(parameter);
         if (param == null) {
@@ -37,6 +46,12 @@ public class RawSearchRule {
         return param.toString();
     }
 
+    /**
+     * Retrieves selector from JSON object
+     *
+     * @return new instance of {@link Selector} if parameter "selector" is present in JSON, else
+     * returns null.
+     */
     public Selector getSelector() {
         JSONObject selector = element.getJSONObject("selector");
         if (selector == null) {
@@ -61,6 +76,11 @@ public class RawSearchRule {
         return validationResults.stream().allMatch(ValidationResult::isValid);
     }
 
+    /**
+     * Form exception message from every failed validation result of search rule instance
+     *
+     * @return concatenated messages from validation results
+     */
     public String getExceptionMessage() {
         StringBuilder stringBuilder = new StringBuilder();
         validationResults.stream().filter(validationResult -> !validationResult.isValid()).forEach(

@@ -4,9 +4,13 @@ import com.epam.page.object.generator.model.webgroup.CommonWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.ComplexWebElementGroup;
 import com.epam.page.object.generator.model.webgroup.FormWebElementGroup;
 import com.epam.page.object.generator.model.webelement.FormWebElement;
+import com.epam.page.object.generator.model.webgroup.WebElementGroup;
 import com.epam.page.object.generator.validator.ValidationResult;
 import com.epam.page.object.generator.validator.ValidatorVisitor;
 
+/**
+ * Validate that {@link WebElementGroup} has existence 'uniqueness' attribute.
+ */
 public class UniquenessAttributeExistenceValidator implements ValidatorVisitor {
 
     @Override

@@ -8,6 +8,7 @@ import com.epam.jdi.uitests.web.selenium.elements.composite.Section;
 import com.epam.page.object.generator.adapter.JavaAnnotation;
 import com.epam.page.object.generator.adapter.classbuildable.FormClass;
 import com.epam.page.object.generator.adapter.JavaClass;
+import com.epam.page.object.generator.adapter.classbuildable.JavaClassBuildable;
 import com.epam.page.object.generator.adapter.classbuildable.PageClass;
 import com.epam.page.object.generator.adapter.classbuildable.SiteClass;
 import com.epam.page.object.generator.adapter.JavaField;
@@ -19,6 +20,14 @@ import javax.lang.model.element.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * JavaClassBuilder knows how to build each {@link JavaClassBuildable} and at the end we get
+ * prepared {@link JavaClass} for generating .java source file.<br/>
+ *
+ * This class based on Visitor pattern. If you want to add a new class, you need to create a new
+ * class which will implement {@link JavaClassBuildable} and than create new build(NewClass
+ * newClass) method in JavaClassBuilder which will take your NewClass as a parameter.
+ */
 public class JavaClassBuilder {
 
     private String packageName;

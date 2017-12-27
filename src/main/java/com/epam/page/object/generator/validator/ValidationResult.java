@@ -1,5 +1,11 @@
 package com.epam.page.object.generator.validator;
 
+import com.epam.page.object.generator.model.searchrule.SearchRule;
+
+/**
+ * This class use in {@link SearchRule} implementations like list of {@link ValidationResult}.
+ * Setting values occurs during validation.
+ */
 public class ValidationResult {
 
     private boolean isValid;
