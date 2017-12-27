@@ -25,6 +25,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Main class which is needed for generation .java source files
+ */
 public class PageObjectsGenerator {
 
     private RawSearchRuleMapper rawSearchRuleMapper;
@@ -45,6 +48,21 @@ public class PageObjectsGenerator {
 
     private final static Logger logger = LoggerFactory.getLogger(PageObjectsGenerator.class);
 
+    /**
+     * Constructor
+     * @param rawSearchRuleMapper {@link RawSearchRuleMapper}
+     * @param jsonSchemaValidator {@link JsonSchemaValidator}
+     * @param typeTransformer {@link TypeTransformer}
+     * @param checker {@link ValidationChecker}
+     * @param jsonValidators {@link JsonValidators}
+     * @param webValidators {@link WebValidators}
+     * @param javaClassBuilder {@link JavaClassBuilder}
+     * @param webElementGroupFieldBuilder {@link WebElementGroupFieldBuilder}
+     * @param javaFileWriter {@link JavaFileWriter}
+     * @param webPageBuilder {@link WebPageBuilder}
+     * @param selectorUtils {@link SelectorUtils}
+     * @param searchRuleExtractor {@link SearchRuleExtractor}
+     */
     public PageObjectsGenerator(RawSearchRuleMapper rawSearchRuleMapper,
                                 JsonSchemaValidator jsonSchemaValidator,
                                 TypeTransformer typeTransformer,
@@ -71,6 +89,14 @@ public class PageObjectsGenerator {
         this.searchRuleExtractor = searchRuleExtractor;
     }
 
+    /**
+     * Main method which checks and generates page objects
+     * @param jsonPath path for input json file, which must starts from resources folder.
+     * @param outputDir outputDir is path for the folder where it is needed to generate .java source files.
+     * @param urls list of urls which PageObjectsGenerator must visit and tries finding elements on each of them
+     * @throws IOException can be thrown from {@link JavaFileWriter#writeFiles(String, List)} if
+     * outputDir path doesn't correct.
+     */
     public void generatePageObjects(String jsonPath, String outputDir, List<String> urls)
         throws IOException {
 
@@ -94,6 +120,11 @@ public class PageObjectsGenerator {
         logger.info("Finish generating JavaClasses");
     }
 
+    /**
+     * Method creates rawSearchRuleList
+     * @param jsonPath type String
+     * @return rawSearchRuleList
+     */
     private List<RawSearchRule> getRawSearchRules(String jsonPath) {
         logger.info("Start creating list of RawSearchRules...");
         List<RawSearchRule> rawSearchRuleList = rawSearchRuleMapper.getRawSearchRuleList(jsonPath);
@@ -101,6 +132,10 @@ public class PageObjectsGenerator {
         return rawSearchRuleList;
     }
 
+    /**
+     * Method checks JSON validness
+     * @param searchRuleList type List of Search Rule
+     */
     private void jsonValidation(List<SearchRule> searchRuleList) {
         logger.info("Start Json validation...\n");
         jsonValidators.validate(searchRuleList);
@@ -109,6 +144,11 @@ public class PageObjectsGenerator {
         checker.checkSearchRules(searchRuleList);
     }
 
+    /**
+     * Method transforms RawSearchRules in SearchRules
+     * @param rawSearchRuleList type List of Raw Search Rule
+     * @return SearchRules
+     */
     private List<SearchRule> getSearchRules(List<RawSearchRule> rawSearchRuleList) {
         logger.info("Start transforming RawSearchRules in SearchRules...");
         List<SearchRule> searchRuleList = typeTransformer
@@ -117,6 +157,10 @@ public class PageObjectsGenerator {
         return searchRuleList;
     }
 
+    /**
+     * Method validates RawSearchRules with using Json Schema
+     * @param rawSearchRuleList type List of Raw Search Rule
+     */
     private void jsonSchemaValidation(List<RawSearchRule> rawSearchRuleList) {
         logger.info("Start validation RawSearchRules with using Json Schema...");
         jsonSchemaValidator.validate(rawSearchRuleList);
@@ -125,6 +169,12 @@ public class PageObjectsGenerator {
         checker.checkRawSearchRules(rawSearchRuleList);
     }
 
+    /**
+     * Method creates web pages
+     * @param urls type List of String
+     * @param searchRuleList type List of Search Rule
+     * @return webPages
+     */
     private List<WebPage> createWebPages(List<String> urls, List<SearchRule> searchRuleList) {
         logger.info("Start creating web pages...");
         List<WebPage> webPages = webPageBuilder.generate(urls, searchRuleExtractor);
@@ -134,6 +184,11 @@ public class PageObjectsGenerator {
         return webPages;
     }
 
+    /**
+     * Method creates JavaClasses
+     * @param javaClassBuildables {@link JavaClassBuildable}
+     * @return javaClasses
+     */
     private List<JavaClass> getJavaClasses(List<JavaClassBuildable> javaClassBuildables) {
         List<JavaClass> javaClasses = new ArrayList<>();
         logger.info("Start creating JavaClasses...");
@@ -144,6 +199,11 @@ public class PageObjectsGenerator {
         return javaClasses;
     }
 
+    /**
+     * Method creates JavaClassBuildables
+     * @param webPages type List of Web Page
+     * @return rawJavaClasses
+     */
     private List<JavaClassBuildable> getJavaClassBuildables(List<WebPage> webPages) {
         List<JavaClassBuildable> rawJavaClasses = new ArrayList<>();
         logger.info("Start creating JavaClassBuildables...");
@@ -164,6 +224,10 @@ public class PageObjectsGenerator {
         return rawJavaClasses;
     }
 
+    /**
+     * Constructor is needed for tests and Method Generate
+     * @param forceGenerateFile type boolean, if true java files are generated despite on exception
+     */
     public void setForceGenerateFile(boolean forceGenerateFile) {
         this.forceGenerateFile = forceGenerateFile;
     }
