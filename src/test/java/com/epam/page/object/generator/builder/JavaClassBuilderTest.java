@@ -66,7 +66,7 @@ public class JavaClassBuilderTest {
     }
 
     @Test
-    public void build_SiteClass_Buildable() {
+    public void build_SiteClass_Valid() {
         when(siteClass.buildAnnotation()).thenReturn(siteAnnotation);
         when(siteClass.buildFields(PACKAGE)).thenReturn(javaFields);
 
@@ -83,7 +83,7 @@ public class JavaClassBuilderTest {
     }
 
     @Test
-    public void build_PageClass_Buildable() {
+    public void build_PageClass_Valid() {
         when(pageClass.getTitle()).thenReturn("Title example");
         when(pageClass.buildAnnotation()).thenReturn(null);
         when(pageClass.buildFields(PACKAGE)).thenReturn(javaFields);
@@ -101,7 +101,7 @@ public class JavaClassBuilderTest {
     }
 
     @Test
-    public void visitFormClassBuildable() {
+    public void build_FormClass_Valid() {
         when(formClass.getFormWebElementGroup()).thenReturn(formWebElementGroup);
         when(formWebElementGroup.getSearchRule()).thenReturn(formSearchRule);
         when(formClass.buildAnnotation()).thenReturn(null);
