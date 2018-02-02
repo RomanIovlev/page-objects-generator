@@ -34,7 +34,7 @@ public class SiteClassTest {
     private List<JavaField> expectedFields = Lists.newArrayList(expectedField);
 
     @Test
-    public void build_JavaFields_Valid() {
+    public void build_JavaFieldsAndJavaAnnotations_Valid() {
         List<JavaField> actualFields = siteClass.buildFields(packageName);
 
         assertEquals(expectedFields.size(), actualFields.size());

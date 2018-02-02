@@ -50,7 +50,7 @@ public class FormClassTest {
 
 
     @Test
-    public void build_JavaAnnotationFields_Success() {
+    public void build_JavaAnnotationFields_Valid() {
         List<JavaField> actualJavaFields = formClass.buildFields(packageName);
         assertEquals(expectedJavaFields.size(), actualJavaFields.size());
         for (int i = 0; i < actualJavaFields.size(); i++) {

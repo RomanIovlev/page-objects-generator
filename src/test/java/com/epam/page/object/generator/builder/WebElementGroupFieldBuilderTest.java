@@ -101,7 +101,7 @@ public class WebElementGroupFieldBuilderTest {
     }
 
     @Test
-    public void build_FirstJavaField_Valid() {
+    public void build_CommonWebElementGroup_Valid() {
         when(commonWebElementGroup.getSearchRule()).thenReturn(commonSearchRule);
         when(commonWebElementGroup.getWebElements()).thenReturn(webElements);
         when(webElement.getUniquenessValue()).thenReturn("Submit");
@@ -120,7 +120,7 @@ public class WebElementGroupFieldBuilderTest {
     }
 
     @Test
-    public void visitComplexWebElementGroup() {
+    public void build_ComplexWebElementGroup_Valid() {
         when(complexWebElementGroup.getSearchRule()).thenReturn(complexSearchRule);
         when(complexWebElementGroup.getWebElements()).thenReturn(webElements);
         when(webElement.getUniquenessValue()).thenReturn("Dropdown list");
@@ -139,7 +139,7 @@ public class WebElementGroupFieldBuilderTest {
     }
 
     @Test
-    public void visitFormWebElementGroup() {
+    public void build_FormWebElementGroup_Valid() {
         when(formWebElementGroup.getSearchRule()).thenReturn(formSearchRule);
         when(formWebElementGroup.getAnnotation(any(Class.class))).thenReturn(javaAnnotation);
 
