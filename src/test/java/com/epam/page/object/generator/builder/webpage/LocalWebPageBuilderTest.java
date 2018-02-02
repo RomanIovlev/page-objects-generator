@@ -18,14 +18,14 @@ public class LocalWebPageBuilderTest {
     private List<String> invalidPaths = Lists.newArrayList("/jsonForBuilders/webPage/jdi/testException.html");
 
     @Test
-    public void generate_Success(){
+    public void generate_ListOfWebPages_Valid(){
         List<WebPage> webPages = localWebPageBuilder.generate(validPaths, searchRuleExtractor);
 
         assertNotNull(webPages);
     }
 
     @Test(expected = NotValidPathsException.class)
-    public void generate_FailedFileDoesNotExist(){
+    public void generate_SearchRuleExtractor_Invalid(){
         localWebPageBuilder.generate(invalidPaths, searchRuleExtractor);
     }
 

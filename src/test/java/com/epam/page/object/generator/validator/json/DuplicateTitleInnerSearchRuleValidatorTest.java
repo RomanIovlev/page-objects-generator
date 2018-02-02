@@ -39,19 +39,19 @@ public class DuplicateTitleInnerSearchRuleValidatorTest {
         new ClassAndAnnotationPair(Dropdown.class, JDropdown.class), selectorUtils);
 
     @Test
-    public void visit_SuccessTest() {
+    public void visit_ValidationResult_Valid() {
         ValidationResult actualValidationResult = sut.visit(validSearchRule);
         assertTrue(actualValidationResult.isValid());
     }
 
     @Test
-    public void visit_FailedDuplicateRootTitleTest() {
+    public void visit_InvalidSearchRuleDuplicateRootTitle_Invalid() {
         ValidationResult actualValidationResult = sut.visit(invalidSearchRuleDuplicateRootTitle);
         assertFalse(actualValidationResult.isValid());
     }
 
     @Test
-    public void visit_FailedDuplicateListTitleTest() {
+    public void visit_InvalidSearchRuleDuplicateListTitle_Invalid() {
         ValidationResult actualValidationResult = sut.visit(invalidSearchRuleDuplicateListTitle);
         assertFalse(actualValidationResult.isValid());
     }

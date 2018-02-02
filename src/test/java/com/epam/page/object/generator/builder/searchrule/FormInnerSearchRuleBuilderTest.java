@@ -31,7 +31,7 @@ public class FormInnerSearchRuleBuilderTest {
     new Selector("css", ".myClass"), new ClassAndAnnotationPair(Input.class, FindBy.class),transformer,searchRuleExtractor);
 
     @Test
-    public void buildSearchRule() {
+    public void build_FormInnerSearchRule_Valid() {
         MockitoAnnotations.initMocks(this);
         FormInnerSearchRuleBuilder builder = new FormInnerSearchRuleBuilder();
 

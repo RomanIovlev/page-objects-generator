@@ -23,35 +23,28 @@ public class PropertyLoaderTest {
         Lists.newArrayList(SearchRuleType.FORM));
 
     @Test
-    public void getSearchRuleGroupList() {
+    public void getSearchRuleGroupList_SearchRuleGroups_Valid() {
         SearchRuleGroups searchRuleGroupList = propertyLoader.getSearchRuleGroupList();
 
         SearchRuleGroup actualCommonSearchRuleGroup = searchRuleGroupList
             .getGroupByType(SearchRuleType.BUTTON);
 
-        assertEquals(expectedCommonSearchRuleGroup.getName(),
-            actualCommonSearchRuleGroup.getName());
-        assertEquals(expectedCommonSearchRuleGroup.getSearchRuleTypes(),
-            actualCommonSearchRuleGroup.getSearchRuleTypes());
+        assertEquals(expectedCommonSearchRuleGroup.getName(), actualCommonSearchRuleGroup.getName());
+        assertEquals(expectedCommonSearchRuleGroup.getSearchRuleTypes(), actualCommonSearchRuleGroup.getSearchRuleTypes());
 
-        SearchRuleGroup actualComplexSearchRuleGroup = searchRuleGroupList
-            .getGroupByType(SearchRuleType.DROPDOWN);
+        SearchRuleGroup actualComplexSearchRuleGroup = searchRuleGroupList.getGroupByType(SearchRuleType.DROPDOWN);
 
-        assertEquals(expectedComplexSearchRuleGroup.getName(),
-            actualComplexSearchRuleGroup.getName());
-        assertEquals(expectedComplexSearchRuleGroup.getSearchRuleTypes(),
-            actualComplexSearchRuleGroup.getSearchRuleTypes());
+        assertEquals(expectedComplexSearchRuleGroup.getName(), actualComplexSearchRuleGroup.getName());
+        assertEquals(expectedComplexSearchRuleGroup.getSearchRuleTypes(), actualComplexSearchRuleGroup.getSearchRuleTypes());
 
-        SearchRuleGroup actualFormSearchRuleGroup = searchRuleGroupList
-            .getGroupByType(SearchRuleType.FORM);
+        SearchRuleGroup actualFormSearchRuleGroup = searchRuleGroupList.getGroupByType(SearchRuleType.FORM);
 
         assertEquals(expectedFormSearchRuleGroup.getName(), actualFormSearchRuleGroup.getName());
-        assertEquals(expectedFormSearchRuleGroup.getSearchRuleTypes(),
-            actualFormSearchRuleGroup.getSearchRuleTypes());
+        assertEquals(expectedFormSearchRuleGroup.getSearchRuleTypes(), actualFormSearchRuleGroup.getSearchRuleTypes());
     }
 
     @Test
-    public void getMapWithScheme() {
+    public void load_Schema_Valid() {
 
         String commonSchema = "/schemaTest/commonSearchRule_schema.json";
         Schema commonSearchRuleSchema;

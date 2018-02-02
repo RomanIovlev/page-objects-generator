@@ -45,7 +45,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithCommonWebElementGroup_OneUniquenessValue() {
+    public void visit_CommonWebElementGroupUniquenessValue_Valid() {
         when(commonWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
 
@@ -54,7 +54,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void visit_FailedWithCommonWebElementGroup_WrongValue() {
+    public void visit_CommonWebElementGroupWrongValue_Invalid() {
         when(commonWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(commonWebElementGroup.getSearchRule()).thenReturn(commonSearchRule);
         when(commonSearchRule.getUniqueness()).thenReturn("example_searchRule");
@@ -65,7 +65,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithComplexWebElementGroup_OneUniquenessValue() {
+    public void visit_ComplexWebElementGroupUniquenessValue_Valid() {
         when(complexWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
 
@@ -74,7 +74,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void visit_FailedWithComplexWebElementGroup_WrongValue() {
+    public void visit_ComplexWebElementGroupWrongValue_Invalid() {
         when(complexWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(complexWebElementGroup.getSearchRule()).thenReturn(complexSearchRule);
         when(complexSearchRule.getUniqueness()).thenReturn("some_complexSearchRule");
@@ -85,7 +85,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithFormWebElementGroup_OneUniquenessValue() {
+    public void visit_FormWebElementGroupUniquenessValue_Valid() {
         when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example value");
 
@@ -94,7 +94,7 @@ public class UniquenessAttributeExistenceValidatorTest {
     }
 
     @Test
-    public void visit_FailedWithFormWebElementGroup_WrongValue() {
+    public void visit_FormWebElementGroupWrongValue_Invalid() {
         when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(formWebElement));
         when(formWebElement.getUniquenessValue()).thenReturn("");
         when(formWebElement.getSearchRule()).thenReturn(formInnerSearchRule);

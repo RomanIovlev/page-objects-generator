@@ -31,14 +31,14 @@ public class MainTest {
     }
 
     @Test
-    public void pageObjectsGenerator_SuccessGenerateCommonSearchRule() throws Exception {
+    public void generatePageObjects_ButtonJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/button.json", outputDir,
             Collections.singletonList("https://www.google.com"));
     }
 
     @Test
-    public void pageObjectGenerator_SuccessGenerateCommonSearchRuleWithUniqueness()
+    public void generatePageObjects_EpamButtonsJson_StatusOk()
         throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/epam-buttons.json", outputDir,
@@ -46,64 +46,63 @@ public class MainTest {
     }
 
     @Test
-    public void pageObjectsGenerator_SuccessGenerateComplexSearchRule() throws Exception {
+    public void generatePageObjects_DropDownJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
 
     @Test
-    public void pageObjectsGenerator_SuccessGenerateComplexSearchRuleWithInnerElements()
-        throws Exception {
+    public void generatePageObjects_DropDownInnerRootJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-inner-root.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
     }
 
     @Test
-    public void pageObjectGenerator_SuccessGenerateFormSearchRule() throws Exception {
+    public void generatePageObjects_FormJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/form.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/html/html_forms.asp"));
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_NotSectionAttribute() throws Exception {
+    public void generatePageObjects_FormWrongSectionJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/form-wrong-section.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/html/html_forms.asp"));
     }
 
     @Test(expected = NotValidUrlException.class)
-    public void pageObjectsGenerator_wrongUrl() throws Exception {
+    public void generatePageObjects_DropDownJson_NotValidUrlException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown.json", outputDir,
             Collections.singletonList("https://www.w3schoolsd.com/howto/howto_js_dropdown.asp"));
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectsGenerator_wrongType() throws Exception {
+    public void generatePageObjects_DropDownWrongTypeJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-wrong-type.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectsGenerator_forceFileGenerate() throws Exception {
+    public void forceGeneratePageObjects_DropDownWrongTypeJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(true);
         pog.generatePageObjects("/dropdown-wrong-type.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
 
     @Test
-    public void pageObjectsGenerator_wrongSelector() throws Exception {
+    public void generatePageObjects_DropDownWrongSelectorJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-wrong-selector.json", outputDir,
             Collections.singletonList("https://www.w3schools.com/howto/howto_js_dropdown.asp"));
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_notExistenceRootTitle() throws Exception {
+    public void generatePageObjects_DropDownWithoutRootJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-without-root.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
@@ -111,14 +110,14 @@ public class MainTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_duplicateInnerRoot() throws Exception {
+    public void generatePageObjects_DropDownDuplicateRootJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-duplicate-root.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_notExistenceTitleIntoInnerSearchRule() throws Exception {
+    public void generatePageObjects_DropDownWrongTitleJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-wrong-title.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
@@ -126,7 +125,7 @@ public class MainTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_notUniquenessAttributeIntoRoot() throws Exception {
+    public void generatePageObjects_DropDownRootWithoutUniquenessJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-root-without-uniqueness.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
@@ -134,14 +133,14 @@ public class MainTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_DuplicateUniquenessAttributeIntoRule() throws Exception {
+    public void generatePageObjects_DropDownDuplicateUniquenessJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/dropdown-duplicate-uniqueness.json", outputDir,
             Collections.singletonList("http://materializecss.com/dropdown.html"));
     }
 
     @Test(expected = ValidationException.class)
-    public void pageObjectGenerator_NotExistUniquenessAttribute() throws Exception {
+    public void generate_EpamButtonsWrongUniquenessJson_ValidationException() throws Exception {
         pog.setForceGenerateFile(true);
         pog.generatePageObjects("/epam-buttons-wrong-uniqueness.json", outputDir,
             Collections.singletonList("https://www.epam.com"));

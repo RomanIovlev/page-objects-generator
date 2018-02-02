@@ -50,28 +50,28 @@ public class TitleOfComplexElementValidatorTest {
     }
 
     @Test
-    public void visit_Success() {
+    public void visit_ValidSearchRule_Valid() {
         ValidationResult validationResult = sut.visit(validSearchRule);
 
         assertTrue(validationResult.isValid());
     }
 
     @Test
-    public void visit_SuccessEmptyInnerRules() {
+    public void visit_ValidSearchRuleWithEmptyInnerRules_Valid() {
         ValidationResult validationResult = sut.visit(validSearchRuleWithEmptyInnerRules);
 
         assertTrue(validationResult.isValid());
     }
 
     @Test
-    public void visit_FailedSearchRuleWithWrongTitleInnerSearchRule() {
+    public void visit_SearchRuleWithWrongTitleInnerSearchRule_Invalid() {
         ValidationResult validationResult = sut.visit(SearchRuleWithWrongTitleInnerSearchRule);
 
         assertFalse(validationResult.isValid());
     }
 
     @Test
-    public void visit_FailedSearchRuleWithBothWrongAndValidTitleInnerSearchRules() {
+    public void visit_SearchRuleWithBothWrongAndValidTitleInnerSearchRules_Invalid() {
         ValidationResult validationResult = sut.visit(SearchRuleWithBothWrongAndValidTitleInnerSearchRules);
 
         assertFalse(validationResult.isValid());

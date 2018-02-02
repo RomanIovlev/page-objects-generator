@@ -21,7 +21,7 @@ public class JsonSchemaValidatorTest {
 
 
     @Test
-    public void validate() {
+    public void validate_RawSearchRules_StatusOk() {
         rawSearchRules.get(2)
             .setValidationResults(Lists.newArrayList(new ValidationResult(false, "")));
 

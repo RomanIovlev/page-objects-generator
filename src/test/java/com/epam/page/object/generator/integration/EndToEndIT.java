@@ -142,7 +142,7 @@ public class EndToEndIT {
      * test in this particular test case.
      */
     @Test
-    public void runForPackage() throws Exception {
+    public void runTestCase_TestClassesData_StatusOk() throws Exception {
         caseClassesList = sortClassesList(caseClassesList);
         for (TestClassesData classDTO : caseClassesList) {
             runTestCase(classDTO);

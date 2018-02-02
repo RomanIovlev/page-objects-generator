@@ -26,7 +26,7 @@ public class SearchRuleBuildersFactoryTest {
         xpathToCssTransformer, searchRuleBuildersFactory.getMapWithBuilders());
 
     @Test
-    public void getMapWithBuilders() {
+    public void build_TypeTransformer_Valid() {
 
         assertEquals(5, typeTransformer.getBuilders().size());
         assertNotNull(typeTransformer.getBuilders().get("commonSearchRule"));

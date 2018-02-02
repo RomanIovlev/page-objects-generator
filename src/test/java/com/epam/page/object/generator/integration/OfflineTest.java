@@ -24,7 +24,7 @@ public class OfflineTest {
     }
 
     @Test
-    public void pageObjectsGenerator_SuccessGenerateCommonSearchRule() throws Exception {
+    public void generate_CalculateJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/jsonForBuilders/webPage/jdi/calculate.json", outputDir,
             Collections.singletonList("/jsonForBuilders/webPage/jdi/test.html"));

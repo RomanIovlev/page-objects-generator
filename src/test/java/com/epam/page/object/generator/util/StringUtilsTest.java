@@ -9,7 +9,7 @@ import org.junit.Test;
 public class StringUtilsTest {
 
     @Test
-    public void splitCamelCaseLessThanThreeWords() throws Exception {
+    public void splitCamelCaseLessThanThreeWords_StringUtils_Valid() throws Exception {
         String camel = "Word1 Word2";
         String expectedResult = "word1Word2";
 
@@ -19,7 +19,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void splitCamelCaseMoreThanThreeWords() throws Exception {
+    public void splitCamelCaseMoreThanThreeWords_StringUtils_Valid() throws Exception {
         String camel = "Word1 Word2 Word3 Word4";
         String expectedResult = "word1Word2Word3";
 
@@ -29,7 +29,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void splitCamelCaseThreeWords() throws Exception {
+    public void splitCamelCaseThreeWords_StringUtils_Valid() throws Exception {
         String camel = "Word1 Word2 Word3";
         String expectedResult = "word1Word2Word3";
 
@@ -39,7 +39,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void splitCamelCaseEmptyWords() throws Exception {
+    public void splitCamelCaseEmptyWords_StringUtils_Valid() throws Exception {
         String camel = " ";
         String expectedResult = "";
 
@@ -49,7 +49,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void splitCamelCaseWordsSplitRandomSymbols() throws Exception {
+    public void splitCamelCaseWordsSplitRandomSymbols_StringUtils_Valid() throws Exception {
         String camel = " Word*? @, / . $% & ! Word1";
         String expectedResult = "wordWord1";
 
@@ -59,7 +59,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterUpWordWithLowerCaseFirstLetter() throws Exception {
+    public void firstLetterUpWordWithLowerCaseFirstLetter_StringUtils_Valid() throws Exception {
         String word = "word1 word2";
         String expectedResult = "Word1 word2";
 
@@ -69,7 +69,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterUpWordWithUpperCaseFirstLetter() throws Exception {
+    public void capitalize_ApacheStringUtils_Valid() throws Exception {
         String word = "Word1 word2";
         String expectedResult = "Word1 word2";
 
@@ -79,7 +79,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterUpLowerCaseLetter() throws Exception {
+    public void capitalizeWithLowerCaseLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "w";
         String expectedResult = "W";
 
@@ -89,7 +89,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterUpUpperCaseLetter() throws Exception {
+    public void capitalizeWithUpperCaseLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "W";
         String expectedResult = "W";
 
@@ -99,7 +99,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterUpEmptyWord() throws Exception {
+    public void capitalizeWithEmptyLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "";
         String expectedResult = "";
 
@@ -109,7 +109,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterDownWordWithLowerCaseFirstLetter() throws Exception {
+    public void uncapitalizeWithLowerCaseLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "word1 word2";
         String expectedResult = "word1 word2";
 
@@ -119,7 +119,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterDownWordWithUpperCaseFirstLetter() throws Exception {
+    public void uncapitalizeWithUpperCaseLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "Word1 word2";
         String expectedResult = "word1 word2";
 
@@ -129,7 +129,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterDownLowerCaseLetter() throws Exception {
+    public void uncapitalizeWithDownLowerCaseLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "w";
         String expectedResult = "w";
 
@@ -139,7 +139,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterDownUpperCaseLetter() throws Exception {
+    public void uncapitalizeWithUpperLowerCaseLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "W";
         String expectedResult = "w";
 
@@ -149,7 +149,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void firstLetterDownEmptyWord() throws Exception {
+    public void uncapitalizeWithEmptyLetter_ApacheStringUtils_Valid() throws Exception {
         String word = "";
         String expectedResult = "";
 

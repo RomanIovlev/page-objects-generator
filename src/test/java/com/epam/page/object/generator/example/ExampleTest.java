@@ -24,14 +24,17 @@ public class ExampleTest {
     }
 
     @Test
-    public void exampleTestCommonElement() throws Exception {
+    public void setForceGenerateFile_CalculateJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
-        pog.generatePageObjects("/example/calculate.json", outputDir,
-            Collections.singletonList("/example/example.html"));
+        pog.generatePageObjects(
+            "/example/calculate.json",
+            outputDir,
+            Collections.singletonList("/example/example.html")
+        );
     }
 
     @Test
-    public void exampleTestComplexElement() throws Exception {
+    public void setForceGenerateFile_DropDownJson_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/example/dropdown.json", outputDir,
             Collections.singletonList("/example/example.html"));

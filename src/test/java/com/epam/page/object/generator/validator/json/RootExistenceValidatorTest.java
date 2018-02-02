@@ -35,13 +35,13 @@ public class RootExistenceValidatorTest {
         new ClassAndAnnotationPair(Dropdown.class, JDropdown.class), selectorUtils);
 
     @Test
-    public void visit_SuccessTest(){
+    public void visit_ValidSearchRule_Valid(){
         ValidationResult actualValidationResult = sut.visit(validSearchRule);
         assertTrue(actualValidationResult.isValid());
     }
 
     @Test
-    public void visit_FailedSearchRuleWithoutRootTitle(){
+    public void visit_InvalidSearchRuleWithoutRootTitle_Invalid(){
         ValidationResult actualValidationResult = sut.visit(invalidSearchRuleWithoutRootTitle);
         assertFalse(actualValidationResult.isValid());
     }

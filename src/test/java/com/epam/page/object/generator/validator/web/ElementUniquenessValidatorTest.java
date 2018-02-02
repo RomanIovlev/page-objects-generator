@@ -33,7 +33,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithCommonWebElementGroup_OneUniquenessValue() {
+    public void visit_CommonWebElementGroupUniquenessValue_Valid() {
         when(commonWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example_value");
 
@@ -42,7 +42,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithCommonWebElementGroup_UniquenessValues() {
+    public void visit_CommonWebElementGroupUniquenessValues_Valid() {
         when(commonWebElementGroup.getWebElements())
             .thenReturn(Lists.newArrayList(element, element));
         when(element.getUniquenessValue()).thenReturn("example_value1")
@@ -53,7 +53,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_FailedWithCommonWebElementGroup_DuplicateValues() {
+    public void visit_CommonWebElementGroupDuplicateValues_Invalid() {
         when(commonWebElementGroup.getWebElements())
             .thenReturn(Lists.newArrayList(element, element));
         when(element.getUniquenessValue()).thenReturn("duplicate_value")
@@ -64,7 +64,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithComplexWebElementGroup_OneUniquenessValue() {
+    public void visit_ComplexWebElementGroupUniquenessValue_Valid() {
         when(complexWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example_value");
 
@@ -73,7 +73,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithComplexWebElementGroup_UniquenessValues() {
+    public void visit_ComplexWebElementGroupUniquenessValues_Valid() {
         when(commonWebElementGroup.getWebElements())
             .thenReturn(Lists.newArrayList(element, element));
         when(element.getUniquenessValue()).thenReturn("example_value1")
@@ -84,7 +84,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_FailedWithComplexWebElementGroup_DuplicateValues() {
+    public void visit_ComplexWebElementGroupDuplicateValues_Invalid() {
         when(complexWebElementGroup.getWebElements())
             .thenReturn(Lists.newArrayList(element, element));
         when(element.getUniquenessValue()).thenReturn("duplicate_value")
@@ -95,7 +95,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithFormWebElementGroup_OneUniquenessValue() {
+    public void visit_FormWebElementGroupUniquenessValue_Valid() {
         when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element));
         when(element.getUniquenessValue()).thenReturn("example_value");
 
@@ -104,7 +104,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_SuccessWithFormWebElementGroup_UniquenessValues() {
+    public void visit_FormWebElementGroupUniquenessValues_Valid() {
         when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element, element));
         when(element.getUniquenessValue()).thenReturn("example_value1")
             .thenReturn("example_value2");
@@ -114,7 +114,7 @@ public class ElementUniquenessValidatorTest {
     }
 
     @Test
-    public void visit_FailedWithFormWebElementGroup_DuplicateValues() {
+    public void visit_FormWebElementGroupDuplicateValues_Invalid() {
         when(formWebElementGroup.getWebElements()).thenReturn(Lists.newArrayList(element, element));
         when(element.getUniquenessValue()).thenReturn("duplicate_value")
             .thenReturn("duplicate_value");

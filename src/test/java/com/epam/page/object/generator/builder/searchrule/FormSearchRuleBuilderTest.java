@@ -50,7 +50,7 @@ public class FormSearchRuleBuilderTest {
         new ClassAndAnnotationPair(Form.class, FindBy.class));
 
     @Test
-    public void buildSearchRule() {
+    public void build_FormSearchRule_Valid() {
         FormSearchRuleBuilder builder = new FormSearchRuleBuilder(rawSearchRuleMapper);
 
         assertNotNull(builder);
@@ -70,7 +70,6 @@ public class FormSearchRuleBuilderTest {
                 searchRuleExtractor);
 
         assertNotNull(searchRule);
-
         assertTrue(searchRule.isValid());
         assertFalse(searchRule.isInvalid());
 

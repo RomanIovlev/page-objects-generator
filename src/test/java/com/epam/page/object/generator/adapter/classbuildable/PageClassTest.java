@@ -47,7 +47,7 @@ public class PageClassTest {
             expectedDropdownAnnotation, new Modifier[]{PUBLIC}));
 
     @Test
-    public void buildFields() {
+    public void build_JavaFieldAndJavaAnnotation_Success() {
 
         List<JavaField> actualFields = pageClass.buildFields(packageName);
 
@@ -79,7 +79,7 @@ public class PageClassTest {
     }
 
     @Test
-    public void buildAnnotation() {
+    public void buildAnnotation_JavaAnnotation_Null() {
         JavaAnnotation actualAnnotation = pageClass.buildAnnotation();
         assertEquals(null, actualAnnotation);
     }

@@ -49,16 +49,29 @@ public class WebElementGroupFieldBuilderTest {
 
     @Mock
     private CommonWebElementGroup commonWebElementGroup;
-    private CommonSearchRule commonSearchRule = new CommonSearchRule("text", SearchRuleType.BUTTON,
+    private CommonSearchRule commonSearchRule = new CommonSearchRule(
+        "text",
+        SearchRuleType.BUTTON,
         new Selector("css", "input[type=submit]"),
-        new ClassAndAnnotationPair(Button.class, FindBy.class), transformer, selectorUtils);
+        new ClassAndAnnotationPair(Button.class, FindBy.class),
+        transformer,
+        selectorUtils
+    );
 
     @Mock
     private ComplexWebElementGroup complexWebElementGroup;
-    private ComplexInnerSearchRule complexInnerSearchRule1 = new ComplexInnerSearchRule("text",
-        "root", new Selector("css", ".myClass"), transformer);
-    private ComplexInnerSearchRule complexInnerSearchRule2 = new ComplexInnerSearchRule(null,
-        "list", new Selector("xpath", "//div"), transformer);
+    private ComplexInnerSearchRule complexInnerSearchRule1 = new ComplexInnerSearchRule(
+        "text",
+        "root",
+        new Selector("css", ".myClass"),
+        transformer
+    );
+    private ComplexInnerSearchRule complexInnerSearchRule2 = new ComplexInnerSearchRule(
+        null,
+        "list",
+        new Selector("xpath", "//div"),
+        transformer
+    );
     private List<ComplexInnerSearchRule> innerSearchRules = Lists
         .newArrayList(complexInnerSearchRule1, complexInnerSearchRule2);
     private ComplexSearchRule complexSearchRule = new ComplexSearchRule(SearchRuleType.DROPDOWN,
@@ -67,8 +80,11 @@ public class WebElementGroupFieldBuilderTest {
 
     @Mock
     private FormWebElementGroup formWebElementGroup;
-    private FormSearchRule formSearchRule = new FormSearchRule("myForm", SearchRuleType.FORM,
-        new Selector("css", "div[class=form]"), null,
+    private FormSearchRule formSearchRule = new FormSearchRule(
+        "myForm",
+        SearchRuleType.FORM,
+        new Selector("css", "div[class=form]"),
+        null,
         new ClassAndAnnotationPair(Form.class, FindBy.class));
 
     private WebElementGroupFieldBuilder webElementGroupFieldBuilder = new WebElementGroupFieldBuilder();
@@ -85,7 +101,7 @@ public class WebElementGroupFieldBuilderTest {
     }
 
     @Test
-    public void visitCommonWebElementGroup() {
+    public void build_FirstJavaField_Valid() {
         when(commonWebElementGroup.getSearchRule()).thenReturn(commonSearchRule);
         when(commonWebElementGroup.getWebElements()).thenReturn(webElements);
         when(webElement.getUniquenessValue()).thenReturn("Submit");
@@ -127,7 +143,8 @@ public class WebElementGroupFieldBuilderTest {
         when(formWebElementGroup.getSearchRule()).thenReturn(formSearchRule);
         when(formWebElementGroup.getAnnotation(any(Class.class))).thenReturn(javaAnnotation);
 
-        List<JavaField> javaFields = webElementGroupFieldBuilder.build(formWebElementGroup, "package");
+        List<JavaField> javaFields = webElementGroupFieldBuilder
+            .build(formWebElementGroup, "package");
         JavaField javaField = javaFields.get(0);
 
         assertEquals("package.form.MyForm", javaField.getFullFieldClass());

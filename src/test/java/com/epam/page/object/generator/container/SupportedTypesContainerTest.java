@@ -13,7 +13,7 @@ public class SupportedTypesContainerTest {
     private SupportedTypesContainer container = new SupportedTypesContainer();
 
     @Test
-    public void addSupportedType() {
+    public void size_MapWithStringsAndAnnotationPairs_Valid() {
         Map<String, ClassAndAnnotationPair> supportedTypesMap = container.getSupportedTypesMap();
         assertEquals(24, supportedTypesMap.size());
 

@@ -37,13 +37,16 @@ public class RawSearchRuleMapperTest {
     }
 
     @Test
-    public void getRawSearchRuleList_OneValidRawSearchRule() {
+    public void getRawSearchRuleList_ButtonJson_Valid() {
         SearchRuleType type = SearchRuleType.BUTTON;
-        RawSearchRule expectedRawSearchRule = new RawSearchRule(object, type,
+        RawSearchRule expectedRawSearchRule = new RawSearchRule(
+            object,
+            type,
             searchRuleGroupList.getGroupByType(type),
-            searchRuleGroupsScheme.getSchema("commonSearchRule"));
-        List<RawSearchRule> expectedList = Lists.newArrayList(expectedRawSearchRule);
+            searchRuleGroupsScheme.getSchema("commonSearchRule")
+        );
 
+        List<RawSearchRule> expectedList = Lists.newArrayList(expectedRawSearchRule);
         List<RawSearchRule> actualList = mapper.getRawSearchRuleList("/mapper/button.json");
 
         assertEquals(expectedList.size(), actualList.size());
@@ -57,7 +60,7 @@ public class RawSearchRuleMapperTest {
     }
 
     @Test
-    public void getRawSearchRuleList_ListOfValidRawSearchRules() {
+    public void getRawSearchRuleList_SearchRulesJson_Valid() {
         SearchRuleType buttonType = SearchRuleType.BUTTON;
         SearchRuleType dropdownType = SearchRuleType.DROPDOWN;
         SearchRuleType textType = SearchRuleType.TEXT;
@@ -67,23 +70,36 @@ public class RawSearchRuleMapperTest {
         Schema complexSearchRule = searchRuleGroupsScheme.getSchema("complexSearchRule");
         Schema formSearchRule = searchRuleGroupsScheme.getSchema("formSearchRule");
 
-        RawSearchRule expectedButton = new RawSearchRule(object, buttonType,
+        RawSearchRule expectedButton = new RawSearchRule(
+            object,
+            buttonType,
             searchRuleGroupList.getGroupByType(buttonType),
-            commonSearchRule);
+            commonSearchRule
+        );
 
-        RawSearchRule expectedDropdown = new RawSearchRule(object,
-            dropdownType, searchRuleGroupList.getGroupByType(dropdownType),
-            complexSearchRule);
+        RawSearchRule expectedDropdown = new RawSearchRule(
+            object,
+            dropdownType,
+            searchRuleGroupList.getGroupByType(dropdownType),
+            complexSearchRule
+        );
 
-        RawSearchRule expectedText = new RawSearchRule(object, textType,
-            searchRuleGroupList.getGroupByType(textType), commonSearchRule);
+        RawSearchRule expectedText = new RawSearchRule(
+            object,
+            textType,
+            searchRuleGroupList.getGroupByType(textType),
+            commonSearchRule
+        );
 
-        RawSearchRule expectedForm = new RawSearchRule(object, formType,
-            searchRuleGroupList.getGroupByType(formType), formSearchRule);
+        RawSearchRule expectedForm = new RawSearchRule(
+            object,
+            formType,
+            searchRuleGroupList.getGroupByType(formType),
+            formSearchRule
+        );
 
         List<RawSearchRule> expectedList = Lists
             .newArrayList(expectedButton, expectedDropdown, expectedText, expectedForm);
-
         List<RawSearchRule> actualList = mapper.getRawSearchRuleList("/mapper/searchRules.json");
 
         assertEquals(expectedList.size(), actualList.size());
@@ -99,7 +115,7 @@ public class RawSearchRuleMapperTest {
     }
 
     @Test
-    public void getRawSearchRuleList_OneInvalidRawSearchRule() {
+    public void getRawSearchRuleList_ButtonWrongTypeJson_Valid() {
         RawSearchRule expectedRawSearchRule = new RawSearchRule(object, null, null, null);
         List<RawSearchRule> expectedList = Lists.newArrayList(expectedRawSearchRule);
 
@@ -117,7 +133,7 @@ public class RawSearchRuleMapperTest {
     }
 
     @Test
-    public void getRawSearchRuleList_ListOfRawSearchRulesWithOneInvalidRule() {
+    public void getRawSearchRuleList_SearchRulesWrongTypeJson_Valid() {
         SearchRuleType buttonType = SearchRuleType.BUTTON;
         SearchRuleType dropdownType = SearchRuleType.DROPDOWN;
         SearchRuleType textType = SearchRuleType.TEXT;
@@ -162,7 +178,7 @@ public class RawSearchRuleMapperTest {
     }
 
     @Test
-    public void getComplexInnerRawSearchRules() {
+    public void getComplexInnerRawSearchRulesByParent_InnerSearchRules_Valid() {
         when(parent.getElement()).thenReturn(object);
         when(object.getJSONArray("innerSearchRules")).thenReturn(array);
         when(array.length()).thenReturn(1);
@@ -179,15 +195,18 @@ public class RawSearchRuleMapperTest {
     }
 
     @Test
-    public void getFormInnerRawSearchRules(){
+    public void getFromInnerRawSearchRulesWithButton_InnerSearchRules_Valid() {
         when(parent.getElement()).thenReturn(object);
         when(object.getJSONArray("innerSearchRules")).thenReturn(array);
         when(array.length()).thenReturn(1);
         when(array.getJSONObject(anyInt())).thenReturn(object);
         when(object.get("type")).thenReturn("button");
 
-        RawSearchRule expectedInnerRawSearchRule = new RawSearchRule(object, SearchRuleType.BUTTON, null,
-            searchRuleGroupsScheme.getSchema("formInnerSearchRule"));
+        RawSearchRule expectedInnerRawSearchRule = new RawSearchRule(
+            object, SearchRuleType.BUTTON,
+            null,
+            searchRuleGroupsScheme.getSchema("formInnerSearchRule")
+        );
 
         List<RawSearchRule> expectedList = Lists.newArrayList(expectedInnerRawSearchRule);
         List<RawSearchRule> actualList = mapper.getFormInnerRawSearchRules(parent);

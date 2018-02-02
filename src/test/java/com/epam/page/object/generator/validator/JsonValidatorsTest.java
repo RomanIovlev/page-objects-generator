@@ -20,7 +20,7 @@ public class JsonValidatorsTest {
     private DuplicateTitleInnerSearchRuleValidator validator = new DuplicateTitleInnerSearchRuleValidator();
 
     @Test
-    public void addValidator() {
+    public void addValidator_JsonValidators_Valid() {
 
         assertEquals(COUNT_VALIDATORS, jsonValidators.getValidators().size());
         jsonValidators.addValidator(validator);
@@ -28,21 +28,21 @@ public class JsonValidatorsTest {
     }
 
     @Test
-    public void addValidatorsList() {
+    public void addValidatorList_JsonValidators_Valid() {
         assertEquals(COUNT_VALIDATORS, jsonValidators.getValidators().size());
         jsonValidators.addValidatorsList(Lists.newArrayList(validator, validator));
         assertEquals(COUNT_VALIDATORS + 2, jsonValidators.getValidators().size());
     }
 
     @Test
-    public void createJsonValidatorsWithCustomValidators() {
+    public void createWithCustomValidators_JsonValidators_Valid() {
         assertEquals(COUNT_VALIDATORS, jsonValidators.getValidators().size());
         jsonValidators = new JsonValidators(Lists.newArrayList(validator));
         assertEquals(COUNT_VALIDATORS + 1, jsonValidators.getValidators().size());
     }
 
     @Test
-    public void validate() {
+    public void validate_JsonValidators_StatusOk() {
         CommonSearchRule common1 = CommonSearchRuleTestDataBuilder
             .getCommonSearchRule_UniquenessText_SelectorCss();
         CommonSearchRule common2 = CommonSearchRuleTestDataBuilder

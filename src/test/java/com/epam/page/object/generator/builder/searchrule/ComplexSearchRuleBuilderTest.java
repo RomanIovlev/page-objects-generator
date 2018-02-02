@@ -62,31 +62,36 @@ public class ComplexSearchRuleBuilderTest {
         selectorUtils);
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         rawSearchRuleList = Lists.newArrayList(innerSearchRule1, innerSearchRule2);
     }
 
     @Test
-    public void buildComplexSearchRule_SuccessTest() {
+    public void build_ComplexSearchRule_Valid() {
 
         when(rawSearchRule.getType()).thenReturn(expectedSearchRule.getType());
-        when(mapper.getComplexInnerRawSearchRules(any(RawSearchRule.class)))
-            .thenReturn(rawSearchRuleList);
-        when(builder.buildSearchRule(any(RawSearchRule.class), any(SupportedTypesContainer.class),
-            any(XpathToCssTransformer.class), any(SelectorUtils.class), any(SearchRuleExtractor.class)))
-            .thenReturn(complexInnerSearchRule1).thenReturn(complexInnerSearchRule2);
+        when(mapper.getComplexInnerRawSearchRules(any(RawSearchRule.class))).thenReturn(rawSearchRuleList);
+        when(builder.buildSearchRule(
+            any(RawSearchRule.class),
+            any(SupportedTypesContainer.class),
+            any(XpathToCssTransformer.class),
+            any(SelectorUtils.class),
+            any(SearchRuleExtractor.class))
+        ).thenReturn(complexInnerSearchRule1).thenReturn(complexInnerSearchRule2);
 
-        SearchRule searchRule = sut.buildSearchRule(rawSearchRule, container, transformer,
-            selectorUtils, searchRuleExtractor);
+        SearchRule searchRule = sut.buildSearchRule(
+            rawSearchRule,
+            container,
+            transformer,
+            selectorUtils,
+            searchRuleExtractor
+        );
         ComplexSearchRule actualSearchRule = (ComplexSearchRule) searchRule;
 
         assertEquals(expectedSearchRule.getType(), actualSearchRule.getType());
-        assertEquals(expectedSearchRule.getClassAndAnnotation().getElementClass(),
-            actualSearchRule.getClassAndAnnotation().getElementClass());
-        assertEquals(expectedSearchRule.getClassAndAnnotation().getElementAnnotation(),
-            actualSearchRule.getClassAndAnnotation().getElementAnnotation());
-        assertEquals(expectedSearchRule.getInnerSearchRules(),
-            actualSearchRule.getInnerSearchRules());
+        assertEquals(expectedSearchRule.getClassAndAnnotation().getElementClass(), actualSearchRule.getClassAndAnnotation().getElementClass());
+        assertEquals(expectedSearchRule.getClassAndAnnotation().getElementAnnotation(), actualSearchRule.getClassAndAnnotation().getElementAnnotation());
+        assertEquals(expectedSearchRule.getInnerSearchRules(), actualSearchRule.getInnerSearchRules());
     }
 }

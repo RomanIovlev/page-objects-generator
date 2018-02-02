@@ -36,7 +36,7 @@ public class CommonSearchRuleBuilderTest {
         new ClassAndAnnotationPair(Button.class, FindBy.class), transformer, selectorUtils);
 
     @Test
-    public void buildCommonSearchRule_SuccessTest() {
+    public void build_CommonSearchRule_Valid() {
         MockitoAnnotations.initMocks(this);
 
         when(rawSearchRule.getValue(anyString())).thenReturn(expectedSearchRule.getUniqueness());

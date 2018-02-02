@@ -20,7 +20,7 @@ public class CommonSearchRuleTest {
     private CommonSearchRule commonSearchRule;
 
     @Test
-    public void getTransformedSelector_UniquenessValue_SelectorXpath() {
+    public void getRuleWithUniquenessValueSelector_TransformedSelector_Valid() {
         commonSearchRule = CommonSearchRuleTestDataBuilder
             .getCommonSearchRule_UniquenessValue_SelectorXpath();
 
@@ -30,7 +30,7 @@ public class CommonSearchRuleTest {
     }
 
     @Test
-    public void getTransformedSelector_UniquenessText_SelectorXpath() {
+    public void getRuleWithUniquenessTextSelector_TransformedSelector_Valid() {
         commonSearchRule = CommonSearchRuleTestDataBuilder
             .getCommonSearchRule_UniquenessText_SelectorXpath();
 
@@ -40,7 +40,7 @@ public class CommonSearchRuleTest {
     }
 
     @Test
-    public void getTransformedSelector_UniquenessValue_SelectorCss() {
+    public void getRuleWithUniquenessValueSelectorCss_TransformedSelector_Valid() {
         commonSearchRule = CommonSearchRuleTestDataBuilder
             .getCommonSearchRule_UniquenessValue_SelectorCss();
 
@@ -50,7 +50,7 @@ public class CommonSearchRuleTest {
     }
 
     @Test
-    public void getTransformedSelector_UniquenessText_SelectorCss() {
+    public void getRuleWithUniquenessTextSelectorCss_TransformedSelector_Valid() {
         commonSearchRule = CommonSearchRuleTestDataBuilder
             .getCommonSearchRule_UniquenessText_SelectorCss();
 
@@ -60,7 +60,7 @@ public class CommonSearchRuleTest {
     }
 
     @Test
-    public void getTransformedSelector_XpathToCssTransformerException() {
+    public void build_CommonSearchRuleWithInvalidXpathSelector_Valid() {
         commonSearchRule = new CommonSearchRule("value", SearchRuleType.BUTTON,
             new Selector("xpath", "Invalid_XPATH"),
             new ClassAndAnnotationPair(Button.class, FindBy.class), xpathToCssTransformer,

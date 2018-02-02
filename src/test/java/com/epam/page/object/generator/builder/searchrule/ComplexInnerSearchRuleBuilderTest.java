@@ -27,7 +27,7 @@ public class ComplexInnerSearchRuleBuilderTest {
 
 
     @Test
-    public void buildSearchRule_SuccessTest() {
+    public void build_ComplexInnerSearchRule_Success() {
         MockitoAnnotations.initMocks(this);
 
         SupportedTypesContainer supportedTypesContainer = new SupportedTypesContainer();

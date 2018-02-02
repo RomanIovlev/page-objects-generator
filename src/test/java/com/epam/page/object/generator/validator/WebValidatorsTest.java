@@ -18,7 +18,7 @@ public class WebValidatorsTest {
     private ElementUniquenessValidator validator = new ElementUniquenessValidator();
 
     @Test
-    public void addValidator() {
+    public void addValidator_WebValidators_Valid() {
 
         assertEquals(COUNT_VALIDATORS, webValidators.getValidators().size());
         webValidators.addValidator(validator);
@@ -26,21 +26,21 @@ public class WebValidatorsTest {
     }
 
     @Test
-    public void addValidatorsList() {
+    public void addValidatorsList_WebValidators_Valid() {
         assertEquals(COUNT_VALIDATORS, webValidators.getValidators().size());
         webValidators.addValidatorsList(Lists.newArrayList(validator, validator));
         assertEquals(COUNT_VALIDATORS + 2, webValidators.getValidators().size());
     }
 
     @Test
-    public void createWebValidatorsWithCustomValidators() {
+    public void createWithCustomValidators_WebValidators_Valid() {
         assertEquals(COUNT_VALIDATORS, webValidators.getValidators().size());
         webValidators = new WebValidators(Lists.newArrayList(validator));
         assertEquals(COUNT_VALIDATORS + 1, webValidators.getValidators().size());
     }
 
     @Test
-    public void validate(){
+    public void validate_WebValidators_Valid(){
         WebPage jdiWebPage = WebPageTestDataBuilder.getJdiWebPage();
         List<WebPage> webPages = Lists.newArrayList(jdiWebPage);
 

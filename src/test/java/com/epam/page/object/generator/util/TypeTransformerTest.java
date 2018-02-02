@@ -14,6 +14,8 @@ import com.epam.page.object.generator.model.Selector;
 import com.epam.page.object.generator.model.searchrule.CommonSearchRule;
 import com.epam.page.object.generator.model.searchrule.SearchRule;
 import com.epam.page.object.generator.databuilder.RawSearchRuleTestDataBuilder;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +35,8 @@ public class TypeTransformerTest {
     private XpathToCssTransformer xpathToCssTransformer = new XpathToCssTransformer();
     private TypeTransformer typeTransformer;
 
-
     private SelectorUtils selectorUtils = new SelectorUtils();
+
     private SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
     private SearchRule expectedSearchRule = new CommonSearchRule("text",
@@ -46,11 +48,11 @@ public class TypeTransformerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         typeTransformer = new TypeTransformer(supportedTypesContainer, xpathToCssTransformer,
-            getSearchRuleBuilders());
+            ImmutableMap.of("commonSearchRule", commonSearchRuleBuilder));
     }
 
     @Test
-    public void transform() {
+    public void transform_RawSearchRules_Valid() {
         when(commonSearchRuleBuilder
             .buildSearchRule(any(RawSearchRule.class), any(SupportedTypesContainer.class),
                 any(XpathToCssTransformer.class), any(SelectorUtils.class),
@@ -67,15 +69,9 @@ public class TypeTransformerTest {
     }
 
     @Test
-    public void getBuilders() {
+    public void get_TypeTransformer_Valid() {
         assertEquals(1, typeTransformer.getBuilders().size());
         assertEquals(commonSearchRuleBuilder,
             typeTransformer.getBuilders().get("commonSearchRule"));
-    }
-
-    private Map<String, SearchRuleBuilder> getSearchRuleBuilders() {
-        Map<String, SearchRuleBuilder> builderMap = new HashMap<>();
-        builderMap.put("commonSearchRule", commonSearchRuleBuilder);
-        return builderMap;
     }
 }

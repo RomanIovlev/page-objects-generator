@@ -50,14 +50,13 @@ public class FormClassTest {
 
 
     @Test
-    public void buildFields() {
+    public void build_JavaAnnotationFields_Success() {
         List<JavaField> actualJavaFields = formClass.buildFields(packageName);
         assertEquals(expectedJavaFields.size(), actualJavaFields.size());
         for (int i = 0; i < actualJavaFields.size(); i++) {
             JavaField actualField = actualJavaFields.get(i);
             JavaField expectedField = expectedJavaFields.get(i);
-            assertEquals(expectedField.getFullFieldClass(),
-                actualField.getFullFieldClass());
+            assertEquals(expectedField.getFullFieldClass(), actualField.getFullFieldClass());
             assertEquals(expectedField.getFieldName(), actualField.getFieldName());
             assertEquals(expectedField.getModifiers(), actualField.getModifiers());
 
@@ -83,7 +82,7 @@ public class FormClassTest {
     }
 
     @Test
-    public void buildAnnotation() {
+    public void build_JavaAnnotation_Null() {
         JavaAnnotation javaAnnotation = formClass.buildAnnotation();
         assertEquals(null, javaAnnotation);
     }

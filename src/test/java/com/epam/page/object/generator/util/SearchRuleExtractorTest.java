@@ -32,13 +32,23 @@ public class SearchRuleExtractorTest {
     private XpathToCssTransformer transformer = new XpathToCssTransformer();
     private SelectorUtils selectorUtils = new SelectorUtils();
 
-    private SearchRule searchRuleWithCss = new CommonSearchRule("text",
-        SearchRuleType.BUTTON, new Selector("css", ".myClass"),
-        new ClassAndAnnotationPair(Button.class, FindBy.class), transformer, selectorUtils);
+    private SearchRule searchRuleWithCss = new CommonSearchRule(
+        "text",
+        SearchRuleType.BUTTON,
+        new Selector("css", ".myClass"),
+        new ClassAndAnnotationPair(Button.class, FindBy.class),
+        transformer,
+        selectorUtils
+    );
 
-    private SearchRule searchRuleWithXpath = new CommonSearchRule("text",
-        SearchRuleType.BUTTON, new Selector("xpath", "//input[@type='submit']"),
-        new ClassAndAnnotationPair(Button.class, FindBy.class), transformer, selectorUtils);
+    private SearchRule searchRuleWithXpath = new CommonSearchRule(
+        "text",
+        SearchRuleType.BUTTON,
+        new Selector("xpath", "//input[@type='submit']"),
+        new ClassAndAnnotationPair(Button.class, FindBy.class),
+        transformer,
+        selectorUtils
+    );
 
     private SearchRuleExtractor searchRuleExtractor = new SearchRuleExtractor();
 
@@ -48,7 +58,7 @@ public class SearchRuleExtractorTest {
     }
 
     @Test
-    public void extractElementsFromElement_SearchRuleWithXpath() {
+    public void extractElementsFromElement_SearchRuleWithXpath_NotNull() {
         String html = "<input value='Поиск в Google' aria-label='Поиск в Google' name='btnK' type='submit' jsaction='sf.chk'/>";
         Document doc = Jsoup.parse(html);
         Element buttonElement = doc.select("input[type=submit]").first();
@@ -60,7 +70,7 @@ public class SearchRuleExtractorTest {
     }
 
     @Test
-    public void extractElementsFromElement_SearchRuleWithCss() {
+    public void extractElementsFromElement_SearchRuleWithCss_StatusOk() {
         when(element.select(anyString())).thenReturn(elements);
 
         searchRuleExtractor.extractElementsFromElement(element, searchRuleWithCss);
