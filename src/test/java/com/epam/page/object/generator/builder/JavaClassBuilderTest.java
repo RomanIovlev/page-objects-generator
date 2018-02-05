@@ -101,7 +101,7 @@ public class JavaClassBuilderTest {
     }
 
     @Test
-    public void build_FormClass_Valid() {
+    public void build_FormClassNullAnnotation_Valid() {
         when(formClass.getFormWebElementGroup()).thenReturn(formWebElementGroup);
         when(formWebElementGroup.getSearchRule()).thenReturn(formSearchRule);
         when(formClass.buildAnnotation()).thenReturn(null);

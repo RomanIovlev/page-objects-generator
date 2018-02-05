@@ -24,7 +24,7 @@ public class ExampleTest {
     }
 
     @Test
-    public void setForceGenerateFile_CalculateJson_StatusOk() throws Exception {
+    public void setForceGenerateFile_ExampleCommonElement_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects(
             "/example/calculate.json",
@@ -34,7 +34,7 @@ public class ExampleTest {
     }
 
     @Test
-    public void setForceGenerateFile_DropDownJson_StatusOk() throws Exception {
+    public void setForceGenerateFile_ExampleComplexElement_StatusOk() throws Exception {
         pog.setForceGenerateFile(false);
         pog.generatePageObjects("/example/dropdown.json", outputDir,
             Collections.singletonList("/example/example.html"));

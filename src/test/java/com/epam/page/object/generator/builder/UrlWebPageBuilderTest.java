@@ -35,7 +35,7 @@ public class UrlWebPageBuilderTest {
     }
 
     @Test
-    public void generate_ListOfWebPages_Saved() throws Exception {
+    public void generate_ValidUrls_Success() throws Exception {
         urls.add("http://ya.ru");
         urls.add("http://google.com");
         List<WebPage> webPages = sut.generate(urls, searchRuleExtractor);
@@ -44,14 +44,14 @@ public class UrlWebPageBuilderTest {
     }
 
     @Test(expected = NotValidUrlException.class)
-    public void generate_UrlWebPageBuilder_NotValidUrlException() throws Exception {
+    public void generate_NotValidUrl_Exception() throws Exception {
         urls.add("123123");
         sut.generate(urls, searchRuleExtractor);
     }
 
 
     @Test
-    public void chuck_Exception_Valid() throws Exception {
+    public void validate_CoupleOfInvalidUrls_Exception() throws Exception {
         TestThing testThing = new TestThing();
 
         thrown.expect(NotValidUrlException.class);

@@ -25,7 +25,7 @@ public class LocalWebPageBuilderTest {
     }
 
     @Test(expected = NotValidPathsException.class)
-    public void generate_SearchRuleExtractor_Invalid(){
+    public void generate_FileDoesNotExist_Failed(){
         localWebPageBuilder.generate(invalidPaths, searchRuleExtractor);
     }
 
